@@ -1,0 +1,80 @@
+body {
+	font: 13px Ubuntu;
+	margin: 0;
+}
+
+div, p, nav, ul, li, h2, header, footer {
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	font: 36px "Ubuntu Light";
+	letter-spacing: -1px;
+}
+
+h2.active {
+	color: #484647;
+}
+
+h2.inactive {
+	color: #a0a0a0;
+}
+
+#MainView header {
+	background: #e7e7e7;
+	border-bottom: 14px solid #c5c5c5;
+	height: 60px;
+	width: 100%;
+}
+
+#MainView header h2 {
+	border-bottom: 1px solid #afafaf;
+	line-height: 60px;
+	width: 100%;
+}
+
+#MainView header h2 span {
+	padding-left: 15px;
+}
+
+#MainView div.content {
+	background: #ededf0;
+	height: auto;
+	min-height: 200px;
+	width: 100%;
+}
+
+#MainView footer.toolbar {
+	background: #fdfdfd;
+	box-shadow: 0 -7px 7px -7px #c2c2c2;
+	height: 65px;
+	width: 100%;
+	-webkit-box-shadow: 0 -7px 7px -7px #c2c2c2;
+}
+
+#MainView footer.toolbar nav {
+	padding-top: 18px;
+	position: absolute;
+	right: 10px;
+}
+
+#MainView footer.toolbar nav ul {
+	display: inline;
+	float: left;
+	list-style: none;
+}
+
+#MainView footer.toolbar nav ul li {
+	color: #7d767b;
+	font: 10px Ubuntu;
+	text-align: center;
+	width: 50px;
+}
+
+#Tab1 div.content p, #Tab2 div.content p {
+	color: #7d767b;
+	line-height: 300px;
+	text-align: center;
+	width: 100%;
+}
