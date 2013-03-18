@@ -1,0 +1,26 @@
+.tabs {
+	background: #e7e7e7;
+	border-bottom: 14px solid #c5c5c5;
+	height: 60px;
+	width: 100%;
+}
+
+.tabs h1 {
+	border-bottom: 1px solid #afafaf;
+	font: 36px "Ubuntu Light";
+	letter-spacing: -1px;
+	line-height: 60px;
+	width: 100%;
+}
+
+.tabs h1.active {
+	color: #484647;
+}
+
+.tabs h1.inactive {
+	color: #a0a0a0;
+}
+
+.tabs h1 span {
+	padding-left: 15px;
+}

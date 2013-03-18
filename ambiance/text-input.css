@@ -1,0 +1,37 @@
+.textfield, .textarea {
+	background: rgba(0, 0, 0, 0.1);
+	border: 0;
+	border-radius: 6px;
+	color: lightgray;
+	font-family: Ubuntu;
+	padding: 8px;
+	text-shadow: 0 1px 1px rgba(0.5, 0.5, 0.5, 0.5);
+	-webkit-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.textfield:focus, .textarea:focus {
+	background: #fff;
+	color: #757373;
+	font-family: Ubuntu;
+	outline: none;
+}
+
+.textfield:not([value]), .textarea:not([value]) {
+	color: #757373;
+}
+
+.textfield[disabled], .textarea[disabled] {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.textfield.clear:focus {
+	background: url(artwork/icon_clear@20.png) no-repeat 97% center #fff;
+	background-size: 12%;
+}
+
+.textfield.label, .textarea.label {
+	background: none !important;
+	font-size: 12px;
+	padding: 0 !important;
+	-webkit-box-shadow: none !important;
+}
