@@ -1,0 +1,68 @@
+/* ----------------------------------
+ * Buttons
+ * ---------------------------------- */
+
+button {
+    max-width: 200px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background: #cccccc;
+    border: 1px solid #999;
+    border: 0;
+    border-radius: 6px;
+    color: #333;
+    font-family: Ubuntu;
+    padding: 5px 25px;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+}
+
+button:after {
+    background: url(../img/ubuntushape_small_radius_idle@18.png) no-repeat;
+    background-size: 100% 100%;
+    content: ' ';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+/* Press (default & recommend) */
+button:active {
+}
+
+button:active:after {
+    background: url(../img/ubuntushape_small_radius_pressed@18.png) no-repeat;
+    background-size: 100% 100%;
+    content: ' ';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+button.danger {
+    background: red;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+button.warning {
+    background: #faa732;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+button.success {
+    background: #5da357;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
