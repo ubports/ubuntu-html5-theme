@@ -1,3 +1,7 @@
+/* ----------------------------------
+ * Tabs
+ * ---------------------------------- */
+
 nav.tabs {
     background: transparent;
     border-bottom: 14px solid #c2c2c2;
@@ -53,4 +57,3 @@ nav.tabs ul.tabs-inner li.inactive > a {
     -webkit-opacity: 1;
     opacity: 1;
 }
-

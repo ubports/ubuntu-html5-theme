@@ -5,6 +5,9 @@
 @import url("progress-bars.css");
 @import url("dialogs.css");
 @import url("buttons.css");
+@import url("sliders.css");
+@import url("toggles.css");
+
 
 body {
     background: #ededf0 url("../img/background_paper@30.png") repeat-x top left;

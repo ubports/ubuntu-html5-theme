@@ -1,8 +1,7 @@
 /* ----------------------------------
- * Confirm
+ * Dialog
  * ---------------------------------- */
 
-/* Main dialog setup */
 form[role="dialog"] {
     background: #000;
     opacity: 0.9;
@@ -59,7 +58,6 @@ form[role="dialog"] p {
     margin: 0;
 }
 
-/* Menu & buttons setup */
 form[role="dialog"] menu {
     white-space: nowrap;
     margin: 0 auto;

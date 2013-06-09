@@ -19,6 +19,7 @@ progress:not([value]) {
     vertical-align: middle;
 }
 
+/* Bigger Spinner */
 progress.bigger:not([value]) {
     background: url(../img/spinner@30.png) no-repeat center center / 100% auto;
     width: 90px;
@@ -47,8 +48,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 
-/* Progress bar */
-
+/* Infinite Progress bar */
 progress[value].infinite::-webkit-progress-value {
     background-color: #027ce0;
     background-size: 15px 15px , 100% 100%, 100% 100%;
