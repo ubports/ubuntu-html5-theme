@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>html: Popovers</title>
+    <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div data-role="page">
+        <header>
+            <nav class="tabs" data-role="navbar">
+                <ul class="tabs-inner" >
+                    <li class="active" role="tab">
+                        <a href="#item1" class="tab-item">Tab 1</a>
+                    </li>
+                    <li class="inactive" role="tab">
+                        <a href="#item2" class="tab-item">Tab 2</a>
+                    </li>
+                    <li class="inactive" role="tab">
+                        <a href="#item3" class="tab-item">Tab 3</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="content">
+            <div class="inset">
+                <div id="popover1" class="popover" data-gravity="n" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+
+                <div id="popover2" class="popover" data-gravity="s" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+
+                <div id="popover3" class="popover" data-gravity="e" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+
+                <div id="popover4" class="popover" data-gravity="w" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
