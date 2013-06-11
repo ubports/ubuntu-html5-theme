@@ -61,6 +61,17 @@ label input[type="checkbox"][data-type="switch"] + span.toggle {
     background: transparent;
 }
 
+label input[type="checkbox"][data-type="switch"] + span.toggle > span.toggle-bg {
+    background: transparent url(../img/Checkbox.png) no-repeat 0.5rem 0.6rem;
+    background-size: 80% 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 4.5rem;
+    height: 2.1rem;
+
+}
 
 label input[type="checkbox"][data-type="switch"] + span.toggle > span.toggle-handle {
     position: absolute;
