@@ -35,8 +35,8 @@ label:not([for]) input[type="checkbox"] + span {
 }
 
 label:not([for]) input[type="checkbox"]:checked + span {
-    background: #dd4814 url(../img/CheckMark@18.png) no-repeat  0.5rem 0.5rem;
-    background-size: 50% 50%;
+    background: #dd4814 url(../img/CheckMark@18.png) no-repeat 0.5rem 0.5rem;
+    background-size: 53% 53%;
 }
 
 
@@ -46,7 +46,7 @@ input[type="checkbox"]:disabled + span {
 
 input[type="checkbox"]:disabled:checked + span {
     background: rgba(221, 72, 20, 0.5) url(../img/CheckMark@18.png) no-repeat 0.5rem 0.5rem!important;
-    background-size: 50% 50%!important;
+    background-size: 53% 53%!important;
 }
 
 label input[type="checkbox"][data-type="switch"] + span.toggle {
