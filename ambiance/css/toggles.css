@@ -53,7 +53,7 @@ label input[type="checkbox"][data-type="switch"] + span.toggle {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin: -1.1rem 0 0 -2.3rem;
+    margin: -1.1rem 0 0 -2.2rem;
     width: 4.5rem;
     height: 2.2rem;
     pointer-events: none;
