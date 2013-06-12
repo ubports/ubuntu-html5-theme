@@ -16,7 +16,7 @@ footer[data-role="toolbar"] {
     transition: transform 0.1s ease-in-out;
 }
 
-footer[data-role="toolbar"].revelead {
+footer[data-role="toolbar"].revealed {
     -webkit-transform: translate3d(0, -65px, 0);
     transform: translate3d(0, -65px, 0);
 }
