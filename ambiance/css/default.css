@@ -12,7 +12,7 @@
 
 
 body {
-    background: #ededf0 url("../img/background_paper@30.png") repeat-x top left;
+    background: #ededf0 url("../img/background_paper@30.png") repeat top left;
     font-family: Ubuntu;
 }
 
@@ -32,7 +32,7 @@ h3 {
 }
 
 div.content {
-    background: #ededf0 url("../img/background_paper@30.png") repeat-x top left;
+    background: #ededf0 url("../img/background_paper@30.png") repeat top left;
     border-top: 1px solid #f0f0f0;
     height: auto;
     min-height: 200px;

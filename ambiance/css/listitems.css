@@ -31,7 +31,7 @@
     box-sizing: border-box;
     border-bottom: solid 0.1rem #c7c7c7;
     color: #787878;
-    display: block;
+    position: relative;
 }
 
 /* Pressed State */
@@ -119,12 +119,11 @@
 
 /* Checkable content */
 [data-type="list"] li > label {
-    pointer-events: none;
     z-index: 110;
-    width: auto;
-    height: auto;
-    margin-right: 2.5rem;
+    width: 4.5rem;
+    height: 2.2rem;
+    right: 0.5rem;
+    margin-top: -1.1rem;
     position: absolute;
     top: 50%;
-    right: 10px;
 }
