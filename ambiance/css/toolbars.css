@@ -1,0 +1,41 @@
+/* ----------------------------------
+ * Toolbars
+ * ---------------------------------- */
+
+footer[data-role="toolbar"] {
+    background: #fdfdfd;
+    height: 65px;
+    width: 100%;
+    -webkit-box-shadow: 0 -10px 10px -7px #c2c2c2;
+    box-shadow: 0 -10px 10px -7px #c2c2c2;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    bottom: -64px;
+    -webkit-transition: -webkit-transform 0.1s ease-in-out;
+    transition: transform 0.1s ease-in-out;
+}
+
+footer[data-role="toolbar"].revelead {
+    -webkit-transform: translate3d(0, -65px, 0);
+    transform: translate3d(0, -65px, 0);
+}
+
+footer[data-role="toolbar"] nav {
+    padding-top: 18px;
+    position: absolute;
+    right: 10px;
+}
+
+footer[data-role="toolbar"] nav ul {
+    display: inline;
+    float: left;
+    list-style: none;
+}
+
+footer[data-role="toolbar"] nav ul li {
+    color: #7d767b;
+    font: 10px Ubuntu;
+    text-align: center;
+    width: 50px;
+}
