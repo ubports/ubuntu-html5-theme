@@ -38,3 +38,7 @@ div.content {
     min-height: 200px;
     width: 100%;
 }
+
+.inset {
+    margin-bottom: 10px;
+}
