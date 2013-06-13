@@ -1,0 +1,16 @@
+Source: ubuntu-html5-theme
+Section: misc
+Priority: extra
+Maintainer: Michael Hall <mhall119@ubuntu.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://launchpad.net/ubuntu-html5-theme
+Vcs-Bzr: bzr+ssh://bazaar.launchpad.net/+branch/ubuntu-html5-theme/
+Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-theme/ambiance
+
+Package: ubuntu-html5-theme
+Architecture: all
+Depends: ${misc:Depends}
+Description: Toolkit styles for Ubuntu HTML5 Apps
+ This package provides common CSS and Javascript for developing native-
+ looking HTML5 applications for Ubuntu
