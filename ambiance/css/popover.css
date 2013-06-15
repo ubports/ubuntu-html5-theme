@@ -32,6 +32,21 @@
     font-size: 1rem;
 }
 
+.list li a {
+    color: #787878;
+    text-decoration: none;
+}
+
+.list li.active {
+    background: #ebebeb;
+    border-top: 1px solid #fcfcfc;
+}
+
+.list li.active a {
+    color: #dd4814;
+    text-decoration: none;
+}
+
 /* Caret */
 .popover[data-gravity]:before,
 .popover[data-gravity]:after {
