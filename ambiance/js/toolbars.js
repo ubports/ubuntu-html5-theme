@@ -12,7 +12,6 @@
     var toolbar = findToolbars(event.target);
     if (!toolbar) return;
 
-
     if (toolbar) toolbar.classList.toggle('revealed');
   });
 }();
