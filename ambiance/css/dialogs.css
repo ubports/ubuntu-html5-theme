@@ -75,3 +75,21 @@ form[role="dialog"] menu button {
     margin-bottom: 10px;
     font-size: medium;
 }
+
+
+/* Tablet landscape / low resolution */
+@media only screen and (min-width: 870px) and (max-width: 1170px){
+
+    form[role="dialog"] {
+        background: rgba(0, 0, 0, 0.6);
+        opacity: 1;
+    }
+
+    form[role="dialog"] > section {
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        width: 350px;
+        padding: 20px 0 0 0;
+    }
+
+}
