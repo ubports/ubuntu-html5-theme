@@ -33,10 +33,6 @@ button:after {
     left: 0px;
 }
 
-/* Press (default & recommend) */
-button:active {
-}
-
 button:active:after {
     background: url(../img/ubuntushape_small_radius_pressed@18.png) no-repeat;
     background-size: 100% 100%;

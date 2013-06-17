@@ -1,5 +1,6 @@
 @import url("reset.css");
 @import url("header.css");
+@import url("pagestack.css");
 @import url("tabs.css");
 @import url("text-input.css");
 @import url("progress-bars.css");
@@ -43,6 +44,10 @@ div.content {
     height: auto;
     min-height: auto;
     width: 100%;
+}
+
+div[data-role="page"] {
+    overflow: hidden;
 }
 
 .inset {
