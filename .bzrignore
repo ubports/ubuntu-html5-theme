@@ -5,3 +5,5 @@ ambiance/old/lists.css
 ambiance/old/ratchet
 ambiance/old/test.qml
 ambiance/old/ubuntu-ui-toolkit
+node_modules
+build
