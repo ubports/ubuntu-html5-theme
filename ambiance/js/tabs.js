@@ -4,11 +4,23 @@
   var pageX;
   var pageY;
   var isScrolling;
+  var tabsItems;
+  var tab;
+
 
   var getTabs = function (target) {
     var tabs = document.querySelector('.tabs-inner ul');
     for (; target && target !== document; target = target.parentNode) {
       if (tabs === target) return target;
+    }
+  };
+
+
+  var findTabs = function (target) {
+    var i;
+    i, tabsItems = document.querySelectorAll('a.tab-item');
+    for (; target && target !== document; target = target.parentNode) {
+      for (i = tabsItems.length; i--;) { if (tabsItems[i] === target) return target; }
     }
   };
 
@@ -58,8 +70,23 @@
     tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
   };
 
+  var getTab = function (e) {
+    var anchor = findTabs(e.target);
+
+    if (!anchor || !anchor.hash) return;
+    for (i = tabsItems.length; i--;) {
+      tabsItems[i].style['-webkit-transition-duration'] = '.2s';
+
+      tabsItems[i].style.display = 'block';
+      tabsItems[i].style.opacity = '1';
+    }
+
+    return anchor;
+  };
+
   window.addEventListener('touchstart', onTouchStart);
   window.addEventListener('touchmove', onTouchMove);
   window.addEventListener('touchend', onTouchEnd);
+  window.addEventListener('click', function (e) { if (getTab(e)) e.preventDefault(); });
 
 }();

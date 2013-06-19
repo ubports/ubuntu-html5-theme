@@ -2,7 +2,8 @@
  * Buttons
  * ---------------------------------- */
 
-button {
+button,
+.button {
     max-width: 200px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -22,26 +23,28 @@ button {
     position: relative;
 }
 
-button:after {
+button:after,
+.button:after {
     background: url(../img/ubuntushape_small_radius_idle@18.png) no-repeat;
     background-size: 100% 100%;
     content: ' ';
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
-button:active:after {
+button:active:after,
+.button:active:after {
     background: url(../img/ubuntushape_small_radius_pressed@18.png) no-repeat;
     background-size: 100% 100%;
     content: ' ';
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
 button.danger {
