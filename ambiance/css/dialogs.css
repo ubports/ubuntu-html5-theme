@@ -18,6 +18,11 @@ form[role="dialog"] {
     color: #fff;
     text-align: center;
     height: 100%;
+    display: none;
+}
+
+form[role="dialog"].active {
+    display: block;
 }
 
 form[role="dialog"] > section {
