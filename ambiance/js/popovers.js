@@ -24,22 +24,22 @@
         var gravity = popover.getAttribute("data-gravity");
 
         switch (gravity) {
-        case 'n':
-            pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight;
-            pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth / 2 - actualWidth / 2;
-            break;
-        case 's':
-            pos_top = popoverToggle.offsetTop - actualHeight;
-            pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth / 2 - actualWidth / 2;
-            break;
-        case 'e':
-            pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight / 2 - actualHeight / 2;
-            pos_left = popoverToggle.offsetLeft - actualWidth;
-            break;
-        case 'w':
-            pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight / 2 - actualHeight / 2;
-            pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth;
-            break;
+            case 'n':
+                pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight + 10;
+                pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth / 2 - actualWidth / 2;
+                break;
+            case 's':
+                pos_top = popoverToggle.offsetTop - actualHeight - 10;
+                pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth / 2 - actualWidth / 2;
+                break;
+            case 'e':
+                pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight / 2 - actualHeight / 2;
+                pos_left = popoverToggle.offsetLeft - actualWidth - 10;
+                break;
+            case 'w':
+                pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight / 2 - actualHeight / 2;
+                pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth + 10;
+                break;
         }
 
         popover.style.top = pos_top + 'px';
