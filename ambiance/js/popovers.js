@@ -45,4 +45,6 @@
         popover.style.top = pos_top + 'px';
         popover.style.left = pos_left + 'px';
     });
+
+    window.addEventListener('click', function (e) { if (getModal(e)) e.preventDefault(); });
 }();

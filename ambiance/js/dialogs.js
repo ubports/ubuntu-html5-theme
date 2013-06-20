@@ -18,4 +18,6 @@
         var dialog = getDialog(event);
         if (dialog) dialog.classList.toggle('active');
     });
+
+    window.addEventListener('click', function (e) { if (getDialog(e)) e.preventDefault(); });
 }();
