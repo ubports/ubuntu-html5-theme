@@ -4,21 +4,21 @@
 
 footer[data-role="toolbar"] {
     background: #fdfdfd;
-    height: 65px;
+    height: 70px;
     width: 100%;
-    -webkit-box-shadow: 0 -10px 10px -7px #c2c2c2;
-    box-shadow: 0 -10px 10px -7px #c2c2c2;
+    -webkit-box-shadow: 0 -3px 10px 0 #c2c2c2;
+    box-shadow: 0 -3px 10px 0 #c2c2c2;
     position: fixed;
     z-index: 100;
     left: 0;
-    bottom: -64px;
+    bottom: -67px;
     -webkit-transition: -webkit-transform 0.1s ease-in-out;
     transition: transform 0.1s ease-in-out;
 }
 
 footer[data-role="toolbar"].revealed {
-    -webkit-transform: translate3d(0, -65px, 0);
-    transform: translate3d(0, -65px, 0);
+    -webkit-transform: translate3d(0, -67px, 0);
+    transform: translate3d(0, -67px, 0);
 }
 
 footer[data-role="toolbar"] nav {

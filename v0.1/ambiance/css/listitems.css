@@ -51,14 +51,15 @@
 
 [data-type="list"] li > a:after {
     content: "";
-    background: transparent url(../img/chevron@18.png) no-repeat 0.5rem 0.5rem;
+    background: transparent url(../img/ListItemProgressionArrow@8.png) no-repeat 0.5rem 0.5rem;
     background-size: 50% 50%;
     pointer-events: none;
     position: absolute;
     width: 2rem;
     height: 2rem;
-    top: 0;
+    top: 50%;
     right: 0;
+    margin-top: -1rem;
     z-index: 0;
 }
 

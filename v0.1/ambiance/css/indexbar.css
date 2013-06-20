@@ -1,0 +1,26 @@
+/* ----------------------------------
+ * Lists
+ * ---------------------------------- */
+
+[data-type="indexbar-alphabet"] {
+    pointer-events: auto;
+    z-index: 2;
+    min-height: 0;
+    height: auto;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    -webkit-box-orient: vertical;
+    width: 1.1em;
+    margin-right: 8px;
+    padding: 0.3em 0;
+    color: #155988;
+}
+
+[data-type="indexbar-alphabet"]> div {
+    font-size: 0.6em;
+    text-align: center;
+    line-height: 1.1em;
+    font-weight: bold;
+    display: block;
+}

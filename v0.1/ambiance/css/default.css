@@ -1,5 +1,6 @@
 @import url("reset.css");
 @import url("header.css");
+@import url("pagestack.css");
 @import url("tabs.css");
 @import url("text-input.css");
 @import url("progress-bars.css");
@@ -10,6 +11,11 @@
 @import url("popover.css");
 @import url("listitems.css");
 @import url("toolbars.css");
+@import url("indexbar.css");
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 
 body {
@@ -36,9 +42,12 @@ div.content {
     background: #ededf0 url("../img/background_paper@30.png") repeat top left;
     border-top: 1px solid #f0f0f0;
     height: auto;
-    min-height:100%;
+    min-height: auto;
     width: 100%;
-    position:relative;
+}
+
+div[data-role="page"] {
+    overflow: hidden;
 }
 
 .inset {

@@ -7,18 +7,24 @@ nav.tabs {
     border-bottom: 14px solid #c2c2c2;
     height: 60px;
     width: 100%;
+    overflow: hidden;
+    position: relative;
     display: -webkit-box;
     display: box;
     -webkit-box-orient: horizontal;
             box-orient: horizontal;
 }
 
-nav.tabs ul.tabs-inner {
+nav.tabs div.tabs-inner {
     border-bottom: 1px solid #afafaf;
     width: 100%;
 }
 
-nav.tabs ul.tabs-inner li {
+nav.tabs div.tabs-inner ul {
+    width: 100%;
+}
+
+nav.tabs div.tabs-inner ul li {
     overflow: hidden;
     white-space: nowrap;
     -webkit-box-flex: 1;
@@ -26,7 +32,7 @@ nav.tabs ul.tabs-inner li {
     display: inline-block;
 }
 
-nav.tabs ul.tabs-inner li > a {
+nav.tabs div.tabs-inner li > a {
     font: 35px "Ubuntu Light";
     letter-spacing: -1px;
     line-height: 60px;
@@ -40,19 +46,19 @@ nav.tabs ul.tabs-inner li > a {
     transition: opacity .25s ease-in-out;
 }
 
-nav.tabs ul.tabs-inner li.active > a {
+nav.tabs div.tabs-inner li.active > a {
     color: #484647;
     padding-left: 15px;
     -webkit-opacity: 1;
     opacity: 1;
 }
 
-nav.tabs ul.tabs-inner li.active > a:after {
+nav.tabs div.tabs-inner li.active > a:after {
     content: "›";
     padding-left: 10px;
 }
 
-nav.tabs ul.tabs-inner li.inactive > a {
+nav.tabs div.tabs-inner li.inactive > a {
     color: #a0a0a0;
     -webkit-opacity: 1;
     opacity: 1;
