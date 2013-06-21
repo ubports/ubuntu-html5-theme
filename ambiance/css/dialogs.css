@@ -2,7 +2,7 @@
  * Dialog
  * ---------------------------------- */
 
-form[role="dialog"] {
+[data-role="dialog"] {
     background: #000;
     opacity: 0.9;
     overflow: hidden;
@@ -21,11 +21,11 @@ form[role="dialog"] {
     display: none;
 }
 
-form[role="dialog"].active {
+[data-role="dialog"].active {
     display: block;
 }
 
-form[role="dialog"] > section {
+[data-role="dialog"] > section {
     font-weight: lighter;
     font-size: 2.2rem;
     color: #FAFAFA;
@@ -39,7 +39,7 @@ form[role="dialog"] > section {
     white-space: normal;
 }
 
-form[role="dialog"]:before {
+[data-role="dialog"]:before {
     content: "";
     display: inline-block;
     vertical-align: middle;
@@ -48,7 +48,7 @@ form[role="dialog"]:before {
     margin-left: -0.1rem;
 }
 
-form[role="dialog"] h1 {
+[data-role="dialog"] h1 {
     font-size: large;
     line-height: 1.5em;
     color: rgba(255, 255, 255, 0.9);
@@ -56,14 +56,14 @@ form[role="dialog"] h1 {
     padding: 0 1.5rem;
 }
 
-form[role="dialog"] p {
+[data-role="dialog"] p {
     font-size: medium;
     line-height: 1.5em;
     color: rgba(255, 255, 255, 0.6);
     margin: 0;
 }
 
-form[role="dialog"] menu {
+[data-role="dialog"] menu {
     white-space: nowrap;
     margin: 0 auto;
     padding: 1.5rem;
@@ -74,23 +74,21 @@ form[role="dialog"] menu {
     width: 250px;
 }
 
-form[role="dialog"] menu button {
+[data-role="dialog"] menu button {
     display: block;
     width: 200px;
     margin-bottom: 10px;
-    font-size: medium;
 }
 
-
 /* Tablet landscape / low resolution */
-@media only screen and (min-width: 870px) and (max-width: 1170px){
+@media only screen and (min-width: 870px){
 
-    form[role="dialog"] {
+    [data-role="dialog"] {
         background: rgba(0, 0, 0, 0.6);
         opacity: 1;
     }
 
-    form[role="dialog"] > section {
+    [data-role="dialog"] > section {
         background: rgba(0, 0, 0, 0.7);
         border-radius: 10px;
         width: 350px;

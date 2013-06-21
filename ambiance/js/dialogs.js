@@ -1,7 +1,9 @@
 ! function () {
     var dialogToggle;
+    var isTouch = 'ontouchstart' in window;
+
     var findDialogs = function (target) {
-        var i, dialogs = document.querySelectorAll('a', 'button');
+        var i, dialogs = document.querySelectorAll("[data-role='button']");
         for (; target && target !== document; target = target.parentNode) {
             for (i = dialogs.length; i--;) {
                 if (dialogs[i] === target) return target;
