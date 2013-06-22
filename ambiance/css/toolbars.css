@@ -2,40 +2,53 @@
  * Toolbars
  * ---------------------------------- */
 
-footer[data-role="toolbar"] {
-    background: #fdfdfd;
+[data-role="toolbar"] {
+    background: transparent url('../img/toolbar_dropshadow@20.png') repeat-x top left;
     height: 70px;
     width: 100%;
-    -webkit-box-shadow: 0 -3px 10px 0 #c2c2c2;
-    box-shadow: 0 -3px 10px 0 #c2c2c2;
     position: fixed;
     z-index: 100;
     left: 0;
-    bottom: -67px;
+    bottom: -50px;
     -webkit-transition: -webkit-transform 0.1s ease-in-out;
     transition: transform 0.1s ease-in-out;
 }
 
-footer[data-role="toolbar"].revealed {
-    -webkit-transform: translate3d(0, -67px, 0);
-    transform: translate3d(0, -67px, 0);
+[data-role="toolbar"].revealed {
+    -webkit-transform: translate3d(0, -50px, 0);
+    transform: translate3d(0, -50px, 0);
 }
 
-footer[data-role="toolbar"] nav {
-    padding-top: 18px;
-    position: absolute;
-    right: 10px;
+[data-role="toolbar"] nav {
+    background: #fdfdfd;
+    margin-top: 20px;
+    display: block;
+    height: 40px;
+    padding-top: 10px;
 }
 
-footer[data-role="toolbar"] nav ul {
-    display: inline;
-    float: left;
+[data-role="toolbar"] nav ul {
     list-style: none;
 }
 
-footer[data-role="toolbar"] nav ul li {
+[data-role="toolbar"] nav ul li,
+[data-role="toolbar"] nav ul li a {
     color: #7d767b;
-    font: 10px Ubuntu;
+    font-size: 0.7rem;
     text-align: center;
-    width: 50px;
+    width: 55px;
+    float: right;
+    text-decoration: none;
+}
+
+[data-role="toolbar"] nav ul li img {
+    width: 16px;
+    height: 16px;
+}
+
+[data-role="toolbar"] nav ul li span {
+    display: block;
+}
+[data-role="toolbar"] nav ul li:last-child {
+    float: left;
 }

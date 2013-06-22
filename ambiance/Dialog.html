@@ -6,7 +6,7 @@
     <title>html: Dialogs</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
     <script src="js/tabs.js"></script>
-    <script src="js/dialogs.js"></script>
+    <script src="js/dg.js"></script>
 </head>
 <body>
     <div data-role="page">
@@ -36,12 +36,28 @@
                     <!-- this heading is optional -->
                     <p>Are you sure you want to delete this file?</p>
                     <menu>
-                        <button data-role="button">Cancel</button>
-                        <button data-role="button" class="danger">Delete</button>
+                        <button data-role="button" id="no">Cancel</button>
+                        <button data-role="button" class="danger" id="yes">Delete</button>
                     </menu>
                 </section>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var d;
+        var e = document.querySelector("[data-role='button']");
+        var c = document.getElementById("no");
+        console.log(e);
+        e.addEventListener('click', clickHandler);
+        c.addEventListener('click', hide);
+        function clickHandler(evt) {
+            d = new Dialog('#dialog1');
+            d.show();
+        }
+
+        function hide(evt) {
+            d.hide();
+        }
+    </script>
 </body>
 </html>
