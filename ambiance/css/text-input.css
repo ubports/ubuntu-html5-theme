@@ -10,7 +10,7 @@ input[type="search"],
 input[type="url"],
 input[type="number"],
 textarea {
-    background: rgba(0, 0, 0, 0.1);
+    background: #cfcfcf;
     border: 0;
     border-radius: 6px;
     color: #757373;
