@@ -14,6 +14,36 @@ $(document).ready(function () {
         myfeeds += "</ul>";
         $("#yourfeeds").html(myfeeds);
     }
+
+    $('#yes').click(function () {
+        var url = $("#rssFeed").val();
+        if (url === "") {
+            if (!$("#addfeeddialog section").hasClass("shake")) {
+                $("#addfeeddialog section").addClass("shake");
+            } else {
+                $('#addfeeddialog section').css('animation-name', 'none');
+                $('#addfeeddialog section').css('-moz-animation-name', 'none');
+                $('#addfeeddialog section').css('-webkit-animation-name', 'none');
+
+                setTimeout(function () {
+                    $('#addfeeddialog section').css('-webkit-animation-name', 'shake');
+                }, 0);
+            }
+        } else {
+            var feeds = eval(localStorage["feeds"]);
+            feeds.push(url);
+            localStorage.setItem("feeds", JSON.stringify(feeds));
+            window.location.reload();
+        }
+    });
+
+    $('#addfeed').click(function () {
+        $('#addfeeddialog').show();
+    });
+
+    $('#no').click(function () {
+        $('#addfeeddialog').hide();
+    });
 });
 
 //FUNCS
@@ -26,9 +56,16 @@ function restoreDefault() {
     feeds.push("http://hespress.com/feed/index.rss");
     feeds.push("http://rss.slashdot.org/Slashdot/slashdot");
     feeds.push("http://www.reddit.com/.rss");
-
-    localStorage.setItem("feeds", JSON.stringify(feeds));
-    window.location.reload();
+    try {
+        localStorage.setItem("feeds", JSON.stringify(feeds));
+        window.location.reload();
+    } catch (e) {
+        if (e == QUOTA_EXCEEDED_ERR) {
+            console.log("Error: Local Storage limit exceeds.");
+        } else {
+            console.log("Error: Saving to local storage.");
+        }
+    }
 }
 
 function loadFeed(url) {

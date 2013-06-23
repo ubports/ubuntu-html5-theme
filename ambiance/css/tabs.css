@@ -46,19 +46,24 @@ nav.tabs div.tabs-inner li > a {
     transition: opacity .25s ease-in-out;
 }
 
-nav.tabs div.tabs-inner li.active > a {
+nav.tabs div.tabs-inner .active > a {
     color: #484647;
     padding-left: 15px;
     -webkit-opacity: 1;
     opacity: 1;
 }
 
-nav.tabs div.tabs-inner li.active > a:after {
+nav.tabs div.tabs-inner .active > a:after {
     content: "›";
     padding-left: 10px;
 }
 
-nav.tabs div.tabs-inner li.inactive > a {
+nav.tabs div.tabs-inner li:only-child > a:after {
+    content: "";
+    padding-left: 10px;
+}
+
+nav.tabs div.tabs-inner .inactive > a {
     color: #a0a0a0;
     -webkit-opacity: 1;
     opacity: 1;

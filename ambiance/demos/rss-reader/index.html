@@ -6,7 +6,7 @@
     <title>RSS Mobile Reader</title>
     <link href="../../css/appTemplate.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAuvAXPRXL9qkzO0R8vzYpOhQ_BAnb8hQeSCQ2aBH79hHa1YbW_RQNN9ClKXG21xQObiXJ7diAAYaywg"></script>
-    <script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="../../js/pagestack.js"></script>
     <script src="app.js"></script>
 </head>
@@ -16,7 +16,9 @@
             <nav data-role="navbar" class="tabs" >
                 <div class="tabs-inner">
                     <ul>
-                        <li class="active" role="tab"><a href="#item1" class="tab-item">RSS Mobile Reader</a></li>
+                        <li class="active" role="tab">
+                            <a href="#item1" class="tab-item">RSS Mobile Reader</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -25,47 +27,45 @@
         <div data-role="content">
             <div data-role="pagestack">
                 <div data-role="page" id="main">
-                    <section data-type="list" id="yourfeeds">
-                    </section>
-                    <footer data-role="toolbar">
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="img/tap-me.png" alt="Tap me!" />
-                                    <span>Tap me!</span>
-                                </a>
-                            </li>
-                            <li>
-                                <img src="img/tap-me.png" alt="Tap me!" />
-                                <span>Tap me!</span>
-                            </li>
-                            <li>
-                                <img src="img/tap-me.png" alt="Tap me!" />
-                                <span>Tap me!</span>
-                            </li>
-                            <li>
-                                <img src="img/tap-me.png" alt="Tap me!" />
-                                <span>Tap me!</span>
-                            </li>
-                            <li>
-                                <img src="img/back@18.png" alt="Tap me!" />
-                                <span>Back</span>
-                            </li>
-                        </ul>
-                    </nav>
-                </footer>
+                    <section data-role="list" id="yourfeeds"></section>
+                    <footer data-role="footer" class="revealed">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" id="addfeed">
+                                        <img src="img/back@18.png" alt="Tap me!" />
+                                        <span>Add feed</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="back">
+                                        <img src="img/back@18.png" alt="Tap me!" />
+                                        <span>Back</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </footer>
                 </div>
 
                 <div data-role="page" id="results">
-                    <section data-type="list" id="resultscontent">
-                    </section>
+                    <section data-role="list" id="resultscontent"></section>
                 </div>
 
                 <div data-role="page" id="article">
-                    <section class="articleinfo">
-                    </section>
+                    <section class="articleinfo"></section>
                 </div>
+            </div>
+            <div data-role="dialog" id="addfeeddialog">
+                <section>
+                    <h1>Add a new feed</h1>
+                    <p>Type the url feed you want to add</p>
+                    <input type="url" id="rssFeed" placeholder="http://">
+                    <menu>
+                        <button data-role="button" id="no">Cancel</button>
+                        <button data-role="button" class="success" id="yes">Add</button>
+                    </menu>
+                </section>
             </div>
         </div>
     </div>
