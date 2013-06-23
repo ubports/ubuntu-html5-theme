@@ -6,12 +6,11 @@
     <title>html: Dialogs</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
     <script src="js/tabs.js"></script>
-    <script src="js/dg.js"></script>
 </head>
 <body>
     <div data-role="page">
-        <header>
-            <nav class="tabs" data-role="navbar">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
                     <ul>
                         <li class="active" role="tab">
@@ -28,7 +27,7 @@
             </nav>
         </header>
 
-        <div class="content">
+        <div data-role="content">
             <a data-role="button" href="#dialog1">Open</a>
             <div data-role="dialog" id="dialog1">
                 <section>
@@ -43,21 +42,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        var d;
-        var e = document.querySelector("[data-role='button']");
-        var c = document.getElementById("no");
-        console.log(e);
-        e.addEventListener('click', clickHandler);
-        c.addEventListener('click', hide);
-        function clickHandler(evt) {
-            d = new Dialog('#dialog1');
-            d.show();
-        }
-
-        function hide(evt) {
-            d.hide();
-        }
-    </script>
+    <script src="js/dialogs.js"></script>
 </body>
 </html>

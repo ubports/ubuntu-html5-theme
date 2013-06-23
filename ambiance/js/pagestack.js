@@ -15,7 +15,7 @@
   var scrollableArea;
 
   var getPagestack = function (target) {
-    var pagestack = document.querySelector('.pagestack');
+    var pagestack = document.querySelector("[data-role='pagestack']");
     for (; target && target !== document; target = target.parentNode) {
       if (pagestack === target) return target;
     }
@@ -38,7 +38,7 @@
     pagestack = getPagestack(e.target);
     if (!pagestack) return;
 
-    var firstItem  = pagestack.querySelector('.page');
+    var firstItem  = pagestack.querySelector("[data-role='page']");
     scrollableArea = firstItem.offsetWidth * pagestack.children.length;
 
     isScrolling = undefined;

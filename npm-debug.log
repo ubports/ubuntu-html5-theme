@@ -1,0 +1,114 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'grunt-cli' ]
+2 info using npm@1.2.32
+3 info using node@v0.10.12
+4 verbose node symlink /usr/bin/node
+5 verbose read json /usr/lib/package.json
+6 verbose read json /usr/lib/package.json
+7 verbose cache add [ 'grunt-cli', null ]
+8 verbose cache add name=undefined spec="grunt-cli" args=["grunt-cli",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'grunt-cli',
+9 verbose parsed url   path: 'grunt-cli',
+9 verbose parsed url   href: 'grunt-cli' }
+10 silly lockFile 671ef8ac-grunt-cli grunt-cli
+11 verbose lock grunt-cli /home/daker/.npm/671ef8ac-grunt-cli.lock
+12 silly lockFile 671ef8ac-grunt-cli grunt-cli
+13 silly lockFile 671ef8ac-grunt-cli grunt-cli
+14 verbose addNamed [ 'grunt-cli', '' ]
+15 verbose addNamed [ null, '' ]
+16 silly lockFile d63f3d0b-grunt-cli grunt-cli@
+17 verbose lock grunt-cli@ /home/daker/.npm/d63f3d0b-grunt-cli.lock
+18 silly addNameRange { name: 'grunt-cli', range: '', hasData: false }
+19 verbose url raw grunt-cli
+20 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-cli' ]
+21 verbose url resolved https://registry.npmjs.org/grunt-cli
+22 info trying registry request attempt 1 at 16:04:04
+23 verbose etag "2C8CZIEPGDPM7GO4KTQ0MKMAT"
+24 http GET https://registry.npmjs.org/grunt-cli
+25 http 200 https://registry.npmjs.org/grunt-cli
+26 silly registry.get cb [ 200,
+26 silly registry.get   { vary: 'Accept',
+26 silly registry.get     server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+26 silly registry.get     etag: '"5KFYFUXPBFHAD1WL0XOB3XBYE"',
+26 silly registry.get     date: 'Sat, 22 Jun 2013 15:04:06 GMT',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'content-length': '22803' } ]
+27 silly addNameRange number 2 { name: 'grunt-cli', range: '', hasData: true }
+28 silly addNameRange versions [ 'grunt-cli',
+28 silly addNameRange   [ '0.1.0',
+28 silly addNameRange     '0.1.1',
+28 silly addNameRange     '0.1.2',
+28 silly addNameRange     '0.1.3',
+28 silly addNameRange     '0.1.4',
+28 silly addNameRange     '0.1.5',
+28 silly addNameRange     '0.1.6',
+28 silly addNameRange     '0.1.7',
+28 silly addNameRange     '0.1.8',
+28 silly addNameRange     '0.1.9' ] ]
+29 verbose addNamed [ 'grunt-cli', '0.1.9' ]
+30 verbose addNamed [ '0.1.9', '0.1.9' ]
+31 silly lockFile 8faf2ed8-grunt-cli-0-1-9 grunt-cli@0.1.9
+32 verbose lock grunt-cli@0.1.9 /home/daker/.npm/8faf2ed8-grunt-cli-0-1-9.lock
+33 verbose read json /home/daker/.npm/grunt-cli/0.1.9/package/package.json
+34 silly lockFile 8faf2ed8-grunt-cli-0-1-9 grunt-cli@0.1.9
+35 silly lockFile 8faf2ed8-grunt-cli-0-1-9 grunt-cli@0.1.9
+36 silly lockFile d63f3d0b-grunt-cli grunt-cli@
+37 silly lockFile d63f3d0b-grunt-cli grunt-cli@
+38 silly resolved [ { name: 'grunt-cli',
+38 silly resolved     description: 'The grunt command line interface.',
+38 silly resolved     version: '0.1.9',
+38 silly resolved     author: { name: 'Grunt Team' },
+38 silly resolved     homepage: 'http://gruntjs.com/',
+38 silly resolved     repository: { type: 'git', url: 'git://github.com/gruntjs/grunt-cli.git' },
+38 silly resolved     bugs: { url: 'http://github.com/gruntjs/grunt-cli/issues' },
+38 silly resolved     licenses: [ [Object] ],
+38 silly resolved     bin: { grunt: 'bin/grunt' },
+38 silly resolved     engines: { node: '>= 0.8.0' },
+38 silly resolved     scripts: { test: 'node bin/grunt test' },
+38 silly resolved     preferGlobal: true,
+38 silly resolved     dependencies: { nopt: '~1.0.10', 'findup-sync': '~0.1.0', resolve: '~0.3.1' },
+38 silly resolved     devDependencies: { grunt: '~0.4.0', 'grunt-contrib-jshint': '~0.2.0' },
+38 silly resolved     contributors: [ [Object], [Object], [Object], [Object] ],
+38 silly resolved     readme: '# grunt-cli [![Build Status](https://secure.travis-ci.org/gruntjs/grunt-cli.png?branch=master)](http://travis-ci.org/gruntjs/grunt-cli)\n> The Grunt command line interface.\n\nInstall this globally and you\'ll have access to the `grunt` command anywhere on your system.\n\n```shell\nnpm install -g grunt-cli\n```\n\n**Note:** The job of the `grunt` command is to load and run the version of Grunt you have installed locally to your project, irrespective of its version.  Starting with Grunt v0.4, you should never install Grunt itself globally.  For more information about why, [please read this](http://blog.nodejs.org/2011/03/23/npm-1-0-global-vs-local-installation).\n\nSee the [Getting Started](http://gruntjs.com/getting-started) guide for more information.\n\n## Shell tab auto-completion\nTo enable bash tab auto-completion for Grunt, add the following line to your `~/.bashrc` file. Currently, the only supported shell is bash.\n\n```bash\neval "$(grunt --completion=bash)"\n```\n\n## Installing grunt-cli locally\nIf you don\'t have administrator rights, you may need to install grunt-cli locally to your project using `npm install grunt-cli --save-dev`.  Unfortunately, this will not put the `grunt` executable in your PATH.  You\'ll need to specify its explicit location when executing it, eg: `./node_modules/.bin/grunt`,\n\nNote: Using grunt-cli in this way is unsupported.\n',
+38 silly resolved     readmeFilename: 'README.md',
+38 silly resolved     _id: 'grunt-cli@0.1.9',
+38 silly resolved     _from: 'grunt-cli@' } ]
+39 info install grunt-cli@0.1.9 into /usr/lib
+40 info installOne grunt-cli@0.1.9
+41 verbose from cache /home/daker/.npm/grunt-cli/0.1.9/package/package.json
+42 info /usr/lib/node_modules/grunt-cli unbuild
+43 verbose read json /usr/lib/node_modules/grunt-cli/package.json
+44 info preuninstall grunt-cli@0.1.9
+45 info uninstall grunt-cli@0.1.9
+46 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild grunt-cli@0.1.9
+47 verbose /usr/bin,[object Object] binRoot
+48 info /usr/lib/node_modules/grunt-cli unbuild
+49 verbose read json /usr/lib/node_modules/grunt-cli/package.json
+50 info preuninstall grunt-cli@0.1.9
+51 info uninstall grunt-cli@0.1.9
+52 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild grunt-cli@0.1.9
+53 verbose /usr/bin,[object Object] binRoot
+54 error error rolling back Error: EACCES, unlink '/usr/bin/grunt'
+54 error error rolling back  grunt-cli@0.1.9 { [Error: EACCES, unlink '/usr/bin/grunt'] errno: 3, code: 'EACCES', path: '/usr/bin/grunt' }
+55 error Error: EACCES, unlink '/usr/bin/grunt'
+55 error  { [Error: EACCES, unlink '/usr/bin/grunt'] errno: 3, code: 'EACCES', path: '/usr/bin/grunt' }
+56 error Please try running this command again as root/Administrator.
+57 error System Linux 3.5.0-34-generic
+58 error command "/usr/bin/node" "/usr/bin/npm" "install" "-g" "grunt-cli"
+59 error cwd /home/daker/Projects/ubuntu-html5-theme
+60 error node -v v0.10.12
+61 error npm -v 1.2.32
+62 error path /usr/bin/grunt
+63 error code EACCES
+64 error errno 3
+65 error stack Error: EACCES, unlink '/usr/bin/grunt'
+66 verbose exit [ 3, true ]

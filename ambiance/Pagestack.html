@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>html: Textinputs</title>
+    <title>html: Pagestack</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
     <script src="js/tabs.js"></script>
     <script src="js/pagestack.js"></script>
 </head>
 <body>
     <div data-role="page">
-        <header>
-            <nav class="tabs" data-role="navbar">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
                     <ul>
                         <li class="active" role="tab">
@@ -28,9 +28,9 @@
             </nav>
         </header>
 
-        <div class="content">
-            <div class="pagestack">
-                <div class="page">
+        <div data-role="content">
+            <div data-role="pagestack">
+                <div data-role="page">
                     <section data-type="list">
                         <header>1 - Standard</header>
                         <ul>

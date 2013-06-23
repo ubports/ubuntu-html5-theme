@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RSS Mobile Reader</title>
+    <link href="../../css/appTemplate.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAuvAXPRXL9qkzO0R8vzYpOhQ_BAnb8hQeSCQ2aBH79hHa1YbW_RQNN9ClKXG21xQObiXJ7diAAYaywg"></script>
+    <script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+    <script src="../../js/pagestack.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div data-role="page">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs" >
+                <div class="tabs-inner">
+                    <ul>
+                        <li class="active" role="tab"><a href="#item1" class="tab-item">RSS Mobile Reader</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div data-role="content">
+            <div data-role="pagestack">
+                <div data-role="page" id="main">
+                    <section data-type="list" id="yourfeeds">
+                    </section>
+                    <footer data-role="toolbar">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <img src="img/tap-me.png" alt="Tap me!" />
+                                    <span>Tap me!</span>
+                                </a>
+                            </li>
+                            <li>
+                                <img src="img/tap-me.png" alt="Tap me!" />
+                                <span>Tap me!</span>
+                            </li>
+                            <li>
+                                <img src="img/tap-me.png" alt="Tap me!" />
+                                <span>Tap me!</span>
+                            </li>
+                            <li>
+                                <img src="img/tap-me.png" alt="Tap me!" />
+                                <span>Tap me!</span>
+                            </li>
+                            <li>
+                                <img src="img/back@18.png" alt="Tap me!" />
+                                <span>Back</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </footer>
+                </div>
+
+                <div data-role="page" id="results">
+                    <section data-type="list" id="resultscontent">
+                    </section>
+                </div>
+
+                <div data-role="page" id="article">
+                    <section class="articleinfo">
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

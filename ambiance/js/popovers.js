@@ -1,5 +1,16 @@
 ! function () {
     var popoverToggle;
+
+    var isTouch = function() {
+        return "ontouchstart" in document);
+    };
+
+    var touchEvents = {
+        touchStart : isTouch() ? 'touchstart' : 'mousedown',
+        touchMove : isTouch() ? 'touchmove' : 'mousemove',
+        touchEnd : isTouch() ? 'touchend' : 'mouseup'
+    };
+
     var findPopovers = function (target) {
         var i, popovers = document.querySelectorAll('a', 'button');
         for (; target && target !== document; target = target.parentNode) {
@@ -14,7 +25,7 @@
         if (popoverToggle && popoverToggle.hash) return document.querySelector(popoverToggle.hash);
     };
 
-    window.addEventListener('touchend', function (event) {
+    window.addEventListener(touchEvents.touchEnd, function (event) {
         var popover = getModal(event);
         if (popover) popover.classList.toggle('active');
 

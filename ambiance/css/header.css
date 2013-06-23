@@ -2,6 +2,6 @@
  * Header
  * ---------------------------------- */
 
-header {
+[data-role="header"]{
     background: #ededf0 url("../img/background_paper@30.png") repeat-x top left;
 }
