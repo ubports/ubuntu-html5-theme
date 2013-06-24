@@ -24,27 +24,40 @@ body {
     font-weight: normal;
 }
 
-h2 {
-    border-bottom: 1px solid #888;
-    color: #333;
-    font-size: 36px;
-    font-weight: normal;
-    margin-top: 30px;
-    padding-bottom: 5px;
-}
-
-h3 {
-    color: #333;
-    font-weight: normal;
-    margin: 20px 0;
-}
-
 [data-role="content"] {
     background: #ededf0 url("../img/background_paper@30.png") repeat top left;
     border-top: 1px solid #f0f0f0;
     height: auto;
     min-height: auto;
     width: 100%;
+    font-size: 1rem "Ubuntu Light";
+    color: #8f8985;
+}
+
+[data-role="content"] p {
+    font: 0.9rem "Ubuntu Light";
+    color: #8f8985;
+}
+
+[data-role="content"] h1,
+[data-role="content"] h2,
+[data-role="content"] h3 {
+    color: #747278;
+    font: 1.3rem "Ubuntu Light";
+    font-weight: bold;
+}
+
+[data-role="content"] h2 {
+    font-size: 1.1rem;
+}
+
+[data-role="content"] h3 {
+    font-size: 0.9rem;
+}
+
+[data-role="content"] img {
+    margin: 0 auto;
+    max-width: 98%;
 }
 
 .inset {
