@@ -1,0 +1,19 @@
+#articleinfo {
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#articleinfo iframe {
+    max-width: 100%;
+}
+
+#articleinfo p {
+    margin: 7px 0;
+}
+
+#articleinfo a{
+    text-decoration: none;
+    color: #787878;
+    font-weight: bold;
+}

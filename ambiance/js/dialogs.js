@@ -1,25 +1,13 @@
-! function () {
-    var dialogToggle;
-    var isTouch = 'ontouchstart' in window;
+/* Dialogs */
+Dialog = function (id) {
+    this.dialog = document.getElementById(id);
+};
 
-    var findDialogs = function (target) {
-        var i, dialogs = document.querySelectorAll("[data-role='button']");
-        for (; target && target !== document; target = target.parentNode) {
-            for (i = dialogs.length; i--;) {
-                if (dialogs[i] === target) return target;
-            }
-        }
-    };
-
-    var getDialog = function (event) {
-        dialogToggle = findDialogs(event.target);
-        if (dialogToggle && dialogToggle.hash) return document.querySelector(dialogToggle.hash);
-    };
-
-    window.addEventListener('touchend', function (event) {
-        var dialog = getDialog(event);
-        if (dialog) dialog.classList.toggle('active');
-    });
-
-    window.addEventListener('click', function (e) { if (getDialog(e)) e.preventDefault(); });
-}();
+Dialog.prototype = {
+    show: function () {
+        this.dialog.classList.add('active');
+    },
+    hide: function () {
+        this.dialog.classList.remove('active');
+    }
+};

@@ -30,13 +30,13 @@ body {
     height: auto;
     min-height: auto;
     width: 100%;
-    font-size: 1rem "Ubuntu Light";
-    color: #8f8985;
+    font-size: 1rem "Ubuntu";
+    color: #787878;
 }
 
 [data-role="content"] p {
-    font: 0.9rem "Ubuntu Light";
-    color: #8f8985;
+    font: 0.9rem "Ubuntu";
+    color: #787878;
 }
 
 [data-role="content"] h1,

@@ -1,4 +1,9 @@
+var UI = new UbuntuJS(),
+    Pagestack = UI.pagestack();
+    UI.init();
+
 $(document).ready(function () {
+
     if (typeof localStorage["feeds"] == "undefined") {
         restoreDefault();
     }
@@ -15,7 +20,7 @@ $(document).ready(function () {
         $("#yourfeeds").html(myfeeds);
     }
 
-    $('#yes').click(function () {
+    UI.button('yes').click(function (e) {
         var url = $("#rssFeed").val();
         if (url === "") {
             if (!$("#addfeeddialog section").hasClass("shake")) {
@@ -37,11 +42,11 @@ $(document).ready(function () {
         }
     });
 
-    $('#addfeed').click(function () {
+    UI.button('addfeed').click(function () {
         $('#addfeeddialog').show();
     });
 
-    $('#no').click(function () {
+    UI.button('no').click(function () {
         $('#addfeeddialog').hide();
     });
 });
@@ -69,7 +74,9 @@ function restoreDefault() {
 }
 
 function loadFeed(url) {
-    var rnd = Math.floor(Math.random() * 10000000);
+    Pagestack.changepage("results");
+    UI.dialog("loading").show();
+
     var feed = new google.feeds.Feed(url);
     feed.setNumEntries(30);
     feed.load(function (result) {
@@ -79,6 +86,7 @@ function loadFeed(url) {
                 myfeeds_items += '<li><a href="#" onclick=\'showArticle("' + escape(result.feed.entries[i].title) + '","' + escape(result.feed.entries[i].link) + '","' + escape(result.feed.entries[i].content) + '")\'>' + result.feed.entries[i].title.replace(/"/g, "'") + '</a></li>';
             }
             myfeeds_items += "</ul>";
+            UI.dialog("loading").hide();
             $("#resultscontent").html(myfeeds_items);
         } else
             alert('feed error');
@@ -86,13 +94,11 @@ function loadFeed(url) {
 }
 
 function showArticle(title, url, desc) {
+    Pagestack.changepage("article");
     if (typeof desc == "undefined")
         desc = "(No description provided)";
-    $("section.articleinfo").html("<p>" + unescape(title) + "</p><p>" + unescape(desc) + "</p><p><a target=\"_blank\" href=\"" + unescape(url) + "\">" + unescape(url) + "</a></p>");
+    $("#articleinfo").html("<p>" + unescape(title) + "</p><p>" + unescape(desc) + "</p><p><a target=\"_blank\" href=\"" + unescape(url) + "\">" + unescape(url) + "</a></p>");
+
 }
 
-//google feeds api
 google.load("feeds", "1");
-
-function OnLoad() {}
-google.setOnLoadCallback(OnLoad);

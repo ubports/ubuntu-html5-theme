@@ -12,7 +12,7 @@ nav.tabs {
     display: -webkit-box;
     display: box;
     -webkit-box-orient: horizontal;
-            box-orient: horizontal;
+    box-orient: horizontal;
 }
 
 nav.tabs div.tabs-inner {
@@ -33,7 +33,7 @@ nav.tabs div.tabs-inner ul li {
 }
 
 nav.tabs div.tabs-inner li > a {
-    font: 35px "Ubuntu Light";
+    font: 35px "Ubuntu";
     letter-spacing: -1px;
     line-height: 60px;
     width: 100%;

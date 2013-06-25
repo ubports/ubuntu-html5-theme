@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RSS Mobile Reader</title>
     <link href="../../css/appTemplate.css" rel="stylesheet" type="text/css" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAuvAXPRXL9qkzO0R8vzYpOhQ_BAnb8hQeSCQ2aBH79hHa1YbW_RQNN9ClKXG21xQObiXJ7diAAYaywg"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="../../js/pagestack.js"></script>
+    <script src="../../js/fast-buttons.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/buttons.js"></script>
+    <script src="../../js/dialogs.js"></script>
+    <script src="../../js/pagestacks.js"></script>
+    <script src="../../js/popovers.js"></script>
     <script src="app.js"></script>
 </head>
 <body>
@@ -53,7 +59,7 @@
                 </div>
 
                 <div data-role="page" id="article">
-                    <section class="articleinfo"></section>
+                    <section id="articleinfo"></section>
                 </div>
             </div>
             <div data-role="dialog" id="addfeeddialog">
@@ -67,8 +73,8 @@
                     </menu>
                 </section>
             </div>
+            <div data-role="dialog" id="loading"><section><progress></progress></section></div>
         </div>
     </div>
-
 </body>
 </html>

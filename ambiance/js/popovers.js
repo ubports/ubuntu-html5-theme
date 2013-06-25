@@ -1,61 +1,79 @@
-! function () {
-    var popoverToggle;
+/* Popover */
+Popover = function (elem, id) {
+    var actualWidth = null,
+        actualHeight = null,
+        gravity = null;
 
-    var isTouch = function() {
-        return "ontouchstart" in document);
-    };
+    this.popover = document.getElementById(id);
+    this.elem = elem;
+};
 
-    var touchEvents = {
-        touchStart : isTouch() ? 'touchstart' : 'mousedown',
-        touchMove : isTouch() ? 'touchmove' : 'mousemove',
-        touchEnd : isTouch() ? 'touchend' : 'mouseup'
-    };
+Popover.prototype = {
+    show: function () {
+        this.popover.classList.add('active');
 
-    var findPopovers = function (target) {
-        var i, popovers = document.querySelectorAll('a', 'button');
-        for (; target && target !== document; target = target.parentNode) {
-            for (i = popovers.length; i--;) {
-                if (popovers[i] === target) return target;
-            }
-        }
-    };
+        popoverWidth = this.popover.offsetWidth;
+        popoverHeight = this.popover.offsetHeight;
 
-    var getModal = function (event) {
-        popoverToggle = findPopovers(event.target);
-        if (popoverToggle && popoverToggle.hash) return document.querySelector(popoverToggle.hash);
-    };
-
-    window.addEventListener(touchEvents.touchEnd, function (event) {
-        var popover = getModal(event);
-        if (popover) popover.classList.toggle('active');
-
-        actualWidth = popover.offsetWidth;
-        actualHeight = popover.offsetHeight;
-
-        var gravity = popover.getAttribute("data-gravity");
+        gravity = this.popover.getAttribute("data-gravity");
 
         switch (gravity) {
             case 'n':
-                pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight + 10;
-                pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth / 2 - actualWidth / 2;
+                pos_top = this.elem.offsetTop + this.elem.offsetHeight + 10;
+                pos_left = this.elem.offsetLeft + this.elem.offsetWidth / 2 - popoverWidth / 2;
                 break;
             case 's':
-                pos_top = popoverToggle.offsetTop - actualHeight - 10;
-                pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth / 2 - actualWidth / 2;
+                pos_top = this.elem.offsetTop - popoverHeight - 10;
+                pos_left = this.elem.offsetLeft + this.elem.offsetWidth / 2 - popoverWidth / 2;
                 break;
             case 'e':
-                pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight / 2 - actualHeight / 2;
-                pos_left = popoverToggle.offsetLeft - actualWidth - 10;
+                pos_top = this.elem.offsetTop + this.elem.offsetHeight / 2 - popoverHeight / 2;
+                pos_left = this.elem.offsetLeft - popoverWidth - 10;
                 break;
             case 'w':
-                pos_top = popoverToggle.offsetTop + popoverToggle.offsetHeight / 2 - actualHeight / 2;
-                pos_left = popoverToggle.offsetLeft + popoverToggle.offsetWidth + 10;
+                pos_top = this.elem.offsetTop + this.elem.offsetHeight / 2 - popoverHeight / 2;
+                pos_left = this.elem.offsetLeft + this.elem.offsetWidth + 10;
                 break;
         }
 
-        popover.style.top = pos_top + 'px';
-        popover.style.left = pos_left + 'px';
-    });
+        this.popover.style.top = pos_top + 'px';
+        this.popover.style.left = pos_left + 'px';
+        return this.popover;
+    },
+    hide: function () {
+        this.popover.classList.remove('active');
+        this.popover.style.top = '0px';
+        this.popover.style.left = '0px';
+        return this.popover;
+    },
+    toggle: function () {
+        this.popover.classList.toggle('active');
+        popoverWidth = this.popover.offsetWidth;
+        popoverHeight = this.popover.offsetHeight;
 
-    window.addEventListener('click', function (e) { if (getModal(e)) e.preventDefault(); });
-}();
+        gravity = this.popover.getAttribute("data-gravity");
+
+        switch (gravity) {
+            case 'n':
+                pos_top = this.elem.offsetTop + this.elem.offsetHeight + 10;
+                pos_left = this.elem.offsetLeft + this.elem.offsetWidth / 2 - popoverWidth / 2;
+                break;
+            case 's':
+                pos_top = this.elem.offsetTop - popoverHeight - 10;
+                pos_left = this.elem.offsetLeft + this.elem.offsetWidth / 2 - popoverWidth / 2;
+                break;
+            case 'e':
+                pos_top = this.elem.offsetTop + this.elem.offsetHeight / 2 - popoverHeight / 2;
+                pos_left = this.elem.offsetLeft - popoverWidth - 10;
+                break;
+            case 'w':
+                pos_top = this.elem.offsetTop + this.elem.offsetHeight / 2 - popoverHeight / 2;
+                pos_left = this.elem.offsetLeft + this.elem.offsetWidth + 10;
+                break;
+        }
+
+        this.popover.style.top = pos_top + 'px';
+        this.popover.style.left = pos_left + 'px';
+        return this.popover;
+    }
+};
