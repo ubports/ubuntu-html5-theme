@@ -9,5 +9,8 @@ Dialog.prototype = {
     },
     hide: function () {
         this.dialog.classList.remove('active');
+    },
+    toggle: function () {
+        this.dialog.classList.toggle('active');
     }
 };

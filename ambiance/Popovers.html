@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>html: Popovers</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
+    <script src="js/fast-buttons.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/buttons.js"></script>
+    <script src="js/dialogs.js"></script>
+    <script src="js/pagestacks.js"></script>
+    <script src="js/popovers.js"></script>
 </head>
 <body>
     <div data-role="page">
@@ -29,13 +35,13 @@
         <div data-role="content">
             <div class="inset" style="margin-top: 250px;text-align: center">
 
-                <a data-role="button" href="#popover1">Open</a>
+                <a data-role="button" id ="button1" href="#popover1">Open</a>
 
-                <a data-role="button" href="#popover2">Open</a>
+                <a data-role="button" id ="button2" href="#popover2">Open</a>
 
-                <a data-role="button" href="#popover3">Open</a>
+                <a data-role="button" id ="button3" href="#popover3">Open</a>
 
-                <a data-role="button" href="#popover4">Open</a>
+                <a data-role="button" id ="button4" href="#popover4">Open</a>
 
                 <div id="popover1" class="popover" data-gravity="n" style="margin-bottom: 30px">
                     <ul class="list">
@@ -77,5 +83,21 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var UI = new UbuntuJS();
+        UI.init();
+        UI.button('button1').click(function (e) {
+            UI.popover(this, 'popover1').toggle();
+        });
+        UI.button('button2').click(function (e) {
+            UI.popover(this, 'popover2').toggle();
+        });
+        UI.button('button3').click(function (e) {
+            UI.popover(this, 'popover3').toggle();
+        });
+        UI.button('button4').click(function (e) {
+            UI.popover(this, 'popover4').toggle();
+        });
+    </script>
 </body>
 </html>
