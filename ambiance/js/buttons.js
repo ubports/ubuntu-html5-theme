@@ -1,5 +1,5 @@
 /* Buttons */
-Button = function (id) {
+var Button = function (id) {
     this.id =  id;
 };
 

@@ -1,5 +1,5 @@
 /* Popover */
-Popover = function (elem, id) {
+var Popover = function (elem, id) {
     var actualWidth = null,
         actualHeight = null,
         gravity = null;

@@ -1,6 +1,5 @@
 var UI = new UbuntuJS(),
     Pagestack = UI.pagestack();
-    UI.init();
 
 $(document).ready(function () {
 

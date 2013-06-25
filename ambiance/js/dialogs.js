@@ -1,5 +1,5 @@
 /* Dialogs */
-Dialog = function (id) {
+var Dialog = function (id) {
     this.dialog = document.getElementById(id);
 };
 

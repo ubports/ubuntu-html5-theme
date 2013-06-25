@@ -1,20 +1,5 @@
 /* Pagestack */
-Pagestack = function () {
-
-    window.addEventListener("popstate", function(e) {
-    // URL location
-    var location = document.location;
-    // state
-    var state = e.state;
-    // return to last state
-
-    console.log(state);
-    /*if (state.view == "EMAILCONTENT") {
-        changepage();
-    }*/
-});
-
-};
+var Pagestack = function () {};
 
 Pagestack.prototype = {
     changepage: function (id) {
@@ -22,8 +7,5 @@ Pagestack.prototype = {
             el.style.display = "none";
         });
         document.getElementById(id).style.display = "block";
-        if (history && history.pushState) {
-            history.pushState( { page:"id" } , document.title, this.href);
-        }
     }
 };
