@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>html: ProgressBars</title>
-    <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <title>Ubuntu UI HTML5 Theme: Sliders</title>
+    <link href="../../ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <div data-role="page">
@@ -28,12 +30,22 @@
 
         <div data-role="content">
             <div class="inset">
-                <progress></progress>
-                <progress class="bigger"></progress>
+                <form onsubmit="return false" oninput="ojim.value = jim.valueAsNumber">
+                    <input name="jim" id="jim" type="range" min="0" max="100" value="0">
+                    <output for="jim" name="ojim">0</output>
+                </form>
             </div>
-            <progress value="80" max="100"></progress>
             <div class="inset">
-                <progress class="infinite" value="100" max="100"></progress>
+                <form onsubmit="return false" oninput="obob.value = bob.valueAsNumber">
+                    <input id="bob" name="bob" type="range" min="23" max="109" value="0">
+                    <output for="bob" name="obob">23</output>
+                </form>
+            </div>
+            <div class="inset">
+                <form onsubmit="return false" oninput="osue.value = sue.valueAsNumber">
+                    <input id="sue" name="sue" type="range" min="50" max="250" value="50" step="15">
+                    <output for="sue"  name="osue">50</output>
+                </form>
             </div>
         </div>
     </div>

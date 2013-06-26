@@ -1,4 +1,4 @@
-var UI = new UbuntuJS(),
+var UI = new UbuntuUI(),
     Pagestack = UI.pagestack();
 
 $(document).ready(function () {

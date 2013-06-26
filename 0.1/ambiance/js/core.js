@@ -1,6 +1,6 @@
-var UbuntuJS = function () {};
+var UbuntuUI = function () {};
 
-UbuntuJS.prototype = {
+UbuntuUI.prototype = {
     init: function () {
         var U = this;
         U.isTouch = "ontouchstart" in window;

@@ -14,3 +14,11 @@ Depends: ${misc:Depends}
 Description: Toolkit styles for Ubuntu HTML5 Apps
  This package provides common CSS and Javascript for developing native-
  looking HTML5 applications for Ubuntu
+
+Package: ubuntu-html5-theme-examples
+Architecture: all
+Depends: ${misc:Depends},
+	 ubuntu-html5-theme (= ${binary:Version})
+Description: Examples for Toolkit styles for Ubuntu HTML5 Apps
+ This package provides examples of native-looing HTML5 applications for Ubuntu
+ based on the ubuntu-html5-theme CSS and Javascript Ubuntu framework.

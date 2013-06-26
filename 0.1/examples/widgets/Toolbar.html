@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>html: Popovers</title>
-    <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <title>Ubuntu UI HTML5 Theme: Toolbar</title>
+    <link href="../../ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <div data-role="page">
@@ -27,8 +29,25 @@
         </header>
 
         <div data-role="content">
-            <div data-role="shape">
-                <img src="img/map_icon.png">
+            <div class="inset">
+                <footer data-role="footer" class="revealed">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span>Add feed</span>
+                                </a>
+                            </li>
+                            <li>
+                                <span>Delete Feed</span>
+                            </li>
+                            <li>
+                                <img src="img/back@18.png" alt="Tap me!" />
+                                <span>Back</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </footer>
             </div>
         </div>
     </div>
