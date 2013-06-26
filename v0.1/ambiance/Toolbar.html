@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>html: Popovers</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
-    <script src="js/tabs.js"></script>
-    <script src="js/toolbars.js"></script>
 </head>
 <body>
     <div data-role="page">
-        <header>
-            <nav class="tabs" data-role="navbar">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
                     <ul>
                         <li class="active" role="tab">
@@ -28,15 +26,23 @@
             </nav>
         </header>
 
-        <div class="content">
+        <div data-role="content">
             <div class="inset">
-                <footer data-role="toolbar">
+                <footer data-role="footer" class="revealed">
                     <nav>
                         <ul>
                             <li>
-                                <img src="img/tap-me.png" alt="Tap me!" />
+                                <a href="#">
+                                    <span>Add feed</span>
+                                </a>
                             </li>
-                            <li>Tap me!</li>
+                            <li>
+                                <span>Delete Feed</span>
+                            </li>
+                            <li>
+                                <img src="img/back@18.png" alt="Tap me!" />
+                                <span>Back</span>
+                            </li>
                         </ul>
                     </nav>
                 </footer>

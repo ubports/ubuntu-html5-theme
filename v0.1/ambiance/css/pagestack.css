@@ -2,17 +2,22 @@
  * Pagestack
  * ---------------------------------- */
 
-.pagestack {
+[data-role="pagestack"] {
     position: relative;
-    font-size: 0;
-    white-space: nowrap;
     -webkit-transition: all 0 linear;
     transition: all 0 linear;
 }
 
-.page {
-    display: inline-block;
+[data-role="pagestack"] [data-role="page"] {
     vertical-align: top;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    display: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+[data-role="pagestack"] [data-role="page"]:first-child {
+    display: block;
 }

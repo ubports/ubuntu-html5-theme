@@ -2,7 +2,7 @@
  * Dialog
  * ---------------------------------- */
 
-form[role="dialog"] {
+[data-role="dialog"] {
     background: #000;
     opacity: 0.9;
     overflow: hidden;
@@ -21,15 +21,13 @@ form[role="dialog"] {
     display: none;
 }
 
-form[role="dialog"].active {
+[data-role="dialog"].active {
     display: block;
 }
 
-form[role="dialog"] > section {
-    font-weight: lighter;
-    font-size: 2.2rem;
+[data-role="dialog"] > section {
+    font-size: 1.5rem;
     color: #FAFAFA;
-    padding: 0 1.5rem;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
@@ -39,7 +37,7 @@ form[role="dialog"] > section {
     white-space: normal;
 }
 
-form[role="dialog"]:before {
+[data-role="dialog"]:before {
     content: "";
     display: inline-block;
     vertical-align: middle;
@@ -48,53 +46,102 @@ form[role="dialog"]:before {
     margin-left: -0.1rem;
 }
 
-form[role="dialog"] h1 {
-    font-size: large;
+[data-role="dialog"] h1 {
+    font-size: 1.3rem;
     line-height: 1.5em;
     color: rgba(255, 255, 255, 0.9);
     margin: 0;
-    padding: 0 1.5rem;
 }
 
-form[role="dialog"] p {
-    font-size: medium;
-    line-height: 1.5em;
+[data-role="dialog"] p {
+    font-size: 0.9rem;
+    line-height: 1.8em;
     color: rgba(255, 255, 255, 0.6);
     margin: 0;
 }
 
-form[role="dialog"] menu {
+[data-role="dialog"] menu {
     white-space: nowrap;
     margin: 0 auto;
-    padding: 1.5rem;
+    margin-top: 1rem;
     display: block;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     text-align: center;
-    width: 250px;
 }
 
-form[role="dialog"] menu button {
+[data-role="dialog"] menu [data-role="button"] {
     display: block;
-    width: 200px;
+    margin: 0 auto;
     margin-bottom: 10px;
-    font-size: medium;
+    width: 200px;
 }
 
+[data-role="dialog"] menu [data-role="button"]:last-child {
+    margin-bottom: 0;
+}
 
-/* Tablet landscape / low resolution */
-@media only screen and (min-width: 870px) and (max-width: 1170px){
+/* Tablet */
+@media only screen and (min-width: 870px){
 
-    form[role="dialog"] {
+    [data-role="dialog"] {
         background: rgba(0, 0, 0, 0.6);
         opacity: 1;
     }
 
-    form[role="dialog"] > section {
+    [data-role="dialog"] > section {
         background: rgba(0, 0, 0, 0.7);
         border-radius: 10px;
-        width: 350px;
-        padding: 20px 0 0 0;
+        width: 18.7rem;
+        padding: 1.8rem;
+    }
+
+    [data-role="dialog"] input[type="text"],
+    [data-role="dialog"] input[type="password"],
+    [data-role="dialog"] input[type="email"],
+    [data-role="dialog"] input[type="tel"],
+    [data-role="dialog"] input[type="search"],
+    [data-role="dialog"] input[type="url"],
+    [data-role="dialog"] input[type="number"] {
+        width: 14rem;
+    }
+
+    [data-role="dialog"] menu [data-role="button"] {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    @keyframes shake{
+        0% { -webkit-transform: translate3d(0,0,0); }
+        10% { -webkit-transform: translate3d(-20px,0,0); }
+        20% { -webkit-transform: translate3d(20px,0,0); }
+        30% { -webkit-transform: translate3d(-20px,0,0); }
+        40% { -webkit-transform: translate3d(20px,0,0); }
+        50% { -webkit-transform: translate3d(-20px,0,0); }
+        60% { -webkit-transform: translate3d(20px,0,0); }
+        70% { -webkit-transform: translate3d(-20px,0,0); }
+        80% { -webkit-transform: translate3d(20px,0,0); }
+        90% { -webkit-transform: translate3d(-20px,0,0); }
+        100% { -webkit-transform: translate3d(0,0,0); }
+    }
+
+    @-webkit-keyframes shake {
+        0% { -webkit-transform: translate3d(0,0,0); }
+        10% { -webkit-transform: translate3d(-20px,0,0); }
+        20% { -webkit-transform: translate3d(20px,0,0); }
+        30% { -webkit-transform: translate3d(-20px,0,0); }
+        40% { -webkit-transform: translate3d(20px,0,0); }
+        50% { -webkit-transform: translate3d(-20px,0,0); }
+        60% { -webkit-transform: translate3d(20px,0,0); }
+        70% { -webkit-transform: translate3d(-20px,0,0); }
+        80% { -webkit-transform: translate3d(20px,0,0); }
+        90% { -webkit-transform: translate3d(-20px,0,0); }
+        100% { -webkit-transform: translate3d(0,0,0); }
+    }
+
+    .shake {
+        -webkit-animation: shakeIt .9s ease-in;
+        animation: shakeIt .9s ease-in;
     }
 
 }

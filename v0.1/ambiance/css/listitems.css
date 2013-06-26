@@ -2,17 +2,12 @@
  * Lists
  * ---------------------------------- */
 
-[data-type="list"] {
+[data-role="list"] {
     border-top: 1px solid #f0f0f0;
 }
 
-[data-type="list"] ul {
-    list-style: none;
-    overflow: hidden;
-}
-
 /* Title divisors */
-[data-type="list"] header {
+[data-role="list"] header {
     border-bottom: 0.1rem solid #c9c9c9;
     line-height: 1.8rem;
     color: #787878;
@@ -20,11 +15,13 @@
     padding-left: 1rem;
 }
 
-[data-type="list"] ul {
+[data-role="list"] ul {
+    list-style: none;
+    overflow: hidden;
 }
 
 /* List items */
-[data-type="list"] li {
+[data-role="list"] li {
     width: 100%;
     height: 3.5rem;
     -webkit-box-sizing: border-box;
@@ -35,21 +32,24 @@
 }
 
 /* Pressed State */
-[data-type="list"] li > a {
+[data-role="list"] li > a {
     text-decoration: none;
     color: #787878;
     display: block;
     height: 3.4rem;
     position: relative;
     border: none;
-    outline: none;
     line-height: 3.4rem;
     padding-left: 1rem;
+    padding-right: 1.5rem;
     border-top: 1px solid #ebebeb;
     font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-[data-type="list"] li > a:after {
+[data-role="list"] li > a:after {
     content: "";
     background: transparent url(../img/ListItemProgressionArrow@8.png) no-repeat 0.5rem 0.5rem;
     background-size: 50% 50%;
@@ -63,13 +63,13 @@
     z-index: 0;
 }
 
-[data-type="list"] li > a:active {
+[data-role="list"] li > a:active {
     background: #e6e6e6;
     border-color: #ebebeb;
 }
 
 /* Text content */
-[data-type="list"] li p {
+[data-role="list"] li p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -78,21 +78,18 @@
     color: #787878;
     font-size: 0.9rem;
     padding-left: 1rem;
-    margin-top: 8px;
-    line-height: 19px;
+    padding-top: 0.5rem;
+    line-height: 1rem;
 }
 
-[data-type="list"] li p:only-child,
-[data-type="list"] li p:first-of-type:last-of-type {
-    line-height: 3.5rem;
-    font-size: 0.9rem;
-    margin-top: 0;
+[data-role="list"] li p:only-child,
+[data-role="list"] li p:first-of-type:last-of-type {
+    line-height: 2.5rem;
 }
 
-[data-type="list"] aside {
+[data-role="list"] aside {
     float: left;
     margin: -1.2em 0 0 0;
-    display: inline-block;
     max-width: 100%;
     vertical-align: bottom;
     position: relative;
@@ -100,26 +97,25 @@
     z-index: 100;
 }
 
-[data-type="list"] aside img {
+[data-role="list"] aside img {
     border-radius: 6px;
     margin-bottom: 0;
-    display: inline-block;
     float: left;
 }
 
-[data-type="list"] aside:after {
+[data-role="list"] aside:after {
     background: url(../img/ubuntushape_medium_radius_idle@18.png) no-repeat;
     background-size: 100% 100%;
     content: ' ';
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
 /* Checkable content */
-[data-type="list"] li > label {
+[data-role="list"] li > label {
     z-index: 110;
     width: 4.5rem;
     height: 2.2rem;

@@ -3,14 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>html: appTemplate</title>
+    <title>html: Listitems</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
-    <script src="js/tabs.js"></script>
 </head>
 <body>
     <div data-role="page">
-        <header>
-            <nav class="tabs" data-role="navbar">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
                     <ul>
                         <li class="active" role="tab">
@@ -27,10 +26,10 @@
             </nav>
         </header>
 
-        <div class="content">
-            <section data-type="list">
+        <div data-role="content">
+            <section data-role="list">
                 <header>1 - Standard</header>
-                <ul>
+                <ul data-role="listview">
                     <li>
                         <p>Label</p>
                     </li>
@@ -43,9 +42,9 @@
                 </ul>
             </section>
 
-            <section data-type="list">
+            <section data-role="list">
                 <header>2 - Subtitled</header>
-                <ul>
+                <ul data-role="listview">
                     <li>
                         <p>Label</p>
                         <p>Secondary Label</p>
@@ -61,9 +60,9 @@
                 </ul>
             </section>
 
-            <section data-type="list">
+            <section data-role="list">
                 <header>3 - Multiple Value</header>
-                <ul>
+                <ul data-role="listview">
                     <li>
                         <p>Label</p>
                         <p>Value 1, Value 2</p>
@@ -83,9 +82,9 @@
                 </ul>
             </section>
 
-            <section data-type="list">
+            <section data-role="list">
                 <header>4 - Progression</header>
-                <ul>
+                <ul data-role="listview">
                     <li>
                         <a href="#">Label</a>
                     </li>
@@ -98,9 +97,9 @@
                 </ul>
             </section>
 
-            <section data-type="list">
+            <section data-role="list">
                 <header>5 - Icon</header>
-                <ul>
+                <ul data-role="listview">
                     <li>
                         <a href="#">
                             <aside>
@@ -128,9 +127,9 @@
                 </ul>
             </section>
 
-            <section data-type="list">
+            <section data-role="list">
                 <header>6 - Control</header>
-                <ul>
+                <ul data-role="listview">
                     <li>
                         <p>Label</p>
                         <label>

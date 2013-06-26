@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>html: Dialogs</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
-    <script src="js/tabs.js"></script>
-    <script src="js/dialogs.js"></script>
 </head>
 <body>
     <div data-role="page">
-        <header>
-            <nav class="tabs" data-role="navbar">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
                     <ul>
                         <li class="active" role="tab">
@@ -28,19 +26,19 @@
             </nav>
         </header>
 
-        <div class="content">
-            <a class="button" href="#dialog1">Open</a>
-            <form role="dialog" id="dialog1">
+        <div data-role="content">
+            <a data-role="button" href="#dialog1">Open</a>
+            <div data-role="dialog" id="dialog1" style="display: block">
                 <section>
                     <h1>Simple Dialog</h1>
                     <!-- this heading is optional -->
                     <p>Are you sure you want to delete this file?</p>
                     <menu>
-                        <button>Cancel</button>
-                        <button class="danger">Delete</button>
+                        <button data-role="button" id="no">Cancel</button>
+                        <button data-role="button" class="danger" id="yes">Delete</button>
                     </menu>
                 </section>
-            </form>
+            </div>
         </div>
     </div>
 </body>

@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>html: ProgressBars</title>
     <link href="css/appTemplate.css" rel="stylesheet" type="text/css" />
-    <script src="js/tabs.js"></script>
 </head>
 <body>
     <div data-role="page">
-        <header>
-            <nav class="tabs" data-role="navbar">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
                     <ul>
                         <li class="active" role="tab">
@@ -27,20 +26,14 @@
             </nav>
         </header>
 
-        <div class="content">
-            <div class="slider">
-                <ul>
-                    <li id="item1" class="tab-item active">
-                        <div class="inset">
-                            <progress></progress>
-                            <progress class="bigger"></progress>
-                        </div>
-                            <progress value="80" max="100"></progress>
-                        <div class="inset">
-                            <progress class="infinite" value="100" max="100"></progress>
-                        </div>
-                    </li>
-                </ul>
+        <div data-role="content">
+            <div class="inset">
+                <progress></progress>
+                <progress class="bigger"></progress>
+            </div>
+            <progress value="80" max="100"></progress>
+            <div class="inset">
+                <progress class="infinite" value="100" max="100"></progress>
             </div>
         </div>
     </div>
