@@ -2,8 +2,17 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ubuntu-html5-theme
 Source: https://launchpad.net/ubuntu-html5-theme
 
+Files: 0.1/ambiance/img/*
+Copyright: 2013 Canonical Ltd.
+License: CC-BY-SA 3.0
+ This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 
+ Unported License. To view a copy of this license, visit 
+ http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative 
+ Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
 Files: *
 Copyright: 2013 Adnane Belmadiaf <daker@ubuntu.com>
+           2013 Tiago Hillebrandt <tiagohillebrandt@ubuntu.com>
 License: LGPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the Lesser GNU General Public License as 
