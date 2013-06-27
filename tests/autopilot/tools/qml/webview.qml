@@ -8,22 +8,90 @@ Rectangle {
     width: 640
     height: 640
 
-    property string url: 'blabla'
+    property string url
 
-    signal messageReceived(string message)
-
-    property var __pendingtx: []
+    signal resultUpdated(string message)
 
     function __gentid() {
         return Math.random() + '';
     }
+    function __wrapJsCommands(commands) {
+        return '(function() { ' + commands + ' })();'
+    }
+    function __createResult(result, tid) {
+        return JSON.stringify({result: result, tid: tid});
+    }
+    function __dumpValue(v) {
+    	if (typeof(v) === "string") {
+	   return "'" + v + "'";
+	}
+	return v;
+    }
+    function __setupClosedVariables(variables) {
+        var variableDeclStatements = '';
+        for (var variable in variables) {
+	    if (variables.hasOwnProperty(variable)) {
+	        variableDeclStatements += 'var ' + variable + ' = ' + __dumpValue(variables[variable]) + ';';
+	    }
+	}
+	return variableDeclStatements;
+    }
+
     function clickElementById(id) {
         var tid = __gentid();
-    	webview.experimental.postMessage(JSON.stringify({click: 1, id: id + '', tid: tid}));
+	var statement = 'document.getElementById("' + id + '").click();';
+
+        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
+		function(result) { root.resultUpdated(root.__createResult(result)); });
+    }
+    function clickAnyElementBySelector(selector) {
+        var tid = __gentid();
+	var statement = 'document.querySelectorAll("' + selector + '")[0].click();';
+
+        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
+		function(result) { root.resultUpdated(root.__createResult(result)); });
     }
     function elementWithIdHasAttribute(id,attribute,value) {
         var tid = __gentid();
-    	webview.experimental.postMessage(JSON.stringify({hasAttribute: 1, id: id + '', attribute: attribute, value: value, tid: tid}));
+	function __hasAttributeWithId() {
+	    try { return document.querySelector('#' + id).getAttribute(attribute) === value; } catch (e) {};
+	    return false;
+	};
+
+	var statement = __setupClosedVariables({'id': id, 'attribute': attribute, 'value': value});
+	statement += __hasAttributeWithId.toString();
+	statement += "; return __hasAttributeWithId(id,attribute,value); "
+
+        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
+		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
+    }
+    function isNodeWithIdVisible(id) {
+        var tid = __gentid();
+	function __isNodeWithIdVisible() {
+	    try { return document.getElementById(id).style.display !== "none"; } catch (e) { return e.toString(); };
+	    return false;
+	};
+
+	var statement = __setupClosedVariables({'id': id});
+	statement += __isNodeWithIdVisible.toString();
+	statement += "; return __isNodeWithIdVisible(id); "
+	
+        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
+		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
+    }
+    function getAttributeForElementWithId(id,attribute) {
+        var tid = __gentid();
+	function __getAttributeWithId() {
+	    try { return document.querySelector('#' + id).getAttribute(attribute); } catch (e) {};
+	    return undefined;
+	};
+
+	var statement = __setupClosedVariables({'id': id, 'attribute': attribute});
+	statement += __getAttributeWithId.toString();
+	statement += "; return __getAttributeWithId(id,attribute,value); "
+
+        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
+		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
     }
 
     WebView {
@@ -42,16 +110,12 @@ Rectangle {
 
         height: parent.height - 100
 
-        experimental.userScripts: ['webpage-message-proxy.js']
+        experimental.userScripts: []
         experimental.preferences.navigatorQtObjectEnabled: true
         experimental.preferences.developerExtrasEnabled: true
 
         experimental.userAgent: {
             return "Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3"
-        }
-
-        experimental.onMessageReceived: {
-	    root.messageReceived(message.data);
         }
     }
 

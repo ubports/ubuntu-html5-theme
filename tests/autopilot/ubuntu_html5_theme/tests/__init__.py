@@ -8,12 +8,13 @@
 """Tests for the Ubuntu HTML5 Theme package """
 
 import os
+import json
 import BaseHTTPServer
 import threading
 
 HTTP_SERVER_PORT = 8383
 
-from testtools.matchers import Contains, Equals
+from testtools.matchers import Contains, Equals, GreaterThan
 from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from autopilot.input import Mouse, Touch, Pointer
@@ -70,11 +71,23 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_CONTAINER_PATH = "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../tools/qml/webview.qml')
     BROWSER_QML_APP_LAUNCHER = 'qmlscene'
 
+    # TODO: fix version
+    LOCAL_APPS_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/apps/'))
+
     BASE_URL = ''
 
+    def setup_base_url(self):
+        if os.path.exists(self.LOCAL_APPS_EXAMPLES_PATH):
+            self.BASE_URL = 'file://' + self.LOCAL_APPS_EXAMPLES_PATH
+        else:
+            self.BASE_URL = "http://localhost:%d" % HTTP_SERVER_PORT
+
     def setUp(self):
+        self.setup_base_url()
         self.pointer = Pointer(Mouse.create())
         self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.BROWSER_CONTAINER_PATH)
+        self.webviewContainer = self.get_webviewContainer()
+        self.watcher = self.webviewContainer.watch_signal('resultUpdated(QString)')
         super(UbuntuHTML5TestCaseBase, self).setUp()
 
     def tearDown(self):
@@ -106,16 +119,33 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assertThat(webview.loading, Eventually(Equals(False)))
         self.assertThat(webview.url, Eventually(Equals(url)))
 
-    # TODO: complete this
-    def click(self, id):
+    def click_dom_node_with_id(self, id):
         webview = self.get_webviewContainer()
-        watcher = webview.watch_signal('messageReceived(QString)')
         webview.slots.clickElementById(id)
-        #        self.assertThat(watcher.num_emissions, Eventually(Equals(1)))
+        self.assertThat(lambda: self.watcher.num_emissions, Eventually(Equals(1)))
+
+    def click_any_dom_node_by_selector(self, selector):
+        webview = self.get_webviewContainer()
+        webview.slots.clickAnyElementBySelector(selector)
+        self.assertThat(lambda: self.watcher.num_emissions, Eventually(Equals(1)))
+
+    def is_dom_node_visible(self, id):
+        webview = self.get_webviewContainer()
+        prev_emissions = self.watcher.num_emissions
+        webview.slots.isNodeWithIdVisible(id)
+        self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
+        return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
+
+    def get_dom_node_id_attribute(self, id, attribute):
+        webview = self.get_webviewContainer()
+        prev_emissions = self.watcher.num_emissions
+        webview.slots.getAttributeForElementWithId(id, attribute)
+        self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
+        return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
 
     def browse_to_app(self, appname):
-        url = self.BASE_URL + '/' + appname
-
+        url = self.BASE_URL + '/' + appname + '/index.html'
+        
         addressbar = self.get_addressbar()
         self.pointer.move_to_object(addressbar)
         self.pointer.click()
@@ -142,7 +172,6 @@ class UbuntuThemeWithHttpServerTestCaseBase(UbuntuHTML5TestCaseBase):
 
 class UbuntuThemeRemotePageTestCaseBase(UbuntuThemeWithHttpServerTestCaseBase):
     def setUp(self):
-        self.BASE_URL = "http://localhost:%d" % HTTP_SERVER_PORT
         super(UbuntuThemeRemotePageTestCaseBase, self).setUp()
 
 
