@@ -3,7 +3,7 @@ var UI = new UbuntuUI(),
 
 $(document).ready(function () {
 
-    Pagestack.changepage("main");
+    Pagestack.push("main");
 
     if (typeof localStorage["feeds"] == "undefined") {
         restoreDefault();
@@ -50,6 +50,12 @@ $(document).ready(function () {
     UI.button('no').click(function () {
         $('#addfeeddialog').hide();
     });
+
+    document.getElementById('back').onclick = function (e) {
+	if (Pagestack.depth() > 1)
+	    Pagestack.pop();
+	e.preventDefault();
+    };
 });
 
 //FUNCS
@@ -75,7 +81,8 @@ function restoreDefault() {
 }
 
 function loadFeed(url) {
-    Pagestack.changepage("results");
+    Pagestack.push("results");
+
     UI.dialog("loading").show();
 
     var feed = new google.feeds.Feed(url);
@@ -95,7 +102,8 @@ function loadFeed(url) {
 }
 
 function showArticle(title, url, desc) {
-    Pagestack.changepage("article");
+    Pagestack.push("article");
+
     if (typeof desc == "undefined")
         desc = "(No description provided)";
     $("#articleinfo").html("<p>" + unescape(title) + "</p><p>" + unescape(desc) + "</p><p><a target=\"_blank\" href=\"" + unescape(url) + "\">" + unescape(url) + "</a></p>");
