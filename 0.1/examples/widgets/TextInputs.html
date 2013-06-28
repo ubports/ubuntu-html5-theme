@@ -3,25 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title>Ubuntu UI HTML5 Theme: TextInputs</title>
     <link href="../../ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
-
 </head>
 <body>
     <div data-role="page">
         <header data-role="header">
             <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
-                    <ul>
-                        <li class="active" role="tab">
-                            <a href="#item1" class="tab-item">Tab 1</a>
+                    <ul data-role="tabs">
+                        <li class="active" data-role="tab">
+                            <a href="#item1">Tab 1</a>
                         </li>
-                        <li class="inactive" role="tab">
-                            <a href="#item2" class="tab-item">Tab 2</a>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item2">Tab 2</a>
                         </li>
-                        <li class="inactive" role="tab">
-                            <a href="#item3" class="tab-item">Tab 3</a>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item3">Tab 3</a>
                         </li>
                     </ul>
                 </div>
@@ -30,19 +28,26 @@
 
         <div data-role="content">
             <div class="inset">
-                <input type="text" placeholder="simple text field"></div>
+                <input type="text" placeholder="simple text field">
+            </div>
             <div class="inset">
-                <input type="text" placeholder="disabled text field" disabled=""></div>
+                <input type="text" placeholder="disabled text field" disabled="">
+            </div>
             <div class="inset">
-                <input type="tel" placeholder="telephone field"></div>
+                <input type="tel" placeholder="telephone field">
+            </div>
             <div class="inset">
-                <input type="search" placeholder="search field"></div>
+                <input type="search" placeholder="search field">
+            </div>
             <div class="inset">
-                <input type="number" placeholder="number field"></div>
+                <input type="number" placeholder="number field">
+            </div>
             <div class="inset">
-                <input type="url" placeholder="url field"></div>
+                <input type="url" placeholder="url field">
+            </div>
             <div class="inset">
-                <input type="password" placeholder="password with echo"></div>
+                <input type="password" placeholder="password with echo">
+            </div>
             <div class="inset">
                 <textarea placeholder="the placeholder text is a text which is displayed when there is no content in the TextArea"></textarea>
             </div>

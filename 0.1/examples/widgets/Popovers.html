@@ -3,15 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title>Ubuntu UI HTML5 Theme: Popovers</title>
     <link href="../../ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
-
     <script src="../../ambiance/js/core.js"></script>
     <script src="../../ambiance/js/fast-buttons.js"></script>
     <script src="../../ambiance/js/buttons.js"></script>
-    <script src="../../ambiance/js/dialogs.js"></script>
-    <script src="../../ambiance/js/pagestacks.js"></script>
     <script src="../../ambiance/js/popovers.js"></script>
 </head>
 <body>
@@ -19,15 +15,15 @@
         <header data-role="header">
             <nav data-role="navbar" class="tabs">
                 <div class="tabs-inner">
-                    <ul>
-                        <li class="active" role="tab">
-                            <a href="#item1" class="tab-item">Tab 1</a>
+                    <ul data-role="tabs">
+                        <li class="active" data-role="tab">
+                            <a href="#item1">Tab 1</a>
                         </li>
-                        <li class="inactive" role="tab">
-                            <a href="#item2" class="tab-item">Tab 2</a>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item2">Tab 2</a>
                         </li>
-                        <li class="inactive" role="tab">
-                            <a href="#item3" class="tab-item">Tab 3</a>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item3">Tab 3</a>
                         </li>
                     </ul>
                 </div>
@@ -86,7 +82,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        var UI = new UbuntuJS();
+        var UI = new UbuntuUI();
         UI.button('button1').click(function (e) {
             UI.popover(this, 'popover1').toggle();
         });
