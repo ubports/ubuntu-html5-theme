@@ -3,7 +3,6 @@ var UI = new UbuntuUI();
 $(document).ready(function () {
 
     UI.init();
-
     UI.pagestack.push("main");
 
     if (typeof localStorage["feeds"] == "undefined") {
