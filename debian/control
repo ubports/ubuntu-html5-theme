@@ -24,3 +24,13 @@ Depends: ubuntu-html5-theme (= ${binary:Version}),
 Description: Examples for Toolkit styles for Ubuntu HTML5 Apps
  This package provides examples of native-looing HTML5 applications for Ubuntu
  based on the ubuntu-html5-theme CSS and Javascript Ubuntu framework.
+
+Package: ubuntu-html5-theme-autopilot
+Architecture: all
+Depends: ${misc:Depends},
+         libautopilot-qt,
+         libqt5test5,
+	 ubuntu-html5-theme
+Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
+ Common CSS and Javascript for developing native-looking HTML5 applications
+ for Ubuntu. This package contains autopilot tests for it.
