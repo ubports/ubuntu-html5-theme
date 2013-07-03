@@ -13,6 +13,7 @@ License: CC-BY-SA 3.0
 Files: *
 Copyright: 2013 Adnane Belmadiaf <daker@ubuntu.com>
            2013 Tiago Hillebrandt <tiagohillebrandt@ubuntu.com>
+	   2013 Canonical Ltd
 License: LGPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the Lesser GNU General Public License as 
