@@ -11,12 +11,12 @@ ubuntu-html5-theme (0.1-0ubuntu1) UNRELEASED; urgency=low
   * Rename UbuntuJS to UbuntuUI
 
   [ Timo Jyrinki ]
-  * Switch to 3.0 (quilt)
   * Modifications for daily release process
   * Add COPYING
   * Relicense packaging to the same LGPL-3+ as the non-CC parts
   * Bump debhelper to 9
   * Priority optional
   * Run wrap-and-sort
+  * Use --fail-missing
 
  -- Timo Jyrinki <timo-jyrinki@ubuntu.com>  Wed, 03 Jul 2013 12:07:11 +0300
