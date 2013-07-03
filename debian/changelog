@@ -1,22 +1,22 @@
-ubuntu-html5-theme (0.1ubuntu2) UNRELEASED; urgency=low
+ubuntu-html5-theme (0.1-0ubuntu1) UNRELEASED; urgency=low
 
+  [ Alexandre Abreu ]
+  * Initial release
   * Add Tabs javascript
   * Add Toolbar javascript
   * Improve Pagestack to be closer to Ubuntu UI TK
   * Update rss-reader example app
-
- -- Alexandre Abreu <alexandre.abreu@canonical.com>  Fri, 28 Jun 2013 13:55:32 -0400
-
-ubuntu-html5-theme (0.1ubuntu1) saucy; urgency=low
-
   * Add ubuntu-html5-examples package
   * Restructure project to isolate examples and update *.html accordingly
   * Rename UbuntuJS to UbuntuUI
 
- -- Alexandre Abreu <alexandre.abreu@canonical.com>  Wed, 26 Jun 2013 12:22:32 -0400
+  [ Timo Jyrinki ]
+  * Modifications for daily release process
+  * Add COPYING
+  * Relicense packaging to the same LGPL-3+ as the non-CC parts
+  * Bump debhelper to 9
+  * Priority optional
+  * Run wrap-and-sort
+  * Use --fail-missing
 
-ubuntu-html5-theme (0.1) saucy; urgency=low
-
-  * Initial release
-
- -- Michael Hall <mhall119@ubuntu.com>  Thu, 13 Jun 2013 17:20:39 -0400
+ -- Timo Jyrinki <timo-jyrinki@ubuntu.com>  Wed, 03 Jul 2013 12:07:11 +0300
