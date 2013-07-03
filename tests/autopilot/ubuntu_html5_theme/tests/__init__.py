@@ -69,23 +69,30 @@ class UbuntuHTML5HTTPServer(threading.Thread):
 
 class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_CONTAINER_PATH = "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../tools/qml/webview.qml')
+    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-theme/autopilot-tests/qml/webview.qml'
     BROWSER_QML_APP_LAUNCHER = 'qmlscene'
 
     # TODO: fix version
     LOCAL_APPS_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/apps/'))
+    INSTALLED_APPS_EXAMPLES_PATH = '/usr/share/ubuntu-html5-theme/0.1/examples/apps/'
 
     BASE_URL = ''
+
+    def get_browser_container_path(self):
+        if os.path.exists(self.BROWSER_CONTAINER_PATH):
+            return self.BROWSER_CONTAINER_PATH
+        return self.INSTALLED_BROWSER_CONTAINER_PATH
 
     def setup_base_url(self):
         if os.path.exists(self.LOCAL_APPS_EXAMPLES_PATH):
             self.BASE_URL = 'file://' + self.LOCAL_APPS_EXAMPLES_PATH
         else:
-            self.BASE_URL = "http://localhost:%d" % HTTP_SERVER_PORT
+            self.BASE_URL = 'file://' + self.INSTALLED_APPS_EXAMPLES_PATH
 
     def setUp(self):
         self.setup_base_url()
         self.pointer = Pointer(Mouse.create())
-        self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.BROWSER_CONTAINER_PATH)
+        self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path())
         self.webviewContainer = self.get_webviewContainer()
         self.watcher = self.webviewContainer.watch_signal('resultUpdated(QString)')
         super(UbuntuHTML5TestCaseBase, self).setUp()
@@ -144,7 +151,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
 
     def browse_to_app(self, appname):
-        url = self.BASE_URL + '/' + appname + '/index.html'
+        url = self.BASE_URL + appname + '/index.html'
         
         addressbar = self.get_addressbar()
         self.pointer.move_to_object(addressbar)
