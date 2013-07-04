@@ -43,67 +43,80 @@ var UbuntuUI = (function () {
             // TODO validate no more than one page stack etc.
             // d.querySelectorAll("[data-role='pagestack']")
 
-            // TODO: only add the footer for now, but need to sync w/ title
-            //  , properties & header
-            var footer;
-            if (d.querySelectorAll("[data-role='footer']").length == 0) {
-                footer = d.createElement('footer');
-                footer.setAttribute('data-role', 'footer');
-                footer.setAttribute('class', 'revealed');
-            } else {
-                // TODO: validate footer count
-                footer = d.querySelectorAll("[data-role='footer']")[0];
-            }
-
-            var a = d.createElement('a');
-            a.setAttribute('href', '#');
-
-            // TODO: validate existence of id
-            a.setAttribute('id', PAGESTACK_BACK_ID);
-
-            var img = d.createElement('img');
-            img.setAttribute('src', '../../../ambiance/img/back@18.png');
-
-            // TODO: translation?
-            img.setAttribute('alt', 'Back');
-            a.appendChild(img);
-            var span = d.createElement('span');
-            var text = d.createTextNode('Back');
-            span.appendChild(text);
-            a.appendChild(span);
-
-            var li = d.createElement('li');
-            li.appendChild(a);
-
-            var ul = null;
-            if (footer.querySelectorAll('ul').length == 0) {
-                ul = d.createElement('ul');
-            } else {
-                ul = footer.querySelectorAll('ul')[0];
-            }
-            ul.appendChild(li);
-
-            if (footer.querySelectorAll('nav').length == 0) {
-                var nav = d.createElement('nav');
-                nav.appendChild(ul);
-                footer.appendChild(nav);
-            }
-
-            d.querySelectorAll("[data-role='pagestack']")[0]
-                .parentNode
-                .appendChild(footer);
-
             this._pageStack = new Pagestack();
-            d.getElementById(PAGESTACK_BACK_ID).onclick = function (e) {
-                if (this._pageStack.depth() > 1)
-                    this._pageStack.pop();
-                e.preventDefault();
-            }.bind(this);
+
+	    // FIXME: support multiple page stack & complex docs?
+	    var pagestacks = d.querySelectorAll("[data-role='pagestack']");
+	    if (pagestacks.length == 0)
+		return;
+	    var pagestack = pagestacks[0];
+
+	    var pages = pagestack.querySelectorAll("[data-role='page']");
+
+	    for (var idx = 0; idx < pages.length; ++idx) {
+		var page = pages[idx];
+
+		// TODO: only add the footer for now, but need to sync w/ title
+		//  , properties & header
+		var footer;
+		if (page.querySelectorAll("[data-role='footer']").length == 0) {
+                    footer = d.createElement('footer');
+                    footer.setAttribute('data-role', 'footer');
+                    footer.setAttribute('class', 'revealed');
+		} else {
+                    // TODO: validate footer count: should be 1 footer
+                    footer = d.querySelectorAll("[data-role='footer']")[0];
+		}
+
+		var a = d.createElement('a');
+		a.setAttribute('href', '#');
+		a.setAttribute('data-role', 'back');
+
+		// TODO: validate existence of id
+		a.setAttribute('id', PAGESTACK_BACK_ID);
+
+		var img = d.createElement('img');
+		img.setAttribute('src', '../../../ambiance/img/back@18.png');
+
+		// TODO: translation?
+		img.setAttribute('alt', 'Back');
+		a.appendChild(img);
+		var span = d.createElement('span');
+		var text = d.createTextNode('Back');
+		span.appendChild(text);
+		a.appendChild(span);
+
+		var li = d.createElement('li');
+		li.appendChild(a);
+
+		var ul = null;
+		if (footer.querySelectorAll('ul').length == 0) {
+                    ul = d.createElement('ul');
+		} else {
+                    ul = footer.querySelectorAll('ul')[0];
+		}
+		ul.appendChild(li);
+
+		if (footer.querySelectorAll('nav').length == 0) {
+                    var nav = d.createElement('nav');
+                    nav.appendChild(ul);
+                    footer.appendChild(nav);
+		}
+
+		page.appendChild(footer);
+
+		a.onclick = function (e) {
+                    if (this._pageStack.depth() > 1)
+			this._pageStack.pop();
+                    e.preventDefault();
+		}.bind(this);
+	    }
         },
 
         __setupPage: function (document) {
-            if (__hasPageStack(document))
+            if (__hasPageStack(document)) {
                 this.__setupPageStack(document);
+	    }
         },
 
         init: function () {
