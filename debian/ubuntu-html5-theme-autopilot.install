@@ -1,2 +1,3 @@
 tests/autopilot/ubuntu_html5_theme/* usr/lib/python2.7/dist-packages/ubuntu_html5_theme/
 tests/autopilot/tools/* usr/share/ubuntu-html5-theme/autopilot-tests/
+tests/data/* usr/share/ubuntu-html5-theme/tests/data/

@@ -62,6 +62,12 @@ Rectangle {
         webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
 		function(result) { root.resultUpdated(root.__createResult(result)); });
     }
+    function evalInPageUnsafe(expr) {
+        var tid = __gentid();
+
+        webview.experimental.evaluateJavaScript(__wrapJsCommands(expr),
+		function(result) { console.log('result: ' + result); root.resultUpdated(root.__createResult(result)); });
+    }
     function clickAnyElementBySelector(selector) {
         var tid = __gentid();
 	var statement = 'document.querySelectorAll("' + selector + '")[0].click();';
