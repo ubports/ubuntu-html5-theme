@@ -30,7 +30,7 @@ Architecture: all
 Depends: ${misc:Depends},
          libautopilot-qt,
          libqt5test5,
-	 ubuntu-html5-theme
+         ubuntu-html5-theme (= ${binary:Version}),
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  Common CSS and Javascript for developing native-looking HTML5 applications
  for Ubuntu. This package contains autopilot tests for it.
