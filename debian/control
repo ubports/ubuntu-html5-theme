@@ -3,6 +3,8 @@ Section: misc
 Priority: optional
 Maintainer: Michael Hall <mhall119@ubuntu.com>
 Build-Depends: debhelper (>= 9),
+               python (>= 2.7),
+               python-setuptools,
 Standards-Version: 3.9.4
 Homepage: https://launchpad.net/ubuntu-html5-theme
 # If you aren't a member of ~ubuntu-html5-theme-devs but need to upload packaging changes,
@@ -28,9 +30,11 @@ Description: Examples for Toolkit styles for Ubuntu HTML5 Apps
 Package: ubuntu-html5-theme-autopilot
 Architecture: all
 Depends: ${misc:Depends},
+         ${python:Depends},
          libautopilot-qt,
          libqt5test5,
-	 ubuntu-html5-theme
+         ubuntu-html5-theme (= ${binary:Version}),
+         ubuntu-html5-theme-examples (= ${binary:Version}),
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  Common CSS and Javascript for developing native-looking HTML5 applications
  for Ubuntu. This package contains autopilot tests for it.
