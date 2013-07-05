@@ -33,6 +33,7 @@ Depends: ${misc:Depends},
          ${python:Depends},
          libautopilot-qt,
          libqt5test5,
+         qmlscene,
          ubuntu-html5-theme (= ${binary:Version}),
          ubuntu-html5-theme-examples (= ${binary:Version}),
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps

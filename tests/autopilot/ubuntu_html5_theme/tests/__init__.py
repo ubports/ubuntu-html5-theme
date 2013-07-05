@@ -11,6 +11,7 @@ import os
 import json
 import BaseHTTPServer
 import threading
+import subprocess
 
 HTTP_SERVER_PORT = 8383
 
@@ -70,7 +71,9 @@ class UbuntuHTML5HTTPServer(threading.Thread):
 class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_CONTAINER_PATH = "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../tools/qml/webview.qml')
     INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-theme/autopilot-tests/qml/webview.qml'
-    BROWSER_QML_APP_LAUNCHER = 'qmlscene'
+    arch = subprocess.check_output(
+        ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip()
+    BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
 
     # TODO: fix version
     LOCAL_APPS_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/apps/'))
