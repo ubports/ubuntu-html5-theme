@@ -1,4 +1,4 @@
-ubuntu-html5-theme (0.1-0ubuntu2) UNRELEASED; urgency=low
+ubuntu-html5-theme (0.1-0ubuntu1) UNRELEASED; urgency=low
 
   [ Alexandre Abreu ]
   * Initial release
@@ -21,5 +21,12 @@ ubuntu-html5-theme (0.1-0ubuntu2) UNRELEASED; urgency=low
 
   [ Alexandre Abreu ]
   * Add package for autopilot tests
+
+  [ Didier Roche ]
+  * Fix some package dependencies mismatch
+  * Use python to install autopilot tests
+  * Simplify and ensure debian/copyright follows our policy
+  * Rename some install file to match binaries
+  * Automatic snapshot from revision 56 (bootstrap)
 
  -- Alexandre Abreu <alexandre.abreu@canonical.com>  Wed, 03 Jul 2013 15:23:15 -0400
