@@ -27,6 +27,6 @@ ubuntu-html5-theme (0.1-0ubuntu1) UNRELEASED; urgency=low
   * Use python to install autopilot tests
   * Simplify and ensure debian/copyright follows our policy
   * Rename some install file to match binaries
-  * Automatic snapshot from revision 56 (bootstrap)
+  * Automatic snapshot from revision 55 (bootstrap)
 
  -- Alexandre Abreu <alexandre.abreu@canonical.com>  Wed, 03 Jul 2013 15:23:15 -0400
