@@ -1,0 +1,120 @@
+<!--
+ Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+
+ This file is part of ubuntu-html5-theme.
+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the Lesser GNU General Public License as 
+ published by the Free Software Foundation; either version 3 of the 
+ License, or
+ (at your option) any later version.
+ 
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public 
+ License along with this program. If not, see 
+ <http://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="copyright" content="Adnane Belmadiaf <daker@ubuntu.com>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ubuntu UI HTML5 Theme: Application Template</title>
+
+    <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <!-- Ubuntu UI javascript imports - Ambiance theme -->
+    <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/dialogs.js"></script>
+    <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
+    <script src="../../../0.1/ambiance/js/popovers.js"></script>
+
+</head>
+<body>
+    <div data-role="page">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
+                <div class="tabs-inner">
+                    <ul data-role="tabs">
+                        <li class="active" data-role="tab">
+                            <a href="#item1">Tab 1</a>
+                        </li>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item2">Tab 2</a>
+                        </li>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item3">Tab 3</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div data-role="content">
+            <div data-role="pagestack">
+                <div data-role="page" id="main">
+                    <section data-role="list" id="yourfeeds"></section>
+                    <footer data-role="footer" class="revealed">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" id="addfeed">
+                                        <img src="../../../0.1/ambiance/img/back@18.png" alt="Tap me!" />
+                                        <span>Add feed</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+
+                <div data-role="page" id="results">
+                    <section data-role="list" id="resultscontent"></section>
+                </div>
+
+                <div data-role="page" id="article">
+                    <section id="articleinfo"></section>
+                </div>
+            </div>
+
+            <section data-type="indexbar-alphabet">
+                <div id="">A</div>
+                <div id="">B</div>
+                <div id="">C</div>
+                <div id="">D</div>
+                <div id="">E</div>
+                <div id="">F</div>
+                <div id="">G</div>
+                <div id="">H</div>
+                <div id="">I</div>
+                <div id="">J</div>
+                <div id="">K</div>
+                <div id="">L</div>
+                <div id="">M</div>
+                <div id="">N</div>
+                <div id="">O</div>
+                <div id="">P</div>
+                <div id="">Q</div>
+                <div id="">R</div>
+                <div id="">S</div>
+                <div id="">T</div>
+                <div id="">U</div>
+                <div id="">V</div>
+                <div id="">W</div>
+                <div id="">X</div>
+                <div id="">Y</div>
+                <div id="">Z</div>
+            </section>
+
+        </div>
+    </div>
+</body>
+</html>

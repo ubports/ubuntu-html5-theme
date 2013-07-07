@@ -76,24 +76,29 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
 
     # TODO: fix version
-    LOCAL_APPS_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/apps/'))
-    INSTALLED_APPS_EXAMPLES_PATH = '/usr/share/ubuntu-html5-theme/0.1/examples/apps/'
+    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/'))
+    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-theme/0.1/examples'
 
-    BASE_URL = ''
+    APPS_SUBFOLDER_NAME = 'apps'
+
+    BASE_PATH = ''
 
     def get_browser_container_path(self):
         if os.path.exists(self.BROWSER_CONTAINER_PATH):
             return self.BROWSER_CONTAINER_PATH
         return self.INSTALLED_BROWSER_CONTAINER_PATH
 
-    def setup_base_url(self):
-        if os.path.exists(self.LOCAL_APPS_EXAMPLES_PATH):
-            self.BASE_URL = 'file://' + self.LOCAL_APPS_EXAMPLES_PATH
+    def create_file_url_from(self, filepath):
+        return 'file://' + filepath
+
+    def setup_base_path(self):
+        if os.path.exists(self.LOCAL_HTML_EXAMPLES_PATH):
+            self.BASE_PATH = self.LOCAL_HTML_EXAMPLES_PATH
         else:
-            self.BASE_URL = 'file://' + self.INSTALLED_APPS_EXAMPLES_PATH
+            self.BASE_PATH = self.INSTALLED_HTML_EXAMPLES_PATH
 
     def setUp(self):
-        self.setup_base_url()
+        self.setup_base_path()
         self.pointer = Pointer(Mouse.create())
         self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path())
         self.webviewContainer = self.get_webviewContainer()
@@ -146,6 +151,13 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
         return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
 
+    def eval_expression_in_page_unsafe(self, expr):
+        webview = self.get_webviewContainer()
+        prev_emissions = self.watcher.num_emissions
+        webview.slots.evalInPageUnsafe(expr)
+        self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
+        return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
+        
     def get_dom_node_id_attribute(self, id, attribute):
         webview = self.get_webviewContainer()
         prev_emissions = self.watcher.num_emissions
@@ -153,9 +165,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
         return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
 
-    def browse_to_app(self, appname):
-        url = self.BASE_URL + appname + '/index.html'
-        
+    def browse_to_url(self, url):
         addressbar = self.get_addressbar()
         self.pointer.move_to_object(addressbar)
         self.pointer.click()
@@ -167,6 +177,12 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.pointer.click()
 
         self.assert_url_eventually_loaded(url);
+
+    def browse_to_app(self, appname):
+        self.browse_to_url(self.create_file_url_from(self.BASE_PATH + '/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/index.html'))
+
+    def browse_to_test_html(self, html_filename):
+        self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + html_filename)))
 
 
 class UbuntuThemeWithHttpServerTestCaseBase(UbuntuHTML5TestCaseBase):
