@@ -28,7 +28,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def get_served_filename(self, appname, filename):
         if len(filename) == 0 or filename == '/':
-            filename = 'index.html'
+            filename = 'autopilot.html'
         print os.path.join(self.BASE_PATH_FOR_SERVED_APPS[appname], filename)
         return os.path.join(self.BASE_PATH_FOR_SERVED_APPS[appname], filename)
 
@@ -179,7 +179,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assert_url_eventually_loaded(url);
 
     def browse_to_app(self, appname):
-        self.browse_to_url(self.create_file_url_from(self.BASE_PATH + '/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/index.html'))
+        self.browse_to_url(self.create_file_url_from(self.BASE_PATH + '/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/autopilot.html'))
 
     def browse_to_test_html(self, html_filename):
         self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + html_filename)))
