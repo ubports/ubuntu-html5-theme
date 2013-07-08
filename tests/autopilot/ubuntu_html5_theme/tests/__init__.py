@@ -179,7 +179,8 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assert_url_eventually_loaded(url);
 
     def browse_to_app(self, appname):
-        self.browse_to_url(self.create_file_url_from(self.BASE_PATH + '/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/autopilot.html'))
+        APP_HTML_PATH = self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/index.html'))
+        self.browse_to_url(APP_HTML_PATH)
 
     def browse_to_test_html(self, html_filename):
         self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + html_filename)))

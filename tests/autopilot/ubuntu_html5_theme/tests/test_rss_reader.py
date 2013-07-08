@@ -27,13 +27,11 @@ class UbuntuThemeRSSReaderTestCase(UbuntuHTML5TestCaseBase):
         self.assertThat(self.is_dom_node_visible('article'), Equals(False))
         self.assertThat(self.is_dom_node_visible('results'), Equals(False))
 
-# Needs further mockup for autopilot.html to work offline
-# LP: https://bugs.launchpad.net/ubuntu-html5-theme/+bug/1198820
-#    def test_switchToFeedView(self):
-#        self.click_any_dom_node_by_selector('#yourfeeds li a')
-#        self.assertThat(lambda: self.is_dom_node_visible('main'), Eventually(Equals(False)))
-#        self.assertThat(self.is_dom_node_visible('article'), Equals(False))
-#        self.assertThat(self.is_dom_node_visible('results'), Equals(True))
+    def test_switchToFeedView(self):
+        self.click_any_dom_node_by_selector('#yourfeeds li a')
+        self.assertThat(lambda: self.is_dom_node_visible('main'), Eventually(Equals(False)))
+        self.assertThat(self.is_dom_node_visible('article'), Equals(False))
+        self.assertThat(self.is_dom_node_visible('results'), Equals(True))
 
 
 
