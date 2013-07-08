@@ -31,10 +31,12 @@ Package: ubuntu-html5-theme-autopilot
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
+         dpkg-dev,
          libautopilot-qt,
          libqt5test5,
          libqt5webkit5-qmlwebkitplugin,
          qmlscene,
+         qtdeclarative5-qtquick2-plugin,
          ubuntu-html5-theme (= ${binary:Version}),
          ubuntu-html5-theme-examples (= ${binary:Version}),
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
