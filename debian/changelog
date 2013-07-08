@@ -1,4 +1,4 @@
-ubuntu-html5-theme (0.1-0ubuntu1) UNRELEASED; urgency=low
+ubuntu-html5-theme (0.1+13.10.20130708.1-0ubuntu1) saucy; urgency=low
 
   [ Alexandre Abreu ]
   * Initial release
@@ -29,4 +29,20 @@ ubuntu-html5-theme (0.1-0ubuntu1) UNRELEASED; urgency=low
   * Rename some install file to match binaries
   * Automatic snapshot from revision 55 (bootstrap)
 
- -- Alexandre Abreu <alexandre.abreu@canonical.com>  Wed, 03 Jul 2013 15:23:15 -0400
+  [ Timo Jyrinki ]
+  * Fix autopilot qmlscene calling by using the full path (in absence of
+    qtchooser).
+  * Depend on libqt5webkit5-qmlwebkitplugin from autopilot.
+  * Add further missing dependencies to the autopilot package.
+  * Prepare the autopilot test to work with blocking firewall. Switch to
+    using libjs-jquery instead of fetching from the web. Add
+    autopilot.html without the Google dependency, disable one test for
+    now that would need further contents mockup to work.
+
+  [ Alexandre Abreu ]
+  * Autopilot tests added for page stack .
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 62
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 08 Jul 2013 08:31:38 +0000
