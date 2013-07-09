@@ -1,3 +1,14 @@
+ubuntu-html5-theme (0.1+13.10.20130709-0ubuntu1) saucy; urgency=low
+
+  [ Alexandre Abreu ]
+  * fix autopilot test of sample app, remove network dependancy & mocked
+    data. (LP: #1198820)
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 64
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 09 Jul 2013 04:01:45 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130708.1-0ubuntu1) saucy; urgency=low
 
   [ Alexandre Abreu ]
