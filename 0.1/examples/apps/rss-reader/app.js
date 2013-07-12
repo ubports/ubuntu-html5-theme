@@ -31,15 +31,17 @@ $(document).ready(function () {
     }
     //load local storage feeds
     var feeds = eval(localStorage["feeds"]);
-    var myfeeds = null;
     if (feeds !== null) {
-        myfeeds = "<header>My feeds</header><ul>";
+	var feeds_list = UI.list('#yourfeeds');
+	feeds_list.removeAllItems();
+	feeds_list.setHeader('My feeds');
+
         for (var i = 0; i < feeds.length; i++) {
-            var feed = new google.feeds.Feed(feeds[i]);
-            myfeeds += '<li><a href="#" onclick="loadFeed(\'' + feeds[i] + '\');">' + feeds[i] + '</a></li>';
+            feeds_list.append(feeds[i],
+			      null,
+			      function (target, thisfeed) { loadFeed(thisfeed); },
+			      feeds[i]);
         }
-        myfeeds += "</ul>";
-        $("#yourfeeds").html(myfeeds);
     }
 
     UI.button('yes').click(function (e) {
@@ -102,15 +104,21 @@ function loadFeed(url) {
 
     var feed = new google.feeds.Feed(url);
     feed.setNumEntries(30);
+
     feed.load(function (result) {
         if (!result.error) {
-            myfeeds_items = "<header>" + result.feed.title + "</header><ul>";
-            for (var i = 0; i < result.feed.entries.length; i++) {
-                myfeeds_items += '<li><a href="#" onclick=\'showArticle("' + escape(result.feed.entries[i].title) + '","' + escape(result.feed.entries[i].link) + '","' + escape(result.feed.entries[i].content) + '")\'>' + result.feed.entries[i].title.replace(/"/g, "'") + '</a></li>';
-            }
-            myfeeds_items += "</ul>";
             UI.dialog("loading").hide();
-            $("#resultscontent").html(myfeeds_items);
+
+	    var results_list = UI.list('#resultscontent');
+	    results_list.removeAllItems();
+	    results_list.setHeader(result.feed.title);
+
+            for (var i = 0; i < result.feed.entries.length; i++) {
+		results_list.append(result.feed.entries[i].title.replace(/"/g, "'"),
+				    null,
+				    function (target, result_infos) { showArticle.apply(null, result_infos); },
+				    [escape(result.feed.entries[i].title), escape(result.feed.entries[i].link), escape(result.feed.entries[i].content)] );
+            }
         } else
             alert('feed error');
     });

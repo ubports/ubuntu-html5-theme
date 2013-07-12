@@ -153,6 +153,12 @@ var UbuntuUI = (function () {
             }
         },
 
+        list: function (selector) {
+            if (typeof List != 'undefined' && List) {
+                return new List(selector);
+            }
+        },
+
         get pagestack() {
             return this._pageStack;
         }
