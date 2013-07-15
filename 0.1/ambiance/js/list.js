@@ -79,7 +79,7 @@ var List = (function () {
 	                              when the event has been trigger.
 	  \return added item node or null
 	 */
-	append: function (text, id, onclick, user_data) {
+	append: function (text, label, id, onclick, user_data) {
 	    var li = document.createElement('li');
 	    var a = document.createElement('a');
 
@@ -94,6 +94,12 @@ var List = (function () {
 	    //FIXME: no real checks on text content
 	    a.innerText = text;
 	    li.appendChild(a);
+
+	    if (label && typeof(label) == 'string') {
+		var n = document.createElement('label');
+		n.innerText = label;
+		li.appendChild(n);
+	    }
 
 	    if (id && typeof(id) == 'string') {
 		if ( ! document.getElementById(id))

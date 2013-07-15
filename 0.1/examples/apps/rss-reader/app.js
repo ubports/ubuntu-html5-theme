@@ -39,6 +39,7 @@ $(document).ready(function () {
         for (var i = 0; i < feeds.length; i++) {
             feeds_list.append(feeds[i],
 			      null,
+			      null,
 			      function (target, thisfeed) { loadFeed(thisfeed); },
 			      feeds[i]);
         }
@@ -115,6 +116,7 @@ function loadFeed(url) {
 
             for (var i = 0; i < result.feed.entries.length; i++) {
 		results_list.append(result.feed.entries[i].title.replace(/"/g, "'"),
+				    null,
 				    null,
 				    function (target, result_infos) { showArticle.apply(null, result_infos); },
 				    [escape(result.feed.entries[i].title), escape(result.feed.entries[i].link), escape(result.feed.entries[i].content)] );
