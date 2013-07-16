@@ -4,18 +4,18 @@
  * This file is part of ubuntu-html5-theme.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the Lesser GNU General Public License as 
- * published by the Free Software Foundation; either version 3 of the 
+ * it under the terms of the Lesser GNU General Public License as
+ * published by the Free Software Foundation; either version 3 of the
  * License, or
  * (at your option) any later version.
- 
+
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this program. If not, see 
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 
@@ -31,7 +31,10 @@ var Tabs = function (selector) {
         resistance,
         tabsWidth;
 
-    tabs = document.querySelector(selector);
+    if (selector === undefined)
+        tabs = document.querySelector('[data-role=tabs]');
+    else
+        tabs = document.querySelector(selector);
 
     var getScroll = function () {
         var translate3d = tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
@@ -45,7 +48,8 @@ var Tabs = function (selector) {
             tabs.addEventListener(UI.touchEvents.touchMove, onTouchMove);
             tabs.addEventListener(UI.touchEvents.touchEnd, onTouchEnd);
 
-            //we only have leave events on desktop, we manually calcuate leave on touch as its not supported in webkit
+            // we only have leave events on desktop, we manually calcuate
+            // leave on touch as its not supported in webkit
             if (UI.touchEvents.touchLeave) {
                 tabs.addEventListener(UI.touchEvents.touchLeave, onTouchLeave);
             }
@@ -53,7 +57,8 @@ var Tabs = function (selector) {
             tabs.removeEventListener(UI.touchEvents.touchMove, onTouchMove, false);
             tabs.removeEventListener(UI.touchEvents.touchEnd, onTouchEnd, false);
 
-            //we only have leave events on desktop, we manually calcuate leave on touch as its not supported in webkit
+            // we only have leave events on desktop, we manually calcuate
+            // leave on touch as its not supported in webkit
             if (UI.touchEvents.touchLeave) {
                 tabs.removeEventListener(UI.touchEvents.touchLeave, onTouchLeave, false);
             }
@@ -92,9 +97,6 @@ var Tabs = function (selector) {
         pageX = e.touches[0].pageX;
         pageY = e.touches[0].pageY;
 
-        console.log(pageY);
-        console.log(pageX);
-
         if (typeof isScrolling == 'undefined') {
             isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
         }
@@ -102,23 +104,57 @@ var Tabs = function (selector) {
         if (isScrolling) return;
         offsetX = (deltaX / resistance) + getScroll();
 
-        e.preventDefault();
         tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
     };
 
     var onTouchEnd = function (e) {
         if (!tabs || isScrolling) return;
-
-        offsetX = 0 * tabsWidth;
-        tabs.style['-webkit-transition-duration'] = '.2s';
-        tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
         setTouchInProgress(false);
     };
 
     var onTouchLeave = function (e) {};
 
+    var onClicked = function (e) {
+
+        if ((this.className).indexOf('inactive') > -1) {
+            var active_tab = document.querySelector('[data-role="tab"].active');
+            console.log('onClicked' + isScrolling);
+            offsetX = this.offsetLeft;
+            tabs.style['-webkit-transition-duration'] = '.3s';
+            tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+
+            active_tab.classList.remove('inactive');
+            active_tab.classList.remove('active');
+            this.classList.remove('inactive');
+            this.classList.add('active');
+
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                el.classList.remove('inactive');
+                console.log('blblbl' + isScrolling);
+            });
+
+            /*FIXME : We need to try to implement the infinite sliding
+            Array.prototype.slice.call(
+                    document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
+                ).map(function(element) {
+                    return element.cloneNode(true);
+                }).forEach(function(element) {
+                    element.classList.remove('active');
+                    tabs.appendChild(element);
+                });*/
+
+        } else {
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                el.classList.toggle('inactive');
+            });
+        }
+    };
+
     tabs.addEventListener(UI.touchEvents.touchStart, onTouchStart);
     tabs.addEventListener(UI.touchEvents.touchMove, onTouchMove);
     tabs.addEventListener(UI.touchEvents.touchEnd, onTouchEnd);
-    tabs.addEventListener(UI.touchEvents.touchLeave, onTouchEnd);
+
+    [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
+        el.addEventListener('click', onClicked, false);
+    });
 };
