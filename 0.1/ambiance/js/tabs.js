@@ -118,7 +118,6 @@ var Tabs = function (selector) {
 
         if ((this.className).indexOf('inactive') > -1) {
             var active_tab = document.querySelector('[data-role="tab"].active');
-            console.log('onClicked' + isScrolling);
             offsetX = this.offsetLeft;
             tabs.style['-webkit-transition-duration'] = '.3s';
             tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
@@ -130,7 +129,6 @@ var Tabs = function (selector) {
 
             [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                 el.classList.remove('inactive');
-                console.log('blblbl' + isScrolling);
             });
 
             /*FIXME : We need to try to implement the infinite sliding
@@ -147,6 +145,11 @@ var Tabs = function (selector) {
             [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                 el.classList.toggle('inactive');
             });
+            window.setTimeout(function() {
+                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                    el.classList.toggle('inactive');
+                });
+            }, 5000);
         }
     };
 
