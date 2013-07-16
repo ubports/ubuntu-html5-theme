@@ -1,3 +1,14 @@
+ubuntu-html5-theme (0.1+13.10.20130716-0ubuntu1) saucy; urgency=low
+
+  [ Alexandre Abreu ]
+  * Add builtin support for list view management
+  * Add label access
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 67
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 16 Jul 2013 04:01:43 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130709-0ubuntu1) saucy; urgency=low
 
   [ Alexandre Abreu ]
