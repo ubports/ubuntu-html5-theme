@@ -44,7 +44,7 @@ var Pagestack = (function () {
 		// treat footers separately
 		var footer = el.querySelector('footer');
 		if (footer)
-		    footer
+		    footer.style.display = visibility;
 	    });
 	},
 	__isPage: function (element) {
