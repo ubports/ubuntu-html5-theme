@@ -27,6 +27,54 @@ var UbuntuUI = (function () {
         return document.querySelectorAll("[data-role='pagestack']") != null;
     };
 
+    function __createBackButtonListItem(d) {
+	var a = d.createElement('a');
+	a.setAttribute('href', '#');
+	a.setAttribute('data-role', 'back');
+
+	a.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
+
+	var img = d.createElement('img');
+	img.setAttribute('src', '/usr/share/ubuntu-html5-theme/0.1/ambiance/img/back@18.png');
+
+	// TODO: translation?
+	img.setAttribute('alt', 'Back');
+	a.appendChild(img);
+	var span = d.createElement('span');
+	var text = d.createTextNode('Back');
+	span.appendChild(text);
+	a.appendChild(span);
+
+	var li = d.createElement('li');
+	li.appendChild(a);
+
+	return li;
+    };
+
+    function __appendBackButtonToFooter(self, d, footer) {
+	var li = __createBackButtonListItem(d);
+	var ul = null;
+	if (footer.querySelectorAll('ul').length == 0) {
+            ul = d.createElement('ul');
+	} else {
+            ul = footer.querySelectorAll('ul')[0];
+	}
+	ul.appendChild(li);
+	
+	if (footer.querySelectorAll('nav').length == 0) {
+            var nav = d.createElement('nav');
+            nav.appendChild(ul);
+            footer.appendChild(nav);
+	}
+
+	var a = li.querySelector('a');
+	a.onclick = function (e) {
+            if (self._pageStack.depth() > 1)
+		self._pageStack.pop();
+            e.preventDefault();
+	}.bind(self);
+    };
+
     function UbuntuUI() {
         var U = this;
         U.isTouch = "ontouchstart" in window;
@@ -50,9 +98,22 @@ var UbuntuUI = (function () {
 	    if (pagestacks.length == 0)
 		return;
 	    var pagestack = pagestacks[0];
+	    var immediateFooters = [].filter.call(pagestack.children,
+						  function(e) {
+						      return e.nodeName.toLowerCase() === 'footer';
+						  });
+	    if (immediateFooters.length !== 0) {
+		// There is a main footer for the whole pagestack,
+		// FIXME: only consider the first (there should be only 1 anyway)
+		var footer = immediateFooters[0];
 
+		__appendBackButtonToFooter(this, d, footer);
+
+		return;
+	    }
+
+	    // try to find subpages & append back button there
 	    var pages = pagestack.querySelectorAll("[data-role='page']");
-
 	    for (var idx = 0; idx < pages.length; ++idx) {
 		var page = pages[idx];
 
@@ -63,53 +124,14 @@ var UbuntuUI = (function () {
                     footer = d.createElement('footer');
                     footer.setAttribute('data-role', 'footer');
                     footer.setAttribute('class', 'revealed');
+
+		    page.appendChild(footer);
 		} else {
                     // TODO: validate footer count: should be 1 footer
-                    footer = d.querySelectorAll("[data-role='footer']")[0];
+                    footer = page.querySelectorAll("[data-role='footer']")[0];
 		}
 
-		var a = d.createElement('a');
-		a.setAttribute('href', '#');
-		a.setAttribute('data-role', 'back');
-
-		// TODO: validate existence of id
-		a.setAttribute('id', PAGESTACK_BACK_ID);
-
-		var img = d.createElement('img');
-		img.setAttribute('src', '../../../ambiance/img/back@18.png');
-
-		// TODO: translation?
-		img.setAttribute('alt', 'Back');
-		a.appendChild(img);
-		var span = d.createElement('span');
-		var text = d.createTextNode('Back');
-		span.appendChild(text);
-		a.appendChild(span);
-
-		var li = d.createElement('li');
-		li.appendChild(a);
-
-		var ul = null;
-		if (footer.querySelectorAll('ul').length == 0) {
-                    ul = d.createElement('ul');
-		} else {
-                    ul = footer.querySelectorAll('ul')[0];
-		}
-		ul.appendChild(li);
-
-		if (footer.querySelectorAll('nav').length == 0) {
-                    var nav = d.createElement('nav');
-                    nav.appendChild(ul);
-                    footer.appendChild(nav);
-		}
-
-		page.appendChild(footer);
-
-		a.onclick = function (e) {
-                    if (this._pageStack.depth() > 1)
-			this._pageStack.pop();
-                    e.preventDefault();
-		}.bind(this);
+		__appendBackButtonToFooter(this, d, footer);
 	    }
         },
 
