@@ -20,21 +20,18 @@
  */
 
 /* Tabs */
-var Tabs = function (selector) {
-    var tabs,
-        pageX,
+var Tabs = function (tabs) {
+    var pageX,
         pageY,
         isScrolling,
         deltaX,
         deltaY,
         offsetX,
         resistance,
-        tabsWidth;
-
-    if (selector === undefined)
-        tabs = document.querySelector('[data-role=tabs]');
-    else
-        tabs = document.querySelector(selector);
+        tabsWidth,
+        activeTab,
+        t1,
+        t2;
 
     var getScroll = function () {
         var translate3d = tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
@@ -67,7 +64,8 @@ var Tabs = function (selector) {
 
     var onTouchStart = function (e) {
         if (!tabs) return;
-
+        window.clearTimeout(t1);
+        window.clearTimeout(t2);
         isScrolling = undefined;
         tabsWidth = tabs.offsetWidth;
         resistance = 1;
@@ -110,6 +108,16 @@ var Tabs = function (selector) {
     var onTouchEnd = function (e) {
         if (!tabs || isScrolling) return;
         setTouchInProgress(false);
+
+        activeTab = document.querySelector('[data-role="tab"].active');
+        t1 = window.setTimeout(function() {
+                offsetX = activeTab.offsetLeft;
+                tabs.style['-webkit-transition-duration'] = '.3s';
+                tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                    el.classList.toggle('inactive');
+                });
+        }, 5000);
     };
 
     var onTouchLeave = function (e) {};
@@ -117,13 +125,13 @@ var Tabs = function (selector) {
     var onClicked = function (e) {
 
         if ((this.className).indexOf('inactive') > -1) {
-            var active_tab = document.querySelector('[data-role="tab"].active');
+            window.clearTimeout(t2);
+            activeTab = document.querySelector('[data-role="tab"].active');
             offsetX = this.offsetLeft;
             tabs.style['-webkit-transition-duration'] = '.3s';
             tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-
-            active_tab.classList.remove('inactive');
-            active_tab.classList.remove('active');
+            activeTab.classList.remove('inactive');
+            activeTab.classList.remove('active');
             this.classList.remove('inactive');
             this.classList.add('active');
 
@@ -145,12 +153,13 @@ var Tabs = function (selector) {
             [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                 el.classList.toggle('inactive');
             });
-            window.setTimeout(function() {
+            t2 = window.setTimeout(function() {
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
             }, 5000);
         }
+        e.preventDefault();
     };
 
     tabs.addEventListener(UI.touchEvents.touchStart, onTouchStart);
