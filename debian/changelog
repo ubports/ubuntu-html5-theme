@@ -1,3 +1,20 @@
+ubuntu-html5-theme (0.1+13.10.20130719-0ubuntu1) saucy; urgency=low
+
+  [ Víctor R. Ruiz ]
+  * LGPL statement fix.
+
+  [ Adnane Belmadiaf ]
+  * Added Indexbar CSS Added Indexbar widget.
+
+  [ Alexandre Abreu ]
+  * Fixes back button addition depending where the footer is located
+    (pagestack wide of per page), . (LP: #1202717)
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 71
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 19 Jul 2013 05:26:32 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130716-0ubuntu1) saucy; urgency=low
 
   [ Alexandre Abreu ]
