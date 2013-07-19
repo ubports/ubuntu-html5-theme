@@ -22,27 +22,39 @@
 
 /* ----------------------------------
  * Lists
- * ---------------------------------- */
+ * ----------------------------------
+   ================================================== */
 
-[data-type="indexbar-alphabet"] {
-    pointer-events: auto;
-    z-index: 2;
-    min-height: 0;
-    height: auto;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
-    -webkit-box-orient: vertical;
-    width: 1.1em;
-    margin-right: 8px;
-    padding: 0.3em 0;
-    color: #155988;
+[data-role="indexbar"] {
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    bottom: 0;
 }
 
-[data-type="indexbar-alphabet"]> div {
-    font-size: 0.6em;
+[data-role="indexbar"] ol {
+    padding: 0.3rem 0;
+    margin: 5.5rem 0;
+    width: 2rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 4rem;
+    opacity: 0.6;
+    list-style: none;
+    background: #c2c2c2;
+}
+
+[data-role="indexbar"] li {
+    font-size: 1rem;
+    line-height: 1.4em;
     text-align: center;
-    line-height: 1.1em;
-    font-weight: bold;
+    text-transform: uppercase;
+}
+
+[data-role="indexbar"] li a {
     display: block;
+    color: #333;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }
