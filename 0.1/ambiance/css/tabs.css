@@ -5,27 +5,27 @@
  * This file is part of ubuntu-html5-theme.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation; either version 3 of the 
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of the
  * License, or
  * (at your option) any later version.
- 
+
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this program. If not, see 
- * <http://www.gnu.org/licenses/>.
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>
  */
 
 /* ----------------------------------
  * Tabs
  * ---------------------------------- */
 
-nav.tabs {
-    background: transparent;
+[data-role="header"]{
+    background: #ededf0 url("../img/background_paper@30.png") repeat-x top left;
     border-bottom: 14px solid #c2c2c2;
     height: 60px;
     width: 100%;
@@ -37,16 +37,17 @@ nav.tabs {
     box-orient: horizontal;
 }
 
-nav.tabs div.tabs-inner {
+[data-role="header"] div.tabs-inner {
     border-bottom: 1px solid #afafaf;
     width: 100%;
 }
 
-nav.tabs div.tabs-inner ul {
+[data-role="header"] div.tabs-inner ul {
     width: 100%;
+    white-space: nowrap;
 }
 
-nav.tabs div.tabs-inner ul li {
+[data-role="header"] div.tabs-inner ul li {
     overflow: hidden;
     white-space: nowrap;
     -webkit-box-flex: 1;
@@ -54,7 +55,7 @@ nav.tabs div.tabs-inner ul li {
     display: inline-block;
 }
 
-nav.tabs div.tabs-inner li > a {
+[data-role="header"] div.tabs-inner li > a {
     font: 35px "Ubuntu";
     letter-spacing: -1px;
     line-height: 60px;
@@ -68,24 +69,24 @@ nav.tabs div.tabs-inner li > a {
     transition: opacity .25s ease-in-out;
 }
 
-nav.tabs div.tabs-inner .active > a {
+[data-role="header"] div.tabs-inner .active > a {
     color: #484647;
     padding-left: 15px;
     -webkit-opacity: 1;
     opacity: 1;
 }
 
-nav.tabs div.tabs-inner .active > a:after {
+[data-role="header"] div.tabs-inner .active > a:after {
     content: "›";
     padding-left: 10px;
 }
 
-nav.tabs div.tabs-inner li:only-child > a:after {
+[data-role="header"] div.tabs-inner li:only-child > a:after {
     content: "";
     padding-left: 10px;
 }
 
-nav.tabs div.tabs-inner .inactive > a {
+[data-role="header"] div.tabs-inner .inactive > a {
     color: #a0a0a0;
     -webkit-opacity: 1;
     opacity: 1;
