@@ -1,10 +1,11 @@
 /*
  * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ * License granted by Canonical Limited
  *
  * This file is part of ubuntu-html5-theme.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the Lesser GNU General Public License as 
+ * it under the terms of the GNU Lesser General Public License as 
  * published by the Free Software Foundation; either version 3 of the 
  * License, or
  * (at your option) any later version.
@@ -44,7 +45,7 @@ var Pagestack = (function () {
 		// treat footers separately
 		var footer = el.querySelector('footer');
 		if (footer)
-		    footer
+		    footer.style.display = visibility;
 	    });
 	},
 	__isPage: function (element) {
@@ -58,7 +59,11 @@ var Pagestack = (function () {
 		return;
 	    }
 	    page.style.display = "none";
-	    if (page.querySelector('footer')) page.querySelector('footer').classList.remove('revealed');
+	    if (page.querySelector('footer')) {
+		var footer = page.querySelector('footer');
+		footer.style.display = 'none';
+		footer.classList.remove('revealed');
+	    }
 	},
 	__activate: function (id) {
 	    if (!id || typeof(id) !== 'string')
@@ -68,7 +73,11 @@ var Pagestack = (function () {
 		return;
 	    }
 	    page.style.display = "block";
-	    if (page.querySelector('footer')) page.querySelector('footer').classList.add('revealed');
+	    if (page.querySelector('footer')) {
+		var footer = page.querySelector('footer');
+		footer.style.display = 'block';
+		footer.classList.add('revealed');
+	    }
 	},
 	push: function (id, properties) {
 	    try {
