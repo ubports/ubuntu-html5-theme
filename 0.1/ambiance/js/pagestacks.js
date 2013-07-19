@@ -45,7 +45,7 @@ var Pagestack = (function () {
 		// treat footers separately
 		var footer = el.querySelector('footer');
 		if (footer)
-		    footer
+		    footer.style.display = visibility;
 	    });
 	},
 	__isPage: function (element) {
@@ -59,7 +59,11 @@ var Pagestack = (function () {
 		return;
 	    }
 	    page.style.display = "none";
-	    if (page.querySelector('footer')) page.querySelector('footer').classList.remove('revealed');
+	    if (page.querySelector('footer')) {
+		var footer = page.querySelector('footer');
+		footer.style.display = 'none';
+		footer.classList.remove('revealed');
+	    }
 	},
 	__activate: function (id) {
 	    if (!id || typeof(id) !== 'string')
@@ -69,7 +73,11 @@ var Pagestack = (function () {
 		return;
 	    }
 	    page.style.display = "block";
-	    if (page.querySelector('footer')) page.querySelector('footer').classList.add('revealed');
+	    if (page.querySelector('footer')) {
+		var footer = page.querySelector('footer');
+		footer.style.display = 'block';
+		footer.classList.add('revealed');
+	    }
 	},
 	push: function (id, properties) {
 	    try {

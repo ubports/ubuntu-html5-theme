@@ -27,6 +27,9 @@ var Button = function (id) {
 
 Button.prototype = {
     click: function (callback) {
+	if ( ! document.getElementById(this.id)) {
+	    throw "Invalid button ID";
+	}
         new FastButton(document.getElementById(this.id), callback);
     }
 };
