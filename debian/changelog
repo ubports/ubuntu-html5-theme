@@ -1,3 +1,14 @@
+ubuntu-html5-theme (0.1+13.10.20130722-0ubuntu1) saucy; urgency=low
+
+  [ Adnane Belmadiaf ]
+  * Added CSS animation for tabs Reset tabs to the initial stat after
+    5sec data-role instead of css class for tab.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 73
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 22 Jul 2013 04:01:50 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130719-0ubuntu1) saucy; urgency=low
 
   [ Víctor R. Ruiz ]
