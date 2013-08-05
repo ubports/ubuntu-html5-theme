@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1+13.10.20130805-0ubuntu1) saucy; urgency=low
+
+  [ Adnane Belmadiaf ]
+  * Added a UI Gallery.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 75
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 05 Aug 2013 04:01:52 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130722-0ubuntu1) saucy; urgency=low
 
   [ Adnane Belmadiaf ]
