@@ -2,6 +2,6 @@
 Name=Ubuntu HTML5 Theme UI Gallery
 Type=Application
 Exec=xdg-open /usr/share/ubuntu-html5-theme/examples/ui-gallery/index.html
-Icon=qmlscene
+Icon=ubuntu
 Terminal=false
 
