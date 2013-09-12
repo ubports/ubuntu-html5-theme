@@ -110,15 +110,26 @@ var Tabs = function (tabs) {
         if (!tabs || isScrolling) return;
         setTouchInProgress(false);
 
-        activeTab = document.querySelector('[data-role="tab"].active');
-        t1 = window.setTimeout(function() {
-                offsetX = activeTab.offsetLeft;
-                tabs.style['-webkit-transition-duration'] = '.3s';
-                tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                    el.classList.toggle('inactive');
-                });
-        }, 5000);
+        [].forEach.call(document.querySelectorAll("[data-role='tab']:not(.active)"), function (e) {
+            [].forEach.call(e.childNodes, function (k) {
+                if (k.nodeName == "A") {
+                    k.addEventListener('click', function (a) {
+                        var id = a.target.hash.replace("#", "");
+                        UI.pagestack.push(id);
+                    }, false);
+                }
+            });
+        });
+
+        t1 = window.setTimeout(function () {
+            activeTab = document.querySelector('[data-role="tab"].active');
+            offsetX = activeTab.offsetLeft;
+            tabs.style['-webkit-transition-duration'] = '.3s';
+            tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                el.classList.toggle('inactive');
+            });
+        }, 3000);
     };
 
     var onTouchLeave = function (e) {};
@@ -127,6 +138,7 @@ var Tabs = function (tabs) {
 
         if ((this.className).indexOf('inactive') > -1) {
             window.clearTimeout(t2);
+
             activeTab = document.querySelector('[data-role="tab"].active');
             offsetX = this.offsetLeft;
             tabs.style['-webkit-transition-duration'] = '.3s';
@@ -136,29 +148,30 @@ var Tabs = function (tabs) {
             this.classList.remove('inactive');
             this.classList.add('active');
 
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                el.classList.remove('inactive');
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
+                e.classList.remove('inactive');
             });
 
             /*FIXME : We need to try to implement the infinite sliding
             Array.prototype.slice.call(
-                    document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
-                ).map(function(element) {
-                    return element.cloneNode(true);
-                }).forEach(function(element) {
-                    element.classList.remove('active');
-                    tabs.appendChild(element);
-                });*/
+                document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
+            ).map(function (element) {
+                return element.cloneNode(true);
+            }).forEach(function (element) {
+                element.classList.remove('active');
+                tabs.appendChild(element);
+            });*/
 
         } else {
+
             [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                 el.classList.toggle('inactive');
             });
-            t2 = window.setTimeout(function() {
+            t2 = window.setTimeout(function () {
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
-            }, 5000);
+            }, 3000);
         }
         e.preventDefault();
     };
