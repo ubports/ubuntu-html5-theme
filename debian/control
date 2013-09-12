@@ -22,6 +22,10 @@ Description: Toolkit styles for Ubuntu HTML5 Apps
 Package: ubuntu-html5-theme-examples
 Architecture: all
 Depends: ubuntu-html5-theme (= ${binary:Version}),
+	 qmlscene,
+         libjs-jquery,
+         libqt5webkit5-qmlwebkitplugin,
+         qtdeclarative5-qtquick2-plugin,
          ${misc:Depends},
 Description: Examples for Toolkit styles for Ubuntu HTML5 Apps
  This package provides examples of native-looing HTML5 applications for Ubuntu
