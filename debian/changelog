@@ -1,3 +1,22 @@
+ubuntu-html5-theme (0.1+13.10.20130916-0ubuntu1) saucy; urgency=low
+
+  [ daker ]
+  * Fixed the popover position when it's used with the footer. (LP:
+    #1216307)
+  * Removed the api key since it's not needed. (LP: #1224051)
+  * Fixed the Switchs CSS to match the QML theme. (LP: #1224188)
+
+  [ Alexandre Abreu ]
+  * The ui-gallery app was not being installed Add simple desktop file.
+    (LP: #1221920)
+  * Add qml launcher for the ui-gallery to have a more consistent view
+    of the widgets.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 81
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 16 Sep 2013 11:34:53 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130805-0ubuntu1) saucy; urgency=low
 
   [ Adnane Belmadiaf ]
