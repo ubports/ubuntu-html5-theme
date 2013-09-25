@@ -21,7 +21,7 @@
  */
 
 /* Tabs */
-var Tabs = function (tabs) {
+var Tabs = function (UbuntuUI, tabs) {
     var pageX,
         pageY,
         isScrolling,
@@ -43,22 +43,22 @@ var Tabs = function (tabs) {
 
         //Add or remove event listeners depending on touch status
         if (val === true) {
-            tabs.addEventListener(UI.touchEvents.touchMove, onTouchMove);
-            tabs.addEventListener(UI.touchEvents.touchEnd, onTouchEnd);
+            tabs.addEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove);
+            tabs.addEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd);
 
             // we only have leave events on desktop, we manually calcuate
             // leave on touch as its not supported in webkit
-            if (UI.touchEvents.touchLeave) {
-                tabs.addEventListener(UI.touchEvents.touchLeave, onTouchLeave);
+            if (UbuntuUI.touchEvents.touchLeave) {
+                tabs.addEventListener(UbuntuUI.touchEvents.touchLeave, onTouchLeave);
             }
         } else {
-            tabs.removeEventListener(UI.touchEvents.touchMove, onTouchMove, false);
-            tabs.removeEventListener(UI.touchEvents.touchEnd, onTouchEnd, false);
+            tabs.removeEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove, false);
+            tabs.removeEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd, false);
 
             // we only have leave events on desktop, we manually calcuate
             // leave on touch as its not supported in webkit
-            if (UI.touchEvents.touchLeave) {
-                tabs.removeEventListener(UI.touchEvents.touchLeave, onTouchLeave, false);
+            if (UbuntuUI.touchEvents.touchLeave) {
+                tabs.removeEventListener(UbuntuUI.touchEvents.touchLeave, onTouchLeave, false);
             }
         }
     };
@@ -71,7 +71,7 @@ var Tabs = function (tabs) {
         tabsWidth = tabs.offsetWidth;
         resistance = 1;
 
-        if (!UI.isTouch) {
+        if (!UbuntuUI.isTouch) {
             e.touches = [{
                 pageX: e.pageX,
                 pageY: e.pageY
@@ -85,7 +85,7 @@ var Tabs = function (tabs) {
     };
 
     var onTouchMove = function (e) {
-        if (!UI.isTouch) {
+        if (!UbuntuUI.isTouch) {
             e.touches = [{
                 pageX: e.pageX,
                 pageY: e.pageY
@@ -163,9 +163,9 @@ var Tabs = function (tabs) {
         e.preventDefault();
     };
 
-    tabs.addEventListener(UI.touchEvents.touchStart, onTouchStart);
-    tabs.addEventListener(UI.touchEvents.touchMove, onTouchMove);
-    tabs.addEventListener(UI.touchEvents.touchEnd, onTouchEnd);
+    tabs.addEventListener(UbuntuUI.touchEvents.touchStart, onTouchStart);
+    tabs.addEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove);
+    tabs.addEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd);
 
     [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
         el.addEventListener('click', onClicked, false);
