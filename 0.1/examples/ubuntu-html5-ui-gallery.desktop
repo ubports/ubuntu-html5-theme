@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Ubuntu HTML5 Theme UI Gallery
 Type=Application
-Exec=qmlscene /usr/share/ubuntu-html5-theme/examples/ui-gallery/qml/main.qml
+Exec=qmlscene /usr/share/ubuntu-html5-theme/0.1/examples/ui-gallery/qml/main.qml
 Icon=ubuntu
 Terminal=false
 X-Ubuntu-Touch=true
