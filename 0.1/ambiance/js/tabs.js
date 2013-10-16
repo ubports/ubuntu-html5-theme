@@ -20,7 +20,25 @@
  * <http://www.gnu.org/licenses/>
  */
 
-/* Tabs */
+/**
+ * @class Tabs
+ * @constructor
+ * @example
+      <header data-role="header">
+        <nav class="tabs" data-role="navbar">
+          <div class="tabs-inner">
+            <ul data-role="tabs">
+              <li class="active" data-role="tab">
+                <a href="#item1" id="firstTab">First</a>
+              </li>
+              <li class="inactive" data-role="tab">
+                <a href="#item2" id="secondTab">Second</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+*/
 var Tabs = function (UbuntuUI, tabs) {
     var pageX,
         pageY,
