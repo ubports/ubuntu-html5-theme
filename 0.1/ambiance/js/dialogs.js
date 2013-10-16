@@ -21,10 +21,12 @@
  */
 
 /** 
+ * Dialogs are modal and prevent other interactions with the entire application until dismissed.
  * @class Dialog
  * @constructor
  * @example
-      Dialog HTML markup is declared inside the data-role="content" div and outside of the data-role="pagestack" div. Dialogs are modal, preventing other interactions with the application until dismissed, including the footer.
+      Dialog HTML markup is declared inside the data-role="content" div and outside of the data-role="pagestack" div.
+
       <div data-role="content">
         <div data-role="pagestack">
           [...]
