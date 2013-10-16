@@ -21,6 +21,10 @@
  */
 
 /* Pagestack */
+/**
+ * @class Pagestack
+ * @constructor
+ */
 var Pagestack = (function () {
     
     function __safeCall(f, args, errorfunc) {
@@ -37,6 +41,12 @@ var Pagestack = (function () {
     };
 
     Pagestack.prototype = {
+/**
+* Make all pages in ths pagestack visible or invisible
+* @method __setAllPagesVisibility
+* @private
+* @param {Boolean} visible - true make visible
+*/
 	__setAllPagesVisibility: function (visible) {
 	    var visibility = visible ? "block" : "none";
 	    [].forEach.call(document.querySelectorAll("[data-role='pagestack'] [data-role='page']"), function(el) {
@@ -79,6 +89,12 @@ var Pagestack = (function () {
 		footer.classList.add('revealed');
 	    }
 	},
+  /**
+   * Push a page to the top of this pagestack
+   * @method push
+   * @param {String} id - The id attribute of the page element to be pushed
+   * @param {Object} properties - This param is not currently used
+   */
 	push: function (id, properties) {
 	    try {
 		__safeCall(this.__setAllPagesVisibility.bind(this), [false]);
@@ -88,12 +104,27 @@ var Pagestack = (function () {
 	    }
 	    catch(e) {}
 	},
+  /**
+   * Checks for zero pages in this pagestack
+   * @method isEmpty
+   * @return {Boolean} - True when this pagestack has no pages, else false
+   */
 	isEmpty: function () {
 	    return this._pages.length === 0;
 	},
+  /**
+   * Gets the id attribute of the page element on top of this pagestack
+   * @method currentPage
+   * @return {PageID|Null} - The topmost page's id attribute, else null when there are no pages on this pagestack
+   */
 	currentPage: function () {
 	    return this.isEmpty() ? null : this._pages[this._pages.length-1];
 	},
+  /**
+   * Gets the number of pages in this pagestack
+   * @method depth
+   * @return {Number} - The number of pages in this pagestack
+   */
 	depth: function() {
 	    return this._pages.length;
 	},
@@ -103,6 +134,10 @@ var Pagestack = (function () {
 	    __safeCall(this.__deactivate.bind(this), [this.currentPage()]);
 	    this._pages = [];
 	},
+  /**
+   * Pops the current page off this pagestack, which causes the next page to become the top page and to display
+   * @method pop
+   */
 	pop: function() {
 	    if(this.isEmpty())
 		return;
@@ -114,4 +149,3 @@ var Pagestack = (function () {
 
     return Pagestack;
 })();
-    
