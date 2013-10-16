@@ -21,8 +21,31 @@
  */
 
 /**
+ * Usually, Ubuntu HTML5 applications have one Pagestack. Pagestack manages pages with a stack data structure, hence the name of the class. A pagestack can contain a toolbar for all its pages, however, pages can also have their own toolbar. The pagestack has methods to show and hide pages. Only one page and its toolbar can be displayed at the same time. Each time a page is shown, its global DOM id is added on the stack of pages. The pop method removes a page from the stack and shows the preceding page instead.
  * @class Pagestack
  * @constructor
+ * @example
+     Declaration in HTML
+     <div data-role="page">
+        <header data-role="header">
+          [...]
+        </header>
+        <div data-role="content">
+          <div data-role="pagestack">
+            <div data-role="page" id="main">
+            </div>
+            <div data-role="page" id="pagestack">
+              <section>
+                [...]
+               </section>
+            </div>
+            <div data-role="page" id="page2">
+            <section>
+                [...]
+            </section>
+          </div>
+        </div>
+      </div>
  */
 var Pagestack = (function () {
     
