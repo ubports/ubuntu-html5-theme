@@ -20,18 +20,43 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Dialogs */
+/** 
+ * @class Dialog
+ * @constructor
+ * @example
+      Dialog HTML markup is declared inside the data-role="content" div and outside of the data-role="pagestack" div. Dialogs are modal, preventing other interactions with the application until dismissed, including the footer.
+      <div data-role="content">
+        <div data-role="pagestack">
+          [...]
+        </div>
+        <div data-role="dialog" id="dialogShow">
+          [...]
+        </div>
+      </div>
+ */
 var Dialog = function (id) {
     this.dialog = document.getElementById(id);
 };
 
 Dialog.prototype = {
+    /**
+     * Display a dialog by adding 'active' CSS class
+     * @method show
+     */
     show: function () {
         this.dialog.classList.add('active');
     },
+    /**
+     * Hide a dialog by removing 'active' class
+     * @method hide
+     */
     hide: function () {
         this.dialog.classList.remove('active');
     },
+    /**
+     * Toggle a dialog, which means removing its 'active' class if it has one, or adding the 'active' class if it does not have one
+     * @method toggle
+     */
     toggle: function () {
         this.dialog.classList.toggle('active');
     }
