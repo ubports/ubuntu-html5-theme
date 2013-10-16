@@ -20,7 +20,6 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Pagestack */
 /**
  * @class Pagestack
  * @constructor
