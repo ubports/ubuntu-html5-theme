@@ -20,6 +20,17 @@
  * <http://www.gnu.org/licenses/>
  */
 
+/**
+ * UbuntuUI is the critical object you need to contruct and initialize for an Ubuntu HTML5 GUI. You then use its properties and methdos to access the Ubuntu HTML5 DOM elements and their methods.
+ * @class UbuntuUI
+ * @constructor
+ * @example
+     window.onload = function () {
+     var UI = new UbuntuUI();
+     UI.init();
+     // Then access UI's properties and methods 
+     UI.pagestack.push("pageid");
+ */
 var UbuntuUI = (function () {
 
     PAGESTACK_BACK_ID = 'ubuntu-pagestack-back';
@@ -142,28 +153,57 @@ var UbuntuUI = (function () {
             }
         },
 
+        /**
+         * Required call to initialize the UbuntuUI object
+         * @method {} init
+         */
         init: function () {
             this.__setupPage(document);
         },
 
+        /**
+         * Getrs an Ubuntu Button element
+         * @method button
+         * @param {ID} - the button's id attrubute
+         * @return {Button} - The button with the specifed id
+         */
         button: function (id) {
             if (typeof Button != 'undefined' && Button) {
                 return new Button(id);
             }
         },
 
+        /**
+         * Gets an Ubuntu Dialog element
+         * @method dialog
+         * @param {ID} - The dialog's id attrubute
+         * @return {Dialog} - The dialog with the specified id
+         */
         dialog: function (id) {
             if (typeof Dialog != 'undefined' && Dialog) {
                 return new Dialog(id);
             }
         },
 
+        /**
+         * Gets an Ubuntu Popover
+         * @method popover
+         * @param {elem} - the element to which the popover is attached
+         * @param {ID} - The created popover's id attrubute
+         * @return {Popover} - The created popover
+         */
         popover: function (elem, id) {
             if (typeof Popover != 'undefined' && Popover) {
                 return new Popover(elem, id);
             }
         },
 
+        /**
+         * Gets an Ubuntu Tabs object
+         * @method tabs
+         * @param {[CssSelectpr]} - The CSS selector of the desired Tabs element. If omitted, the app's single tabs oobject is used
+         * @return {Tabs} - The app's single Tabs object
+         */
         tabs: function (selector) {
             if (typeof Tabs != 'undefined' && Tabs) {
                 if (selector === undefined)
@@ -174,18 +214,35 @@ var UbuntuUI = (function () {
             }
         },
 
+        /**
+         * Gets an Ubuntu Toolbar
+         * @method toolbar
+         * @param {ID} - The toolbar's id attrubute
+         * @return {Toolbar} - The 
+         */
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
                 return new Toolbar(this, id);
             }
         },
 
+        /**
+         * Gets an Ubuntu List
+         * @method list
+         * @param {ID} - the toolbar's id attrubute
+         * @return {List}
+         */
         list: function (selector) {
             if (typeof List != 'undefined' && List) {
                 return new List(selector);
             }
         },
 
+        /**
+         * Gets the Ubuntu Pagestack
+         * @method list
+         * @return {Pagestack}
+         */
         get pagestack() {
             return this._pageStack;
         }
