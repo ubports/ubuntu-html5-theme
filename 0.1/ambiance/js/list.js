@@ -20,7 +20,32 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Lists */
+/**
+ * A Ubuntu List is a &lt;section data-role="list"&gt; element containing an unordered list &lt;ul&gt; with list items &lt;li&gt;, each of which contains an &lt;a href="#"&gt; with text (displayed flush left). The list may have a &lt;header&gt;. Additional options include: additional text flushed right, a secondary label, and an icon on the left, as shown in the example.
+ * @class List
+ * @constructor
+ * @example
+     Declaring a list in HTML:
+     <section data-role="list" id="testlist">
+       <header>My header text</header>
+       <ul>
+         <li>
+           <a href="#">Main text, to the left</a>
+         </li>
+         <li>
+           <a href="#">Main text</a>
+           <label>Right text</label>
+         </li>
+         <li>
+           <aside>
+             <img src="someicon.png">
+           </aside>
+           <a href="#">Main text</a>
+           <label>Right</label>
+         </li>
+       </ul>
+      </section>
+ */
 var List = (function () {
     var LIST_DATA_ROLE = 'list';
 
@@ -45,6 +70,11 @@ var List = (function () {
     };
 
     List.prototype = {
+    /**
+     * Add or Set the List Header
+     * @method setHeader
+     * @param {String} text - The header text
+     */ 
 	setHeader: function (text) {
 	    if (typeof(text) == 'string') {
 		var header = this._list.querySelectorAll('header');
@@ -65,21 +95,16 @@ var List = (function () {
 		header.innerText = text;
 	    }
 	},
-	/*
-	  \brief Appends a item to the list
-	  
-	  Appends a given item to the current list.
-	  
-	  \param text A string of text (images & custom html not supported at the moment)
-	  \param onclick (optional) A function callback that is to be called when the item is clicked.
-	                 It will be called with the clicked node as a parameter along with the value of
-			 user_data (if any).
-	  \param id (optional) An optional Id for the added node, the id will only be added if it does not already
-	                       conflict with another one.
-          \param user_data (optional) An javascript entity that will be passed to the onclick callback (if any)
-	                              when the event has been trigger.
-	  \return added item node or null
-	 */
+	/**
+     * Append an item to a list
+     * @method append
+     * @param {String} text - The main text, flushed left (no markup)
+     * @param {[String]} label - Additional text, flushed right (no markup)
+     * @param {[ID]} id - An id attribute value set for the new list item (must be unique in DOM)
+     * @param {[Function]} onclick - The click callback function
+     * @param {[Object*]} user_data - Additional data that is passed to the click callback
+     * @return {Element} - The created list item, or null on failure ot create
+     */
 	append: function (text, label, id, onclick, user_data) {
 	    var li = document.createElement('li');
 	    var a = document.createElement('a');
@@ -110,29 +135,32 @@ var List = (function () {
 
 	    return li;
 	},
-	/*
-	  \brief returns the nth child item from a list
-	  
-	  \param index Index of the child to return (0 based number)
-	  \return selected item node or null
-	 */
+    /**
+     * Gets a list item &lt;li&gt; by its index, where index counting starts from 1
+     * @method at
+     * @param {Number} index
+     * @return The list item, or null on failure 
+     */
 	at: function (index) {
 	    if (typeof(index) != 'number')
 		return null;
 	    return this._list.querySelector('ul').querySelector('li:nth-child(' + index + ')');
 	},
-	/*
-	  \brief removes the nth child item from a list
-	  
-	  \param index Index of the child to remove (0 based number)
-	  \return nothing
-	 */
+    /**
+     * Removes a list item &lt;li&gt; by its index, where index counting starts from 1
+     * @method remove
+     * @param {Number} index
+     */
 	remove: function (index) {
 	    var item = this.at(index);
 	    if (item) {
-		item.parendNode.removeChild(item);
+		item.parendNode.removeChild(item); /* Note: 'parend' is a typo. see pad.lv//1241215
 	    }
 	},
+    /**
+     * Removes all items from a list
+     * @method removeAllItems
+     */
 	/*
 	  \brief removes all the child items from a list
 	  \return nothing
@@ -141,14 +169,11 @@ var List = (function () {
 	    if (this._list.querySelector('ul'))
 		this._list.querySelector('ul').innerHTML = '';
 	},
-	/*
-	  \brief iterator over the list of list items and calls a function on each one
-	  
-	  \param func function to be called for each list item. The function
-	              receives the DOM node associated with the current item along with its
-		      index.
-	  \return nothing
-	*/
+    /**
+     * Iterates over all list items and runs a provided function on each
+     * @method forEach
+     * @param {Function} func - The function to run on each list item
+     */
 	forEach: function (func) {
 	    if (typeof(func) !== 'function')
 		return;
