@@ -20,12 +20,28 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Buttons */
+/**
+ * An Ubuntu Button
+ * @class Button
+ * @constructor
+ * @example
+     Declare an Ubuntu Button in HTML like this:
+     <button data-role="button" id=SOMEID>text</button>
+ */
 var Button = function (id) {
     this.id =  id;
 };
 
 Button.prototype = {
+    /**
+     * Associate a function with the button's Click event
+     * @method click
+     * @param {Function} - The function to execute on click
+     * @example
+        UI.button("buttonid").click(function(){
+         console.log("clicked");
+        });
+     */
     click: function (callback) {
 	if ( ! document.getElementById(this.id)) {
 	    throw "Invalid button ID: " + String(this.id);
