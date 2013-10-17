@@ -164,7 +164,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Button element
          * @method button
-         * @param {ID} - the button's id attrubute
+         * @param {ID} id - the button's id attrubute
          * @return {Button} - The button with the specifed id
          */
         button: function (id) {
@@ -176,7 +176,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Dialog element
          * @method dialog
-         * @param {ID} - The dialog's id attrubute
+         * @param {ID} id - The dialog's id attrubute
          * @return {Dialog} - The dialog with the specified id
          */
         dialog: function (id) {
@@ -188,8 +188,8 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Popover
          * @method popover
-         * @param {elem} - the element to which the popover is attached
-         * @param {ID} - The created popover's id attrubute
+         * @param {Element} elem - the element to which the popover is attached
+         * @param {ID} id - The created popover's id attrubute
          * @return {Popover} - The created popover
          */
         popover: function (elem, id) {
@@ -201,7 +201,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Tabs object
          * @method tabs
-         * @param {[CssSelectpr]} - The CSS selector of the desired Tabs element. If omitted, the app's single tabs oobject is used
+         * @param {[CssSelectpr]} selector - The CSS selector of the desired Tabs element. If omitted, the app's single tabs oobject is used
          * @return {Tabs} - The app's single Tabs object
          */
         tabs: function (selector) {
@@ -217,7 +217,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Toolbar
          * @method toolbar
-         * @param {ID} - The toolbar's id attrubute
+         * @param {ID} id - The toolbar's id attrubute
          * @return {Toolbar} - The 
          */
         toolbar: function (id) {
@@ -229,7 +229,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu List
          * @method list
-         * @param {ID} - the toolbar's id attrubute
+         * @param {Selector} selector - A selector that JavaScript querySelector understands
          * @return {List}
          */
         list: function (selector) {
@@ -238,11 +238,6 @@ var UbuntuUI = (function () {
             }
         },
 
-        /**
-         * Gets the Ubuntu Pagestack
-         * @method list
-         * @return {Pagestack}
-         */
         get pagestack() {
             return this._pageStack;
         }
