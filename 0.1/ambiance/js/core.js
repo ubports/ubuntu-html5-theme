@@ -162,7 +162,7 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Getrs an Ubuntu Button element
+         * Gets an Ubuntu Button element
          * @method button
          * @param {ID} - the button's id attrubute
          * @return {Button} - The button with the specifed id
