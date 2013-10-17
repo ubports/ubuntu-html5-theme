@@ -32,7 +32,7 @@ body {
 
 /* -- Links ----------------------------------------------------------------- */
 a {
-    color: #356de4;
+    color: #DD4814;
     text-decoration: none;
 }
 
@@ -56,8 +56,8 @@ dd p:first-child, td p:first-child { margin-top: 0; }
 
 /* -- Headings -------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
-    color: #D98527;/*was #f80*/
-    font-family: 'Trebuchet MS', sans-serif;
+    color: #DD4814
+    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     line-height: 1.1;
     margin: 1.1em 0 0.5em;
