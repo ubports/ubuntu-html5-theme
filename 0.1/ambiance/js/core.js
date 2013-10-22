@@ -21,7 +21,7 @@
  */
 
 /**
- * UbuntuUI is the critical object you need to contruct and initialize for an Ubuntu HTML5 GUI. You then use its properties and methdos to access the Ubuntu HTML5 DOM elements and their methods. Ubuntu HTML is styled with CSS, so check out the CSS files to see what's available by default.
+ * UbuntuUI is the critical object you need to contruct and initialize for an Ubuntu HTML5 GUI. You then use its properties and methods to access the Ubuntu HTML5 DOM elements and their methods. Ubuntu HTML is styled with CSS, so check out the CSS files to see what's available by default.
  * @module UbuntuUI
  * @class UbuntuUI
  * @constructor
