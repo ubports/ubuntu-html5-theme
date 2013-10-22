@@ -21,7 +21,7 @@
  */
 
 /** 
- * Dialogs are modal and prevent other interactions with the entire application until dismissed.
+ * Dialogs are modal and prevent other GUI interactions with the application until dismissed.
  * @class Dialog
  * @constructor
  * @example
