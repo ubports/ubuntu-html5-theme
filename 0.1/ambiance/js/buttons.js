@@ -36,7 +36,7 @@ Button.prototype = {
     /**
      * Associate a function with the button's Click event
      * @method click
-     * @param {Function} - The function to execute on click
+     * @param {Function} callback - The function to execute on click
      * @example
         UI.button("buttonid").click(function(){
          console.log("clicked");
