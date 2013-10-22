@@ -20,21 +20,57 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Toolbars */
+/**
+ * An Ubuntu Toolbar is the same thing as the Footer. The Toolbar/Footer contains a Ubuntu list (see below). See the Pagestack documentation for information about the default footer, defining an application footer, and Page specific footers. 
+ * @class Toolbar
+ * @constructor
+ * @example
+     Declare an Ubuntu  in HTML like this:
+     <footer data-role="footer" class="revealed" id="footer">
+       <section data-role="list">
+         <navbar>
+           <ul>
+             <li>
+                 <a href="#" id="home">Home</a>
+             </li>
+           </ul>
+         </navbar>
+       </section>
+     </footer>
+
+ */
+
 var Toolbar = function (UbuntuUI, id) {
     this.toolbar = document.getElementById(id);
 };
 
 Toolbar.prototype = {
+    /**-
+     * Display a Toolbar
+     * @method show
+     */
     show: function () {
         this.toolbar.classList.add('revealed');
     },
+    /**-
+     * Hide a Toolbar
+     * @method hide
+     */
     hide: function () {
         this.toolbar.classList.remove('revealed');
     },
+    /**
+     * Toggle show/hide status of a Toolbar
+     * @method toggle
+     */
     toggle: function () {
         this.toolbar.classList.toggle('revealed');
     },
+    /**
+     * Provide a callback function that's called with the Toolbar is touched
+     * @method touch
+     * @param {Function} - The function that is called when the Toolbar is touched
+     */
     touch: function (callback) {
         this.toolbar.addEventListener(UbuntuUI.touchEvents.touchEnd, callback);
     }

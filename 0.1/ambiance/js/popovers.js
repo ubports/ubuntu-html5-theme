@@ -20,7 +20,22 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Popover */
+/**
+ * A Popover is a &lt;div&gt; containing an unordered list (&gt;ul&lt;). Its position is set relative to a specified element with the &lt;data-gravity="LETTER"&gt; attribute, with these values for LETTER: 'n': the element is above the Popover; 's': the element is below the Popover; 'e': the element is to the east of, or is to the right of, the Popover (in right-to-left locales); 'w': the element is to the west of, or to the left of, the Popover (in right-to-left locale)
+).
+ * @class Popover
+ * @constructor
+ * @param {String} elem - The element to which the Popover's position is relative
+ * @param {ID} id - The id attribute of the Popover in HTML
+ * @example
+      <div class="popover active" data-gravity="n" id="popover">
+        <ul class="list">
+          <li class="active"><a href="#">Item1</a></li>
+          <li><a href="#">Item2</a></li>
+        </ul>
+      </div>
+ */
+
 var Popover = function (elem, id) {
     this.id = id;
     this.popover = document.getElementById(id);
@@ -30,6 +45,10 @@ var Popover = function (elem, id) {
 };
 
 Popover.prototype = {
+    /** 
+     * Display a Popover
+     * @method show
+     */
     show: function () {
         if (this.popover === null) {
             console.error('The popover with the ID #' + this.id + ' doesn\'t exist');
@@ -103,12 +122,20 @@ Popover.prototype = {
 
         return this.popover;
     },
+    /**
+     * Hide a Popover
+     * @method hide
+     */
     hide: function () {
         this.popover.classList.remove('active');
         this.popover.style.top = '0px';
         this.popover.style.left = '0px';
         return this.popover;
     },
+    /**
+     * Toggle show/hide status of a Popover
+     * @method toggle
+     */
     toggle: function () {
         if (this.popover === null) {
             console.error('The popover with the ID #' + this.id + ' doesn\'t exist');
