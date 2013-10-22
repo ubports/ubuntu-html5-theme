@@ -283,6 +283,16 @@ var UbuntuUI = (function () {
             return this._pageStack;
         },
 
+        /**
+         * Gets the Ubuntu HTML element
+         * @method getEl
+         * @param {UbuntuWidget} widget - An UbuntuUI widget object
+         * @return {Element} - The HTML element
+         */
+        getEl: function(widget) {
+          return document.getElementById(widget.id);
+        },
+
     };
 
     return UbuntuUI;
