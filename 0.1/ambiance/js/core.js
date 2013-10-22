@@ -21,15 +21,15 @@
  */
 
 /**
- * UbuntuUI is the critical object you need to contruct and initialize for an Ubuntu HTML5 GUI. You then use its properties and methdos to access the Ubuntu HTML5 DOM elements and their methods.
+ * UbuntuUI is the critical object you need to contruct and initialize for an Ubuntu HTML5 GUI. You then use its properties and methdos to access the Ubuntu HTML5 DOM elements and their methods. Ubuntu HTML is styled with CSS, so check out the CSS files to see what's available by default.
+ * @module UbuntuUI
  * @class UbuntuUI
  * @constructor
  * @example
      window.onload = function () {
      var UI = new UbuntuUI();
      UI.init();
-     // Then access UI's properties and methods 
-     UI.pagestack.push("pageid");
+     UI.pagestack.push('pageid');
  */
 var UbuntuUI = (function () {
 
@@ -154,7 +154,7 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Required call to initialize the UbuntuUI object
+         * Required call that initializes the UbuntuUI object
          * @method {} init
          */
         init: function () {
@@ -162,10 +162,34 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets an Ubuntu Button element
+         * Gets an Ubuntu Page object
+         * @method page
+         * @param {ID} id - The element's id attrubute
+         * @return {Page} - The Page with the specified id
+         */
+        page: function (id) {
+            if (typeof Page != 'undefined' && Page ) {
+                return new Page(id);
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Shape object
+         * @method shape
+         * @param {ID} id - The element's id attrubute
+         * @return {Shape} - The Shape with the specified id
+         */
+        shape: function (id) {
+            if (typeof Shape != 'undefined' && Shape ) {
+                return new Shape(id);
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Button object
          * @method button
-         * @param {ID} id - the button's id attrubute
-         * @return {Button} - The button with the specifed id
+         * @param {ID} id - The element's id attrubute
+         * @return {Button} - The Button with the specified id
          */
         button: function (id) {
             if (typeof Button != 'undefined' && Button) {
@@ -174,10 +198,10 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets an Ubuntu Dialog element
+         * Gets an Ubuntu Dialog object
          * @method dialog
-         * @param {ID} id - The dialog's id attrubute
-         * @return {Dialog} - The dialog with the specified id
+         * @param {ID} id - The element's id attrubute
+         * @return {Dialog} - The Dialog with the specified id
          */
         dialog: function (id) {
             if (typeof Dialog != 'undefined' && Dialog) {
@@ -186,11 +210,11 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets an Ubuntu Popover
+         * Gets an Ubuntu Popover object
          * @method popover
-         * @param {Element} elem - the element to which the popover is attached
-         * @param {ID} id - The created popover's id attrubute
-         * @return {Popover} - The created popover
+         * @param {Element} el - The element to which the Popover's position is relative
+         * @param {ID} id - The element's id attrubute
+         * @return {Popover} - The Popover with the specified id
          */
         popover: function (elem, id) {
             if (typeof Popover != 'undefined' && Popover) {
@@ -199,10 +223,22 @@ var UbuntuUI = (function () {
         },
 
         /**
+         * Gets an Ubuntu Header object
+         * @method header
+         * @param {ID} id - The element's id attrubute
+         * @return {Header} - The Header with the specified id
+         */
+        header: function (id) {
+            if (typeof Header != 'undefined' && Header) {
+                return new Header(id);
+            }
+        },
+
+        /**
          * Gets an Ubuntu Tabs object
          * @method tabs
-         * @param {[CssSelectpr]} selector - The CSS selector of the desired Tabs element. If omitted, the app's single tabs oobject is used
-         * @return {Tabs} - The app's single Tabs object
+         * @param {ID} id - The element's id attrubute
+         * @return {Tabs} - The Tabs with the specified id
          */
         tabs: function (selector) {
             if (typeof Tabs != 'undefined' && Tabs) {
@@ -215,10 +251,10 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets an Ubuntu Toolbar
+         * Gets an Ubuntu Toolbar object
          * @method toolbar
-         * @param {ID} id - The toolbar's id attrubute
-         * @return {Toolbar} - The 
+         * @param {ID} id - The element's id attrubute
+         * @return {Toolbar} - The Toolbar with the specified id
          */
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
@@ -229,7 +265,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu List
          * @method list
-         * @param {Selector} selector - A selector that JavaScript querySelector understands
+         * @param {Selector} selector - A selector that JavaScript querySelector method understands
          * @return {List}
          */
         list: function (selector) {
@@ -238,9 +274,15 @@ var UbuntuUI = (function () {
             }
         },
 
+        /**
+         * Gets this Pagestack object
+         * @method pagestack
+         * @return {Pagestack} - This Pagestack
+         */
         get pagestack() {
             return this._pageStack;
-        }
+        },
+
     };
 
     return UbuntuUI;
