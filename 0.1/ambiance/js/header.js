@@ -25,7 +25,7 @@
  * @class Header
  * @constructor
  * @example
-      Declare a header in HTML as a direct child of the &lt;body&gt; like this:
+      Declare a header in HTML as a direct child of the <body> like this:
       <body>
         <header data-role="header">
           <nav data-role="navbar" class="tabs" >
