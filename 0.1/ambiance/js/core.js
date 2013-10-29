@@ -28,6 +28,10 @@ var UbuntuUI = (function () {
         return document.querySelectorAll("[data-role='pagestack']") != null;
     };
 
+    function __hasTabs(document) {
+        return document.querySelectorAll("[data-role='tabs']") != null;
+    };
+
     function __createBackButtonListItem(d) {
 	var a = d.createElement('a');
 	a.setAttribute('href', '#');
@@ -139,11 +143,21 @@ var UbuntuUI = (function () {
         __setupPage: function (document) {
             if (__hasPageStack(document)) {
                 this.__setupPageStack(document);
-	    }
+            }
+        },
+
+        __setupTabs: function (document) {
+            if (__hasTabs(document)) {
+                    if (typeof Tabs != 'undefined' && Tabs) {
+                        tabs = document.querySelector('[data-role=tabs]');
+                        this._tabs = new Tabs(tabs);
+                    }
+            }
         },
 
         init: function () {
             this.__setupPage(document);
+            this.__setupTabs(document);
         },
 
         button: function (id) {
@@ -164,16 +178,6 @@ var UbuntuUI = (function () {
             }
         },
 
-        tabs: function (selector) {
-            if (typeof Tabs != 'undefined' && Tabs) {
-                if (selector === undefined)
-                    tabs = document.querySelector('[data-role=tabs]');
-                else
-                    tabs = document.querySelector(selector);
-                return new Tabs(tabs);
-            }
-        },
-
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
                 return new Toolbar(id);
@@ -188,6 +192,10 @@ var UbuntuUI = (function () {
 
         get pagestack() {
             return this._pageStack;
+        },
+
+        get tabs() {
+            return this._tabs;
         }
     };
 
