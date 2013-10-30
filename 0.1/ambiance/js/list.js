@@ -130,7 +130,7 @@ var List = (function () {
 	remove: function (index) {
 	    var item = this.at(index);
 	    if (item) {
-		item.parendNode.removeChild(item);
+		item.parentNode.removeChild(item);
 	    }
 	},
 	/*
