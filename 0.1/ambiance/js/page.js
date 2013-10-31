@@ -21,14 +21,35 @@
  */
 
 /**
- * An Ubuntu app consists of a Pagestack made of one or more Pages. Each page displays full-window.
+ * An Ubuntu app consists of a Pagestack containing one or more Pages. Each page displays full-screen. See the Pagestack class.
+
+Each Page must have an <em>id</em> attriubute. This is used to push the Page to the top of the Pagestack (see the Pagestack class).
+
+Navigation between Pages is typically provided by the Header and its Tabs. See the Header class.
  * @class Page
  * @constructor
+ * @namespace UbuntuUI
  * @example
-      Declare in HTML like this:
-      <div data-role="page" id="ID">
-        [...]
-      </div>
+      </body>
+        <div data-role="page">
+          <header data-role="header">
+            [...]
+          </header>
+          <div data-role="content">
+            <div data-role="pagestack">
+              <div data-role="page" id="main">
+                [...]
+              </div>
+              <div data-role="page" id="ID">
+                [...]
+              </div>
+            </div>
+          </div>
+        </div>
+      </body>
+
+      JavaScript access:
+      var page = UI.page("pageID");
  */
 var Page = function (id) {
     this.id =  id;

@@ -21,14 +21,18 @@
  */
 
 /**
- * An Ubuntu Shape
+ * An Ubuntu Shape contains and decorates (with CSS styles) some markup, often an <em>img</em>.
  * @class Shape
  * @constructor
+ * @namespace UbuntuUI
  * @example
-      Declare in HTML like this:
-      <div data-role="shape">
+      <div data-role="shape" id="shapeID">
         <img src="URI"/>
       </div>
+
+      JavaScript access:
+      var shape = UI.shape("shapeID");
+
  */
 var Shape = function (id) {
     this.id =  id;

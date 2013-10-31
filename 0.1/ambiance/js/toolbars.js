@@ -21,22 +21,32 @@
  */
 
 /**
- * An Ubuntu Toolbar is the same thing as the Footer. The Toolbar/Footer contains a Ubuntu list (see below). See the Pagestack documentation for information about the default footer, defining an application footer, and Page specific footers. 
+ * A Toolbar is the JavaScript representation of an Ubuntu HTML5 app <em>footer</em>. 
+
+######Contained List provides buttons
+The Toolbar contains a List, where each list item is treated as a Button (see below). List items (Buttons) are pushed to the right. The default Back button always exists to the left and does not need to be declared. 
+
+#####Default and custom footers
+See the Pagestack class documentation for information about the default application-wide Footer, customizing it, and adding Page-specific Footers.
  * @class Toolbar
  * @constructor
+ * @namespace UbuntuUI
  * @example
-     Declare an Ubuntu  in HTML like this:
-     <footer data-role="footer" class="revealed" id="footer">
-       <section data-role="list">
-         <navbar>
-           <ul>
-             <li>
-                 <a href="#" id="home">Home</a>
-             </li>
-           </ul>
-         </navbar>
-       </section>
-     </footer>
+      <footer data-role="footer" class="revealed" id="footerID">
+        <div data-role="list">
+          <ul>
+            <li>
+              <a href="#" id="home">Home</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+
+      JavaScript access:
+      var toolbar = UI.footer("footerID");
+      UI.button('home').click(function () {
+        UI.pagestack.push("main");
+      });
 
  */
 
@@ -69,7 +79,7 @@ Toolbar.prototype = {
     /**
      * Provide a callback function that's called with the Toolbar is touched
      * @method touch
-     * @param {Function} - The function that is called when the Toolbar is touched
+     * @param {Function} function - The function that is called when the Toolbar is touched
      */
     touch: function (callback) {
         this.toolbar.addEventListener(UbuntuUI.touchEvents.touchEnd, callback);

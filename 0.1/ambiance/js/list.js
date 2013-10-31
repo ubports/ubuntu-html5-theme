@@ -21,11 +21,11 @@
  */
 
 /**
- * A Ubuntu List is a &lt;section data-role="list"&gt; element containing an unordered list &lt;ul&gt; with list items &lt;li&gt;, each of which contains an &lt;a href="#"&gt; with text (displayed flush left). The list may have a &lt;header&gt;. Additional options include: additional text flushed right, a secondary label, and an icon on the left, as shown in the example.
+ * A List comes with various options, including: a <em>header</em>, main text (pushed left), an icon (pushed left), and a secondary label (pushed right).
  * @class List
  * @constructor
+ * @namespace UbuntuUI
  * @example
-     Declaring a list in HTML:
      <section data-role="list" id="testlist">
        <header>My header text</header>
        <ul>
@@ -45,6 +45,9 @@
          </li>
        </ul>
       </section>
+
+      JavaScript access:
+        var list = UI.list('[id="testlist"]');
  */
 var List = (function () {
     var LIST_DATA_ROLE = 'list';

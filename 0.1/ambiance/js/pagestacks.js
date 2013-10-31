@@ -21,11 +21,25 @@
  */
 
 /**
- * The pagestack manages all pages in a stack data structure. The top page is displayed. Methods let you manipulate the pages on the pagestack. A default footer (toolbar) with a single back button always displays. This application-wide footer can be customized (for example, you can add buttons) by creating a footer inside the pagestack that is a sibling to the pages. Each page may have its own custom footer by declaring the footer inside a page.
+ * The Pagestack manages all Pages in a stack data structure. Initially, the Pagestack contains no Pages. The <em>push()</em> method is normally executed on load to display the app starting page.
+
+      UI.pagestack.push("pageID")
+
+The topmost Page on the Pagestack is always displayed.
+
+The Pagestack is declared as a direct child of the <em>content</em> div.
+
+#####Default application wide footer
+The Pagestack contains a default <em>footer</em> (represented in JavaScript as a Toolbar), even if you do not declare one in HTML. The <em>footer</em> has a single Back button. 
+#####Customized application wide footer
+This application-wide <em>footer</em> can be customized (for example, you can add Buttons) by declaring a <em>footer</em> as a direct child of the <em>pagestack</em> div (see example). 
+######Page specific footers
+A <em>page</em> may declare a page-specific <em>footer</em> as a child element.
+
  * @class Pagestack
+ * @namespace UbuntuUI
  * @constructor
  * @example
-     The Pagestack HTML markup is declared inside the data-role="content" div.
 
      <div data-role="page">
         <header data-role="header">
@@ -36,17 +50,21 @@
             <div data-role="page" id="main">
             </div>
             <div data-role="page" id="page2">
-              <section>
+              [...]
+              <footer data-role="footer" class="revealed" id="footerPage2">
                 [...]
-               </section>
+              </footer>
             </div>
-            <div data-role="page" id="page3">
-            <section>
-                [...]
-            </section>
-          </div>
+            <footer data-role="footer" class="revealed" id="footerAppWide">
+              [...]
+            </footer>
+          </div>  <!-- end of Pagestack div -->
         </div>
       </div>
+
+      JavaScript:
+      UI.pagestack.METHOD();
+
  */
 var Pagestack = (function () {
     
@@ -64,12 +82,6 @@ var Pagestack = (function () {
     };
 
     Pagestack.prototype = {
-/**
-* Make all pages in ths pagestack visible or invisible
-* @method __setAllPagesVisibility
-* @private
-* @param {Boolean} visible - true make visible
-*/
 	__setAllPagesVisibility: function (visible) {
 	    var visibility = visible ? "block" : "none";
 	    [].forEach.call(document.querySelectorAll("[data-role='pagestack'] [data-role='page']"), function(el) {

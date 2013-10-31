@@ -21,15 +21,22 @@
  */
 
 /**
- * UbuntuUI is the critical object you need to contruct and initialize for an Ubuntu HTML5 GUI. You then use its properties and methods to access the Ubuntu HTML5 DOM elements and their methods. Ubuntu HTML is styled with CSS, so check out the CSS files to see what's available by default.
  * @module UbuntuUI
+ */
+
+/**
+ * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements. 
+
+Note: The UbuntuUI object is "UI" in all API doc examples.
  * @class UbuntuUI
  * @constructor
  * @example
-     window.onload = function () {
-     var UI = new UbuntuUI();
-     UI.init();
-     UI.pagestack.push('pageid');
+      var UI = new UbuntuUI();
+      window.onload = function () {
+        UI.init();
+        UI.pagestack.push('pageid');
+        [...]
+      };
  */
 var UbuntuUI = (function () {
 
@@ -275,18 +282,18 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets this Pagestack object
+         * Gets this UbuntuUI's single Pagestack object
          * @method pagestack
-         * @return {Pagestack} - This Pagestack
+         * @return {Pagestack} - The Pagestack
          */
         get pagestack() {
             return this._pageStack;
         },
 
         /**
-         * Gets the Ubuntu HTML element
+         * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
          * @method getEl
-         * @param {UbuntuWidget} widget - An UbuntuUI widget object
+         * @param {UbuntuObject} object - An UbuntuUI widget object
          * @return {Element} - The HTML element
          */
         getEl: function(widget) {

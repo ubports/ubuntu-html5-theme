@@ -21,19 +21,37 @@
  */
 
 /**
- * A Popover is a &lt;div&gt; containing an unordered list (&gt;ul&lt;). Its position is set relative to a specified element with the &lt;data-gravity="LETTER"&gt; attribute, with these values for LETTER: 'n': the element is above the Popover; 's': the element is below the Popover; 'e': the element is to the east of, or is to the right of, the Popover (in right-to-left locales); 'w': the element is to the west of, or to the left of, the Popover (in right-to-left locale)
-).
+ * A Popover is a div containng markup can pop up and disappear. (Unlike a Dialog, Popovers are not full screen.)
+
+A Popoves often contain a List whose items are connected to useful JavaScript functions.
+
+
+######Popover Position
+The Popover's position is set relative to a specified base element with the <em>data-gravity="LETTER"</em> attribute. LETTER values:
+
+ - 'n': the base element is above the Popover
+ - 's': the base element is below the Popover
+ - 'e': the base element is to the east of (to the right of) the Popover (in right-to-left locales)
+ - 'w': the base element is to the west of (to the left of) the Popover (in right-to-left locale)
+
  * @class Popover
  * @constructor
+ * @namespace UbuntuUI
  * @param {String} elem - The element to which the Popover's position is relative
  * @param {ID} id - The id attribute of the Popover in HTML
  * @example
+
+      <p id="popoverBase">Text</p>
       <div class="popover active" data-gravity="n" id="popover">
         <ul class="list">
           <li class="active"><a href="#">Item1</a></li>
           <li><a href="#">Item2</a></li>
         </ul>
       </div>
+
+      Javascript:
+      var popBase = document.getElementByID("popoverBase");
+      var popover = UI.popover(popBase, "popover");
  */
 
 var Popover = function (elem, id) {

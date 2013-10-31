@@ -21,12 +21,18 @@
  */
 
 /**
- * An Ubuntu Button
+ * A Button.
+
+ Note the Ubuntu CSS style classes: <em>success</em>, <em>warning</em>, and <em>danger</em>
+
  * @class Button
  * @constructor
+ * @namespace UbuntuUI
  * @example
-     Declare an Ubuntu Button in HTML like this:
-     <button data-role="button" id=SOMEID>text</button>
+      <button data-role="button" id="buttonID">text</button>
+
+      Javascript access:
+      var button = UI.button("buttonID");
  */
 var Button = function (id) {
     this.id =  id;

@@ -21,28 +21,38 @@
  */
 
 /**
- * An Ubuntu Header
+ * An Ubuntu Header wraps Tabs. Together they provide the main navigation widget at the top of an Ubuntu HTML5 app.
+
+Declare the Header and its Tabs in HTML as a direct child of the top level Page as a sibling to the <em>content</em> div.
+######Contained list provides Page navigation
+A contained unordered list has list items, each of which has an anchor (&lt;a&gt;) whose <em>href</em> attribute is a hash char ("#") followed by a Page ID. Clicking the Header/Tabs allows the user to navigate to the Pages identified by these IDs.
+
  * @class Header
  * @constructor
+ * @namespace UbuntuUI
  * @example
-      Declare a header in HTML as a direct child of the <body> like this:
       <body>
-        <header data-role="header">
-          <nav data-role="navbar" class="tabs" >
+        <div data-role="page">
+          <header data-role="header" id="headerID">
             <div class="tabs-inner">
               <ul data-role="tabs">
-                <li class="active" data-role="tab" id="tab1">
-                  <a id='hometab'>TEXT</a>
+                <li class="active" data-role="tab">
+                  <a href="#main">Main</a>
                 </li>
-                <li class="inactive" data-role="tab" id="tab2">
-                  <a id='anothertab'>TEXT</a>
+                <li data-role="tab">
+                  <a href="#page2">Two</a>
                 </li>
               </ul>
             </div>
-          </nav>
-        </header>
-        ...
+          </header>
+          <div data-role="content">
+            [...]
+          </div>
+        </div>
       </body>
+
+      JavaScript access:
+      var header = UI.header("headerID");
  */
 var Header= function (id) {
     this.id =  id;

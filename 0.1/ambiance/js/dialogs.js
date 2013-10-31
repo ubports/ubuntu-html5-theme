@@ -20,21 +20,28 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/** 
- * Dialogs are modal and prevent other GUI interactions with the application until dismissed.
+/**
+ * Dialogs are modal full-screen popups that prevent other GUI interactions with the application until dismissed.
+
+Dialogs wrap arbitrary markup.
+
+Dialogs are declared inside the <em>content</em> div as a sibling to the <em>pagestack</em> div.
  * @class Dialog
  * @constructor
+ * @namespace UbuntuUI
  * @example
-      Dialog HTML markup is declared inside the data-role="content" div and outside of the data-role="pagestack" div.
-
       <div data-role="content">
         <div data-role="pagestack">
           [...]
         </div>
-        <div data-role="dialog" id="dialogShow">
+        <div data-role="dialog" id="dialogID">
           [...]
         </div>
       </div>
+
+      JavaScript access:
+      var dialog = UI.dialog("dialogID");
+
  */
 var Dialog = function (id) {
     this.dialog = document.getElementById(id);
