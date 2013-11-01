@@ -21,7 +21,7 @@
  */
 
 /**
- * A Popover is a div containng markup can pop up and disappear. (Unlike a Dialog, Popovers are not full screen.)
+ * A Popover is a div containng markup that can pop up and disappear. (Unlike a Dialog, Popovers are not full screen.)
 
 A Popoves often contain a List whose items are connected to useful JavaScript functions.
 
