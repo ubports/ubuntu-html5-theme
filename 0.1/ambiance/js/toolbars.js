@@ -20,21 +20,67 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Toolbars */
+/**
+ * A Toolbar is the JavaScript representation of an Ubuntu HTML5 app <em>footer</em>. 
+
+######Contained List provides buttons
+The Toolbar contains a List, where each list item is treated as a Button (see below). List items (Buttons) are pushed to the right. The default Back button always exists to the left and does not need to be declared. 
+
+#####Default and custom footers
+See the Pagestack class documentation for information about the default application-wide Footer, customizing it, and adding Page-specific Footers.
+ * @class Toolbar
+ * @constructor
+ * @namespace UbuntuUI
+ * @example
+      <footer data-role="footer" class="revealed" id="footerID">
+        <div data-role="list">
+          <ul>
+            <li>
+              <a href="#" id="home">Home</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+
+      JavaScript access:
+      var toolbar = UI.footer("footerID");
+      UI.button('home').click(function () {
+        UI.pagestack.push("main");
+      });
+
+ */
+
 var Toolbar = function (UbuntuUI, id) {
     this.toolbar = document.getElementById(id);
 };
 
 Toolbar.prototype = {
+    /**-
+     * Display a Toolbar
+     * @method show
+     */
     show: function () {
         this.toolbar.classList.add('revealed');
     },
+    /**-
+     * Hide a Toolbar
+     * @method hide
+     */
     hide: function () {
         this.toolbar.classList.remove('revealed');
     },
+    /**
+     * Toggle show/hide status of a Toolbar
+     * @method toggle
+     */
     toggle: function () {
         this.toolbar.classList.toggle('revealed');
     },
+    /**
+     * Provide a callback function that's called with the Toolbar is touched
+     * @method touch
+     * @param {Function} function - The function that is called when the Toolbar is touched
+     */
     touch: function (callback) {
         this.toolbar.addEventListener(UbuntuUI.touchEvents.touchEnd, callback);
     }

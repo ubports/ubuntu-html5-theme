@@ -20,18 +20,52 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Dialogs */
+/**
+ * Dialogs are modal full-screen popups that prevent other GUI interactions with the application until dismissed.
+
+Dialogs wrap arbitrary markup.
+
+Dialogs are declared inside the <em>content</em> div as a sibling to the <em>pagestack</em> div.
+ * @class Dialog
+ * @constructor
+ * @namespace UbuntuUI
+ * @example
+      <div data-role="content">
+        <div data-role="pagestack">
+          [...]
+        </div>
+        <div data-role="dialog" id="dialogID">
+          [...]
+        </div>
+      </div>
+
+      JavaScript access:
+      var dialog = UI.dialog("dialogID");
+
+ */
 var Dialog = function (id) {
     this.dialog = document.getElementById(id);
 };
 
 Dialog.prototype = {
+    /**
+     * Display a dialog by adding 'active' CSS class
+     * @method show
+     */
     show: function () {
         this.dialog.classList.add('active');
     },
+    /**
+     * Hide a dialog by removing 'active' class
+     * @method hide
+     */
     hide: function () {
         this.dialog.classList.remove('active');
     },
+    /**
+     * Toggle a dialog, which means removing its 'active' class if it has one, or adding the 'active' class if it does not have one
+     * @method toggle
+     */
     toggle: function () {
         this.dialog.classList.toggle('active');
     }

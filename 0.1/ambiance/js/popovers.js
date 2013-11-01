@@ -20,7 +20,40 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Popover */
+/**
+ * A Popover is a div containng markup can pop up and disappear. (Unlike a Dialog, Popovers are not full screen.)
+
+A Popoves often contain a List whose items are connected to useful JavaScript functions.
+
+
+######Popover Position
+The Popover's position is set relative to a specified base element with the <em>data-gravity="LETTER"</em> attribute. LETTER values:
+
+ - 'n': the base element is above the Popover
+ - 's': the base element is below the Popover
+ - 'e': the base element is to the east of (to the right of) the Popover (in right-to-left locales)
+ - 'w': the base element is to the west of (to the left of) the Popover (in right-to-left locale)
+
+ * @class Popover
+ * @constructor
+ * @namespace UbuntuUI
+ * @param {String} elem - The element to which the Popover's position is relative
+ * @param {ID} id - The id attribute of the Popover in HTML
+ * @example
+
+      <p id="popoverBase">Text</p>
+      <div class="popover active" data-gravity="n" id="popover">
+        <ul class="list">
+          <li class="active"><a href="#">Item1</a></li>
+          <li><a href="#">Item2</a></li>
+        </ul>
+      </div>
+
+      Javascript:
+      var popBase = document.getElementByID("popoverBase");
+      var popover = UI.popover(popBase, "popover");
+ */
+
 var Popover = function (elem, id) {
     this.id = id;
     this.popover = document.getElementById(id);
@@ -30,6 +63,10 @@ var Popover = function (elem, id) {
 };
 
 Popover.prototype = {
+    /** 
+     * Display a Popover
+     * @method show
+     */
     show: function () {
         if (this.popover === null) {
             console.error('The popover with the ID #' + this.id + ' doesn\'t exist');
@@ -103,12 +140,20 @@ Popover.prototype = {
 
         return this.popover;
     },
+    /**
+     * Hide a Popover
+     * @method hide
+     */
     hide: function () {
         this.popover.classList.remove('active');
         this.popover.style.top = '0px';
         this.popover.style.left = '0px';
         return this.popover;
     },
+    /**
+     * Toggle show/hide status of a Popover
+     * @method toggle
+     */
     toggle: function () {
         if (this.popover === null) {
             console.error('The popover with the ID #' + this.id + ' doesn\'t exist');

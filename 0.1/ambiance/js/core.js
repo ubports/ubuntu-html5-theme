@@ -20,6 +20,24 @@
  * <http://www.gnu.org/licenses/>
  */
 
+/**
+ * @module UbuntuUI
+ */
+
+/**
+ * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements. 
+
+Note: The UbuntuUI object is "UI" in all API doc examples.
+ * @class UbuntuUI
+ * @constructor
+ * @example
+      var UI = new UbuntuUI();
+      window.onload = function () {
+        UI.init();
+        UI.pagestack.push('pageid');
+        [...]
+      };
+ */
 var UbuntuUI = (function () {
 
     PAGESTACK_BACK_ID = 'ubuntu-pagestack-back';
@@ -142,28 +160,93 @@ var UbuntuUI = (function () {
             }
         },
 
+        /**
+         * Required call that initializes the UbuntuUI object
+         * @method {} init
+         */
         init: function () {
             this.__setupPage(document);
         },
 
+        /**
+         * Gets an Ubuntu Page object
+         * @method page
+         * @param {ID} id - The element's id attrubute
+         * @return {Page} - The Page with the specified id
+         */
+        page: function (id) {
+            if (typeof Page != 'undefined' && Page ) {
+                return new Page(id);
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Shape object
+         * @method shape
+         * @param {ID} id - The element's id attrubute
+         * @return {Shape} - The Shape with the specified id
+         */
+        shape: function (id) {
+            if (typeof Shape != 'undefined' && Shape ) {
+                return new Shape(id);
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Button object
+         * @method button
+         * @param {ID} id - The element's id attrubute
+         * @return {Button} - The Button with the specified id
+         */
         button: function (id) {
             if (typeof Button != 'undefined' && Button) {
                 return new Button(id);
             }
         },
 
+        /**
+         * Gets an Ubuntu Dialog object
+         * @method dialog
+         * @param {ID} id - The element's id attrubute
+         * @return {Dialog} - The Dialog with the specified id
+         */
         dialog: function (id) {
             if (typeof Dialog != 'undefined' && Dialog) {
                 return new Dialog(id);
             }
         },
 
+        /**
+         * Gets an Ubuntu Popover object
+         * @method popover
+         * @param {Element} el - The element to which the Popover's position is relative
+         * @param {ID} id - The element's id attrubute
+         * @return {Popover} - The Popover with the specified id
+         */
         popover: function (elem, id) {
             if (typeof Popover != 'undefined' && Popover) {
                 return new Popover(elem, id);
             }
         },
 
+        /**
+         * Gets an Ubuntu Header object
+         * @method header
+         * @param {ID} id - The element's id attrubute
+         * @return {Header} - The Header with the specified id
+         */
+        header: function (id) {
+            if (typeof Header != 'undefined' && Header) {
+                return new Header(id);
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Tabs object
+         * @method tabs
+         * @param {ID} id - The element's id attrubute
+         * @return {Tabs} - The Tabs with the specified id
+         */
         tabs: function (selector) {
             if (typeof Tabs != 'undefined' && Tabs) {
                 if (selector === undefined)
@@ -174,21 +257,49 @@ var UbuntuUI = (function () {
             }
         },
 
+        /**
+         * Gets an Ubuntu Toolbar object
+         * @method toolbar
+         * @param {ID} id - The element's id attrubute
+         * @return {Toolbar} - The Toolbar with the specified id
+         */
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
                 return new Toolbar(this, id);
             }
         },
 
+        /**
+         * Gets an Ubuntu List
+         * @method list
+         * @param {Selector} selector - A selector that JavaScript querySelector method understands
+         * @return {List}
+         */
         list: function (selector) {
             if (typeof List != 'undefined' && List) {
                 return new List(selector);
             }
         },
 
+        /**
+         * Gets this UbuntuUI's single Pagestack object
+         * @method pagestack
+         * @return {Pagestack} - The Pagestack
+         */
         get pagestack() {
             return this._pageStack;
-        }
+        },
+
+        /**
+         * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
+         * @method getEl
+         * @param {UbuntuObject} object - An UbuntuUI widget object
+         * @return {Element} - The HTML element
+         */
+        getEl: function(widget) {
+          return document.getElementById(widget.id);
+        },
+
     };
 
     return UbuntuUI;

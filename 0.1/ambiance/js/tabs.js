@@ -20,7 +20,38 @@
  * <http://www.gnu.org/licenses/>
  */
 
-/* Tabs */
+/**
+ * Tabs are the standard way to provide app navigation from your application Header. See the Header class for more information.
+
+Declare the Header and Tabs in HTML as a direct child of the top level Page as a sibling to the content div.
+
+ * @class Tabs
+ * @constructor
+ * @namespace UbuntuUI
+ * @example
+      <body>
+        <div data-role="page">
+          <header data-role="header" id="headerID">
+            <div class="tabs-inner">
+              <ul data-role="tabs">
+                <li class="active" data-role="tab">
+                  <a href="#main">Main</a>
+                </li>
+                <li data-role="tab">
+                  <a href="#page2">Two</a>
+                </li>
+              </ul>
+            </div>
+          </header>
+          <div data-role="content">
+            [...]
+          </div>
+        </div>
+      </body>
+
+      JavaScript:
+      var tabs = UI.tabs();
+*/
 var Tabs = function (UbuntuUI, tabs) {
     var pageX,
         pageY,

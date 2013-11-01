@@ -20,12 +20,34 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Buttons */
+/**
+ * A Button.
+
+ Note the Ubuntu CSS style classes: <em>success</em>, <em>warning</em>, and <em>danger</em>
+
+ * @class Button
+ * @constructor
+ * @namespace UbuntuUI
+ * @example
+      <button data-role="button" id="buttonID">text</button>
+
+      Javascript access:
+      var button = UI.button("buttonID");
+ */
 var Button = function (id) {
     this.id =  id;
 };
 
 Button.prototype = {
+    /**
+     * Associate a function with the button's Click event
+     * @method click
+     * @param {Function} callback - The function to execute on click
+     * @example
+        UI.button("buttonid").click(function(){
+         console.log("clicked");
+        });
+     */
     click: function (callback) {
     if ( ! document.getElementById(this.id)) {
         throw "Invalid button ID: " + String(this.id);
