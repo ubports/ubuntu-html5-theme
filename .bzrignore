@@ -2,4 +2,3 @@ ambiance/old
 node_modules
 build
 npm-debug.log
-./build
