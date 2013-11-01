@@ -29,56 +29,58 @@ var UbuntuUI = (function () {
     };
 
     function __hasTabs(document) {
-        return document.querySelectorAll("[data-role='tabs']") != null;
+         return document.querySelectorAll("[data-role='tabs']") != null;
     };
 
     function __createBackButtonListItem(d) {
-	var a = d.createElement('a');
-	a.setAttribute('href', '#');
-	a.setAttribute('data-role', 'back');
+        var a = d.createElement('a');
+        a.setAttribute('href', '#');
+        a.setAttribute('data-role', 'back');
 
-	a.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
+        a.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
 
-	var img = d.createElement('img');
-	img.setAttribute('src', '/usr/share/ubuntu-html5-theme/0.1/ambiance/img/back@18.png');
+        var img = d.createElement('img');
+        img.setAttribute('src', '/usr/share/ubuntu-html5-theme/0.1/ambiance/img/back@18.png');
 
-	// TODO: translation?
-	img.setAttribute('alt', 'Back');
-	a.appendChild(img);
-	var span = d.createElement('span');
-	var text = d.createTextNode('Back');
-	span.appendChild(text);
-	a.appendChild(span);
+        // TODO: translation?
+        img.setAttribute('alt', 'Back');
+        a.appendChild(img);
+        var span = d.createElement('span');
+        var text = d.createTextNode('Back');
+        span.appendChild(text);
+        a.appendChild(span);
 
-	var li = d.createElement('li');
-	li.appendChild(a);
+        var li = d.createElement('li');
+        li.appendChild(a);
 
-	return li;
+        return li;
     };
 
     function __appendBackButtonToFooter(self, d, footer) {
-	var li = __createBackButtonListItem(d);
-	var ul = null;
-	if (footer.querySelectorAll('ul').length == 0) {
+        var li = __createBackButtonListItem(d);
+        var ul = null;
+        if (footer.querySelectorAll('ul').length == 0) {
             ul = d.createElement('ul');
-	} else {
+        } else {
             ul = footer.querySelectorAll('ul')[0];
-	}
-	ul.appendChild(li);
+        }
+        ul.appendChild(li);
 
-	if (footer.querySelectorAll('nav').length == 0) {
+        if (footer.querySelectorAll('nav').length == 0) {
             var nav = d.createElement('nav');
             nav.appendChild(ul);
             footer.appendChild(nav);
-	}
+        }
 
-	var a = li.querySelector('a');
-	a.onclick = function (e) {
-            if (self._pageStack.depth() > 1)
-		self._pageStack.pop();
+        var a = li.querySelector('a');
+        a.onclick = function (e) {
+            if (self._pageStack.depth() > 1) {
+                self._pageStack.pop();
+                self._tabs.activate(self._pageStack.currentPage());
+            }
             e.preventDefault();
-	}.bind(self);
-    };
+        }.bind(self);
+    }
 
     function UbuntuUI() {
         var U = this;
@@ -98,46 +100,46 @@ var UbuntuUI = (function () {
 
             this._pageStack = new Pagestack();
 
-	    // FIXME: support multiple page stack & complex docs?
-	    var pagestacks = d.querySelectorAll("[data-role='pagestack']");
-	    if (pagestacks.length == 0)
-		return;
-	    var pagestack = pagestacks[0];
-	    var immediateFooters = [].filter.call(pagestack.children,
-						  function(e) {
-						      return e.nodeName.toLowerCase() === 'footer';
-						  });
-	    if (immediateFooters.length !== 0) {
-		// There is a main footer for the whole pagestack,
-		// FIXME: only consider the first (there should be only 1 anyway)
-		var footer = immediateFooters[0];
+            // FIXME: support multiple page stack & complex docs?
+            var pagestacks = d.querySelectorAll("[data-role='pagestack']");
+            if (pagestacks.length == 0)
+                return;
+            var pagestack = pagestacks[0];
+            var immediateFooters = [].filter.call(pagestack.children,
+                function (e) {
+                    return e.nodeName.toLowerCase() === 'footer';
+                });
+            if (immediateFooters.length !== 0) {
+                // There is a main footer for the whole pagestack,
+                // FIXME: only consider the first (there should be only 1 anyway)
+                var footer = immediateFooters[0];
 
-		__appendBackButtonToFooter(this, d, footer);
+                __appendBackButtonToFooter(this, d, footer);
 
-		return;
-	    }
+                return;
+            }
 
-	    // try to find subpages & append back button there
-	    var pages = pagestack.querySelectorAll("[data-role='page']");
-	    for (var idx = 0; idx < pages.length; ++idx) {
-		var page = pages[idx];
+            // try to find subpages & append back button there
+            var pages = pagestack.querySelectorAll("[data-role='page']");
+            for (var idx = 0; idx < pages.length; ++idx) {
+                var page = pages[idx];
 
-		// TODO: only add the footer for now, but need to sync w/ title
-		//  , properties & header
-		var footer;
-		if (page.querySelectorAll("[data-role='footer']").length == 0) {
+                // TODO: only add the footer for now, but need to sync w/ title
+                //  , properties & header
+                var footer;
+                if (page.querySelectorAll("[data-role='footer']").length == 0) {
                     footer = d.createElement('footer');
                     footer.setAttribute('data-role', 'footer');
                     footer.setAttribute('class', 'revealed');
 
-		    page.appendChild(footer);
-		} else {
+                    page.appendChild(footer);
+                } else {
                     // TODO: validate footer count: should be 1 footer
                     footer = page.querySelectorAll("[data-role='footer']")[0];
-		}
+                }
 
-		__appendBackButtonToFooter(this, d, footer);
-	    }
+                __appendBackButtonToFooter(this, d, footer);
+            }
         },
 
         __setupPage: function (document) {
@@ -147,17 +149,21 @@ var UbuntuUI = (function () {
         },
 
         __setupTabs: function (document) {
-            if (__hasTabs(document)) {
-                    if (typeof Tabs != 'undefined' && Tabs) {
-                        tabs = document.querySelector('[data-role=tabs]');
-                        this._tabs = new Tabs(tabs);
-                    }
-            }
+             if (__hasTabs(document)) {
+                if (typeof Tabs != 'undefined' && Tabs) {
+                    multi_tabs = document.querySelectorAll('[data-role=tabs]');
+                    if (multi_tabs.length == 0)
+                        return;
+                    var tabs_j = multi_tabs[0];
+                    console.log(tabs_j);
+                    this._tabs = new Tabs(this, tabs_j);
+                }
+             }
         },
 
         init: function () {
-            this.__setupPage(document);
             this.__setupTabs(document);
+            this.__setupPage(document);
         },
 
         button: function (id) {
@@ -180,7 +186,7 @@ var UbuntuUI = (function () {
 
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
-                return new Toolbar(id);
+                return new Toolbar(this, id);
             }
         },
 
@@ -194,9 +200,6 @@ var UbuntuUI = (function () {
             return this._pageStack;
         },
 
-        get tabs() {
-            return this._tabs;
-        }
     };
 
     return UbuntuUI;
