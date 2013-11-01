@@ -22,7 +22,7 @@
 
 /* Tabs */
 
-var Tabs = (function () {
+var Tabs = function (UbuntuUI, tabs) {
     var pageX,
         pageY,
         isScrolling,

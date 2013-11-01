@@ -74,7 +74,7 @@ var UbuntuUI = (function () {
 
         var a = li.querySelector('a');
         a.onclick = function (e) {
-            if (self._pageStack.depth() > 1) {
+            if (self._pageStack.depth() > 1)
                 self._pageStack.pop();
                 self._tabs.activate(self._pageStack.currentPage());
             }
