@@ -20,8 +20,52 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* Pagestack */
+/**
+ * The Pagestack manages all Pages in a stack data structure. Initially, the Pagestack contains no Pages. The <em>push()</em> method is normally executed on load to display the app starting page.
 
+      UI.pagestack.push("pageID")
+
+The topmost Page on the Pagestack is always displayed.
+
+The Pagestack is declared as a direct child of the <em>content</em> div.
+
+#####Default application wide footer
+The Pagestack contains a default <em>footer</em> (represented in JavaScript as a Toolbar), even if you do not declare one in HTML. The <em>footer</em> has a single Back button. 
+#####Customized application wide footer
+This application-wide <em>footer</em> can be customized (for example, you can add Buttons) by declaring a <em>footer</em> as a direct child of the <em>pagestack</em> div (see example). 
+######Page specific footers
+A <em>page</em> may declare a page-specific <em>footer</em> as a child element.
+
+ * @class Pagestack
+ * @namespace UbuntuUI
+ * @constructor
+ * @example
+
+     <div data-role="page">
+        <header data-role="header">
+          [...]
+        </header>
+        <div data-role="content">
+          <div data-role="pagestack">
+            <div data-role="page" id="main">
+            </div>
+            <div data-role="page" id="page2">
+              [...]
+              <footer data-role="footer" class="revealed" id="footerPage2">
+                [...]
+              </footer>
+            </div>
+            <footer data-role="footer" class="revealed" id="footerAppWide">
+              [...]
+            </footer>
+          </div>  <!-- end of Pagestack div -->
+        </div>
+      </div>
+
+      JavaScript:
+      UI.pagestack.METHOD();
+
+ */
 var Pagestack = (function () {
 
     function __safeCall(f, args, errorfunc) {
@@ -81,6 +125,12 @@ var Pagestack = (function () {
                 footer.classList.add('revealed');
             }
         },
+        /**
+         * Push a page to the top of this pagestack
+         * @method push
+         * @param {String} id - The id attribute of the page element to be pushed
+         * @param {Object} properties - This param is not currently used
+         */
         push: function (id, properties) {
             try {
                 __safeCall(this.__setAllPagesVisibility.bind(this), [false]);
@@ -89,21 +139,41 @@ var Pagestack = (function () {
                 this._pages.push(id);
             } catch (e) {}
         },
+        /**
+         * Checks for zero pages in this pagestack
+         * @method isEmpty
+         * @return {Boolean} - True when this pagestack has no pages, else false
+         */
         isEmpty: function () {
             return this._pages.length === 0;
         },
+        /**
+         * Gets the id attribute of the page element on top of this pagestack
+         * @method currentPage
+         * @return {PageID|Null} - The topmost page's id attribute, else null when there are no pages on this pagestack
+         */
         currentPage: function () {
             return this.isEmpty() ? null : this._pages[this._pages.length - 1];
         },
+        /**
+         * Gets the number of pages in this pagestack
+         * @method depth
+         * @return {Number} - The number of pages in this pagestack
+         */
         depth: function () {
             return this._pages.length;
         },
+
         clear: function () {
             if (this.isEmpty())
                 return;
             __safeCall(this.__deactivate.bind(this), [this.currentPage()]);
             this._pages = [];
         },
+        /**
+         * Pops the current page off this pagestack, which causes the next page to become the top page and to display
+         * @method pop
+         */
         pop: function () {
             if (this.isEmpty())
                 return;
