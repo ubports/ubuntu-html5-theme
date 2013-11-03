@@ -25,7 +25,7 @@
  */
 
 /**
- * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements. 
+ * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements.
 
 Note: The UbuntuUI object is "UI" in all API doc examples.
  * @class UbuntuUI
@@ -278,6 +278,18 @@ var UbuntuUI = (function () {
         list: function (selector) {
             if (typeof List != 'undefined' && List) {
                 return new List(selector);
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Option selector
+         * @method optionselector
+         * @param {ID} id - The element's id attrubute
+         * @return {OptionSelector}
+         */
+        optionselector: function (id) {
+            if (typeof OptionSelector != 'undefined' && OptionSelector) {
+                return new OptionSelector(id);
             }
         },
 
