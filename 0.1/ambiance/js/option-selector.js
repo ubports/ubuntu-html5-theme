@@ -29,9 +29,9 @@ var OptionSelector = (function () {
         try {
             f.apply(null, args);
         } catch (e) {
-            if (errorfunc && typeof (errorfunc) === 'function') errorfunc(e)
+            if (errorfunc && typeof (errorfunc) === 'function') errorfunc(e);
         }
-    };
+    }
 
     function OptionSelector (id, expanded) {
 
@@ -44,8 +44,8 @@ var OptionSelector = (function () {
 
         t = this;
 
-        [].forEach.call(this.optionselector.querySelectorAll('li > a'), function (el) {
-            el.addEventListener('click', __safeCall(t.__onClicked.bind(t), [el]), false);
+        [].forEach.call(this.optionselector.querySelectorAll('li > a'), function (elm) {
+            elm.addEventListener('click', t.__onClicked, false);
         });
 
         if (this.expanded) {
@@ -55,29 +55,28 @@ var OptionSelector = (function () {
 
     OptionSelector.prototype = {
 
-        __onClicked: function (elm) {
+        __onClicked: function () {
+
 
             index = 0;
-            menuNodes = elm.parentNode.parentNode.childNodes;
+            menuNodes = this.parentNode.parentNode.childNodes;
 
             for(var i = 0, max = menuNodes.length; i < max; i++) {
-                if (menuNodes[i]==elm.parentNode) break;
-                if (menuNodes[i].nodeType==1) { console.log(elm.parentNode);index++; }
+                if (menuNodes[i]==this.parentNode) break;
+                if (menuNodes[i].nodeType==1) { console.log(this.parentNode);index++; }
             }
 
-            if (this.expanded) {
-                this.__close(index);
-                elm.classList.add('active');
-                elm.classList.add('closed');
-                elm.style.borderTop = '0';
+            if (t.expanded) {
+                t.__close(index);
+                this.classList.add('active');
+                this.classList.add('closed');
+                this.style.borderTop = '0';
             }
             else {
-                elm.classList.remove('closed');
-                this.__open();
-                elm.style.borderTop = '1px solid #C7C7C7';
+                this.classList.remove('closed');
+                t.__open();
+                this.style.borderTop = '1px solid #C7C7C7';
             }
-
-            console.log(this);
 
             e.preventDefault();
         },
