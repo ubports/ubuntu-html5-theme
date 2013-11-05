@@ -25,7 +25,7 @@
  */
 
 /**
- * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements. 
+ * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements.
 
 Note: The UbuntuUI object is "UI" in all API doc examples.
  * @class UbuntuUI
@@ -44,6 +44,10 @@ var UbuntuUI = (function () {
 
     function __hasPageStack(document) {
         return document.querySelectorAll("[data-role='pagestack']") != null;
+    };
+
+    function __hasTabs(document) {
+         return document.querySelectorAll("[data-role='tabs']") != null;
     };
 
     function __createBackButtonListItem(d) {
@@ -88,10 +92,12 @@ var UbuntuUI = (function () {
 
         var a = li.querySelector('a');
         a.onclick = function (e) {
-            if (self._pageStack.depth() > 1)
+            if (self._pageStack.depth() > 1){
                 self._pageStack.pop();
+                self._tabs.activate(self._pageStack.currentPage());
+            }
             e.preventDefault();
-        }.bind(self);
+        };
     }
 
     function UbuntuUI() {
@@ -110,13 +116,15 @@ var UbuntuUI = (function () {
             // TODO validate no more than one page stack etc.
             // d.querySelectorAll("[data-role='pagestack']")
 
-            this._pageStack = new Pagestack();
-
             // FIXME: support multiple page stack & complex docs?
             var pagestacks = d.querySelectorAll("[data-role='pagestack']");
             if (pagestacks.length == 0)
                 return;
             var pagestack = pagestacks[0];
+
+            this._pageStack = new Pagestack(pagestack);
+
+
             var immediateFooters = [].filter.call(pagestack.children,
                 function (e) {
                     return e.nodeName.toLowerCase() === 'footer';
@@ -152,6 +160,16 @@ var UbuntuUI = (function () {
 
                 __appendBackButtonToFooter(this, d, footer);
             }
+
+            t = this._tabs;
+
+            this._pageStack.onPageChanged("push", function (e) {
+                t.activate(e.page);
+            });
+
+            this._pageStack.onPageChanged("pop", function (e) {
+                t.activate(e.page);
+            });
         },
 
         __setupPage: function (document) {
@@ -160,11 +178,28 @@ var UbuntuUI = (function () {
             }
         },
 
+        __setupTabs: function (document) {
+             if (__hasTabs(document)) {
+                if (typeof Tabs != 'undefined' && Tabs) {
+                    multi_tabs = document.querySelectorAll('[data-role=tabs]');
+                    if (multi_tabs.length == 0)
+                        return;
+                    var tabs_o = multi_tabs[0];
+                    this._tabs = new Tabs(this, tabs_o);
+
+                    this._tabs.onTabChanged("selected", function (e) {
+                        this._pageStack.push(e.page);
+                    });
+                }
+             }
+        },
+
         /**
          * Required call that initializes the UbuntuUI object
          * @method {} init
          */
         init: function () {
+            this.__setupTabs(document);
             this.__setupPage(document);
         },
 
@@ -242,22 +277,6 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets an Ubuntu Tabs object
-         * @method tabs
-         * @param {ID} id - The element's id attrubute
-         * @return {Tabs} - The Tabs with the specified id
-         */
-        tabs: function (selector) {
-            if (typeof Tabs != 'undefined' && Tabs) {
-                if (selector === undefined)
-                    tabs = document.querySelector('[data-role=tabs]');
-                else
-                    tabs = document.querySelector(selector);
-                return new Tabs(this, tabs);
-            }
-        },
-
-        /**
          * Gets an Ubuntu Toolbar object
          * @method toolbar
          * @param {ID} id - The element's id attrubute
@@ -282,6 +301,16 @@ var UbuntuUI = (function () {
         },
 
         /**
+         * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
+         * @method getEl
+         * @param {UbuntuObject} object - An UbuntuUI widget object
+         * @return {Element} - The HTML element
+         */
+        getEl: function(widget) {
+          return document.getElementById(widget.id);
+        },
+
+        /**
          * Gets this UbuntuUI's single Pagestack object
          * @method pagestack
          * @return {Pagestack} - The Pagestack
@@ -291,13 +320,12 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
-         * @method getEl
-         * @param {UbuntuObject} object - An UbuntuUI widget object
-         * @return {Element} - The HTML element
+         * Gets this UbuntuUI's single Tabs object
+         * @method tabs
+         * @return {Tabs} - The Tabs
          */
-        getEl: function(widget) {
-          return document.getElementById(widget.id);
+        get tabs() {
+            return this._tabs;
         },
 
     };

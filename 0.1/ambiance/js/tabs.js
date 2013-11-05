@@ -50,9 +50,9 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
       </body>
 
       JavaScript:
-      var tabs = UI.tabs();
+      var tabs = UI.tabs;
 */
-var Tabs = function (UbuntuUI, tabs) {
+var Tabs = (function () {
     var pageX,
         pageY,
         isScrolling,
@@ -63,142 +63,188 @@ var Tabs = function (UbuntuUI, tabs) {
         tabsWidth,
         activeTab,
         t1,
-        t2;
+        t2,
+        _UbuntuUI;
 
-    var getScroll = function () {
-        var translate3d = tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
-        return parseInt(translate3d ? translate3d[1] : 0)
-    };
 
-    var setTouchInProgress = function (val) {
+    function Tabs (UbuntuUI, tabs) {
+        this._tabs = tabs;
+        _UbuntuUI = UbuntuUI;
 
-        //Add or remove event listeners depending on touch status
-        if (val === true) {
-            tabs.addEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove);
-            tabs.addEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd);
+        //this._tabs.addEventListener(_UbuntuUI.touchEvents.touchStart, this.__onTouchStart.bind(this));
+        //this._tabs.addEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
+        //this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
 
-            // we only have leave events on desktop, we manually calcuate
-            // leave on touch as its not supported in webkit
-            if (UbuntuUI.touchEvents.touchLeave) {
-                tabs.addEventListener(UbuntuUI.touchEvents.touchLeave, onTouchLeave);
+        t = this;
+        [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
+            [].forEach.call(el.childNodes, function (k) {
+                    if (k.nodeName == "A") {
+                        k.addEventListener('click', t.__onClicked.bind(t), false);
+                    }
+           });
+        });
+    }
+
+
+    Tabs.prototype = {
+        __getScroll: function () {
+            var translate3d = this._tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
+            return parseInt(translate3d ? translate3d[1] : 0)
+        },
+
+        __setTouchInProgress: function (val) {
+            //Add or remove event listeners depending on touch status
+            if (val === true) {
+                this._tabs.addEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
+                this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
+
+                // we only have leave events on desktop, we manually calcuate
+                // leave on touch as its not supported in webkit
+                if (_UbuntuUI.touchEvents.touchLeave) {
+                    this._tabs.addEventListener(_UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this));
+                }
+            } else {
+                this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this), false);
+                this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this), false);
+
+                // we only have leave events on desktop, we manually calcuate
+                // leave on touch as its not supported in webkit
+                if (_UbuntuUI.touchEvents.touchLeave) {
+                    this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this), false);
+                }
             }
-        } else {
-            tabs.removeEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove, false);
-            tabs.removeEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd, false);
+        },
 
-            // we only have leave events on desktop, we manually calcuate
-            // leave on touch as its not supported in webkit
-            if (UbuntuUI.touchEvents.touchLeave) {
-                tabs.removeEventListener(UbuntuUI.touchEvents.touchLeave, onTouchLeave, false);
+        __onTouchStart: function (e) {
+            if (!this._tabs) return;
+            window.clearTimeout(t1);
+            window.clearTimeout(t2);
+            isScrolling = undefined;
+            tabsWidth = this._tabs.offsetWidth;
+            resistance = 1;
+
+            if (!_UbuntuUI.isTouch) {
+                e.touches = [{
+                    pageX: e.pageX,
+                    pageY: e.pageY
+                }];
             }
-        }
-    };
+            pageX = e.touches[0].pageX;
+            pageY = e.touches[0].pageY;
 
-    var onTouchStart = function (e) {
-        if (!tabs) return;
-        window.clearTimeout(t1);
-        window.clearTimeout(t2);
-        isScrolling = undefined;
-        tabsWidth = tabs.offsetWidth;
-        resistance = 1;
+            this._tabs.style['-webkit-transition-duration'] = 0;
+            this.__setTouchInProgress(true);
+        },
 
-        if (!UbuntuUI.isTouch) {
-            e.touches = [{
-                pageX: e.pageX,
-                pageY: e.pageY
-            }];
-        }
-        pageX = e.touches[0].pageX;
-        pageY = e.touches[0].pageY;
+        __onTouchMove: function (e) {
+            if (!_UbuntuUI.isTouch) {
+                e.touches = [{
+                    pageX: e.pageX,
+                    pageY: e.pageY
+                }];
+            }
+            deltaX = e.touches[0].pageX - pageX;
+            deltaY = e.touches[0].pageY - pageY;
+            pageX = e.touches[0].pageX;
+            pageY = e.touches[0].pageY;
 
-        tabs.style['-webkit-transition-duration'] = 0;
-        setTouchInProgress(true);
-    };
+            if (typeof isScrolling == 'undefined') {
+                isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
+            }
+            if (isScrolling) return;
+            offsetX = (deltaX / resistance) + this.__getScroll();
 
-    var onTouchMove = function (e) {
-        if (!UbuntuUI.isTouch) {
-            e.touches = [{
-                pageX: e.pageX,
-                pageY: e.pageY
-            }];
-        }
-        deltaX = e.touches[0].pageX - pageX;
-        deltaY = e.touches[0].pageY - pageY;
-        pageX = e.touches[0].pageX;
-        pageY = e.touches[0].pageY;
+            this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+        },
 
-        if (typeof isScrolling == 'undefined') {
-            isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
-        }
+        __onTouchEnd: function (e) {
+            if (!this._tabs || isScrolling) return;
 
-        if (isScrolling) return;
-        offsetX = (deltaX / resistance) + getScroll();
+            this.__setTouchInProgress(false);
 
-        tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
-    };
+            t = this;
 
-    var onTouchEnd = function (e) {
-        if (!tabs || isScrolling) return;
-        setTouchInProgress(false);
-
-        activeTab = document.querySelector('[data-role="tab"].active');
-        t1 = window.setTimeout(function() {
+            t1 = window.setTimeout(function () {
+                activeTab = document.querySelector('[data-role="tab"].active');
                 offsetX = activeTab.offsetLeft;
-                tabs.style['-webkit-transition-duration'] = '.3s';
-                tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+                t._tabs.style['-webkit-transition-duration'] = '.3s';
+                t._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
-        }, 5000);
-    };
+            }, 3000);
+        },
 
-    var onTouchLeave = function (e) {};
 
-    var onClicked = function (e) {
+        __onTouchLeave: function (e) {},
 
-        if ((this.className).indexOf('inactive') > -1) {
-            window.clearTimeout(t2);
-            activeTab = document.querySelector('[data-role="tab"].active');
-            offsetX = this.offsetLeft;
-            tabs.style['-webkit-transition-duration'] = '.3s';
-            tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-            activeTab.classList.remove('inactive');
-            activeTab.classList.remove('active');
-            this.classList.remove('inactive');
-            this.classList.add('active');
+        __onClicked: function (e) {
+            if ((this.parentNode.className).indexOf('inactive') > -1) {
+                window.clearTimeout(t2);
 
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                el.classList.remove('inactive');
-            });
+                activeTab = document.querySelector('[data-role="tab"].active');
+                offsetX = this.offsetLeft;
+                this._tabs.style['-webkit-transition-duration'] = '.3s';
+                this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+                activeTab.classList.remove('inactive');
+                activeTab.classList.remove('active');
+                this.classList.remove('inactive');
+                this.classList.add('active');
 
-            /*FIXME : We need to try to implement the infinite sliding
-            Array.prototype.slice.call(
+                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
+                    e.classList.remove('inactive');
+                });
+
+                /*Array.prototype.slice.call(
                     document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
-                ).map(function(element) {
+                ).map(function (element) {
                     return element.cloneNode(true);
-                }).forEach(function(element) {
+                }).forEach(function (element) {
                     element.classList.remove('active');
                     tabs.appendChild(element);
                 });*/
 
-        } else {
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                el.classList.toggle('inactive');
-            });
-            t2 = window.setTimeout(function() {
+                var id = e.getAttribute("data-page");
+                this._evt = document.createEvent('Event');
+                this._evt.initEvent('change',true,true);
+                this._evt.page = id;
+                this._tabs.dispatchEvent(this._evt);
+            } else {
+
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
-            }, 5000);
+                t2 = window.setTimeout(function () {
+                    [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                        el.classList.toggle('inactive');
+                    });
+                }, 3000);
+            }
+            e.preventDefault();
+        },
+
+        activate: function (id) {
+            if (!id || typeof (id) !== 'string')
+            return;
+            activeTab = document.querySelector('[data-page="'+ id +'"]');
+
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (e) {
+                e.classList.remove('active');
+                e.classList.remove('inactive');
+            });
+
+            activeTab.classList.add('active');
+
+            offsetX = activeTab.offsetLeft;
+            this._tabs.style['-webkit-transition-duration'] = '.3s';
+            this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+        },
+
+        onTabChanged : function(e, callback){
+            this._tabs.addEventListener(e, callback);
         }
-        e.preventDefault();
     };
 
-    tabs.addEventListener(UbuntuUI.touchEvents.touchStart, onTouchStart);
-    tabs.addEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove);
-    tabs.addEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd);
 
-    [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
-        el.addEventListener('click', onClicked, false);
-    });
-};
+    return Tabs;
+})();
