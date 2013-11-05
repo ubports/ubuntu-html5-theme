@@ -124,7 +124,6 @@ var UbuntuUI = (function () {
 
             this._pageStack = new Pagestack(pagestack);
 
-
             var immediateFooters = [].filter.call(pagestack.children,
                 function (e) {
                     return e.nodeName.toLowerCase() === 'footer';
@@ -133,9 +132,7 @@ var UbuntuUI = (function () {
                 // There is a main footer for the whole pagestack,
                 // FIXME: only consider the first (there should be only 1 anyway)
                 var footer = immediateFooters[0];
-
                 __appendBackButtonToFooter(this, d, footer);
-
                 return;
             }
 
@@ -157,18 +154,22 @@ var UbuntuUI = (function () {
                     // TODO: validate footer count: should be 1 footer
                     footer = page.querySelectorAll("[data-role='footer']")[0];
                 }
-
                 __appendBackButtonToFooter(this, d, footer);
             }
 
-            t = this._tabs;
+            _tabs_temp = this._tabs;
 
             this._pageStack.onPageChanged("push", function (e) {
-                t.activate(e.page);
+                _tabs_temp.activate(e.page);
             });
 
             this._pageStack.onPageChanged("pop", function (e) {
-                t.activate(e.page);
+                _tabs_temp.activate(e.page);
+            });
+
+            _pagestack_temp = this._pageStack;
+            this._tabs.onTabChanged("selected", function (e) {
+                _pagestack_temp.push(e.page);
             });
         },
 
@@ -186,10 +187,6 @@ var UbuntuUI = (function () {
                         return;
                     var tabs_o = multi_tabs[0];
                     this._tabs = new Tabs(this, tabs_o);
-
-                    this._tabs.onTabChanged("selected", function (e) {
-                        this._pageStack.push(e.page);
-                    });
                 }
              }
         },
