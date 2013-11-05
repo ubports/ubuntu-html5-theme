@@ -34,8 +34,9 @@ var Pagestack = (function () {
         }
     };
 
-    function Pagestack() {
+    function Pagestack(pagestack) {
         this._pages = [];
+        this._pagestack = pagestack;
     };
 
     Pagestack.prototype = {
@@ -85,9 +86,13 @@ var Pagestack = (function () {
         push: function (id, properties) {
             try {
                 __safeCall(this.__setAllPagesVisibility.bind(this), [false]);
-
                 this.__activate(id);
                 this._pages.push(id);
+
+                this._evt = document.createEvent('Event');
+                this._evt.initEvent('push',true,true);
+                this._evt.page = this.currentPage();
+                this._pagestack.dispatchEvent(this._evt);
             } catch (e) {}
         },
         isEmpty: function () {
@@ -111,7 +116,16 @@ var Pagestack = (function () {
             __safeCall(this.__deactivate.bind(this), [this.currentPage()]);
             this._pages.pop();
             __safeCall(this.__activate.bind(this), [this.currentPage()]);
+
+            this._evt = document.createEvent('Event');
+            this._evt.initEvent('pop',true,true);
+            this._evt.page = this.currentPage();
+            this._pagestack.dispatchEvent(this._evt);
+        },
+        onPageChanged : function(e, callback){
+            this._pagestack.addEventListener(e, callback);
         }
+
     };
 
     return Pagestack;

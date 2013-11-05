@@ -22,7 +22,7 @@
 
 /* Tabs */
 
-var Tabs = function (UbuntuUI, tabs) {
+var Tabs = (function () {
     var pageX,
         pageY,
         isScrolling,
@@ -33,20 +33,25 @@ var Tabs = function (UbuntuUI, tabs) {
         tabsWidth,
         activeTab,
         t1,
-        t2;
+        t2,
+        _UbuntuUI;
 
 
-    function Tabs (UbuntuUI, tabssi) {
-        this._tabs = tabssi;
-        this._UbuntuUI = UbuntuUI;
+    function Tabs (UbuntuUI, tabs) {
+        this._tabs = tabs;
+        _UbuntuUI = UbuntuUI;
 
-        this._tabs.addEventListener(this._UbuntuUI.touchEvents.touchStart, this.__onTouchStart.bind(this));
-        this._tabs.addEventListener(this._UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
-        this._tabs.addEventListener(this._UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
+        //this._tabs.addEventListener(_UbuntuUI.touchEvents.touchStart, this.__onTouchStart.bind(this));
+        //this._tabs.addEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
+        //this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
 
-        var __t = this;
+        t = this;
         [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
-            el.addEventListener('click', __t.__onClicked, false);
+            [].forEach.call(el.childNodes, function (k) {
+                    if (k.nodeName == "A") {
+                        k.addEventListener('click', t.__onClicked.bind(t), false);
+                    }
+           });
         });
     }
 
@@ -58,25 +63,24 @@ var Tabs = function (UbuntuUI, tabs) {
         },
 
         __setTouchInProgress: function (val) {
-            console.log(this);
             //Add or remove event listeners depending on touch status
             if (val === true) {
-                this._tabs.addEventListener(this._UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
-                this._tabs.addEventListener(this._UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
+                this._tabs.addEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
+                this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
 
                 // we only have leave events on desktop, we manually calcuate
                 // leave on touch as its not supported in webkit
-                if (this._UbuntuUI.touchEvents.touchLeave) {
-                    this._tabs.addEventListener(this._UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this));
+                if (_UbuntuUI.touchEvents.touchLeave) {
+                    this._tabs.addEventListener(_UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this));
                 }
             } else {
-                this._tabs.removeEventListener(this._UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this), false);
-                this._tabs.removeEventListener(this._UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this), false);
+                this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this), false);
+                this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this), false);
 
                 // we only have leave events on desktop, we manually calcuate
                 // leave on touch as its not supported in webkit
-                if (this._UbuntuUI.touchEvents.touchLeave) {
-                    this._tabs.removeEventListener(this._UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this), false);
+                if (_UbuntuUI.touchEvents.touchLeave) {
+                    this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this), false);
                 }
             }
         },
@@ -89,7 +93,7 @@ var Tabs = function (UbuntuUI, tabs) {
             tabsWidth = this._tabs.offsetWidth;
             resistance = 1;
 
-            if (!this._UbuntuUI.isTouch) {
+            if (!_UbuntuUI.isTouch) {
                 e.touches = [{
                     pageX: e.pageX,
                     pageY: e.pageY
@@ -103,7 +107,7 @@ var Tabs = function (UbuntuUI, tabs) {
         },
 
         __onTouchMove: function (e) {
-            if (!this._UbuntuUI.isTouch) {
+            if (!_UbuntuUI.isTouch) {
                 e.touches = [{
                     pageX: e.pageX,
                     pageY: e.pageY
@@ -117,7 +121,6 @@ var Tabs = function (UbuntuUI, tabs) {
             if (typeof isScrolling == 'undefined') {
                 isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
             }
-
             if (isScrolling) return;
             offsetX = (deltaX / resistance) + this.__getScroll();
 
@@ -126,24 +129,16 @@ var Tabs = function (UbuntuUI, tabs) {
 
         __onTouchEnd: function (e) {
             if (!this._tabs || isScrolling) return;
+
             this.__setTouchInProgress(false);
 
-            [].forEach.call(document.querySelectorAll("[data-role='tab']:not(.active)"), function (e) {
-                [].forEach.call(e.childNodes, function (k) {
-                    if (k.nodeName == "A") {
-                        k.addEventListener('click', function (a) {
-                            var id = a.target.hash.replace("#", "");
-                            this._UbuntuUI.pagestack.push(id);
-                        }, false);
-                    }
-                });
-            });
+            t = this;
 
             t1 = window.setTimeout(function () {
                 activeTab = document.querySelector('[data-role="tab"].active');
                 offsetX = activeTab.offsetLeft;
-                this._tabs.style['-webkit-transition-duration'] = '.3s';
-                this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+                t._tabs.style['-webkit-transition-duration'] = '.3s';
+                t._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
@@ -154,8 +149,7 @@ var Tabs = function (UbuntuUI, tabs) {
         __onTouchLeave: function (e) {},
 
         __onClicked: function (e) {
-            console.log(this);
-            if ((this.className).indexOf('inactive') > -1) {
+            if ((this.parentNode.className).indexOf('inactive') > -1) {
                 window.clearTimeout(t2);
 
                 activeTab = document.querySelector('[data-role="tab"].active');
@@ -171,8 +165,7 @@ var Tabs = function (UbuntuUI, tabs) {
                     e.classList.remove('inactive');
                 });
 
-                /*FIXME : We need to try to implement the infinite sliding
-                Array.prototype.slice.call(
+                /*Array.prototype.slice.call(
                     document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
                 ).map(function (element) {
                     return element.cloneNode(true);
@@ -181,6 +174,11 @@ var Tabs = function (UbuntuUI, tabs) {
                     tabs.appendChild(element);
                 });*/
 
+                var id = e.getAttribute("data-page");
+                this._evt = document.createEvent('Event');
+                this._evt.initEvent('change',true,true);
+                this._evt.page = id;
+                this._tabs.dispatchEvent(this._evt);
             } else {
 
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
@@ -195,22 +193,25 @@ var Tabs = function (UbuntuUI, tabs) {
             e.preventDefault();
         },
 
-        __activate: function (id) {
+        activate: function (id) {
             if (!id || typeof (id) !== 'string')
             return;
+            activeTab = document.querySelector('[data-page="'+ id +'"]');
 
-            activeTab_o = document.querySelector('[data-page="'+ id +'"]');
-            activeTab_o.classList.remove('inactive');
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (e) {
+                e.classList.remove('active');
                 e.classList.remove('inactive');
             });
 
-            activeTab_o.classList.add('active');
+            activeTab.classList.add('active');
 
-            offsetX = activeTab_o.offsetLeft;
-            //console.log(offsetX);
+            offsetX = activeTab.offsetLeft;
             this._tabs.style['-webkit-transition-duration'] = '.3s';
             this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+        },
+
+        onTabChanged : function(e, callback){
+            this._tabs.addEventListener(e, callback);
         }
     };
 

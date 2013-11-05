@@ -74,12 +74,12 @@ var UbuntuUI = (function () {
 
         var a = li.querySelector('a');
         a.onclick = function (e) {
-            if (self._pageStack.depth() > 1)
+            if (self._pageStack.depth() > 1){
                 self._pageStack.pop();
                 self._tabs.activate(self._pageStack.currentPage());
             }
             e.preventDefault();
-        }.bind(self);
+        };
     }
 
     function UbuntuUI() {
@@ -98,13 +98,15 @@ var UbuntuUI = (function () {
             // TODO validate no more than one page stack etc.
             // d.querySelectorAll("[data-role='pagestack']")
 
-            this._pageStack = new Pagestack();
-
             // FIXME: support multiple page stack & complex docs?
             var pagestacks = d.querySelectorAll("[data-role='pagestack']");
             if (pagestacks.length == 0)
                 return;
             var pagestack = pagestacks[0];
+
+            this._pageStack = new Pagestack(pagestack);
+
+
             var immediateFooters = [].filter.call(pagestack.children,
                 function (e) {
                     return e.nodeName.toLowerCase() === 'footer';
@@ -140,6 +142,16 @@ var UbuntuUI = (function () {
 
                 __appendBackButtonToFooter(this, d, footer);
             }
+
+            t = this._tabs;
+
+            this._pageStack.onPageChanged("push", function (e) {
+                t.activate(e.page);
+            });
+
+            this._pageStack.onPageChanged("pop", function (e) {
+                t.activate(e.page);
+            });
         },
 
         __setupPage: function (document) {
@@ -154,9 +166,12 @@ var UbuntuUI = (function () {
                     multi_tabs = document.querySelectorAll('[data-role=tabs]');
                     if (multi_tabs.length == 0)
                         return;
-                    var tabs_j = multi_tabs[0];
-                    console.log(tabs_j);
-                    this._tabs = new Tabs(this, tabs_j);
+                    var tabs_o = multi_tabs[0];
+                    this._tabs = new Tabs(this, tabs_o);
+
+                    this._tabs.onTabChanged("selected", function (e) {
+                        this._pageStack.push(e.page);
+                    });
                 }
              }
         },
@@ -198,6 +213,10 @@ var UbuntuUI = (function () {
 
         get pagestack() {
             return this._pageStack;
+        },
+
+        get tabs() {
+            return this._tabs;
         },
 
     };
