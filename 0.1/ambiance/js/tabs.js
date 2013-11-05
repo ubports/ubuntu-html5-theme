@@ -50,7 +50,7 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
       </body>
 
       JavaScript:
-      var tabs = UI.tabs;
+      UI.tabs.METHOD();
 */
 var Tabs = (function () {
     var pageX,
