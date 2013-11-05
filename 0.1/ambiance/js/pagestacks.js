@@ -140,7 +140,7 @@ var Pagestack = (function () {
                 this._pages.push(id);
 
                 this._evt = document.createEvent('Event');
-                this._evt.initEvent('changed',true,true);
+                this._evt.initEvent('pagechanged',true,true);
                 this._evt.page = this.currentPage();
                 this._pagestack.dispatchEvent(this._evt);
             } catch (e) {}
@@ -188,12 +188,12 @@ var Pagestack = (function () {
             __safeCall(this.__activate.bind(this), [this.currentPage()]);
 
             this._evt = document.createEvent('Event');
-            this._evt.initEvent('changed',true,true);
+            this._evt.initEvent('pagechanged',true,true);
             this._evt.page = this.currentPage();
             this._pagestack.dispatchEvent(this._evt);
         },
         onPageChanged : function(callback){
-            this._pagestack.addEventListener("changed", callback);
+            this._pagestack.addEventListener("pagechanged", callback);
         }
 
     };

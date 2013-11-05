@@ -198,7 +198,7 @@ var Tabs = (function () {
 
                 var id = elm.getAttribute("data-page");
                 this._evt = document.createEvent('Event');
-                this._evt.initEvent('selected',true,true);
+                this._evt.initEvent('tabchanged',true,true);
                 this._evt.page = id;
                 this._tabs.dispatchEvent(this._evt);
             } else {
@@ -233,7 +233,7 @@ var Tabs = (function () {
         },
 
         onTabChanged : function(callback){
-            this._tabs.addEventListener("selected", callback);
+            this._tabs.addEventListener("tabchanged", callback);
         }
     };
 
