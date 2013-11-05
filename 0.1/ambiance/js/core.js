@@ -158,17 +158,12 @@ var UbuntuUI = (function () {
             }
 
             _tabs_temp = this._tabs;
-
-            this._pageStack.onPageChanged("push", function (e) {
-                _tabs_temp.activate(e.page);
-            });
-
-            this._pageStack.onPageChanged("pop", function (e) {
+            this._pageStack.onPageChanged(function (e) {
                 _tabs_temp.activate(e.page);
             });
 
             _pagestack_temp = this._pageStack;
-            this._tabs.onTabChanged("selected", function (e) {
+            this._tabs.onTabChanged(function (e) {
                 _pagestack_temp.push(e.page);
             });
         },

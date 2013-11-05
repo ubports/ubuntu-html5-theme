@@ -30,9 +30,9 @@ The topmost Page on the Pagestack is always displayed.
 The Pagestack is declared as a direct child of the <em>content</em> div.
 
 #####Default application wide footer
-The Pagestack contains a default <em>footer</em> (represented in JavaScript as a Toolbar), even if you do not declare one in HTML. The <em>footer</em> has a single Back button. 
+The Pagestack contains a default <em>footer</em> (represented in JavaScript as a Toolbar), even if you do not declare one in HTML. The <em>footer</em> has a single Back button.
 #####Customized application wide footer
-This application-wide <em>footer</em> can be customized (for example, you can add Buttons) by declaring a <em>footer</em> as a direct child of the <em>pagestack</em> div (see example). 
+This application-wide <em>footer</em> can be customized (for example, you can add Buttons) by declaring a <em>footer</em> as a direct child of the <em>pagestack</em> div (see example).
 ######Page specific footers
 A <em>page</em> may declare a page-specific <em>footer</em> as a child element.
 
@@ -140,7 +140,7 @@ var Pagestack = (function () {
                 this._pages.push(id);
 
                 this._evt = document.createEvent('Event');
-                this._evt.initEvent('push',true,true);
+                this._evt.initEvent('changed',true,true);
                 this._evt.page = this.currentPage();
                 this._pagestack.dispatchEvent(this._evt);
             } catch (e) {}
@@ -188,12 +188,12 @@ var Pagestack = (function () {
             __safeCall(this.__activate.bind(this), [this.currentPage()]);
 
             this._evt = document.createEvent('Event');
-            this._evt.initEvent('pop',true,true);
+            this._evt.initEvent('changed',true,true);
             this._evt.page = this.currentPage();
             this._pagestack.dispatchEvent(this._evt);
         },
-        onPageChanged : function(e, callback){
-            this._pagestack.addEventListener(e, callback);
+        onPageChanged : function(callback){
+            this._pagestack.addEventListener("changed", callback);
         }
 
     };

@@ -232,8 +232,8 @@ var Tabs = (function () {
             this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
         },
 
-        onTabChanged : function(e, callback){
-            this._tabs.addEventListener(e, callback);
+        onTabChanged : function(callback){
+            this._tabs.addEventListener("selected", callback);
         }
     };
 
