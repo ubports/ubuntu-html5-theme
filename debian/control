@@ -14,6 +14,7 @@ Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-th
 
 Package: ubuntu-html5-theme
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends},
 Description: Toolkit styles for Ubuntu HTML5 Apps
  This package provides common CSS and Javascript for developing native-
