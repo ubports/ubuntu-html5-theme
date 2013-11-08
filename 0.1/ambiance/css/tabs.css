@@ -37,8 +37,6 @@
     content: "";
     border-top: 1px solid #afafaf;
     height: 14px;
-    position: relative;
-    left: 0;
     width: 100%;
     display: block;
 }
