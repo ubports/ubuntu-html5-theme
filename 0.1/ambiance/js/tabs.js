@@ -32,16 +32,14 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
       <body>
         <div data-role="page">
           <header data-role="header" id="headerID">
-            <div class="tabs-inner">
-              <ul data-role="tabs">
-                <li class="active" data-role="tab" date-page="main">
-                  <span>Main</span>
-                </li>
-                <li data-role="tab" date-page="page2">
-                  <span>Two</span>
-                </li>
-              </ul>
-            </div>
+            <ul data-role="tabs">
+              <li data-role="tab" date-page="main">
+                <span>Main</span>
+              </li>
+              <li data-role="tab" date-page="page2">
+                <span>Two</span>
+              </li>
+            </ul>
           </header>
           <div data-role="content">
             [...]
@@ -76,6 +74,9 @@ var Tabs = (function () {
         this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));*/
 
         _tabsTemp = this;
+
+        document.querySelector('[data-role="tab"]:first-child').classList.add('active');
+
         [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
             el.addEventListener('click', _tabsTemp.__onClicked.bind(_tabsTemp, el), false);
         });
