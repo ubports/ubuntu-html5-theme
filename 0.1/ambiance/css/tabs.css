@@ -47,18 +47,10 @@
 }
 
 [data-role="header"] ul li {
-    overflow: hidden;
-    white-space: nowrap;
-    -webkit-box-flex: 1;
-    box-flex: 1;
     display: inline-block;
-}
-
-[data-role="header"] li > span {
     font: 35px "Ubuntu";
     letter-spacing: -1px;
     line-height: 60px;
-    width: 100%;
     padding-left: 35px;
     text-decoration: none;
     color: #a0a0a0;
@@ -69,24 +61,24 @@
     cursor: pointer;
 }
 
-[data-role="header"] .active > span {
+[data-role="header"] .active {
     color: #484647;
     padding-left: 15px;
     -webkit-opacity: 1;
     opacity: 1;
 }
 
-[data-role="header"] .active > span:after {
+[data-role="header"] .active:after {
     content: "›";
     padding-left: 10px;
 }
 
-[data-role="header"] li:only-child > span:after {
+[data-role="header"] li:only-child:after {
     content: "";
     padding-left: 10px;
 }
 
-[data-role="header"] .inactive > span {
+[data-role="header"] .inactive {
     color: #a0a0a0;
     -webkit-opacity: 1;
     opacity: 1;
