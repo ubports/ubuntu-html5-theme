@@ -33,10 +33,10 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
         <div data-role="page">
           <header data-role="header" id="headerID">
             <ul data-role="tabs">
-              <li data-role="tab" date-page="main">
+              <li data-role="tab" data-page="main">
                 <span>Main</span>
               </li>
-              <li data-role="tab" date-page="page2">
+              <li data-role="tab" data-page="page2">
                 <span>Two</span>
               </li>
             </ul>
