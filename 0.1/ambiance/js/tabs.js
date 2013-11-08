@@ -34,11 +34,11 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
           <header data-role="header" id="headerID">
             <div class="tabs-inner">
               <ul data-role="tabs">
-                <li class="active" data-role="tab">
-                  <a href="#main">Main</a>
+                <li class="active" data-role="tab" date-page="main">
+                  <span>Main</span>
                 </li>
-                <li data-role="tab">
-                  <a href="#page2">Two</a>
+                <li data-role="tab" date-page="page2">
+                  <span>Two</span>
                 </li>
               </ul>
             </div>
@@ -78,12 +78,6 @@ var Tabs = (function () {
         _tabsTemp = this;
         [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
             el.addEventListener('click', _tabsTemp.__onClicked.bind(_tabsTemp, el), false);
-
-            [].forEach.call(el.childNodes, function (k) {
-                if (k.nodeName == "A") {
-                    k.addEventListener('click', function (e) { e.preventDefault(); }, false);
-                }
-           });
         });
     }
 
