@@ -291,13 +291,12 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
-         * @method getEl
-         * @param {UbuntuObject} object - An UbuntuUI widget object
-         * @return {Element} - The HTML element
+         * Gets the DOM element from a given selector
+         * @method element
+         * @return {Element} - The DOM element
          */
-        getEl: function(widget) {
-          return document.getElementById(widget.id);
+        element: function(selector) {
+          return document.querySelector(selector);
         },
 
     };
