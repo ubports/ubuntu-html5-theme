@@ -56,7 +56,13 @@ var Page = function (id) {
 };
 
 Page.prototype = {
-    /*
-     * placeholder for future methods
-     */
+    /**
+     * Returns the DOM element associated with the selector this widget is bind to.
+     * @method element
+     * @example
+       var mypage = UI.page("pageid").element();
+    */
+    element: function () {
+	return document.getElementById(this.id);
+    }
 };

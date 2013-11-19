@@ -226,5 +226,14 @@ Popover.prototype = {
             this.popover.style.left = pos_left+ 'px';
 
         return this.popover;
+    },
+    /**
+     * Returns the DOM element associated with the id this widget is bind to.
+     * @method element
+     * @example
+        var mypopover = UI.popover("popoverid").element();
+     */
+    element: function () {
+	return this.popover;
     }
 };

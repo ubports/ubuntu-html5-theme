@@ -83,5 +83,14 @@ Toolbar.prototype = {
      */
     touch: function (callback) {
         this.toolbar.addEventListener(UbuntuUI.touchEvents.touchEnd, callback);
+    },
+    /**
+     * Returns the DOM element associated with the id this widget is bind to.
+     * @method element
+     * @example
+        var mytoolbar = UI.toolbar("toolbarid").element();
+     */
+    element: function () {
+	return this.toolbar;
     }
 };

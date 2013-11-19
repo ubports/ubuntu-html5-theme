@@ -49,9 +49,18 @@ Button.prototype = {
         });
      */
     click: function (callback) {
-    if ( ! document.getElementById(this.id)) {
-        throw "Invalid button ID: " + String(this.id);
-    }
+	if ( ! document.getElementById(this.id)) {
+            throw "Invalid button ID: " + String(this.id);
+	}
         new FastButton(document.getElementById(this.id), callback);
+    },
+    /**
+     * Returns the DOM element associated with the id this widget is bind to.
+     * @method element
+     * @example
+        var mybutton = UI.button("buttonid").element();
+     */
+    element: function() {
+	return document.getElementById(this.id);
     }
 };
