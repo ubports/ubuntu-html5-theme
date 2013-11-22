@@ -59,8 +59,11 @@
     font-size: 0.6rem;
     text-align: center;
     width: 60px;
-    float: right;
+    float: left;
     text-decoration: none;
+}
+
+[data-role="footer"] nav ul li {
     padding-top: 4px;
 }
 
