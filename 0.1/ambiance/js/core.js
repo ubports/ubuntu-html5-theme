@@ -287,9 +287,9 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attrubute
          * @return {OptionSelector}
          */
-        optionselector: function (id) {
+        optionselector: function (id, expanded, multiSelection) {
             if (typeof OptionSelector != 'undefined' && OptionSelector) {
-                return new OptionSelector(id);
+                return new OptionSelector(id, expanded, multiSelection);
             }
         },
 

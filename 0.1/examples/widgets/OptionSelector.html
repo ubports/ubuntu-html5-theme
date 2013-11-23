@@ -38,7 +38,11 @@
         var UI = new UbuntuUI();
         $(document).ready(function () {
             UI.init();
-            os2 = UI.optionselector('o2');
+            os1 = UI.optionselector('os1', expanded=true, multiSelection=true);
+
+            os1.onClicked(function (e) {
+                console.log(e.values);
+            })
         });
     </script>
 </head>
@@ -64,72 +68,35 @@
 
         <div data-role="content">
             <div class="inset" style="margin: 15px;">
-
-
-            <section data-role="option-selector" id="o1">
-                <ul>
-                    <li>
-                        <a href="" data-value="0">
-                            <p>Label</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" data-value="1">
-                            <p>Label</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" data-value="2">
-                            <p>Label</p>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <section data-role="option-selector" id="o2">
-                <ul>
-                    <li>
-                        <a href="#" data-value="0">
+                <section data-role="option-selector" id="os1">
+                    <ul>
+                        <li data-value="0">
                             <aside>
-                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png">
-                            </aside>
+                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
                             <p>Label 1</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-value="1">
+                        </li>
+                        <li data-value="1">
                             <aside>
-                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png">
-                            </aside>
+                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
                             <p>Label 2</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-value="3">
+                        </li>
+                        <li data-value="3">
                             <aside>
-                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png">
-                            </aside>
+                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
                             <p>Label 3</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-value="4">
+                        </li>
+                        <li data-value="4">
                             <aside>
-                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png">
-                            </aside>
+                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
                             <p>Label 4</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-value="5">
+                        </li>
+                        <li data-value="5">
                             <aside>
-                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png">
-                            </aside>
+                                <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
                             <p>Label 5</p>
-                        </a>
-                    </li>
-                </ul>
-            </section>
+                        </li>
+                    </ul>
+                </section>
             </div>
         </div>
     </div>

@@ -23,83 +23,120 @@
 /* OptionSelector */
 var OptionSelector = (function () {
 
-    function __safeCall(f, args, errorfunc) {
-        if (typeof (f) !== 'function')
-            return;
-        try {
-            f.apply(null, args);
-        } catch (e) {
-            if (errorfunc && typeof (errorfunc) === 'function') errorfunc(e);
-        }
-    }
+    var currentlyExpanded = false,
+        currentIndex = 0,
+        values = "";
 
-    function OptionSelector (id, expanded) {
+    function OptionSelector (id, expanded, multiSelection) {
 
         this.expanded = typeof expanded !== 'undefined' ? expanded : true;
+        this.multiSelection = typeof multiSelection !== 'undefined' ? multiSelection : true;
 
         this.optionselector = document.getElementById(id);
         this.optionselector_ul = this.optionselector.querySelectorAll('ul')[0];
         this.optionselector_ul_li = this.optionselector.querySelectorAll('li');
-        this.offsetX = -3.33;
 
         t = this;
 
-        [].forEach.call(this.optionselector.querySelectorAll('li > a'), function (elm) {
+        [].forEach.call(this.optionselector_ul_li, function (elm) {
             elm.addEventListener('click', t.__onClicked, false);
         });
 
-        if (this.expanded) {
+        if (t.expanded) {
             t.__open();
+        }
+        else {
+            if (currentlyExpanded) {
+                t.__open();
+                this.optionselector_ul_li[0].classList.add('active');
+            } else {
+                t.__close(currentIndex);
+                this.optionselector_ul_li[0].classList.add('closed');
+            }
         }
     }
 
     OptionSelector.prototype = {
 
-        __onClicked: function () {
-
-
-            index = 0;
-            menuNodes = this.parentNode.parentNode.childNodes;
-
-            for(var i = 0, max = menuNodes.length; i < max; i++) {
-                if (menuNodes[i]==this.parentNode) break;
-                if (menuNodes[i].nodeType==1) { console.log(this.parentNode);index++; }
-            }
+        __onClicked: function (e) {
+            values = "";
+            currentIndex = 0;
 
             if (t.expanded) {
-                t.__close(index);
-                this.classList.add('active');
-                this.classList.add('closed');
-                this.style.borderTop = '0';
+                if (!t.multiSelection) {
+                    [].forEach.call(t.optionselector_ul_li, function (elm) {
+                        elm.classList.remove('active');
+                    });
+                    this.classList.toggle('active');
+                }
+                else {
+                    this.classList.toggle('active');
+                }
             }
             else {
-                this.classList.remove('closed');
-                t.__open();
-                this.style.borderTop = '1px solid #C7C7C7';
+
+                for(i = 0, max = t.optionselector_ul_li.length; i < max; i++) {
+                    if (t.optionselector_ul_li[i]==this) break;
+                    if (t.optionselector_ul_li[i].nodeType==1) { currentIndex++; }
+                }
+
+                if (currentlyExpanded) {
+                    t.__close(currentIndex);
+                    this.classList.add('active');
+                    this.classList.add('closed');
+                    this.style.borderTop = '0';
+                }
+                else {
+                    this.classList.add('active');
+                    this.classList.remove('closed');
+                    t.__open();
+                    this.style.borderTop = '1px solid #C7C7C7';
+                }
             }
+
+            k = 0;
+            for(i = 0, max = t.optionselector_ul_li.length; i < max; i++) {
+                if (t.optionselector_ul_li[i].nodeType==1) {
+                    if ((t.optionselector_ul_li[i].className).indexOf('active') > -1) {
+                        if (k == 0) {
+                            values = t.optionselector_ul_li[i].getAttribute("data-value");
+                        }
+                        else {
+                            values = values + ", " + t.optionselector_ul_li[i].getAttribute("data-value");
+                        }
+                        k++;
+                    }
+                }
+            }
+
+            this._evt = document.createEvent('Event');
+            this._evt.initEvent('onclicked', true, true);
+            this._evt.values = values;
+            this.dispatchEvent(this._evt);
 
             e.preventDefault();
         },
 
         __open: function () {
-            this.optionselector_ul.style['-webkit-transition-duration'] = '.3s';
+            this.optionselector_ul.style['-webkit-transition-duration'] = '.4s';
             this.optionselector_ul.style.webkitTransform = 'translate3d(0, 0rem,0)';
-            this.optionselector.style.height = 3.3*this.optionselector_ul_li.length + 'rem';
-            this.expanded = true;
+            this.optionselector.style.height = 3*this.optionselector_ul_li.length + 'rem';
+            currentlyExpanded = true;
         },
 
-        __close: function (index) {
-
-            this.optionselector_ul.style['-webkit-transition-duration'] = '.3s';
-            this.optionselector_ul.style.webkitTransform = 'translate3d(0,' + this.offsetX*index + 'rem,0)';
-
-            this.optionselector.style.height = '3.3rem';
-
-            [].forEach.call(this.optionselector.querySelectorAll('li > a'), function (el) {
-                el.classList.remove('active');
+        __close: function (currentIndex) {
+            this.optionselector_ul.style['-webkit-transition-duration'] = '.4s';
+            this.optionselector_ul.style.webkitTransform = 'translate3d(0,' + -3*currentIndex + 'rem,0)';
+            this.optionselector.style.height = '3rem';
+            [].forEach.call(this.optionselector_ul_li, function (elm) {
+                elm.classList.remove('active');
             });
-            this.expanded = false;
+            currentlyExpanded = false;
         },
+
+        onClicked : function(callback){
+            this.optionselector_ul.addEventListener("onclicked", callback);
+        }
     };
     return OptionSelector;
 })();
