@@ -18,7 +18,7 @@ MainView {
       The property holds the path to the filesystem location where the 'index.html'
       file can be found (root of the HTML5 application).
 
-      The path is absolute or relative.
+      The path is absolute or relative to the current dir.
       */
     property alias htmlIndexDirectory: view.wwwDir
 
