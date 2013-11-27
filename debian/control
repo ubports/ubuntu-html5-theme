@@ -2,9 +2,12 @@ Source: ubuntu-html5-theme
 Section: misc
 Priority: optional
 Maintainer: Michael Hall <mhall119@ubuntu.com>
-Build-Depends: debhelper (>= 9),
+Build-Depends: cmake (>= 2.8.9),
+               debhelper (>= 9),
                python (>= 2.7),
                python-setuptools,
+               qt5-default,
+               qt5-qmake,
 Standards-Version: 3.9.4
 Homepage: https://launchpad.net/ubuntu-html5-theme
 # If you aren't a member of ~ubuntu-html5-theme-devs but need to upload packaging changes,
