@@ -48,3 +48,19 @@ Depends: ${misc:Depends},
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  Common CSS and Javascript for developing native-looking HTML5 applications
  for Ubuntu. This package contains autopilot tests for it.
+
+Package: ubuntu-html5-container
+Architecture: all
+Depends: ${misc:Depends},
+         ${python:Depends},
+         dpkg-dev,
+         libqt5webkit5-qmlwebkitplugin,
+         qtdeclarative5-cordova-2.8-plugin,
+         qtdeclarative5-qtquick2-plugin,
+         qtdeclarative5-ubuntu-ui-extras-browser-plugin,
+         qmlscene,
+         ubuntu-html5-theme (= ${binary:Version}),
+Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
+ This package contains the Ubuntu HTML5 QML component used to embed HTML5
+ apps at runtime.
+
