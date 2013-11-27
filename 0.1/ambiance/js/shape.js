@@ -63,6 +63,6 @@ Shape.prototype = {
         var myshape = UI.shape("shapeid").element();
      */
     element: function () {
-	return document.getElementById(this.id);
+        return document.getElementById(this.id);
     }
 };

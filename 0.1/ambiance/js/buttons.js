@@ -49,9 +49,9 @@ Button.prototype = {
         });
      */
     click: function (callback) {
-	if ( ! document.getElementById(this.id)) {
+        if ( ! document.getElementById(this.id)) {
             throw "Invalid button ID: " + String(this.id);
-	}
+        }
         new FastButton(document.getElementById(this.id), callback);
     },
     /**
@@ -61,6 +61,6 @@ Button.prototype = {
         var mybutton = UI.button("buttonid").element();
      */
     element: function() {
-	return document.getElementById(this.id);
+        return document.getElementById(this.id);
     }
 };

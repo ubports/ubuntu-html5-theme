@@ -234,6 +234,6 @@ Popover.prototype = {
         var mypopover = UI.popover("popoverid").element();
      */
     element: function () {
-	return this.popover;
+        return this.popover;
     }
 };

@@ -67,7 +67,7 @@ var List = (function () {
         if (list == null || list.nodeName.toLowerCase() !== 'section' || list.getAttribute('data-role') != LIST_DATA_ROLE) {
             throw new Error('Element with selector "' + selector + '" does not exist or not declared as a "list" <section>');
         }
-	this._selector = selector;
+        this._selector = selector;
         this._list = list;
 
         __addUlIfNotFound(this._list);
@@ -99,7 +99,7 @@ var List = (function () {
                 header.innerText = text;
             }
         },
-	    /**
+            /**
          * Append an item to a list
          * @method append
          * @param {String} text - The main text, flushed left (no markup)
@@ -182,15 +182,15 @@ var List = (function () {
                 func(element, index);
             });
         },
-	/**
-	 * Returns the DOM element associated with the selector this widget is bind to.
-	 * @method element
-	 * @example
+        /**
+         * Returns the DOM element associated with the selector this widget is bind to.
+         * @method element
+         * @example
             var mylist = UI.list("#listid").element();
-	*/
-	element: function () {
-	    return this._list;
-	}
+        */
+        element: function () {
+            return this._list;
+        }
     };
 
     return List;

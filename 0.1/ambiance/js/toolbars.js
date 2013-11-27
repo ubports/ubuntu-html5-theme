@@ -91,6 +91,6 @@ Toolbar.prototype = {
         var mytoolbar = UI.toolbar("toolbarid").element();
      */
     element: function () {
-	return this.toolbar;
+        return this.toolbar;
     }
 };

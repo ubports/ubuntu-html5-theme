@@ -63,6 +63,6 @@ Page.prototype = {
        var mypage = UI.page("pageid").element();
     */
     element: function () {
-	return document.getElementById(this.id);
+        return document.getElementById(this.id);
     }
 };

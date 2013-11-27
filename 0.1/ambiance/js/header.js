@@ -66,6 +66,6 @@ Header.prototype = {
         var myheader = UI.header("headerid").element();
      */
     element: function () {
-	return document.getElementById(this.id);
+        return document.getElementById(this.id);
     }
 };
