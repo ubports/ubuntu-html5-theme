@@ -71,6 +71,8 @@
 [data-role="header"] .active:after {
     content: "›";
     padding-left: 10px;
+    -webkit-opacity: 0.5;
+    opacity: 0.5;
 }
 
 [data-role="header"] li:only-child:after {
@@ -78,8 +80,9 @@
     padding-left: 10px;
 }
 
+/* Inavtive but viewable state*/
 [data-role="header"] .inactive {
     color: #a0a0a0;
-    -webkit-opacity: 1;
-    opacity: 1;
+    -webkit-opacity: 0.5;
+    opacity: 0.5;
 }

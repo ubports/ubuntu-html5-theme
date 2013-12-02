@@ -174,14 +174,37 @@ var UbuntuUI = (function () {
             }
         },
 
+	__getTabInfosDelegate: function () {
+	    var self = this;
+	    return {
+		get isTouch() {
+		    return self.isTouch;
+		},
+		touchEvents: {
+		    get touchStart() {
+			return self.touchEvents.touchStart;
+		    },
+		    get touchMove() {
+			return self.touchEvents.touchMove;
+		    },
+		    get touchEnd() {
+			return self.touchEvents.touchEnd;
+		    },
+		    get touchLeave() {
+			return self.touchEvents.touchLeave;
+		    },
+		},
+	    };
+	},
+
         __setupTabs: function (document) {
              if (__hasTabs(document)) {
                 if (typeof Tabs != 'undefined' && Tabs) {
-                    multi_tabs = document.querySelectorAll('[data-role=tabs]');
-                    if (multi_tabs.length == 0)
+                    var apptabsElements = document.querySelectorAll('[data-role=tabs]');
+                    if (apptabsElements.length == 0)
                         return;
-                    var tabs_o = multi_tabs[0];
-                    this._tabs = new Tabs(this, tabs_o);
+                    this._tabs = new Tabs(apptabsElements[0],
+					  this.__getTabInfosDelegate());
                 }
              }
         },

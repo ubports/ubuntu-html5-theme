@@ -60,44 +60,141 @@ var Tabs = (function () {
         resistance,
         tabsWidth,
         activeTab,
-        t1,
+        navigationTimer,
         t2,
-        _UbuntuUI;
+        startTimestamp;
 
+    var STATES = {
+        basic: 0,
+        transitioning_to_navigation: 1,
+        navigating: 2,
+    };
+    var state = STATES.basic;
 
-    function Tabs (UbuntuUI, tabs) {
+    function Tabs (tabs, touchInfoDelegate) {
+        if (tabs == null || touchInfoDelegate == null) {
+            return;
+        }
         this._tabs = tabs;
-        _UbuntuUI = UbuntuUI;
 
-        /*this._tabs.addEventListener(_UbuntuUI.touchEvents.touchStart, this.__onTouchStart.bind(this));
-        this._tabs.addEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
-        this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));*/
+	this._infos = {
+	    width: this.__getTabHeadersWidth(),
+	    count: this._tabs.querySelectorAll('li').length
+	};
+	console.log('');
+        this._touchInfoDelegate = touchInfoDelegate;
 
-        _tabsTemp = this;
+        var touchEvents = touchInfoDelegate.touchEvents;
+        this._tabs.addEventListener(touchEvents.touchStart,
+                                    this.__onTouchStart.bind(this));
+        this._tabs.addEventListener(touchEvents.touchMove, this.__onTouchMove.bind(this));
+        this._tabs.addEventListener(touchEvents.touchEnd, this.__onTouchEnd.bind(this));
 
+        // we only have leave events on desktop, we manually calcuate
+        // leave on touch as its not supported in webkit
+        if (touchEvents.touchLeave) {
+            this._tabs.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
+        }
         document.querySelector('[data-role="tab"]:first-child').classList.add('active');
-
-        [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
-            el.addEventListener('click', _tabsTemp.__onClicked.bind(_tabsTemp, el), false);
-        });
-    }
-
+    };
 
     Tabs.prototype = {
+	/**
+         * Return the index of the selected tab
+         * @property selectedTabIndex
+         * @return {Integer} - The index of the element in the list of tabs or -1
+         */
+	get selectedTabIndex() {
+	    return [].prototype.slice.call(this._tabs.querySelector('ul').children).indexOf(activeTab);
+	},
+
+	/**
+         * Return the currently selected tab element
+         * @property selectedTab
+         * @return {Element} - The currently selected element or null
+         */
+	get selectedTab() {
+	    return activeTab;
+	},
+
+	/**
+         * Return the page associated with the currently selected tab
+         * @property currentPage
+         * @return {Element} - Page DOM element associated with the currently selected tab or null
+         */
+	get currentPage() {
+	    return this.selectedTab ? this.selectedTab.querySelector('page') : null;
+	},
+
+	/**
+         * Return the number of tab elements in the header
+         * @property count
+         * @return {Integer} - Number of tab elements
+         */
+	get count() {
+	    return this.tabChildren.length;
+	},
+
+	/**
+         * Return the list of DOM elements of the tab
+         * @property tabChildren
+         * @return {Elements} - List of DOM elements in the tab
+         */
+	get tabChildren() {
+	    return this._tabs.querySelectorAll('li');
+	},
+
+
+	/**
+         * @private
+	 */
         __getScroll: function () {
             var translate3d = this._tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
             return parseInt(translate3d ? translate3d[1] : 0)
         },
 
-        __onTouchStart: function (e) {
-            if (!this._tabs) return;
-            window.clearTimeout(t1);
-            window.clearTimeout(t2);
+	/**
+         * @private
+	 */
+	__getTabHeadersWidth: function() {
+	    return Array.prototype.slice.call(document.querySelectorAll('header li')).reduce(function(prev, cur) { return prev + cur.clientWidth;}, 0);
+	},
+
+	/**
+         * @private
+	 */
+	__getHeaderWidth: function() {
+	    return this._tabs.clientWidth;
+	},
+
+	/**
+         * @private
+	 */
+        __clearInternalState: function() {
+            if (navigationTimer) window.clearTimeout(navigationTimer);
+            if (t2) window.clearTimeout(t2);
+            navigationTimer = undefined;
+            t2 = undefined;
             isScrolling = undefined;
             tabsWidth = this._tabs.offsetWidth;
-            resistance = 1;
+            resistance = 10;
+            startTimestamp = 0;
+        },
 
-            if (!_UbuntuUI.isTouch) {
+	/**
+         * @private
+	 */
+        __onTouchStart: function (e) {
+            if (!this._tabs) return;
+            this.__clearInternalState();
+
+            if (state === STATES.basic) {
+                state = STATES.transitioning_to_navigation;
+                this.__showNavigation();
+            }
+
+            // fallback for mouse input method
+            if (!this._touchInfoDelegate.isTouch) {
                 e.touches = [{
                     pageX: e.pageX,
                     pageY: e.pageY
@@ -106,19 +203,16 @@ var Tabs = (function () {
             pageX = e.touches[0].pageX;
             pageY = e.touches[0].pageY;
 
-            this._tabs.style['-webkit-transition-duration'] = 0;
-            this._tabs.addEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this));
-            this._tabs.addEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this));
+            startTimestamp = e.timeStamp;
 
-            // we only have leave events on desktop, we manually calcuate
-            // leave on touch as its not supported in webkit
-            if (_UbuntuUI.touchEvents.touchLeave) {
-                this._tabs.addEventListener(_UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this));
-            }
+            this._tabs.style['-webkit-transition-duration'] = 0;
         },
 
+	/**
+         * @private
+	 */
         __onTouchMove: function (e) {
-            if (!_UbuntuUI.isTouch) {
+            if (!this._touchInfoDelegate.isTouch) {
                 e.touches = [{
                     pageX: e.pageX,
                     pageY: e.pageY
@@ -126,76 +220,143 @@ var Tabs = (function () {
             }
             deltaX = e.touches[0].pageX - pageX;
             deltaY = e.touches[0].pageY - pageY;
-            pageX = e.touches[0].pageX;
-            pageY = e.touches[0].pageY;
 
-            if (typeof isScrolling == 'undefined') {
-                isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
-            }
+//            pageX = e.touches[0].pageX;
+//            pageY = e.touches[0].pageY;
+
+            // TODO: account for DPR
+            var MIN_JITTER_THRESHOLD = 20;
+
+            var plusDeltaX = Math.abs(deltaX);
+            var plusDeltaY = Math.abs(deltaY);
+
+            // Account for clicks w/ slight touch jitter
+            isScrolling = plusDeltaY > plusDeltaX &&
+                plusDeltaY > MIN_JITTER_THRESHOLD;
             if (isScrolling) return;
+
             offsetX = (deltaX / resistance) + this.__getScroll();
 
-            this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+	    var maxLeftReached = this._tabs.querySelector('li:first-child').getBoundingClientRect().left >= 0 &&
+		deltaX > 0;
+	    var maxRightReached = this._tabs.querySelector('li:last-child').getBoundingClientRect().right <= this.__getHeaderWidth() &&
+		deltaX < 0;
+	    if (this.__getTabHeadersWidth() > this.__getHeaderWidth() && !maxLeftReached && !maxRightReached) {
+		this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+	    }
         },
 
+	/**
+         * @private
+	 */
         __onTouchEnd: function (e) {
             if (!this._tabs || isScrolling) return;
-
-            this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchMove, this.__onTouchMove.bind(this), false);
-            this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchEnd, this.__onTouchEnd.bind(this), false);
-
-            // we only have leave events on desktop, we manually calcuate
-            // leave on touch as its not supported in webkit
-            if (_UbuntuUI.touchEvents.touchLeave) {
-                this._tabs.removeEventListener(_UbuntuUI.touchEvents.touchLeave, this.__onTouchLeave.bind(this), false);
+            var MIN_JITTER_THRESHOLD = 20;
+            if (state === STATES.transitioning_to_navigation) {
+                state = STATES.navigating;
+            }
+            else if (state === STATES.navigating && Math.abs((e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
+                this.__onClicked(e);
+		// Timer should have been cancelled, back to basic
+		state = STATES.basic;
             }
 
-            _tabsTemp = this;
-
-            t1 = window.setTimeout(function () {
-                activeTab = document.querySelector('[data-role="tab"].active');
-                offsetX = activeTab.offsetLeft;
-                _tabsTemp._tabs.style['-webkit-transition-duration'] = '.3s';
-                _tabsTemp._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                    el.classList.toggle('inactive');
-                });
+            var self = this;
+            navigationTimer = window.setTimeout(function () {
+                self.__endNavigation();
+		state = STATES.basic;
             }, 3000);
         },
 
+	/**
+         * @private
+	 */
+        __endNavigation: function () {
+            if (state !== STATES.navigating) return;
+
+            var activeTab = document.querySelector('[data-role="tab"].active');
+            if (! activeTab) return;
+
+            var offsetX = activeTab.offsetLeft;
+            this._tabs.style['-webkit-transition-duration'] = '.3s';
+            this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+            
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                el.classList.toggle('inactive');
+            });
+        },
+
+	/**
+         * @private
+	 */
+        __showNavigation: function () {
+            if (state !== STATES.transitioning_to_navigation) return;
+
+            // TODO constraint a bit the selector
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                el.classList.toggle('inactive');
+            });
+        },
+
+	/**
+         * @private
+	 */
+        __updateActiveTab: function(newActiveTab, oldActiveTab) {
+            // TODO avoid reflow
+            oldActiveTab.classList.remove('inactive');
+            oldActiveTab.classList.remove('active');
+            newActiveTab.classList.remove('inactive');
+            newActiveTab.classList.add('active');
+        },
+
+	/**
+         * @private
+	 */
         __onTouchLeave: function (e) {},
 
-        __onClicked: function (elm, e) {
-            if ((elm.className).indexOf('inactive') > -1) {
+	/**
+         * @private
+	 */
+	__dispatchTabChangedEvent: function (selectedTab) {
+            var id = selectedTab.getAttribute("data-page");
+            this._evt = document.createEvent('Event');
+            this._evt.initEvent('tabchanged',true,true);
+            this._evt.page = id;
+            this._tabs.dispatchEvent(this._evt);
+	},
+
+	/**
+         * @private
+	 */
+        __onClicked: function (e) {
+            if (state !== STATES.navigating)
+                return;
+	    if (e.changedTouches.length === 0)
+		return;
+	    var touch = e.changedTouches[0];
+            var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
+            if (selectedTab == null)
+                return;
+            if (selectedTab.getAttribute("data-role") !== 'tab')
+                return;
+            if ((selectedTab.className).indexOf('inactive') > -1) {
                 window.clearTimeout(t2);
 
                 activeTab = document.querySelector('[data-role="tab"].active');
                 offsetX = this.offsetLeft;
                 this._tabs.style['-webkit-transition-duration'] = '.3s';
+		console.log("offsetX: " + offsetX);
                 this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-                activeTab.classList.remove('inactive');
-                activeTab.classList.remove('active');
-                elm.classList.remove('inactive');
-                elm.classList.add('active');
+		console.log('this._tabs.style.webkitTransform ' + this._tabs.style.webkitTransform);
+
+                this.__updateActiveTab(selectedTab, activeTab);
 
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
                     e.classList.remove('inactive');
                 });
 
-                /*Array.prototype.slice.call(
-                    document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
-                ).map(function (element) {
-                    return element.cloneNode(true);
-                }).forEach(function (element) {
-                    element.classList.remove('active');
-                    tabs.appendChild(element);
-                });*/
+		this.__dispatchTabChangedEvent(selectedTab);
 
-                var id = elm.getAttribute("data-page");
-                this._evt = document.createEvent('Event');
-                this._evt.initEvent('tabchanged',true,true);
-                this._evt.page = id;
-                this._tabs.dispatchEvent(this._evt);
             } else {
 
                 [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
@@ -210,10 +371,15 @@ var Tabs = (function () {
             e.preventDefault();
         },
 
+	/**
+         * @private
+	 */
         activate: function (id) {
             if (!id || typeof (id) !== 'string')
-            return;
+		return;
             activeTab = document.querySelector('[data-page="'+ id +'"]');
+	    if (!activeTab)
+		return;
 
             [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (e) {
                 e.classList.remove('active');
@@ -224,9 +390,13 @@ var Tabs = (function () {
 
             offsetX = activeTab.offsetLeft;
             this._tabs.style['-webkit-transition-duration'] = '.3s';
+		console.log("offsetX: " + offsetX);
             this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
         },
 
+	/**
+         * @private
+	 */
         onTabChanged : function(callback){
             this._tabs.addEventListener("tabchanged", callback);
         }
