@@ -20,7 +20,31 @@
  * <http://www.gnu.org/licenses/>
  */
 
-/* OptionSelector */
+/**
+ * OptionSelector is a component displaying either a single selected value or expanded multiple choice with an optional image and subtext when not expanded, when expanding it opens a
+    listing of all the possible values for selection with an additional option of always being expanded. If multiple choice is selected the list is expanded automatically.
+
+ * @class OptionSelector
+ * @constructor
+ * @namespace UbuntuUI
+ * @example
+      <section data-role="option-selector" id="OptionSelectorID">
+        <ul>
+          <li data-value="0">
+            <p>Label 1</p>
+          </li>
+          <li data-value="1">
+            <p>Label 2</p>
+          </li>
+          <li data-value="3">
+            <p>Label 3</p>
+          </li>
+        </ul>
+      </section>
+
+      JavaScript:
+      UI.optionselector.METHOD();
+*/
 var OptionSelector = (function () {
 
     var __currentIndex = 0,
@@ -57,6 +81,9 @@ var OptionSelector = (function () {
 
     OptionSelector.prototype = {
 
+        /**
+         * @private
+         */
         __onClicked: function (elm, e) {
             values = "";
             __currentIndex = 0;
