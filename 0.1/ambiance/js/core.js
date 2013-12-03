@@ -92,10 +92,8 @@ var UbuntuUI = (function () {
 
         var a = li.querySelector('a');
         a.onclick = function (e) {
-	    console.log(self._pageStack.depth());
             if (self._pageStack.depth() > 1){
                 self._pageStack.pop();
-//                self._tabs.activate(self._pageStack.currentPage());
             }
             e.preventDefault();
         };
@@ -126,9 +124,7 @@ var UbuntuUI = (function () {
             this._pageStack = new Pagestack(pagestack);
 
             var pages = pagestack.querySelectorAll("[data-role='page']");
-	    console.log(pages.length);
 	    if (pages.length > 0) {
-		console.log(pages[0].getAttribute('id'))
 		this._pageStack.push(pages[0].getAttribute('id'));
 	    }
 
