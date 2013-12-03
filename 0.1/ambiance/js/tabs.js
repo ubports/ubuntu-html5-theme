@@ -77,11 +77,10 @@ var Tabs = (function () {
         }
         this._tabs = tabs;
 
-	this._infos = {
-	    width: this.__getTabHeadersWidth(),
-	    count: this._tabs.querySelectorAll('li').length
-	};
-	console.log('');
+        this._infos = {
+            width: this.__getTabHeadersWidth(),
+            count: this._tabs.querySelectorAll('li').length
+        };
         this._touchInfoDelegate = touchInfoDelegate;
 
         var touchEvents = touchInfoDelegate.touchEvents;
@@ -99,77 +98,77 @@ var Tabs = (function () {
     };
 
     Tabs.prototype = {
-	/**
+        /**
          * Return the index of the selected tab
          * @property selectedTabIndex
          * @return {Integer} - The index of the element in the list of tabs or -1
          */
-	get selectedTabIndex() {
-	    return [].prototype.slice.call(this._tabs.querySelector('ul').children).indexOf(activeTab);
-	},
+        get selectedTabIndex() {
+            return [].prototype.slice.call(this._tabs.querySelector('ul').children).indexOf(activeTab);
+        },
 
-	/**
+        /**
          * Return the currently selected tab element
          * @property selectedTab
          * @return {Element} - The currently selected element or null
          */
-	get selectedTab() {
-	    return activeTab;
-	},
+        get selectedTab() {
+            return activeTab;
+        },
 
-	/**
+        /**
          * Return the page associated with the currently selected tab
          * @property currentPage
          * @return {Element} - Page DOM element associated with the currently selected tab or null
          */
-	get currentPage() {
-	    return this.selectedTab ? this.selectedTab.querySelector('page') : null;
-	},
+        get currentPage() {
+            return this.selectedTab ? this.selectedTab.querySelector('page') : null;
+        },
 
-	/**
+        /**
          * Return the number of tab elements in the header
          * @property count
          * @return {Integer} - Number of tab elements
          */
-	get count() {
-	    return this.tabChildren.length;
-	},
+        get count() {
+            return this.tabChildren.length;
+        },
 
-	/**
+        /**
          * Return the list of DOM elements of the tab
          * @property tabChildren
          * @return {Elements} - List of DOM elements in the tab
          */
-	get tabChildren() {
-	    return this._tabs.querySelectorAll('li');
-	},
+        get tabChildren() {
+            return this._tabs.querySelectorAll('li');
+        },
 
 
-	/**
+        /**
          * @private
-	 */
+         */
         __getScroll: function () {
             var translate3d = this._tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
             return parseInt(translate3d ? translate3d[1] : 0)
         },
 
-	/**
+        /**
          * @private
-	 */
-	__getTabHeadersWidth: function() {
-	    return Array.prototype.slice.call(document.querySelectorAll('header li')).reduce(function(prev, cur) { return prev + cur.clientWidth;}, 0);
-	},
+         */
+        __getTabHeadersWidth: function() {
+            return Array.prototype.slice.call(document.querySelectorAll('header li')).reduce(function(prev, cur) { return prev + cur.clientWidth;}, 0);
+        },
 
-	/**
+        /**
          * @private
-	 */
-	__getHeaderWidth: function() {
-	    return this._tabs.clientWidth;
-	},
+         */
+        __getHeaderWidth: function() {
+            return this._tabs.clientWidth;
+        },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __clearInternalState: function() {
             if (navigationTimer) window.clearTimeout(navigationTimer);
             if (t2) window.clearTimeout(t2);
@@ -181,9 +180,9 @@ var Tabs = (function () {
             startTimestamp = 0;
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __onTouchStart: function (e) {
             if (!this._tabs) return;
             this.__clearInternalState();
@@ -193,36 +192,22 @@ var Tabs = (function () {
                 this.__showNavigation();
             }
 
-            // fallback for mouse input method
-            if (!this._touchInfoDelegate.isTouch) {
-                e.touches = [{
-                    pageX: e.pageX,
-                    pageY: e.pageY
-                }];
-            }
-            pageX = e.touches[0].pageX;
-            pageY = e.touches[0].pageY;
+	    var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            pageX = _e.touches[0].pageX;
+            pageY = _e.touches[0].pageY;
 
-            startTimestamp = e.timeStamp;
+            startTimestamp = _e.timeStamp;
 
             this._tabs.style['-webkit-transition-duration'] = 0;
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __onTouchMove: function (e) {
-            if (!this._touchInfoDelegate.isTouch) {
-                e.touches = [{
-                    pageX: e.pageX,
-                    pageY: e.pageY
-                }];
-            }
-            deltaX = e.touches[0].pageX - pageX;
-            deltaY = e.touches[0].pageY - pageY;
-
-//            pageX = e.touches[0].pageX;
-//            pageY = e.touches[0].pageY;
+	    var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            deltaX = _e.touches[0].pageX - pageX;
+            deltaY = _e.touches[0].pageY - pageY;
 
             // TODO: account for DPR
             var MIN_JITTER_THRESHOLD = 20;
@@ -237,40 +222,43 @@ var Tabs = (function () {
 
             offsetX = (deltaX / resistance) + this.__getScroll();
 
-	    var maxLeftReached = this._tabs.querySelector('li:first-child').getBoundingClientRect().left >= 0 &&
-		deltaX > 0;
-	    var maxRightReached = this._tabs.querySelector('li:last-child').getBoundingClientRect().right <= this.__getHeaderWidth() &&
-		deltaX < 0;
-	    if (this.__getTabHeadersWidth() > this.__getHeaderWidth() && !maxLeftReached && !maxRightReached) {
-		this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
-	    }
+            var maxLeftReached = this._tabs.querySelector('li:first-child').getBoundingClientRect().left >= 0 &&
+                deltaX > 0;
+            var maxRightReached = this._tabs.querySelector('li:last-child').getBoundingClientRect().right <= this.__getHeaderWidth() &&
+                deltaX < 0;
+            if (this.__getTabHeadersWidth() > this.__getHeaderWidth() && !maxLeftReached && !maxRightReached) {
+                this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+            }
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __onTouchEnd: function (e) {
             if (!this._tabs || isScrolling) return;
+
+	    var _e = this._touchInfoDelegate.translateTouchEvent(e);
+
             var MIN_JITTER_THRESHOLD = 20;
             if (state === STATES.transitioning_to_navigation) {
                 state = STATES.navigating;
             }
-            else if (state === STATES.navigating && Math.abs((e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
-                this.__onClicked(e);
-		// Timer should have been cancelled, back to basic
-		state = STATES.basic;
+            else if (state === STATES.navigating && Math.abs((_e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
+                this.__onClicked(_e);
+                // Timer should have been cancelled, back to basic
+                state = STATES.basic;
             }
 
             var self = this;
             navigationTimer = window.setTimeout(function () {
                 self.__endNavigation();
-		state = STATES.basic;
+                state = STATES.basic;
             }, 3000);
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __endNavigation: function () {
             if (state !== STATES.navigating) return;
 
@@ -286,9 +274,9 @@ var Tabs = (function () {
             });
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __showNavigation: function () {
             if (state !== STATES.transitioning_to_navigation) return;
 
@@ -298,9 +286,9 @@ var Tabs = (function () {
             });
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __updateActiveTab: function(newActiveTab, oldActiveTab) {
             // TODO avoid reflow
             oldActiveTab.classList.remove('inactive');
@@ -309,31 +297,31 @@ var Tabs = (function () {
             newActiveTab.classList.add('active');
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __onTouchLeave: function (e) {},
 
-	/**
+        /**
          * @private
-	 */
-	__dispatchTabChangedEvent: function (selectedTab) {
+         */
+        __dispatchTabChangedEvent: function (selectedTab) {
             var id = selectedTab.getAttribute("data-page");
             this._evt = document.createEvent('Event');
             this._evt.initEvent('tabchanged',true,true);
             this._evt.page = id;
             this._tabs.dispatchEvent(this._evt);
-	},
+        },
 
-	/**
+        /**
          * @private
-	 */
+         */
         __onClicked: function (e) {
             if (state !== STATES.navigating)
                 return;
-	    if (e.changedTouches.length === 0)
-		return;
-	    var touch = e.changedTouches[0];
+            if (e.changedTouches.length === 0)
+                return;
+            var touch = e.changedTouches[0];
             var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
             if (selectedTab == null)
                 return;
@@ -345,9 +333,7 @@ var Tabs = (function () {
                 activeTab = document.querySelector('[data-role="tab"].active');
                 offsetX = this.offsetLeft;
                 this._tabs.style['-webkit-transition-duration'] = '.3s';
-		console.log("offsetX: " + offsetX);
                 this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-		console.log('this._tabs.style.webkitTransform ' + this._tabs.style.webkitTransform);
 
                 this.__updateActiveTab(selectedTab, activeTab);
 
@@ -355,7 +341,7 @@ var Tabs = (function () {
                     e.classList.remove('inactive');
                 });
 
-		this.__dispatchTabChangedEvent(selectedTab);
+                this.__dispatchTabChangedEvent(selectedTab);
 
             } else {
 
@@ -371,15 +357,15 @@ var Tabs = (function () {
             e.preventDefault();
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         activate: function (id) {
             if (!id || typeof (id) !== 'string')
-		return;
+                return;
             activeTab = document.querySelector('[data-page="'+ id +'"]');
-	    if (!activeTab)
-		return;
+            if (!activeTab)
+                return;
 
             [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (e) {
                 e.classList.remove('active');
@@ -390,13 +376,12 @@ var Tabs = (function () {
 
             offsetX = activeTab.offsetLeft;
             this._tabs.style['-webkit-transition-duration'] = '.3s';
-		console.log("offsetX: " + offsetX);
             this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
         },
 
-	/**
+        /**
          * @private
-	 */
+         */
         onTabChanged : function(callback){
             this._tabs.addEventListener("tabchanged", callback);
         }

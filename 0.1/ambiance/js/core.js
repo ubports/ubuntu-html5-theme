@@ -174,28 +174,40 @@ var UbuntuUI = (function () {
             }
         },
 
-	__getTabInfosDelegate: function () {
-	    var self = this;
-	    return {
-		get isTouch() {
-		    return self.isTouch;
-		},
-		touchEvents: {
-		    get touchStart() {
-			return self.touchEvents.touchStart;
-		    },
-		    get touchMove() {
-			return self.touchEvents.touchMove;
-		    },
-		    get touchEnd() {
-			return self.touchEvents.touchEnd;
-		    },
-		    get touchLeave() {
-			return self.touchEvents.touchLeave;
-		    },
-		},
-	    };
-	},
+        __getTabInfosDelegate: function () {
+            var self = this;
+            return {
+                get isTouch() {
+                    return self.isTouch;
+                },
+                touchEvents: {
+                    get touchStart() {
+                        return self.touchEvents.touchStart;
+                    },
+                    get touchMove() {
+                        return self.touchEvents.touchMove;
+                    },
+                    get touchEnd() {
+                        return self.touchEvents.touchEnd;
+                    },
+                    get touchLeave() {
+                        return self.touchEvents.touchLeave;
+                    },
+                },
+		translateTouchEvent: function(event) {
+		    if (self.isTouch)
+			return event;
+		    var touchEvent = event;
+		    touchEvent.identifier = event.timeStamp;
+		    return {
+			changedTouches: [touchEvent],
+			// keep the properties even for e.g. 'touchend'
+			touches: [touchEvent],
+			targetTouches: [touchEvent],
+		    };
+		}
+            };
+        },
 
         __setupTabs: function (document) {
              if (__hasTabs(document)) {
@@ -204,7 +216,7 @@ var UbuntuUI = (function () {
                     if (apptabsElements.length == 0)
                         return;
                     this._tabs = new Tabs(apptabsElements[0],
-					  this.__getTabInfosDelegate());
+                                          this.__getTabInfosDelegate());
                 }
              }
         },
