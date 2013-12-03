@@ -96,7 +96,7 @@ var Pagestack = (function () {
                 (new Page(id)).activate(id);
                 this._pages.push(id);
 
-		this.__dispatchPageChanged(this.currentPage());
+                this.__dispatchPageChanged(this.currentPage());
             } catch (e) {}
         },
 
@@ -149,42 +149,42 @@ var Pagestack = (function () {
             this._pages.pop();
             __safeCall(Page.prototype.activate.bind(new Page(this.currentPage())), []);
 
-	    this.__dispatchPageChanged(this.currentPage());
+            this.__dispatchPageChanged(this.currentPage());
         },
 
         onPageChanged : function(callback){
             this._pagestack.addEventListener("pagechanged", callback);
         },
 
-	/**
-	 * @private
-	 */
+        /**
+         * @private
+         */
         __setAllPagesVisibility: function (visible) {
             var visibility = visible ? "block" : "none";
 
-	    var children = [].slice.call(this._pagestack.children);
-	    children.forEach(function(element) {
-		var pageHelper = new Page();
-		if (pageHelper.isPage(element)) {
+            var children = [].slice.call(this._pagestack.children);
+            children.forEach(function(element) {
+                var pageHelper = new Page();
+                if (pageHelper.isPage(element)) {
                     el.style.display = visibility;
                     // treat footers separately
                     var footer = el.querySelector('footer');
                     if (footer)
-			footer.style.display = visibility;
-		}
-	    });
+                        footer.style.display = visibility;
+                }
+            });
         },
 
-	/**
-	 * @private
-	 */
+        /**
+         * @private
+         */
         __isPage: function (element) {
             return element.getAttribute('data-role') === 'page';
         },
 
-	/**
-	 * @private
-	 */
+        /**
+         * @private
+         */
         __dispatchPageChanged: function (page) {
             var event = document.createEvent('Event');
             event.initEvent('pagechanged',true,true);

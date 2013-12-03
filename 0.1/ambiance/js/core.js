@@ -124,9 +124,9 @@ var UbuntuUI = (function () {
             this._pageStack = new Pagestack(pagestack);
 
             var pages = pagestack.querySelectorAll("[data-role='page']");
-	    if (pages.length > 0) {
-		this._pageStack.push(pages[0].getAttribute('id'));
-	    }
+            if (pages.length > 0) {
+                this._pageStack.push(pages[0].getAttribute('id'));
+            }
 
             var immediateFooters = [].filter.call(pagestack.children,
                 function (e) {
@@ -162,8 +162,8 @@ var UbuntuUI = (function () {
         },
 
         __setupPage: function (document) {
-	    if (this._pageStack != null)
-		return;
+            if (this._pageStack != null)
+                return;
             if (__hasPageStack(document)) {
                 this.__setupPageStack(document);
             }
@@ -216,8 +216,8 @@ var UbuntuUI = (function () {
         },
 
         __setupTabs: function (document) {
-	    if (this._tabs != null)
-		return;
+            if (this._tabs != null)
+                return;
             if (__hasTabs(document)) {
                 if (typeof Tabs != 'undefined' && Tabs) {
                     var apptabsElements = document.querySelectorAll('[data-role=tabs]');
@@ -226,13 +226,13 @@ var UbuntuUI = (function () {
                     this._tabs = new Tabs(apptabsElements[0],
                                           this.__getTabInfosDelegate());
 
-		    this._tabs.onTabChanged(function (e) {
-			if (!e || !e.infos)
-			    return;
-			if (e.infos.pageId) {
-			    (new Page(e.infos.pageId)).activate();
-			}
-		    }.bind(this));
+                    this._tabs.onTabChanged(function (e) {
+                        if (!e || !e.infos)
+                            return;
+                        if (e.infos.pageId) {
+                            (new Page(e.infos.pageId)).activate();
+                        }
+                    }.bind(this));
                 }
              }
         },

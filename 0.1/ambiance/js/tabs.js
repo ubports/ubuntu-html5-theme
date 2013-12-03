@@ -94,9 +94,9 @@ var Tabs = (function () {
         if (touchEvents.touchLeave) {
             this._tabs.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
         }
-	
-	// initialize default page
-	this.__setupInitialTabVisibility();
+        
+        // initialize default page
+        this.__setupInitialTabVisibility();
     };
 
     Tabs.prototype = {
@@ -148,18 +148,18 @@ var Tabs = (function () {
         /**
          * @private
          */
-	__setupInitialTabVisibility: function() {
-	    var tab = this._tabs.querySelector('[data-role="tab"]:first-child');
-	    tab.classList.add('active');
-	    var updateDisplayStyle = function(tab, value) {
-		document.getElementById(tab.getAttribute('data-page')).style.display=value;
-	    };
-	    [].slice.
-		call(this._tabs.querySelectorAll('[data-role="tab"]:not(:first-child)')).
-		forEach(function(element) {
-		    updateDisplayStyle(element, 'none');
-		});
-	},
+        __setupInitialTabVisibility: function() {
+            var tab = this._tabs.querySelector('[data-role="tab"]:first-child');
+            tab.classList.add('active');
+            var updateDisplayStyle = function(tab, value) {
+                document.getElementById(tab.getAttribute('data-page')).style.display=value;
+            };
+            [].slice.
+                call(this._tabs.querySelectorAll('[data-role="tab"]:not(:first-child)')).
+                forEach(function(element) {
+                    updateDisplayStyle(element, 'none');
+                });
+        },
 
         /**
          * @private
@@ -201,7 +201,7 @@ var Tabs = (function () {
          * @private
          */
         __onTouchStart: function (e) {
-	    console.log('touchstart');
+            console.log('touchstart');
             if (!this._tabs) return;
             this.__clearInternalState();
 
@@ -210,7 +210,7 @@ var Tabs = (function () {
                 this.__showNavigation();
             }
 
-	    var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            var _e = this._touchInfoDelegate.translateTouchEvent(e);
             pageX = _e.touches[0].pageX;
             pageY = _e.touches[0].pageY;
 
@@ -223,7 +223,7 @@ var Tabs = (function () {
          * @private
          */
         __onTouchMove: function (e) {
-	    var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            var _e = this._touchInfoDelegate.translateTouchEvent(e);
             deltaX = _e.touches[0].pageX - pageX;
             deltaY = _e.touches[0].pageY - pageY;
 
@@ -255,7 +255,7 @@ var Tabs = (function () {
         __onTouchEnd: function (e) {
             if (!this._tabs || isScrolling) return;
 
-	    var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            var _e = this._touchInfoDelegate.translateTouchEvent(e);
 
             var MIN_JITTER_THRESHOLD = 20;
             if (state === STATES.transitioning_to_navigation) {
@@ -358,8 +358,8 @@ var Tabs = (function () {
                     e.classList.remove('inactive');
                 });
 
-		var targetPageId = selectedTab.getAttribute('data-page');
-		this.activate(targetPageId);
+                var targetPageId = selectedTab.getAttribute('data-page');
+                this.activate(targetPageId);
                 this.__dispatchTabChangedEvent(targetPageId);
             } else {
 

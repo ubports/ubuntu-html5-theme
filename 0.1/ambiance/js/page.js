@@ -61,11 +61,11 @@ Page.prototype = {
      * @property {List} actions
      */
     get actions() {
-	// TODO: Not implemented yet
-	return [];
+        // TODO: Not implemented yet
+        return [];
     },
     set actions(value) {
-	// TODO: Not implemented yet
+        // TODO: Not implemented yet
     },
 
     /**
@@ -73,11 +73,11 @@ Page.prototype = {
      * @property {String} title
      */
     get title() {
-	// TODO: Not implemented yet
-	return "";
+        // TODO: Not implemented yet
+        return "";
     },
     set title(value) {
-	// TODO: Not implemented yet
+        // TODO: Not implemented yet
     },
 
     /**
@@ -85,12 +85,12 @@ Page.prototype = {
      * @method {} deactivate
      */
     deactivate: function () {
-	this.__updateVisibleState('none', function(footer) {
-	    if (!footer)
-		return;
+        this.__updateVisibleState('none', function(footer) {
+            if (!footer)
+                return;
             footer.style.display = 'none';
             footer.classList.remove('revealed');
-	});
+        });
     },
 
     /**
@@ -98,13 +98,13 @@ Page.prototype = {
      * @method {} deactivate
      */
     activate: function (id) {
-	this.__hideVisibleSibling();
-	this.__updateVisibleState('block', function(footer) {
-	    if (!footer)
-		return;
+        this.__hideVisibleSibling();
+        this.__updateVisibleState('block', function(footer) {
+            if (!footer)
+                return;
             footer.style.display = 'block';
             footer.classList.add('revealed');
-	});
+        });
     },
 
     /**
@@ -114,8 +114,8 @@ Page.prototype = {
      */
     isPage: function (element) {
         return element.tagName === 'DIV' &&
-	    element.hasAttribute('data-role') &&
-	    element.getAttribute('data-role') === 'page';
+            element.hasAttribute('data-role') &&
+            element.getAttribute('data-role') === 'page';
     },
 
     /**
@@ -131,7 +131,7 @@ Page.prototype = {
         page.style.display = displayStyle;
         if (page.querySelector(this.__thisSelector + ' > footer')) {
             var footer = page.querySelector('footer');
-	    footerHandlerFunc(footer);
+            footerHandlerFunc(footer);
         }
     },
 
@@ -145,25 +145,25 @@ Page.prototype = {
         if (!this.isPage(page)) {
             return;
         }
-	var children = page.parentNode.children;
-	for (var idx = 0; idx < children.length; ++idx) {
-	    if (this.isPage(children[idx])) {
-		children[idx].style.display = 'none';
-	    }
-	}
+        var children = page.parentNode.children;
+        for (var idx = 0; idx < children.length; ++idx) {
+            if (this.isPage(children[idx])) {
+                children[idx].style.display = 'none';
+            }
+        }
     },
 
     /**
      * @private
      */
     __isValidId: function (id) {
-	return id && typeof(id) === 'string';
+        return id && typeof(id) === 'string';
     },
 
     /**
      * @private
      */
     get __thisSelector () {
-	return "#" + this.id;
+        return "#" + this.id;
     }
 };
