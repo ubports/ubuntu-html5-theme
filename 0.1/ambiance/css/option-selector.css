@@ -43,10 +43,10 @@
     display: block;
     height: 3rem;
     position: relative;
-    border: none;
     line-height: 3rem;
     padding-left: 1rem;
     padding-right: 1.5rem;
+    border: none;
     border-top: 1px solid #C7C7C7;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -116,4 +116,9 @@
 [data-role="option-selector"] li p:only-child,
 [data-role="option-selector"] li p:first-of-type:last-of-type {
     line-height: 2rem;
+}
+
+[data-role="option-selector"] li p+p {
+    padding-top: 0.2rem;
+    font-size: 0.7rem;
 }

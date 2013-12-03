@@ -23,12 +23,11 @@
 /* OptionSelector */
 var OptionSelector = (function () {
 
-    var currentlyExpanded = false,
-        currentIndex = 0,
-        values = "";
+    var __currentIndex = 0,
+        __values = "";
 
     function OptionSelector (id, expanded, multiSelection) {
-
+        this.currentlyExpanded = false;
         this.expanded = typeof expanded !== 'undefined' ? expanded : true;
         this.multiSelection = typeof multiSelection !== 'undefined' ? multiSelection : true;
 
@@ -36,21 +35,21 @@ var OptionSelector = (function () {
         this.optionselector_ul = this.optionselector.querySelectorAll('ul')[0];
         this.optionselector_ul_li = this.optionselector.querySelectorAll('li');
 
-        t = this;
-
         [].forEach.call(this.optionselector_ul_li, function (elm) {
-            elm.addEventListener('click', t.__onClicked, false);
-        });
+            elm.addEventListener('click', this.__onClicked.bind(this, elm), false);
+        }.bind(this));
 
-        if (t.expanded) {
-            t.__open();
+        if (this.expanded) {
+            this.__open();
         }
         else {
-            if (currentlyExpanded) {
-                t.__open();
+            if (this.currentlyExpanded) {
+                console.log('messoud');
+                this.__open();
                 this.optionselector_ul_li[0].classList.add('active');
             } else {
-                t.__close(currentIndex);
+                console.log('mahloul');
+                this.__close(__currentIndex);
                 this.optionselector_ul_li[0].classList.add('closed');
             }
         }
@@ -58,72 +57,88 @@ var OptionSelector = (function () {
 
     OptionSelector.prototype = {
 
-        __onClicked: function (e) {
+        __onClicked: function (elm, e) {
             values = "";
-            currentIndex = 0;
+            __currentIndex = 0;
 
-            if (t.expanded) {
-                if (!t.multiSelection) {
-                    [].forEach.call(t.optionselector_ul_li, function (elm) {
+            if (this.expanded) {
+                if (!this.multiSelection) {
+                    [].forEach.call(this.optionselector_ul_li, function (elm) {
                         elm.classList.remove('active');
                     });
-                    this.classList.toggle('active');
+                    elm.classList.toggle('active');
                 }
                 else {
-                    this.classList.toggle('active');
+                    elm.classList.toggle('active');
                 }
             }
             else {
 
-                for(i = 0, max = t.optionselector_ul_li.length; i < max; i++) {
-                    if (t.optionselector_ul_li[i]==this) break;
-                    if (t.optionselector_ul_li[i].nodeType==1) { currentIndex++; }
+                for(i = 0, max = this.optionselector_ul_li.length; i < max; i++) {
+                    if (this.optionselector_ul_li[i]==elm) break;
+                    if (this.optionselector_ul_li[i].nodeType==1) { __currentIndex++; }
                 }
 
-                if (currentlyExpanded) {
-                    t.__close(currentIndex);
-                    this.classList.add('active');
-                    this.classList.add('closed');
-                    this.style.borderTop = '0';
+                if (this.currentlyExpanded) {
+                    this.__close(__currentIndex);
+                    elm.classList.add('active');
+                    elm.classList.add('closed');
+                    elm.style.borderTop = '0';
                 }
                 else {
-                    this.classList.add('active');
-                    this.classList.remove('closed');
-                    t.__open();
-                    this.style.borderTop = '1px solid #C7C7C7';
+                    elm.classList.add('active');
+                    elm.classList.remove('closed');
+                    this.__open();
+                    elm.style.borderTop = '1px solid #C7C7C7';
                 }
             }
 
             k = 0;
-            for(i = 0, max = t.optionselector_ul_li.length; i < max; i++) {
-                if (t.optionselector_ul_li[i].nodeType==1) {
-                    if ((t.optionselector_ul_li[i].className).indexOf('active') > -1) {
+            for(i = 0, max = this.optionselector_ul_li.length; i < max; i++) {
+                if (this.optionselector_ul_li[i].nodeType==1) {
+                    if ((this.optionselector_ul_li[i].className).indexOf('active') > -1) {
                         if (k == 0) {
-                            values = t.optionselector_ul_li[i].getAttribute("data-value");
+                            values = this.optionselector_ul_li[i].getAttribute("data-value");
                         }
                         else {
-                            values = values + ", " + t.optionselector_ul_li[i].getAttribute("data-value");
+                            values = values + ", " + this.optionselector_ul_li[i].getAttribute("data-value");
                         }
                         k++;
                     }
                 }
             }
 
-            this._evt = document.createEvent('Event');
-            this._evt.initEvent('onclicked', true, true);
-            this._evt.values = values;
-            this.dispatchEvent(this._evt);
+            if (!this.currentlyExpanded && !this.expanded) {
+                elm._evt = document.createEvent('Event');
+                elm._evt.initEvent('onclicked', true, true);
+                elm._evt.values = values;
+                elm.dispatchEvent(elm._evt);
+            }
+            else {
+                if (this.expanded) {
+                    elm._evt = document.createEvent('Event');
+                    elm._evt.initEvent('onclicked', true, true);
+                    elm._evt.values = values;
+                    elm.dispatchEvent(elm._evt);
+                }
+            }
 
             e.preventDefault();
         },
 
+        /**
+         * @private
+         */
         __open: function () {
             this.optionselector_ul.style['-webkit-transition-duration'] = '.4s';
             this.optionselector_ul.style.webkitTransform = 'translate3d(0, 0rem,0)';
-            this.optionselector.style.height = 3*this.optionselector_ul_li.length + 'rem';
-            currentlyExpanded = true;
+            this.optionselector.style.height = 3.07*this.optionselector_ul_li.length + 'rem';
+            this.currentlyExpanded = true;
         },
 
+        /**
+         * @private
+         */
         __close: function (currentIndex) {
             this.optionselector_ul.style['-webkit-transition-duration'] = '.4s';
             this.optionselector_ul.style.webkitTransform = 'translate3d(0,' + -3*currentIndex + 'rem,0)';
@@ -131,7 +146,7 @@ var OptionSelector = (function () {
             [].forEach.call(this.optionselector_ul_li, function (elm) {
                 elm.classList.remove('active');
             });
-            currentlyExpanded = false;
+            this.currentlyExpanded = false;
         },
 
         onClicked : function(callback){

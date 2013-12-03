@@ -28,7 +28,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ubuntu UI HTML5 Theme: ListItems</title>
     <link href="../../ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
-    <script src="file:///usr/share/javascript/jquery/jquery.min.js"></script>
     <!-- Ubuntu UI javascript imports - Ambiance theme -->
     <script src="../../ambiance/js/option-selector.js"></script>
     <script src="../../ambiance/js/fast-buttons.js"></script>
@@ -38,10 +37,22 @@
         var UI = new UbuntuUI();
         $(document).ready(function () {
             UI.init();
-            os1 = UI.optionselector('os1', expanded=true, multiSelection=true);
+            os1 = UI.optionselector('os1', expanded=false, multiSelection=false);
 
             os1.onClicked(function (e) {
-                console.log(e.values);
+                console.log("optionselector1 values: " + e.values);
+            })
+
+            os2 = UI.optionselector('os2', expanded=true, multiSelection=true);
+
+            os2.onClicked(function (e) {
+                console.log("optionselector2 values: " + e.values);
+            })
+
+            os3 = UI.optionselector('os3', expanded=true, multiSelection=false);
+
+            os3.onClicked(function (e) {
+                console.log("optionselector3 values: " + e.values);
             })
         });
     </script>
@@ -68,6 +79,7 @@
 
         <div data-role="content">
             <div class="inset" style="margin: 15px;">
+                <h1>Collapsed</h1>
                 <section data-role="option-selector" id="os1">
                     <ul>
                         <li data-value="0">
@@ -93,6 +105,55 @@
                         <li data-value="5">
                             <aside>
                                 <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
+                            <p>Label 5</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div class="inset" style="margin: 15px;">
+                <h1>Expanded with a multiple selections</h1>
+                <section data-role="option-selector" id="os2">
+                    <ul>
+                        <li data-value="0">
+                            <p>Label 1</p>
+                            <p>Subtext 1</p>
+                        </li>
+                        <li data-value="1">
+                            <p>Label 2</p>
+                            <p>Subtext 2</p>
+                        </li>
+                        <li data-value="3">
+                            <p>Label 3</p>
+                            <p>Subtext 3</p>
+                        </li>
+                        <li data-value="4">
+                            <p>Label 4</p>
+                            <p>Subtext 4</p>
+                        </li>
+                        <li data-value="5">
+                            <p>Label 5</p>
+                            <p>Subtext 5</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div class="inset" style="margin: 15px;">
+                <h1>Expanded with a unique selection</h1>
+                <section data-role="option-selector" id="os3">
+                    <ul>
+                        <li data-value="0">
+                            <p>Label 1</p>
+                        </li>
+                        <li data-value="1">
+                            <p>Label 2</p>
+                        </li>
+                        <li data-value="3">
+                            <p>Label 3</p>
+                        </li>
+                        <li data-value="4">
+                            <p>Label 4</p>
+                        </li>
+                        <li data-value="5">
                             <p>Label 5</p>
                         </li>
                     </ul>
