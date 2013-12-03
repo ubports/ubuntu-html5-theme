@@ -92,9 +92,10 @@ var UbuntuUI = (function () {
 
         var a = li.querySelector('a');
         a.onclick = function (e) {
+	    console.log(self._pageStack.depth());
             if (self._pageStack.depth() > 1){
                 self._pageStack.pop();
-                self._tabs.activate(self._pageStack.currentPage());
+//                self._tabs.activate(self._pageStack.currentPage());
             }
             e.preventDefault();
         };
@@ -124,6 +125,13 @@ var UbuntuUI = (function () {
 
             this._pageStack = new Pagestack(pagestack);
 
+            var pages = pagestack.querySelectorAll("[data-role='page']");
+	    console.log(pages.length);
+	    if (pages.length > 0) {
+		console.log(pages[0].getAttribute('id'))
+		this._pageStack.push(pages[0].getAttribute('id'));
+	    }
+
             var immediateFooters = [].filter.call(pagestack.children,
                 function (e) {
                     return e.nodeName.toLowerCase() === 'footer';
@@ -137,7 +145,6 @@ var UbuntuUI = (function () {
             }
 
             // try to find subpages & append back button there
-            var pages = pagestack.querySelectorAll("[data-role='page']");
             for (var idx = 0; idx < pages.length; ++idx) {
                 var page = pages[idx];
 
@@ -156,19 +163,11 @@ var UbuntuUI = (function () {
                 }
                 __appendBackButtonToFooter(this, d, footer);
             }
-
-            _tabs_temp = this._tabs;
-            this._pageStack.onPageChanged(function (e) {
-                _tabs_temp.activate(e.page);
-            });
-
-            _pagestack_temp = this._pageStack;
-            this._tabs.onTabChanged(function (e) {
-                _pagestack_temp.push(e.page);
-            });
         },
 
         __setupPage: function (document) {
+	    if (this._pageStack != null)
+		return;
             if (__hasPageStack(document)) {
                 this.__setupPageStack(document);
             }
@@ -221,13 +220,23 @@ var UbuntuUI = (function () {
         },
 
         __setupTabs: function (document) {
-             if (__hasTabs(document)) {
+	    if (this._tabs != null)
+		return;
+            if (__hasTabs(document)) {
                 if (typeof Tabs != 'undefined' && Tabs) {
                     var apptabsElements = document.querySelectorAll('[data-role=tabs]');
                     if (apptabsElements.length == 0)
                         return;
                     this._tabs = new Tabs(apptabsElements[0],
                                           this.__getTabInfosDelegate());
+
+		    this._tabs.onTabChanged(function (e) {
+			if (!e || !e.infos)
+			    return;
+			if (e.infos.pageId) {
+			    (new Page(e.infos.pageId)).activate();
+			}
+		    }.bind(this));
                 }
              }
         },

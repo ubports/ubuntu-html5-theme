@@ -94,7 +94,9 @@ var Tabs = (function () {
         if (touchEvents.touchLeave) {
             this._tabs.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
         }
-        document.querySelector('[data-role="tab"]:first-child').classList.add('active');
+	
+	// initialize default page
+	this.__setupInitialTabVisibility();
     };
 
     Tabs.prototype = {
@@ -143,6 +145,21 @@ var Tabs = (function () {
             return this._tabs.querySelectorAll('li');
         },
 
+        /**
+         * @private
+         */
+	__setupInitialTabVisibility: function() {
+	    var tab = this._tabs.querySelector('[data-role="tab"]:first-child');
+	    tab.classList.add('active');
+	    var updateDisplayStyle = function(tab, value) {
+		document.getElementById(tab.getAttribute('data-page')).style.display=value;
+	    };
+	    [].slice.
+		call(this._tabs.querySelectorAll('[data-role="tab"]:not(:first-child)')).
+		forEach(function(element) {
+		    updateDisplayStyle(element, 'none');
+		});
+	},
 
         /**
          * @private
@@ -184,6 +201,7 @@ var Tabs = (function () {
          * @private
          */
         __onTouchStart: function (e) {
+	    console.log('touchstart');
             if (!this._tabs) return;
             this.__clearInternalState();
 
@@ -305,11 +323,10 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __dispatchTabChangedEvent: function (selectedTab) {
-            var id = selectedTab.getAttribute("data-page");
+        __dispatchTabChangedEvent: function (pageId) {
             this._evt = document.createEvent('Event');
             this._evt.initEvent('tabchanged',true,true);
-            this._evt.page = id;
+            this._evt.infos = {pageId: pageId};
             this._tabs.dispatchEvent(this._evt);
         },
 
@@ -330,26 +347,27 @@ var Tabs = (function () {
             if ((selectedTab.className).indexOf('inactive') > -1) {
                 window.clearTimeout(t2);
 
-                activeTab = document.querySelector('[data-role="tab"].active');
+                activeTab = this._tabs.querySelector('[data-role="tab"].active');
                 offsetX = this.offsetLeft;
                 this._tabs.style['-webkit-transition-duration'] = '.3s';
                 this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
 
                 this.__updateActiveTab(selectedTab, activeTab);
 
-                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
+                [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
                     e.classList.remove('inactive');
                 });
 
-                this.__dispatchTabChangedEvent(selectedTab);
-
+		var targetPageId = selectedTab.getAttribute('data-page');
+		this.activate(targetPageId);
+                this.__dispatchTabChangedEvent(targetPageId);
             } else {
 
-                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
                 t2 = window.setTimeout(function () {
-                    [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                    [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                         el.classList.toggle('inactive');
                     });
                 }, 3000);
@@ -363,11 +381,11 @@ var Tabs = (function () {
         activate: function (id) {
             if (!id || typeof (id) !== 'string')
                 return;
-            activeTab = document.querySelector('[data-page="'+ id +'"]');
+            activeTab = this._tabs.querySelector('[data-page="'+ id +'"]');
             if (!activeTab)
                 return;
 
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (e) {
+            [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]'), function (e) {
                 e.classList.remove('active');
                 e.classList.remove('inactive');
             });
@@ -382,7 +400,7 @@ var Tabs = (function () {
         /**
          * @private
          */
-        onTabChanged : function(callback){
+        onTabChanged: function(callback){
             this._tabs.addEventListener("tabchanged", callback);
         }
     };
