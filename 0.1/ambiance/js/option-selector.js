@@ -52,10 +52,19 @@ var OptionSelector = (function () {
 
     function OptionSelector (id, expanded, multiSelection) {
         this.currentlyExpanded = false;
-        this.expanded = typeof expanded !== 'undefined' ? expanded : true;
-        this.multiSelection = typeof multiSelection !== 'undefined' ? multiSelection : true;
+        this.expanded = typeof expanded !== 'undefined' ? expanded : false;
+        this.multiSelection = typeof multiSelection !== 'undefined' ? multiSelection : false;
+
+        if (this.multiSelection)
+            this.expanded = true;
 
         this.optionselector = document.getElementById(id);
+
+        if (this.optionselector === null) {
+            console.error('The OptionSelector with the ID #' + this.id + ' doesn\'t exist');
+            return;
+        }
+
         this.optionselector_ul = this.optionselector.querySelectorAll('ul')[0];
         this.optionselector_ul_li = this.optionselector.querySelectorAll('li');
 
@@ -68,11 +77,9 @@ var OptionSelector = (function () {
         }
         else {
             if (this.currentlyExpanded) {
-                console.log('messoud');
                 this.__open();
                 this.optionselector_ul_li[0].classList.add('active');
             } else {
-                console.log('mahloul');
                 this.__close(__currentIndex);
                 this.optionselector_ul_li[0].classList.add('closed');
             }
