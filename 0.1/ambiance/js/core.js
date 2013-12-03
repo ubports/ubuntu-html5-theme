@@ -176,6 +176,18 @@ var UbuntuUI = (function () {
 
         __getTabInfosDelegate: function () {
             var self = this;
+            var __createTouchObject = function(event) {
+                return {
+                    identifier: event.timeStamp,
+                    target: event.target,
+                    screenX: event.screenX,
+                    screenY: event.screenY,
+                    clientX: event.clientX,
+                    clientY: event.clientY,
+                    pageX: event.pageX,
+                    pageY: event.pageY,
+                };
+            };
             return {
                 get isTouch() {
                     return self.isTouch;
@@ -194,18 +206,17 @@ var UbuntuUI = (function () {
                         return self.touchEvents.touchLeave;
                     },
                 },
-		translateTouchEvent: function(event) {
-		    if (self.isTouch)
-			return event;
-		    var touchEvent = event;
-		    touchEvent.identifier = event.timeStamp;
-		    return {
-			changedTouches: [touchEvent],
-			// keep the properties even for e.g. 'touchend'
-			touches: [touchEvent],
-			targetTouches: [touchEvent],
-		    };
-		}
+                translateTouchEvent: function(event) {
+                    if (self.isTouch)
+                        return event;
+                    var touch = __createTouchObject(event);
+                    var translatedTouchEvent = event;
+                    translatedTouchEvent.changedTouches = [touch];
+                    // keep the properties even for e.g. 'touchend'
+                    translatedTouchEvent.touches = [touch];
+                    translatedTouchEvent.targetTouches = [touch];
+                    return translatedTouchEvent;
+                }
             };
         },
 
