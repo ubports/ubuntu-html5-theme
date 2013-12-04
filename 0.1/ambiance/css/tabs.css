@@ -80,7 +80,7 @@
     padding-left: 10px;
 }
 
-/* Inavtive but viewable state*/
+/* Inactive but viewable state*/
 [data-role="header"] .inactive {
     color: #a0a0a0;
     -webkit-opacity: 0.5;
