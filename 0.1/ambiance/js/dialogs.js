@@ -44,6 +44,7 @@ Dialogs are declared inside the <em>content</em> div as a sibling to the <em>pag
 
  */
 var Dialog = function (id) {
+    this.id = id;
     this.dialog = document.getElementById(id);
 };
 
@@ -68,5 +69,14 @@ Dialog.prototype = {
      */
     toggle: function () {
         this.dialog.classList.toggle('active');
+    },
+    /**
+     * Returns the DOM element associated with the id this widget is bind to.
+     * @method element
+     * @example
+        var mydialog = UI.dialog("dialogid").element();
+     */
+    element: function () {
+	return document.getElementById(this.id);
     }
 };
