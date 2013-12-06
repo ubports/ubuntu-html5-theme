@@ -26,41 +26,31 @@
 
 [data-role="header"]{
     background: #ededf0 url("../img/background_paper@30.png") repeat-x top left;
-    border-bottom: 14px solid #c2c2c2;
-    height: 60px;
+    height: 74px;
     width: 100%;
     overflow: hidden;
     position: relative;
-    display: -webkit-box;
-    display: box;
-    -webkit-box-orient: horizontal;
-    box-orient: horizontal;
-    margin-bottom: 1em;
 }
 
-[data-role="header"] div.tabs-inner {
-    border-bottom: 1px solid #afafaf;
+[data-role="header"]:after{
+    background: #C2C2C2;
+    content: "";
+    border-top: 1px solid #afafaf;
+    height: 14px;
     width: 100%;
+    display: block;
 }
 
-[data-role="header"] div.tabs-inner ul {
+[data-role="header"] ul {
     width: 100%;
     white-space: nowrap;
 }
 
-[data-role="header"] div.tabs-inner ul li {
-    overflow: hidden;
-    white-space: nowrap;
-    -webkit-box-flex: 1;
-    box-flex: 1;
+[data-role="header"] ul li {
     display: inline-block;
-}
-
-[data-role="header"] div.tabs-inner li > a {
     font: 35px "Ubuntu";
     letter-spacing: -1px;
     line-height: 60px;
-    width: 100%;
     padding-left: 35px;
     text-decoration: none;
     color: #a0a0a0;
@@ -68,27 +58,31 @@
     opacity: 0;
     -webkit-transition: opacity .25s ease-in-out;
     transition: opacity .25s ease-in-out;
+    cursor: pointer;
 }
 
-[data-role="header"] div.tabs-inner .active > a {
+[data-role="header"] .active {
     color: #484647;
     padding-left: 15px;
     -webkit-opacity: 1;
     opacity: 1;
 }
 
-[data-role="header"] div.tabs-inner .active > a:after {
+[data-role="header"] .active:after {
     content: "›";
     padding-left: 10px;
+    -webkit-opacity: 0.5;
+    opacity: 0.5;
 }
 
-[data-role="header"] div.tabs-inner li:only-child > a:after {
+[data-role="header"] li:only-child:after {
     content: "";
     padding-left: 10px;
 }
 
-[data-role="header"] div.tabs-inner .inactive > a {
+/* Inactive but viewable state*/
+[data-role="header"] .inactive {
     color: #a0a0a0;
-    -webkit-opacity: 1;
-    opacity: 1;
+    -webkit-opacity: 0.5;
+    opacity: 0.5;
 }

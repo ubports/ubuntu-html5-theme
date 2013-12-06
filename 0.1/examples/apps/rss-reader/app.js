@@ -25,7 +25,6 @@ var UI = new UbuntuUI();
 $(document).ready(function () {
 
     UI.init();
-    tabs = UI.tabs();
     UI.pagestack.push("main");
 
     if (typeof localStorage["feeds"] == "undefined") {

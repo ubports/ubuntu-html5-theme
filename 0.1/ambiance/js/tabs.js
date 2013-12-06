@@ -32,16 +32,14 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
       <body>
         <div data-role="page">
           <header data-role="header" id="headerID">
-            <div class="tabs-inner">
-              <ul data-role="tabs">
-                <li class="active" data-role="tab">
-                  <a href="#main">Main</a>
-                </li>
-                <li data-role="tab">
-                  <a href="#page2">Two</a>
-                </li>
-              </ul>
-            </div>
+            <ul data-role="tabs">
+              <li data-role="tab" data-page="main">
+                Main
+              </li>
+              <li data-role="tab" data-page="page2">
+                Two
+              </li>
+            </ul>
           </header>
           <div data-role="content">
             [...]
@@ -50,9 +48,9 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
       </body>
 
       JavaScript:
-      var tabs = UI.tabs();
+      UI.tabs.METHOD();
 */
-var Tabs = function (UbuntuUI, tabs) {
+var Tabs = (function () {
     var pageX,
         pageY,
         isScrolling,
@@ -62,143 +60,351 @@ var Tabs = function (UbuntuUI, tabs) {
         resistance,
         tabsWidth,
         activeTab,
-        t1,
-        t2;
+        navigationTimer,
+        t2,
+        startTimestamp;
 
-    var getScroll = function () {
-        var translate3d = tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
-        return parseInt(translate3d ? translate3d[1] : 0)
+    var STATES = {
+        basic: 0,
+        transitioning_to_navigation: 1,
+        navigating: 2,
+    };
+    var state = STATES.basic;
+
+    function Tabs (tabs, touchInfoDelegate) {
+        if (tabs == null || touchInfoDelegate == null) {
+            return;
+        }
+        this._tabs = tabs;
+
+        this._infos = {
+            width: this.__getTabHeadersWidth(),
+            count: this._tabs.querySelectorAll('li').length
+        };
+        this._touchInfoDelegate = touchInfoDelegate;
+
+        var touchEvents = touchInfoDelegate.touchEvents;
+        this._tabs.addEventListener(touchEvents.touchStart,
+                                    this.__onTouchStart.bind(this));
+        this._tabs.addEventListener(touchEvents.touchMove, this.__onTouchMove.bind(this));
+        this._tabs.addEventListener(touchEvents.touchEnd, this.__onTouchEnd.bind(this));
+
+        // we only have leave events on desktop, we manually calcuate
+        // leave on touch as its not supported in webkit
+        if (touchEvents.touchLeave) {
+            this._tabs.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
+        }
+        
+        // initialize default page
+        this.__setupInitialTabVisibility();
     };
 
-    var setTouchInProgress = function (val) {
+    Tabs.prototype = {
+        /**
+         * Return the index of the selected tab
+         * @property selectedTabIndex
+         * @return {Integer} - The index of the element in the list of tabs or -1
+         */
+        get selectedTabIndex() {
+            return [].prototype.slice.call(this._tabs.querySelector('ul').children).indexOf(activeTab);
+        },
 
-        //Add or remove event listeners depending on touch status
-        if (val === true) {
-            tabs.addEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove);
-            tabs.addEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd);
+        /**
+         * Return the currently selected tab element
+         * @property selectedTab
+         * @return {Element} - The currently selected element or null
+         */
+        get selectedTab() {
+            return activeTab;
+        },
 
-            // we only have leave events on desktop, we manually calcuate
-            // leave on touch as its not supported in webkit
-            if (UbuntuUI.touchEvents.touchLeave) {
-                tabs.addEventListener(UbuntuUI.touchEvents.touchLeave, onTouchLeave);
-            }
-        } else {
-            tabs.removeEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove, false);
-            tabs.removeEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd, false);
+        /**
+         * Return the page associated with the currently selected tab
+         * @property currentPage
+         * @return {Element} - Page DOM element associated with the currently selected tab or null
+         */
+        get currentPage() {
+            return this.selectedTab ? this.selectedTab.querySelector('page') : null;
+        },
 
-            // we only have leave events on desktop, we manually calcuate
-            // leave on touch as its not supported in webkit
-            if (UbuntuUI.touchEvents.touchLeave) {
-                tabs.removeEventListener(UbuntuUI.touchEvents.touchLeave, onTouchLeave, false);
-            }
-        }
-    };
+        /**
+         * Return the number of tab elements in the header
+         * @property count
+         * @return {Integer} - Number of tab elements
+         */
+        get count() {
+            return this.tabChildren.length;
+        },
 
-    var onTouchStart = function (e) {
-        if (!tabs) return;
-        window.clearTimeout(t1);
-        window.clearTimeout(t2);
-        isScrolling = undefined;
-        tabsWidth = tabs.offsetWidth;
-        resistance = 1;
+        /**
+         * Return the list of DOM elements of the tab
+         * @property tabChildren
+         * @return {Elements} - List of DOM elements in the tab
+         */
+        get tabChildren() {
+            return this._tabs.querySelectorAll('li');
+        },
 
-        if (!UbuntuUI.isTouch) {
-            e.touches = [{
-                pageX: e.pageX,
-                pageY: e.pageY
-            }];
-        }
-        pageX = e.touches[0].pageX;
-        pageY = e.touches[0].pageY;
-
-        tabs.style['-webkit-transition-duration'] = 0;
-        setTouchInProgress(true);
-    };
-
-    var onTouchMove = function (e) {
-        if (!UbuntuUI.isTouch) {
-            e.touches = [{
-                pageX: e.pageX,
-                pageY: e.pageY
-            }];
-        }
-        deltaX = e.touches[0].pageX - pageX;
-        deltaY = e.touches[0].pageY - pageY;
-        pageX = e.touches[0].pageX;
-        pageY = e.touches[0].pageY;
-
-        if (typeof isScrolling == 'undefined') {
-            isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
-        }
-
-        if (isScrolling) return;
-        offsetX = (deltaX / resistance) + getScroll();
-
-        tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
-    };
-
-    var onTouchEnd = function (e) {
-        if (!tabs || isScrolling) return;
-        setTouchInProgress(false);
-
-        activeTab = document.querySelector('[data-role="tab"].active');
-        t1 = window.setTimeout(function() {
-                offsetX = activeTab.offsetLeft;
-                tabs.style['-webkit-transition-duration'] = '.3s';
-                tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                    el.classList.toggle('inactive');
+        /**
+         * @private
+         */
+        __setupInitialTabVisibility: function() {
+            var tab = this._tabs.querySelector('[data-role="tab"]:first-child');
+            tab.classList.add('active');
+            var updateDisplayStyle = function(tab, value) {
+                document.getElementById(tab.getAttribute('data-page')).style.display=value;
+            };
+            [].slice.
+                call(this._tabs.querySelectorAll('[data-role="tab"]:not(:first-child)')).
+                forEach(function(element) {
+                    updateDisplayStyle(element, 'none');
                 });
-        }, 5000);
-    };
+        },
 
-    var onTouchLeave = function (e) {};
+        /**
+         * @private
+         */
+        __getScroll: function () {
+            var translate3d = this._tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
+            return parseInt(translate3d ? translate3d[1] : 0)
+        },
 
-    var onClicked = function (e) {
+        /**
+         * @private
+         */
+        __getTabHeadersWidth: function() {
+            return Array.prototype.slice.call(document.querySelectorAll('header li')).reduce(function(prev, cur) { return prev + cur.clientWidth;}, 0);
+        },
 
-        if ((this.className).indexOf('inactive') > -1) {
-            window.clearTimeout(t2);
-            activeTab = document.querySelector('[data-role="tab"].active');
-            offsetX = this.offsetLeft;
-            tabs.style['-webkit-transition-duration'] = '.3s';
-            tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-            activeTab.classList.remove('inactive');
-            activeTab.classList.remove('active');
-            this.classList.remove('inactive');
-            this.classList.add('active');
+        /**
+         * @private
+         */
+        __getHeaderWidth: function() {
+            return this._tabs.clientWidth;
+        },
 
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
-                el.classList.remove('inactive');
-            });
+        /**
+         * @private
+         */
+        __clearInternalState: function() {
+            if (navigationTimer) window.clearTimeout(navigationTimer);
+            if (t2) window.clearTimeout(t2);
+            navigationTimer = undefined;
+            t2 = undefined;
+            isScrolling = undefined;
+            tabsWidth = this._tabs.offsetWidth;
+            resistance = 10;
+            startTimestamp = 0;
+        },
 
-            /*FIXME : We need to try to implement the infinite sliding
-            Array.prototype.slice.call(
-                    document.querySelectorAll('ul[data-role=tabs] li:nth-child(-n+3)')
-                ).map(function(element) {
-                    return element.cloneNode(true);
-                }).forEach(function(element) {
-                    element.classList.remove('active');
-                    tabs.appendChild(element);
-                });*/
+        /**
+         * @private
+         */
+        __onTouchStart: function (e) {
+            console.log('touchstart');
+            if (!this._tabs) return;
+            this.__clearInternalState();
 
-        } else {
+            if (state === STATES.basic) {
+                state = STATES.transitioning_to_navigation;
+                this.__showNavigation();
+            }
+
+            var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            pageX = _e.touches[0].pageX;
+            pageY = _e.touches[0].pageY;
+
+            startTimestamp = _e.timeStamp;
+
+            this._tabs.style['-webkit-transition-duration'] = 0;
+        },
+
+        /**
+         * @private
+         */
+        __onTouchMove: function (e) {
+            var _e = this._touchInfoDelegate.translateTouchEvent(e);
+            deltaX = _e.touches[0].pageX - pageX;
+            deltaY = _e.touches[0].pageY - pageY;
+
+            // TODO: account for DPR
+            var MIN_JITTER_THRESHOLD = 20;
+
+            var plusDeltaX = Math.abs(deltaX);
+            var plusDeltaY = Math.abs(deltaY);
+
+            // Account for clicks w/ slight touch jitter
+            isScrolling = plusDeltaY > plusDeltaX &&
+                plusDeltaY > MIN_JITTER_THRESHOLD;
+            if (isScrolling) return;
+
+            offsetX = (deltaX / resistance) + this.__getScroll();
+
+            var maxLeftReached = this._tabs.querySelector('li:first-child').getBoundingClientRect().left >= 0 &&
+                deltaX > 0;
+            var maxRightReached = this._tabs.querySelector('li:last-child').getBoundingClientRect().right <= this.__getHeaderWidth() &&
+                deltaX < 0;
+            if (this.__getTabHeadersWidth() > this.__getHeaderWidth() && !maxLeftReached && !maxRightReached) {
+                this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+            }
+        },
+
+        /**
+         * @private
+         */
+        __onTouchEnd: function (e) {
+            if (!this._tabs || isScrolling) return;
+
+            var _e = this._touchInfoDelegate.translateTouchEvent(e);
+
+            var MIN_JITTER_THRESHOLD = 20;
+            if (state === STATES.transitioning_to_navigation) {
+                state = STATES.navigating;
+            }
+            else if (state === STATES.navigating && Math.abs((_e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
+                this.__onClicked(_e);
+                // Timer should have been cancelled, back to basic
+                state = STATES.basic;
+            }
+
+            var self = this;
+            navigationTimer = window.setTimeout(function () {
+                self.__endNavigation();
+                state = STATES.basic;
+            }, 3000);
+        },
+
+        /**
+         * @private
+         */
+        __endNavigation: function () {
+            if (state !== STATES.navigating) return;
+
+            var activeTab = document.querySelector('[data-role="tab"].active');
+            if (! activeTab) return;
+
+            var offsetX = activeTab.offsetLeft;
+            this._tabs.style['-webkit-transition-duration'] = '.3s';
+            this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+            
             [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                 el.classList.toggle('inactive');
             });
-            t2 = window.setTimeout(function() {
-                [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+        },
+
+        /**
+         * @private
+         */
+        __showNavigation: function () {
+            if (state !== STATES.transitioning_to_navigation) return;
+
+            // TODO constraint a bit the selector
+            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                el.classList.toggle('inactive');
+            });
+        },
+
+        /**
+         * @private
+         */
+        __updateActiveTab: function(newActiveTab, oldActiveTab) {
+            // TODO avoid reflow
+            oldActiveTab.classList.remove('inactive');
+            oldActiveTab.classList.remove('active');
+            newActiveTab.classList.remove('inactive');
+            newActiveTab.classList.add('active');
+        },
+
+        /**
+         * @private
+         */
+        __onTouchLeave: function (e) {},
+
+        /**
+         * @private
+         */
+        __dispatchTabChangedEvent: function (pageId) {
+            this._evt = document.createEvent('Event');
+            this._evt.initEvent('tabchanged',true,true);
+            this._evt.infos = {pageId: pageId};
+            this._tabs.dispatchEvent(this._evt);
+        },
+
+        /**
+         * @private
+         */
+        __onClicked: function (e) {
+            if (state !== STATES.navigating)
+                return;
+            if (e.changedTouches.length === 0)
+                return;
+            var touch = e.changedTouches[0];
+            var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
+            if (selectedTab == null)
+                return;
+            if (selectedTab.getAttribute("data-role") !== 'tab')
+                return;
+            if ((selectedTab.className).indexOf('inactive') > -1) {
+                window.clearTimeout(t2);
+
+                activeTab = this._tabs.querySelector('[data-role="tab"].active');
+                offsetX = this.offsetLeft;
+                this._tabs.style['-webkit-transition-duration'] = '.3s';
+                this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+
+                this.__updateActiveTab(selectedTab, activeTab);
+
+                [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
+                    e.classList.remove('inactive');
+                });
+
+                var targetPageId = selectedTab.getAttribute('data-page');
+                this.activate(targetPageId);
+                this.__dispatchTabChangedEvent(targetPageId);
+            } else {
+
+                [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
-            }, 5000);
+                t2 = window.setTimeout(function () {
+                    [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                        el.classList.toggle('inactive');
+                    });
+                }, 3000);
+            }
+            e.preventDefault();
+        },
+
+        /**
+         * @private
+         */
+        activate: function (id) {
+            if (!id || typeof (id) !== 'string')
+                return;
+            activeTab = this._tabs.querySelector('[data-page="'+ id +'"]');
+            if (!activeTab)
+                return;
+
+            [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]'), function (e) {
+                e.classList.remove('active');
+                e.classList.remove('inactive');
+            });
+
+            activeTab.classList.add('active');
+
+            offsetX = activeTab.offsetLeft;
+            this._tabs.style['-webkit-transition-duration'] = '.3s';
+            this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+        },
+
+        /**
+         * @private
+         */
+        onTabChanged: function(callback){
+            this._tabs.addEventListener("tabchanged", callback);
         }
-        e.preventDefault();
     };
 
-    tabs.addEventListener(UbuntuUI.touchEvents.touchStart, onTouchStart);
-    tabs.addEventListener(UbuntuUI.touchEvents.touchMove, onTouchMove);
-    tabs.addEventListener(UbuntuUI.touchEvents.touchEnd, onTouchEnd);
 
-    [].forEach.call(document.querySelectorAll('[data-role="tab"]'), function (el) {
-        el.addEventListener('click', onClicked, false);
-    });
-};
+    return Tabs;
+})();
