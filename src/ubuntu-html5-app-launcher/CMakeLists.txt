@@ -6,7 +6,7 @@ configure_file(
     @ONLY)
 
 include_directories(
-    ${CMAKE_BINARY_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 
