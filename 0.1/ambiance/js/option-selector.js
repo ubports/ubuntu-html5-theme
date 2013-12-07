@@ -60,13 +60,24 @@ var OptionSelector = (function () {
 
         this.optionselector = document.getElementById(id);
 
-        if (this.optionselector === null) {
+        if (this.optionselector == null) {
             console.error('The OptionSelector with the ID #' + this.id + ' doesn\'t exist');
             return;
         }
 
         this.optionselector_ul = this.optionselector.querySelectorAll('ul')[0];
+        if (this.optionselector_ul == null)
+            return;
+
+        if (this.optionselector_ul.length == 0)
+            return;
+
+
         this.optionselector_ul_li = this.optionselector.querySelectorAll('li');
+        if (this.optionselector_ul == null)
+            return;
+        if (this.optionselector_ul_li.length == 0)
+            return;
 
         [].forEach.call(this.optionselector_ul_li, function (elm) {
             elm.addEventListener('click', this.__onClicked.bind(this, elm), false);
@@ -74,6 +85,7 @@ var OptionSelector = (function () {
 
         if (this.expanded) {
             this.__open();
+            this.optionselector_ul_li[0].classList.add('active');
         }
         else {
             if (this.currentlyExpanded) {
@@ -92,7 +104,7 @@ var OptionSelector = (function () {
          * @private
          */
         __onClicked: function (elm, e) {
-            values = "";
+            __values = "";
             __currentIndex = 0;
 
             if (this.expanded) {
@@ -110,7 +122,7 @@ var OptionSelector = (function () {
 
                 for(i = 0, max = this.optionselector_ul_li.length; i < max; i++) {
                     if (this.optionselector_ul_li[i]==elm) break;
-                    if (this.optionselector_ul_li[i].nodeType==1) { __currentIndex++; }
+                    __currentIndex++;
                 }
 
                 if (this.currentlyExpanded) {
@@ -128,36 +140,38 @@ var OptionSelector = (function () {
             }
 
             k = 0;
-            for(i = 0, max = this.optionselector_ul_li.length; i < max; i++) {
-                if (this.optionselector_ul_li[i].nodeType==1) {
-                    if ((this.optionselector_ul_li[i].className).indexOf('active') > -1) {
-                        if (k == 0) {
-                            values = this.optionselector_ul_li[i].getAttribute("data-value");
-                        }
-                        else {
-                            values = values + ", " + this.optionselector_ul_li[i].getAttribute("data-value");
-                        }
-                        k++;
+            for (i = 0, max = this.optionselector_ul_li.length; i < max; i++) {
+                var li = this.optionselector_ul_li[i];
+                if ((li.className).indexOf('active') > -1) {
+                    if (k === 0) {
+                        __values = li.getAttribute("data-value");
+                    } else {
+                        __values = __values + ", " + li.getAttribute("data-value");
                     }
+                    k++;
                 }
             }
 
             if (!this.currentlyExpanded && !this.expanded) {
-                elm._evt = document.createEvent('Event');
-                elm._evt.initEvent('onclicked', true, true);
-                elm._evt.values = values;
-                elm.dispatchEvent(elm._evt);
+                this.__ClickEvent(elm);
             }
             else {
                 if (this.expanded) {
-                    elm._evt = document.createEvent('Event');
-                    elm._evt.initEvent('onclicked', true, true);
-                    elm._evt.values = values;
-                    elm.dispatchEvent(elm._evt);
+                    this.__ClickEvent(elm);
                 }
             }
 
             e.preventDefault();
+        },
+
+        /**
+         * @private
+         */
+        __ClickEvent: function (elm) {
+            elm._evt = document.createEvent('Event');
+            elm._evt.initEvent('onclicked', true, true);
+            elm._evt.values = __values;
+            elm.dispatchEvent(elm._evt);
         },
 
         /**
