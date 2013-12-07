@@ -35,7 +35,6 @@
     display: box;
     -webkit-box-orient: horizontal;
     box-orient: horizontal;
-    margin-bottom: 1em;
 }
 
 [data-role="header"] div.tabs-inner {
