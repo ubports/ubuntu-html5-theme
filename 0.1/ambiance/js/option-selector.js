@@ -47,10 +47,10 @@
 */
 var OptionSelector = (function () {
 
-    var __currentIndex = 0,
-        __values = "";
+    var  __values = "";
 
     function OptionSelector (id, expanded, multiSelection) {
+        this.currentIndex = 0;
         this.currentlyExpanded = false;
         this.expanded = typeof expanded !== 'undefined' ? expanded : false;
         this.multiSelection = typeof multiSelection !== 'undefined' ? multiSelection : false;
@@ -92,7 +92,7 @@ var OptionSelector = (function () {
                 this.__open();
                 this.optionselector_ul_li[0].classList.add('active');
             } else {
-                this.__close(__currentIndex);
+                this.__close(this.currentIndex);
                 this.optionselector_ul_li[0].classList.add('closed');
             }
         }
@@ -105,7 +105,7 @@ var OptionSelector = (function () {
          */
         __onClicked: function (elm, e) {
             __values = "";
-            __currentIndex = 0;
+            this.currentIndex = 0;
 
             if (this.expanded) {
                 if (!this.multiSelection) {
@@ -122,11 +122,11 @@ var OptionSelector = (function () {
 
                 for(i = 0, max = this.optionselector_ul_li.length; i < max; i++) {
                     if (this.optionselector_ul_li[i]==elm) break;
-                    __currentIndex++;
+                    this.currentIndex++;
                 }
 
                 if (this.currentlyExpanded) {
-                    this.__close(__currentIndex);
+                    this.__close(this.currentIndex);
                     elm.classList.add('active');
                     elm.classList.add('closed');
                     elm.style.borderTop = '0';
