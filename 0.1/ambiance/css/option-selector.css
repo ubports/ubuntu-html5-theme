@@ -26,8 +26,8 @@
     margin: 0 auto;
     border: 1px solid #C7C7C7;
     overflow: hidden;
-    -webkit-transition: height 0.4s ease-in-out;
-    transition: height 0.4s ease-in-out;
+    -webkit-transition: height 0.4s;
+    transition: height 0.4s;
     margin-top: 15px;
     margin-bottom: 15px;
     -webkit-border-radius: 10px;
@@ -59,14 +59,28 @@
     border-top: 0!important;
 }
 
-[data-role="option-selector"] li.active {
-    background: transparent url(../img/tick@30.png) no-repeat 99% center;
+[data-role="option-selector"] li.active:after{
+    background: transparent url(../img/tick@30.png) no-repeat center center;
     background-size: 15px 15px;
+    display: block;
+    position: absolute;
+    width: 2rem;
+    height: 3rem;
+    right: 0.5rem;
+    content: "";
+    top: 0;
 }
 
-[data-role="option-selector"] li.closed {
-    background: transparent url(../img/chevron_down@30.png) no-repeat 99% center;
+[data-role="option-selector"] li.closed:after {
+    background: transparent url(../img/chevron_down@30.png) no-repeat center center;
     background-size: 15px 15px;
+    display: block;
+    position: absolute;
+    width: 2rem;
+    height: 3rem;
+    right: 0.5rem;
+    content: "";
+    top: 0;
 }
 
 [data-role="option-selector"] li aside {
