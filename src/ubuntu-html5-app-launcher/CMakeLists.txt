@@ -25,9 +25,7 @@ qt5_use_modules(${HTML5_LAUNCHER} Core Widgets Quick)
 
 # install qml files
 file(GLOB QML_FILES *.qml)
-install(FILES ${QML_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/ubuntu-html5-app-launcher)
-install(DIRECTORY actions DESTINATION ${CMAKE_INSTALL_DATADIR}/ubuntu-html5-app-launcher
-        FILES_MATCHING PATTERN *.qml)
+install(FILES ${QML_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/ubuntu-html5-app-launcher/qml)
 
 
 # install bin files
