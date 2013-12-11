@@ -344,15 +344,6 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets this UbuntuUI's single Pagestack object
-         * @method pagestack
-         * @return {Pagestack} - The Pagestack
-         */
-        get pagestack() {
-            return this._pageStack;
-        },
-
-        /**
          * Gets the DOM element from a given selector
          * @method element
          * @return {Element} - The DOM element

@@ -152,7 +152,9 @@ var Tabs = (function () {
             var tab = this._tabs.querySelector('[data-role="tab"]:first-child');
             tab.classList.add('active');
             var updateDisplayStyle = function(tab, value) {
-                document.getElementById(tab.getAttribute('data-page')).style.display=value;
+                var targetPage = document.getElementById(tab.getAttribute('data-page'));
+		if (targetPage)
+		    targetPage.style.display=value;
             };
             [].slice.
                 call(this._tabs.querySelectorAll('[data-role="tab"]:not(:first-child)')).
