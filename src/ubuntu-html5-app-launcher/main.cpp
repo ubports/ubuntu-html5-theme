@@ -116,28 +116,25 @@ int main(int argc, char *argv[])
 
     setUpQmlImportPathIfNecessary();
 
-    QQmlEngine engine;
-    QQmlContext *context = new QQmlContext(engine.rootContext());
-
-    QQmlComponent component(&engine);
-    component.loadUrl(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
+    QQuickView view;
+    view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
 
-    QObject *object = component.create(context);
-
-    if (!component.isReady())
+    if (view.status() != QQuickView::Ready)
     {
-        qWarning() << component.errorString();
+        qWarning() << "Component not ready";
         return -1;
     }
 
+    
+    QQuickItem *object = view.rootObject();
     if ( ! object)
     {
         qCritical() << "Cannot create object from qml base file";
         return -1;
     }
 
-    QQuickWindow* window = qobject_cast<QQuickWindow*>(object);
+    QQuickWindow* window = qobject_cast<QQuickWindow*>(&view);
 
     object->setProperty("htmlIndexDirectory", wwwfolder);
 
