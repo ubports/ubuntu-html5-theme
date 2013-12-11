@@ -25,7 +25,7 @@
  */
 
 /**
- * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements. 
+ * UbuntuUI is the critical Ubuntu HTML5 framework class. You need to construct an UbuntuUI object and initialize it to have an Ubuntu HTML5 app. You then use this object to access Ubuntu HTML5 objects (and object methods) that correspond to the Ubuntu HTML5 DOM elements.
 
 Note: The UbuntuUI object is "UI" in all API doc examples.
  * @class UbuntuUI
@@ -44,6 +44,10 @@ var UbuntuUI = (function () {
 
     function __hasPageStack(document) {
         return document.querySelectorAll("[data-role='pagestack']") != null;
+    };
+
+    function __hasTabs(document) {
+         return document.querySelectorAll("[data-role='tabs']") != null;
     };
 
     function __createBackButtonListItem(d) {
@@ -88,10 +92,11 @@ var UbuntuUI = (function () {
 
         var a = li.querySelector('a');
         a.onclick = function (e) {
-            if (self._pageStack.depth() > 1)
+            if (self._pageStack.depth() > 1){
                 self._pageStack.pop();
+            }
             e.preventDefault();
-        }.bind(self);
+        };
     }
 
     function UbuntuUI() {
@@ -110,13 +115,19 @@ var UbuntuUI = (function () {
             // TODO validate no more than one page stack etc.
             // d.querySelectorAll("[data-role='pagestack']")
 
-            this._pageStack = new Pagestack();
-
             // FIXME: support multiple page stack & complex docs?
             var pagestacks = d.querySelectorAll("[data-role='pagestack']");
             if (pagestacks.length == 0)
                 return;
             var pagestack = pagestacks[0];
+
+            this._pageStack = new Pagestack(pagestack);
+
+            var pages = pagestack.querySelectorAll("[data-role='page']");
+            if (pages.length > 0) {
+                this._pageStack.push(pages[0].getAttribute('id'));
+            }
+
             var immediateFooters = [].filter.call(pagestack.children,
                 function (e) {
                     return e.nodeName.toLowerCase() === 'footer';
@@ -125,14 +136,11 @@ var UbuntuUI = (function () {
                 // There is a main footer for the whole pagestack,
                 // FIXME: only consider the first (there should be only 1 anyway)
                 var footer = immediateFooters[0];
-
                 __appendBackButtonToFooter(this, d, footer);
-
                 return;
             }
 
             // try to find subpages & append back button there
-            var pages = pagestack.querySelectorAll("[data-role='page']");
             for (var idx = 0; idx < pages.length; ++idx) {
                 var page = pages[idx];
 
@@ -149,15 +157,84 @@ var UbuntuUI = (function () {
                     // TODO: validate footer count: should be 1 footer
                     footer = page.querySelectorAll("[data-role='footer']")[0];
                 }
-
                 __appendBackButtonToFooter(this, d, footer);
             }
         },
 
         __setupPage: function (document) {
+            if (this._pageStack != null)
+                return;
             if (__hasPageStack(document)) {
                 this.__setupPageStack(document);
             }
+        },
+
+        __getTabInfosDelegate: function () {
+            var self = this;
+            var __createTouchObject = function(event) {
+                return {
+                    identifier: event.timeStamp,
+                    target: event.target,
+                    screenX: event.screenX,
+                    screenY: event.screenY,
+                    clientX: event.clientX,
+                    clientY: event.clientY,
+                    pageX: event.pageX,
+                    pageY: event.pageY,
+                };
+            };
+            return {
+                get isTouch() {
+                    return self.isTouch;
+                },
+                touchEvents: {
+                    get touchStart() {
+                        return self.touchEvents.touchStart;
+                    },
+                    get touchMove() {
+                        return self.touchEvents.touchMove;
+                    },
+                    get touchEnd() {
+                        return self.touchEvents.touchEnd;
+                    },
+                    get touchLeave() {
+                        return self.touchEvents.touchLeave;
+                    },
+                },
+                translateTouchEvent: function(event) {
+                    if (self.isTouch)
+                        return event;
+                    var touch = __createTouchObject(event);
+                    var translatedTouchEvent = event;
+                    translatedTouchEvent.changedTouches = [touch];
+                    // keep the properties even for e.g. 'touchend'
+                    translatedTouchEvent.touches = [touch];
+                    translatedTouchEvent.targetTouches = [touch];
+                    return translatedTouchEvent;
+                }
+            };
+        },
+
+        __setupTabs: function (document) {
+            if (this._tabs != null)
+                return;
+            if (__hasTabs(document)) {
+                if (typeof Tabs != 'undefined' && Tabs) {
+                    var apptabsElements = document.querySelectorAll('[data-role=tabs]');
+                    if (apptabsElements.length == 0)
+                        return;
+                    this._tabs = new Tabs(apptabsElements[0],
+                                          this.__getTabInfosDelegate());
+
+                    this._tabs.onTabChanged(function (e) {
+                        if (!e || !e.infos)
+                            return;
+                        if (e.infos.pageId) {
+                            (new Page(e.infos.pageId)).activate();
+                        }
+                    }.bind(this));
+                }
+             }
         },
 
         /**
@@ -165,6 +242,7 @@ var UbuntuUI = (function () {
          * @method {} init
          */
         init: function () {
+            this.__setupTabs(document);
             this.__setupPage(document);
         },
 
@@ -242,22 +320,6 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets an Ubuntu Tabs object
-         * @method tabs
-         * @param {ID} id - The element's id attrubute
-         * @return {Tabs} - The Tabs with the specified id
-         */
-        tabs: function (selector) {
-            if (typeof Tabs != 'undefined' && Tabs) {
-                if (selector === undefined)
-                    tabs = document.querySelector('[data-role=tabs]');
-                else
-                    tabs = document.querySelector(selector);
-                return new Tabs(this, tabs);
-            }
-        },
-
-        /**
          * Gets an Ubuntu Toolbar object
          * @method toolbar
          * @param {ID} id - The element's id attrubute
@@ -282,6 +344,16 @@ var UbuntuUI = (function () {
         },
 
         /**
+         * Gets the DOM element from a given selector
+         * @method element
+         * @return {Element} - The DOM element
+         * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
+         */
+        element: function(selector) {
+          return document.querySelector(selector);
+        },
+
+        /**
          * Gets this UbuntuUI's single Pagestack object
          * @method pagestack
          * @return {Pagestack} - The Pagestack
@@ -291,12 +363,12 @@ var UbuntuUI = (function () {
         },
 
         /**
-         * Gets the DOM element from a given selector
-         * @method element
-         * @return {Element} - The DOM element
+         * Gets this UbuntuUI's single Tabs object
+         * @method tabs
+         * @return {Tabs} - The Tabs
          */
-        element: function(selector) {
-          return document.querySelector(selector);
+        get tabs() {
+            return this._tabs;
         },
 
     };

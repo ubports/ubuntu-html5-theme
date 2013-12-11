@@ -64,5 +64,116 @@ Page.prototype = {
     */
     element: function () {
         return document.getElementById(this.id);
+    },
+
+    /**
+     * actions property.
+     * @property {List} actions
+     */
+    get actions() {
+        // TODO: Not implemented yet
+        return [];
+    },
+    set actions(value) {
+        // TODO: Not implemented yet
+    },
+
+    /**
+     * title property.
+     * @property {String} title
+     */
+    get title() {
+        // TODO: Not implemented yet
+        return "";
+    },
+    set title(value) {
+        // TODO: Not implemented yet
+    },
+
+    /**
+     * Deactivates the current page.
+     * @method {} deactivate
+     */
+    deactivate: function () {
+        this.__updateVisibleState('none', function(footer) {
+            if (!footer)
+                return;
+            footer.style.display = 'none';
+            footer.classList.remove('revealed');
+        });
+    },
+
+    /**
+     * Activates the current page.
+     * @method {} deactivate
+     */
+    activate: function (id) {
+        this.__hideVisibleSibling();
+        this.__updateVisibleState('block', function(footer) {
+            if (!footer)
+                return;
+            footer.style.display = 'block';
+            footer.classList.add('revealed');
+        });
+    },
+
+    /**
+     * Validates that a given DOM node element is a Ubuntu UI Page.
+     * @method {DOM Element} isPage
+     * @return {Boolean} if the DOM element is a page
+     */
+    isPage: function (element) {
+        return element.tagName === 'DIV' &&
+            element.hasAttribute('data-role') &&
+            element.getAttribute('data-role') === 'page';
+    },
+
+    /**
+     * @private
+     */
+    __updateVisibleState: function(displayStyle, footerHandlerFunc) {
+        if (!this.__isValidId(this.id))
+            return;
+        var page = document.getElementById(this.id);
+        if (!this.isPage(page)) {
+            return;
+        }
+        page.style.display = displayStyle;
+        if (page.querySelector(this.__thisSelector + ' > footer')) {
+            var footer = page.querySelector('footer');
+            footerHandlerFunc(footer);
+        }
+    },
+
+    /**
+     * @private
+     */
+    __hideVisibleSibling: function() {
+        if (!this.__isValidId(this.id))
+            return;
+        var page = document.getElementById(this.id);
+        if (!this.isPage(page)) {
+            return;
+        }
+        var children = page.parentNode.children;
+        for (var idx = 0; idx < children.length; ++idx) {
+            if (this.isPage(children[idx])) {
+                children[idx].style.display = 'none';
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    __isValidId: function (id) {
+        return id && typeof(id) === 'string';
+    },
+
+    /**
+     * @private
+     */
+    get __thisSelector () {
+        return "#" + this.id;
     }
 };
