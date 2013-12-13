@@ -1,0 +1,123 @@
+<!--
+ Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ License granted by Canonical Limited
+
+ This file is part of ubuntu-html5-theme.
+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as 
+ published by the Free Software Foundation; either version 3 of the 
+ License, or
+ (at your option) any later version.
+ 
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public 
+ License along with this program. If not, see 
+ <http://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="copyright" content="Adnane Belmadiaf <daker@ubuntu.com>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ubuntu UI HTML5 Theme: Popovers</title>
+    <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/popovers.js"></script>
+</head>
+<body>
+    <div data-role="page">
+        <header data-role="header">
+            <nav data-role="navbar" class="tabs">
+                <div class="tabs-inner">
+                    <ul data-role="tabs">
+                        <li class="active" data-role="tab">
+                            <a href="#item1">Tab 1</a>
+                        </li>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item2">Tab 2</a>
+                        </li>
+                        <li class="inactive" data-role="tab">
+                            <a href="#item3">Tab 3</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div data-role="content">
+            <div class="inset" style="margin-top: 250px;text-align: center">
+
+                <a data-role="button" id ="button1" href="#popover1">Open</a>
+
+                <a data-role="button" id ="button2" href="#popover2">Open</a>
+
+                <a data-role="button" id ="button3" href="#popover3">Open</a>
+
+                <a data-role="button" id ="button4" href="#popover4">Open</a>
+
+                <div id="popover1" class="popover" data-gravity="n" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li><a href="#">Item1</a></li>
+                        <li class="active"><a href="#">Item2</a></li>
+                        <li><a href="#">Item3</a></li>
+                        <li><a href="#">Item4</a></li>
+                        <li><a href="#">Item5</a></li>
+                        <li><a href="#">Item6</a></li>
+                    </ul>
+                </div>
+
+                <div id="popover2" class="popover" data-gravity="s" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+
+                <div id="popover3" class="popover" data-gravity="e" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+
+                <div id="popover4" class="popover" data-gravity="w" style="margin-bottom: 30px">
+                    <ul class="list">
+                        <li>Item1</li>
+                        <li>Item2</li>
+                        <li>Item3</li>
+                        <li>Item4</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var UI = new UbuntuUI();
+        UI.button('button1').click(function (e) {
+            UI.popover(this, 'popover1').toggle();
+        });
+        UI.button('button2').click(function (e) {
+            UI.popover(this, 'popover2').toggle();
+        });
+        UI.button('button3').click(function (e) {
+            UI.popover(this, 'popover3').toggle();
+        });
+        UI.button('button4').click(function (e) {
+            UI.popover(this, 'popover4').toggle();
+        });
+    </script>
+</body>
+</html>
