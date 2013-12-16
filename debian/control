@@ -2,9 +2,19 @@ Source: ubuntu-html5-theme
 Section: misc
 Priority: optional
 Maintainer: Michael Hall <mhall119@ubuntu.com>
-Build-Depends: debhelper (>= 9),
+Build-Depends: cmake (>= 2.8.9),
+               debhelper (>= 9),
                python (>= 2.7),
                python-setuptools,
+               libqt5webkit5-dev,
+               libqt5webkit5-qmlwebkitplugin,
+               qt5-default,
+               qt5-qmake,
+               qtbase5-dev,
+               qtbase5-private-dev,
+               qtdeclarative5-dev,
+               qtdeclarative5-qtquick2-plugin,
+               qtdeclarative5-ubuntu-ui-toolkit-plugin,
 Standards-Version: 3.9.4
 Homepage: https://launchpad.net/ubuntu-html5-theme
 # If you aren't a member of ~ubuntu-html5-theme-devs but need to upload packaging changes,
@@ -14,6 +24,7 @@ Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-th
 
 Package: ubuntu-html5-theme
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends},
 Description: Toolkit styles for Ubuntu HTML5 Apps
  This package provides common CSS and Javascript for developing native-
@@ -47,3 +58,19 @@ Depends: ${misc:Depends},
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  Common CSS and Javascript for developing native-looking HTML5 applications
  for Ubuntu. This package contains autopilot tests for it.
+
+Package: ubuntu-html5-container
+Architecture: all
+Depends: ${misc:Depends},
+         ${python:Depends},
+         dpkg-dev,
+         libqt5webkit5-qmlwebkitplugin,
+         qtdeclarative5-cordova-2.8-plugin,
+         qtdeclarative5-qtquick2-plugin,
+         qtdeclarative5-ubuntu-ui-extras-browser-plugin,
+         qmlscene,
+         ubuntu-html5-theme (= ${binary:Version}),
+Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
+ This package contains the Ubuntu HTML5 QML component used to embed HTML5
+ apps at runtime.
+

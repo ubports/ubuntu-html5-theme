@@ -1,22 +1,23 @@
 <!--
  Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ License granted by Canonical Limited
 
  This file is part of ubuntu-html5-theme.
 
  This package is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as 
- published by the Free Software Foundation; either version 3 of the 
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 3 of the
  License, or
  (at your option) any later version.
- 
+
  This package is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
- You should have received a copy of the GNU Lesser General Public 
- License along with this program. If not, see 
- <http://www.gnu.org/licenses/>.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program. If not, see
+ <http://www.gnu.org/licenses/>
 -->
 
 <!DOCTYPE html>
@@ -34,6 +35,7 @@
     <link href="styles.css" rel="stylesheet" type="text/css" />
 
     <!-- External javascript imports -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="file:///usr/share/javascript/jquery/jquery.min.js"></script>
 
     <!-- Ubuntu UI javascript imports - Ambiance theme -->
@@ -41,9 +43,11 @@
     <script src="../../../../../0.1/ambiance/js/core.js"></script>
     <script src="../../../../../0.1/ambiance/js/buttons.js"></script>
     <script src="../../../../../0.1/ambiance/js/dialogs.js"></script>
+    <script src="../../../../../0.1/ambiance/js/page.js"></script>
     <script src="../../../../../0.1/ambiance/js/pagestacks.js"></script>
     <script src="../../../../../0.1/ambiance/js/popovers.js"></script>
-
+    <script src="../../../../../0.1/ambiance/js/list.js"></script>
+    <script src="../../../../../0.1/ambiance/js/tabs.js"></script>
     <script src="app.js"></script>
 </head>
 
@@ -51,15 +55,11 @@
     <div data-role="page">
 
         <header data-role="header">
-            <nav data-role="navbar" class="tabs" >
-                <div class="tabs-inner">
-                    <ul>
-                        <li class="active" role="tab">
-                            <a href="#item1" class="tab-item">RSS Mobile Reader</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <ul data-role="tabs">
+                <li data-role="tab" data-page="main">RSS Mobile Reader</li>
+                <li data-role="tab" data-page="results">RSS Feed</li>
+                <li data-role="tab" data-page="article">Article</li>
+            </ul>
         </header>
 
         <div data-role="content">
@@ -71,7 +71,7 @@
                             <ul>
                                 <li>
                                     <a href="#" id="addfeed">
-                                        <img src="../../../../../0.1/ambiance/img/back@18.png" alt="Tap me!" />
+                                        <img src="../../../ambiance/img/back@18.png" alt="Tap me!" />
                                         <span>Add feed</span>
                                     </a>
                                 </li>

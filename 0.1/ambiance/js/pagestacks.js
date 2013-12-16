@@ -30,9 +30,9 @@ The topmost Page on the Pagestack is always displayed.
 The Pagestack is declared as a direct child of the <em>content</em> div.
 
 #####Default application wide footer
-The Pagestack contains a default <em>footer</em> (represented in JavaScript as a Toolbar), even if you do not declare one in HTML. The <em>footer</em> has a single Back button. 
+The Pagestack contains a default <em>footer</em> (represented in JavaScript as a Toolbar), even if you do not declare one in HTML. The <em>footer</em> has a single Back button.
 #####Customized application wide footer
-This application-wide <em>footer</em> can be customized (for example, you can add Buttons) by declaring a <em>footer</em> as a direct child of the <em>pagestack</em> div (see example). 
+This application-wide <em>footer</em> can be customized (for example, you can add Buttons) by declaring a <em>footer</em> as a direct child of the <em>pagestack</em> div (see example).
 ######Page specific footers
 A <em>page</em> may declare a page-specific <em>footer</em> as a child element.
 
@@ -78,53 +78,12 @@ var Pagestack = (function () {
         }
     };
 
-    function Pagestack() {
+    function Pagestack(pagestack) {
         this._pages = [];
+        this._pagestack = pagestack;
     };
 
     Pagestack.prototype = {
-        __setAllPagesVisibility: function (visible) {
-            var visibility = visible ? "block" : "none";
-            [].forEach.call(document.querySelectorAll("[data-role='pagestack'] [data-role='page']"), function (el) {
-                el.style.display = visibility;
-
-                // treat footers separately
-                var footer = el.querySelector('footer');
-                if (footer)
-                    footer.style.display = visibility;
-            });
-        },
-        __isPage: function (element) {
-            return element.getAttribute('data-role') === 'page';
-        },
-        __deactivate: function (id) {
-            if (!id || typeof (id) !== 'string')
-                return;
-            var page = document.getElementById(id);
-            if (!this.__isPage(page)) {
-                return;
-            }
-            page.style.display = "none";
-            if (page.querySelector('footer')) {
-                var footer = page.querySelector('footer');
-                footer.style.display = 'none';
-                footer.classList.remove('revealed');
-            }
-        },
-        __activate: function (id) {
-            if (!id || typeof (id) !== 'string')
-                return;
-            var page = document.getElementById(id);
-            if (!this.__isPage(page)) {
-                return;
-            }
-            page.style.display = "block";
-            if (page.querySelector('footer')) {
-                var footer = page.querySelector('footer');
-                footer.style.display = 'block';
-                footer.classList.add('revealed');
-            }
-        },
         /**
          * Push a page to the top of this pagestack
          * @method push
@@ -134,11 +93,13 @@ var Pagestack = (function () {
         push: function (id, properties) {
             try {
                 __safeCall(this.__setAllPagesVisibility.bind(this), [false]);
-
-                this.__activate(id);
+                (new Page(id)).activate(id);
                 this._pages.push(id);
+
+                this.__dispatchPageChanged(this.currentPage());
             } catch (e) {}
         },
+
         /**
          * Checks for zero pages in this pagestack
          * @method isEmpty
@@ -147,6 +108,7 @@ var Pagestack = (function () {
         isEmpty: function () {
             return this._pages.length === 0;
         },
+
         /**
          * Gets the id attribute of the page element on top of this pagestack
          * @method currentPage
@@ -155,6 +117,7 @@ var Pagestack = (function () {
         currentPage: function () {
             return this.isEmpty() ? null : this._pages[this._pages.length - 1];
         },
+
         /**
          * Gets the number of pages in this pagestack
          * @method depth
@@ -164,12 +127,17 @@ var Pagestack = (function () {
             return this._pages.length;
         },
 
+        /**
+         * Clears the whole page stack
+         * @method clear
+         */
         clear: function () {
             if (this.isEmpty())
                 return;
-            __safeCall(this.__deactivate.bind(this), [this.currentPage()]);
+            __safeCall(Page.prototype.deactivate.bind(new Page(this.currentPage())), []);
             this._pages = [];
         },
+
         /**
          * Pops the current page off this pagestack, which causes the next page to become the top page and to display
          * @method pop
@@ -177,11 +145,53 @@ var Pagestack = (function () {
         pop: function () {
             if (this.isEmpty())
                 return;
-            __safeCall(this.__deactivate.bind(this), [this.currentPage()]);
+            __safeCall(Page.prototype.deactivate.bind(new Page(this.currentPage())), []);
             this._pages.pop();
-            __safeCall(this.__activate.bind(this), [this.currentPage()]);
-        }
-    }
+            __safeCall(Page.prototype.activate.bind(new Page(this.currentPage())), []);
+
+            this.__dispatchPageChanged(this.currentPage());
+        },
+
+        onPageChanged : function(callback){
+            this._pagestack.addEventListener("pagechanged", callback);
+        },
+
+        /**
+         * @private
+         */
+        __setAllPagesVisibility: function (visible) {
+            var visibility = visible ? "block" : "none";
+
+            var children = [].slice.call(this._pagestack.children);
+            children.forEach(function(element) {
+                var pageHelper = new Page();
+                if (pageHelper.isPage(element)) {
+                    el.style.display = visibility;
+                    // treat footers separately
+                    var footer = el.querySelector('footer');
+                    if (footer)
+                        footer.style.display = visibility;
+                }
+            });
+        },
+
+        /**
+         * @private
+         */
+        __isPage: function (element) {
+            return element.getAttribute('data-role') === 'page';
+        },
+
+        /**
+         * @private
+         */
+        __dispatchPageChanged: function (page) {
+            var event = document.createEvent('Event');
+            event.initEvent('pagechanged',true,true);
+            event.page = page;
+            this._pagestack.dispatchEvent(event);
+        },
+    };
 
     return Pagestack;
 })();

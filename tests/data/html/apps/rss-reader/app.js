@@ -5,67 +5,45 @@
  * This file is part of ubuntu-html5-theme.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation; either version 3 of the 
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of the
  * License, or
  * (at your option) any later version.
- 
+
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this program. If not, see 
- * <http://www.gnu.org/licenses/>.
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>
  */
 
-var FEED_LOCAL_STORAGE_KEY = "my-data-feeds";
-
 var UI = new UbuntuUI();
-
-var data_feeds = {
-    'this.is.a.feed': {entries: [
-	{title: 'My feed content', link: 'http://www.ubuntu.com', content: 'This is my feed'},
-	{title: 'My feed content2', link: 'http://www.ubuntu.com', content: 'This is my feed2'},
-	{title: 'My feed content3', link: 'http://www.ubuntu.com', content: 'This is my feed3'}
-    ]},
-    'this.is.another.feed': {entries: [
-	{title: 'My other feed content', link: 'http://www.ubuntu.com', content: 'This is my other feed'},
-	{title: 'My other feed content2', link: 'http://www.ubuntu.com', content: 'This is my other feed2'},
-	{title: 'My other feed content3', link: 'http://www.ubuntu.com', content: 'This is my other feed3'}
-    ]}
-};
-
-function Feed(url) {
-    this.url = url;
-}
-Feed.prototype = {
-    setNumEntries: function (count) {},
-    load: function(callback) {
-	callback({feed: data_feeds[this.url]});
-    }
-}
-
 
 $(document).ready(function () {
 
     UI.init();
     UI.pagestack.push("main");
 
-    if (typeof localStorage[FEED_LOCAL_STORAGE_KEY] == "undefined") {
+    if (typeof localStorage["feeds"] == "undefined") {
         restoreDefault();
     }
     //load local storage feeds
-    var feeds = eval(localStorage[FEED_LOCAL_STORAGE_KEY]);
-    var myfeeds = null;
+    var feeds = eval(localStorage["feeds"]);
     if (feeds !== null) {
-        myfeeds = "<header>My feeds</header><ul>";
+	var feeds_list = UI.list('#yourfeeds');
+	feeds_list.removeAllItems();
+	feeds_list.setHeader('My feeds');
+
         for (var i = 0; i < feeds.length; i++) {
-            myfeeds += '<li><a href="#" onclick="loadFeed(\'' + feeds[i] + '\');">' + feeds[i] + '</a></li>';
+            feeds_list.append(feeds[i],
+			      null,
+			      null,
+			      function (target, thisfeed) { console.log('load'); loadFeed(thisfeed); },
+			      feeds[i]);
         }
-        myfeeds += "</ul>";
-        $("#yourfeeds").html(myfeeds);
     }
 
     UI.button('yes').click(function (e) {
@@ -83,9 +61,9 @@ $(document).ready(function () {
                 }, 0);
             }
         } else {
-            var feeds = eval(localStorage[FEED_LOCAL_STORAGE_KEY]);
+            var feeds = eval(localStorage["feeds"]);
             feeds.push(url);
-            localStorage.setItem(FEED_LOCAL_STORAGE_KEY, JSON.stringify(feeds));
+            localStorage.setItem("feeds", JSON.stringify(feeds));
             window.location.reload();
         }
     });
@@ -104,13 +82,13 @@ $(document).ready(function () {
 function restoreDefault() {
     localStorage.clear();
     var feeds = [];
-    for (var feed in data_feeds) {
-	if (data_feeds.hasOwnProperty(feed)) {
-	    feeds.push(feed);
-	}
-    }
+    feeds.push("http://daker.me/feed.xml");
+    feeds.push("http://www.omgubuntu.co.uk/feed");
+    feeds.push("http://hespress.com/feed/index.rss");
+    feeds.push("http://rss.slashdot.org/Slashdot/slashdot");
+    feeds.push("http://www.reddit.com/.rss");
     try {
-        localStorage.setItem(FEED_LOCAL_STORAGE_KEY, JSON.stringify(feeds));
+        localStorage.setItem("feeds", JSON.stringify(feeds));
         window.location.reload();
     } catch (e) {
         if (e == QUOTA_EXCEEDED_ERR) {
@@ -126,17 +104,25 @@ function loadFeed(url) {
 
     UI.dialog("loading").show();
 
-    var feed = new Feed(url);
+    var feed = new google.feeds.Feed(url);
     feed.setNumEntries(30);
+
     feed.load(function (result) {
         if (!result.error) {
-            myfeeds_items = "<header>" + result.feed.title + "</header><ul>";
-            for (var i = 0; i < result.feed.entries.length; i++) {
-                myfeeds_items += '<li><a href="#" onclick=\'showArticle("' + escape(result.feed.entries[i].title) + '","' + escape(result.feed.entries[i].link) + '","' + escape(result.feed.entries[i].content) + '")\'>' + result.feed.entries[i].title.replace(/"/g, "'") + '</a></li>';
-            }
-            myfeeds_items += "</ul>";
             UI.dialog("loading").hide();
-            $("#resultscontent").html(myfeeds_items);
+
+	    var results_list = UI.list('#resultscontent');
+	    console.log(results_list);
+	    results_list.removeAllItems();
+	    results_list.setHeader(result.feed.title);
+
+            for (var i = 0; i < result.feed.entries.length; i++) {
+		results_list.append(result.feed.entries[i].title.replace(/"/g, "'"),
+				    null,
+				    null,
+				    function (target, result_infos) { showArticle.apply(null, result_infos); },
+				    [escape(result.feed.entries[i].title), escape(result.feed.entries[i].link), escape(result.feed.entries[i].content)] );
+            }
         } else
             alert('feed error');
     });
@@ -151,3 +137,4 @@ function showArticle(title, url, desc) {
 
 }
 
+google.load("feeds", "1");

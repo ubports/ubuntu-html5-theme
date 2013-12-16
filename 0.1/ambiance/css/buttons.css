@@ -67,6 +67,12 @@
     left: 0;
 }
 
+[data-role="button"].ubuntu {
+    background: #dd4814;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
 [data-role="button"].danger {
     background: red;
     color: #ffffff;

@@ -56,4 +56,13 @@ Shape.prototype = {
         el.addEventListener('click', callback);
       }
     },
+    /**
+     * Returns the DOM element associated with the id this widget is bind to.
+     * @method element
+     * @example
+        var myshape = UI.shape("shapeid").element();
+     */
+    element: function () {
+        return document.getElementById(this.id);
+    }
 };

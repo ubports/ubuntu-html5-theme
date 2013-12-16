@@ -60,6 +60,12 @@ var Header= function (id) {
 
 Header.prototype = {
     /**
-     * Placeholder for future methods
+     * Returns the DOM element associated with the id this widget is bind to.
+     * @method element
+     * @example
+        var myheader = UI.header("headerid").element();
      */
+    element: function () {
+        return document.getElementById(this.id);
+    }
 };
