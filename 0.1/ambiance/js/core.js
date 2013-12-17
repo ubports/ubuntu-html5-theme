@@ -344,13 +344,27 @@ var UbuntuUI = (function () {
         },
 
         /**
+         * Gets an Ubuntu Option Selector
+         * @method optionselector
+         * @param {ID} id - The element's id attrubute
+         * @param {Boolean} expanded - Specifies whether the list is always expanded
+         * @param {Boolean} multiSelection - If multiple choice selection is enabled the list is always expanded.
+         * @return {OptionSelector}
+         */
+        optionselector: function (id, expanded, multiSelection) {
+            if (typeof OptionSelector != 'undefined' && OptionSelector) {
+                return new OptionSelector(id, expanded, multiSelection);
+            }
+        },
+
+        /**
          * Gets the DOM element from a given selector
          * @method element
          * @return {Element} - The DOM element
          * Gets the HTML element associated with an Ubuntu HTML5 JavaScript object
          */
         element: function(selector) {
-          return document.querySelector(selector);
+            return document.querySelector(selector);
         },
 
         /**
