@@ -5,18 +5,18 @@
  This file is part of ubuntu-html5-theme.
 
  This package is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as 
- published by the Free Software Foundation; either version 3 of the 
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 3 of the
  License, or
  (at your option) any later version.
- 
+
  This package is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
- You should have received a copy of the GNU Lesser General Public 
- License along with this program. If not, see 
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program. If not, see
  <http://www.gnu.org/licenses/>.
 -->
 
@@ -40,22 +40,12 @@
 </head>
 <body>
     <div data-role="page">
-        <header data-role="header">
-            <nav data-role="navbar" class="tabs">
-                <div class="tabs-inner">
-                    <ul data-role="tabs">
-                        <li class="active" data-role="tab">
-                            <a href="#item1">Tab 1</a>
-                        </li>
-                        <li class="inactive" data-role="tab">
-                            <a href="#item2">Tab 2</a>
-                        </li>
-                        <li class="inactive" data-role="tab">
-                            <a href="#item3">Tab 3</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+
+        <header data-role="header" id="headerID">
+            <ul data-role="tabs">
+                <li data-role="tab" data-page="main">Tab 1</li>
+                <li data-role="tab" data-page="page2">Tab 2</li>
+            </ul>
         </header>
 
         <div data-role="content">
@@ -82,12 +72,12 @@
         </div>
     </div>
     <script type="text/javascript">
-        var UI = new UbuntuUI(),
-            tabs = UI.tabs("[data-role='tabs']");
+        var UI = new UbuntuUI();
+        window.onload = function() {
+            UI.init();
             toolbar = UI.toolbar("footer1");
-            toolbar.touch(function (event) {
-                toolbar.toggle();
-            });
+        };
+    </script>
     </script>
 </body>
 </html>

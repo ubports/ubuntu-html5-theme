@@ -327,7 +327,7 @@ var UbuntuUI = (function () {
          */
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
-                return new Toolbar(this, id);
+                return new Toolbar(id, this.__getTabInfosDelegate());
             }
         },
 

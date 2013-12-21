@@ -21,10 +21,10 @@
  */
 
 /**
- * A Toolbar is the JavaScript representation of an Ubuntu HTML5 app <em>footer</em>. 
+ * A Toolbar is the JavaScript representation of an Ubuntu HTML5 app <em>footer</em>.
 
 ######Contained List provides buttons
-The Toolbar contains a List, where each list item is treated as a Button (see below). List items (Buttons) are pushed to the right. The default Back button always exists to the left and does not need to be declared. 
+The Toolbar contains a List, where each list item is treated as a Button (see below). List items (Buttons) are pushed to the right. The default Back button always exists to the left and does not need to be declared.
 
 #####Default and custom footers
 See the Pagestack class documentation for information about the default application-wide Footer, customizing it, and adding Page-specific Footers.
@@ -50,47 +50,180 @@ See the Pagestack class documentation for information about the default applicat
 
  */
 
-var Toolbar = function (UbuntuUI, id) {
-    this.toolbar = document.getElementById(id);
-};
+var Toolbar = (function () {
 
-Toolbar.prototype = {
-    /**-
-     * Display a Toolbar
-     * @method show
-     */
-    show: function () {
-        this.toolbar.classList.add('revealed');
-    },
-    /**-
-     * Hide a Toolbar
-     * @method hide
-     */
-    hide: function () {
-        this.toolbar.classList.remove('revealed');
-    },
-    /**
-     * Toggle show/hide status of a Toolbar
-     * @method toggle
-     */
-    toggle: function () {
-        this.toolbar.classList.toggle('revealed');
-    },
-    /**
-     * Provide a callback function that's called with the Toolbar is touched
-     * @method touch
-     * @param {Function} function - The function that is called when the Toolbar is touched
-     */
-    touch: function (callback) {
-        this.toolbar.addEventListener(UbuntuUI.touchEvents.touchEnd, callback);
-    },
-    /**
-     * Returns the DOM element associated with the id this widget is bind to.
-     * @method element
-     * @example
-        var mytoolbar = UI.toolbar("toolbarid").element();
-     */
-    element: function () {
-        return this.toolbar;
-    }
-};
+    function Toolbar(id, touchInfoDelegate) {
+
+        this.PHASE_START = "start";
+        this.PHASE_MOVE = "move";
+        this.PHASE_END = "end";
+        this.PHASE_CANCEL = "cancel";
+
+        this.phase = null;
+
+        this.UI = UI;
+
+        this.toolbar = document.getElementById(id);
+
+        this._touchInfoDelegate = touchInfoDelegate;
+
+        var touchEvents = touchInfoDelegate.touchEvents;
+
+        this.fingerData = [];
+        this.fingerData.push({
+            start: {
+                x: 0,
+                y: 0
+            },
+            end: {
+                x: 0,
+                y: 0
+            },
+            identifier: 0
+        });
+
+        this.toolbar.addEventListener(touchEvents.touchStart, this.__onTouchStart.bind(this));
+        this.toolbar.addEventListener(touchEvents.touchMove, this.__onTouchMove.bind(this));
+        this.toolbar.addEventListener(touchEvents.touchEnd, this.__onTouchEnd.bind(this));
+        this.toolbar.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
+    };
+
+    Toolbar.prototype = {
+        /**-
+         * Display a Toolbar
+         * @method show
+         */
+        show: function () {
+            this.toolbar.classList.add('revealed');
+        },
+        /**-
+         * Hide a Toolbar
+         * @method hide
+         */
+        hide: function () {
+            this.toolbar.classList.remove('revealed');
+        },
+        /**
+         * Toggle show/hide status of a Toolbar
+         * @method toggle
+         */
+        toggle: function () {
+            this.toolbar.classList.toggle('revealed');
+        },
+        /**
+         * Provide a callback function that's called with the Toolbar is touched
+         * @method touch
+         * @param {Function} function - The function that is called when the Toolbar is touched
+         */
+        touch: function (callback) {
+            this.toolbar.addEventListener(this.touchEvents.touchEnd, callback);
+        },
+
+        /**
+         * Returns the DOM element associated with the id this widget is bind to.
+         * @method element
+         * @example
+            var mytoolbar = UI.toolbar("toolbarid").element();
+         */
+        element: function () {
+            return this.toolbar;
+        },
+
+        __onTouchStart: function (evt) {
+
+            this.phase = this.PHASE_START;
+            var identifier = evt.identifier !== undefined ? evt.identifier : 0;
+
+            if (!this.UI.isTouch) {
+                evt.touches = [{
+                    pageX: evt.pageX,
+                    pageY: evt.pageY
+                }];
+            }
+
+            this.fingerData[0].identifier = identifier;
+            this.fingerData[0].start.x = this.fingerData[0].end.x = evt.touches[0].pageX;
+            this.fingerData[0].start.y = this.fingerData[0].end.y = evt.touches[0].pageY;
+        },
+
+        __onTouchMove: function (evt) {
+
+            if (this.phase === this.PHASE_END || this.phase === this.PHASE_CANCEL)
+                return;
+
+            if (this.phase == this.PHASE_START) {
+                if (!this.UI.isTouch) {
+                    evt.touches = [{
+                        pageX: evt.pageX,
+                        pageY: evt.pageY
+                    }];
+                }
+
+                var identifier = evt.identifier !== undefined ? evt.identifier : 0;
+                var f = this.__getFingerData(identifier);
+
+                f.end.x = evt.touches[0].pageX;
+                f.end.y = evt.touches[0].pageY;
+
+                direction = this.__calculateDirection(f.start, f.end);
+
+                if (direction == "DOWN") {
+                    this.hide();
+                }
+
+                if (direction == "UP") {
+                    this.show();
+                }
+
+                phase = this.PHASE_MOVE;
+            }
+        },
+
+        __onTouchEnd: function (e) {
+            phase = this.PHASE_END;
+        },
+
+        __onTouchLeave: function (e) {
+            phase = this.PHASE_CANCEL;
+        },
+
+        __calculateDirection: function (startPoint, endPoint) {
+            var angle = this.__calculateAngle(startPoint, endPoint);
+
+            if ((angle <= 45) && (angle >= 0)) {
+                return "LEFT";
+            } else if ((angle <= 360) && (angle >= 315)) {
+                return "LEFT";
+            } else if ((angle >= 135) && (angle <= 225)) {
+                return "RIGHT";
+            } else if ((angle > 45) && (angle < 135)) {
+                return "DOWN";
+            } else {
+                return "UP";
+            }
+        },
+
+        __getFingerData: function (id) {
+            for (var i = 0; i < this.fingerData.length; i++) {
+                if (this.fingerData[i].identifier == id) {
+                    return this.fingerData[i];
+                }
+            }
+        },
+
+        __calculateAngle: function (startPoint, endPoint) {
+            var x = startPoint.x - endPoint.x;
+            var y = endPoint.y - startPoint.y;
+            var r = Math.atan2(y, x); //radians
+            var angle = Math.round(r * 180 / Math.PI); //degrees
+
+            //ensure value is positive
+            if (angle < 0) {
+                angle = 360 - Math.abs(angle);
+            }
+
+            return angle;
+        }
+    };
+    return Toolbar;
+})();
