@@ -96,6 +96,7 @@ var Toolbar = (function () {
         show: function () {
             this.toolbar.classList.add('revealed');
         },
+
         /**-
          * Hide a Toolbar
          * @method hide
@@ -103,6 +104,7 @@ var Toolbar = (function () {
         hide: function () {
             this.toolbar.classList.remove('revealed');
         },
+
         /**
          * Toggle show/hide status of a Toolbar
          * @method toggle
@@ -110,6 +112,7 @@ var Toolbar = (function () {
         toggle: function () {
             this.toolbar.classList.toggle('revealed');
         },
+
         /**
          * Provide a callback function that's called with the Toolbar is touched
          * @method touch
@@ -129,6 +132,9 @@ var Toolbar = (function () {
             return this.toolbar;
         },
 
+        /**
+         * @private
+         */
         __onTouchStart: function (evt) {
 
             this.phase = this.PHASE_START;
@@ -146,6 +152,9 @@ var Toolbar = (function () {
             this.fingerData[0].start.y = this.fingerData[0].end.y = evt.touches[0].pageY;
         },
 
+        /**
+         * @private
+         */
         __onTouchMove: function (evt) {
 
             if (this.phase === this.PHASE_END || this.phase === this.PHASE_CANCEL)
@@ -179,14 +188,23 @@ var Toolbar = (function () {
             }
         },
 
+        /**
+         * @private
+         */
         __onTouchEnd: function (e) {
             phase = this.PHASE_END;
         },
 
+        /**
+         * @private
+         */
         __onTouchLeave: function (e) {
             phase = this.PHASE_CANCEL;
         },
 
+        /**
+         * @private
+         */
         __calculateDirection: function (startPoint, endPoint) {
             var angle = this.__calculateAngle(startPoint, endPoint);
 
@@ -203,6 +221,9 @@ var Toolbar = (function () {
             }
         },
 
+        /**
+         * @private
+         */
         __getFingerData: function (id) {
             for (var i = 0; i < this.fingerData.length; i++) {
                 if (this.fingerData[i].identifier == id) {
@@ -211,6 +232,9 @@ var Toolbar = (function () {
             }
         },
 
+        /**
+         * @private
+         */
         __calculateAngle: function (startPoint, endPoint) {
             var x = startPoint.x - endPoint.x;
             var y = endPoint.y - startPoint.y;
