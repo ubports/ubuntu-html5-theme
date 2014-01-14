@@ -77,9 +77,8 @@
 
 [data-role="list"] li > a:after {
     content: "";
-    background: transparent url(../img/ListItemProgressionArrow@8.png) no-repeat 0.5rem 0.5rem;
-    background-size: 50% 50%;
-    pointer-events: none;
+    background: transparent url(../img/chevron@27.png) no-repeat 0.5rem 0.5rem;
+    background-size: 40% 75%;
     position: absolute;
     width: 2rem;
     height: 2rem;

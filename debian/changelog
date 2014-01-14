@@ -1,3 +1,57 @@
+ubuntu-html5-theme (0.1+14.04.20140107-0ubuntu1) trusty; urgency=low
+
+  [ Adnane Belmadiaf ]
+  * s/parentNode/parendNode Spaces instead of tabs. (LP: #1241215)
+  * Add option selector widget. (LP: #1232533)
+
+  [ daker ]
+  * Passe the UI variable name so we will not lock the variable. (LP:
+    #1222878)
+  * Made variable declaration locale. (LP: #1222881)
+  * Fixed z-index for the list items aside. (LP: #1223973)
+  * s/parentNode/parendNode Spaces instead of tabs. (LP: #1241215)
+  * Space instead of tab. (LP: #1240682)
+  * Made list items with headers differentes. (LP: #1246446)
+  * Updated the progressbar component to match the design.
+  * Move tabs closer to what they should be, Expand API to match the QML
+    one (at least at the Tabs level), .
+  * Add option selector widget. (LP: #1232533)
+
+  [ Kyle Nitzsche ]
+  * Add button id to "Invalid button ID" error message .
+  * This MR does three main things: 1) Implements yuidoc comments in all
+    js files to support API doc generation, and provides yuidoc assets
+    (theme dir and json file) needed to build the API docs. Bug LP:
+    #1241029 3) Provides JS classes for shape and page with
+    corresponding UbuntuUI prototype constructor functions. Bug LP:
+    #1243248 4) Adds a getEl(UbuntuUIObject) to return the element for
+    any Ubuntu class. Also LP: #1243248. (LP: #1243248, #1241029)
+
+  [ Colin Watson ]
+  * Make ubuntu-html5-theme Multi-Arch: foreign.
+
+  [ Alexandre Abreu ]
+  * Fix exec path in app-gallery app desktop file. (LP: #1235321)
+  * Add convenient element() function to most widgets ... (we might want
+    to factor those out in a second step).
+  * Move tabs closer to what they should be, Expand API to match the QML
+    one (at least at the Tabs level), .
+  * Add HTML5 webapp container package.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 98
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 07 Jan 2014 23:46:53 +0000
+
+ubuntu-html5-theme (0.1+13.10.20130916-0ubuntu2) trusty; urgency=low
+
+  * Cherrypick upstream committed packaging fix, to resolve
+    cross-compilation co-installation: Mark ubuntu-html5-theme Multi-Arch:
+    foreign.
+    https://code.launchpad.net/~cjwatson/ubuntu-html5-theme/multiarch-foreign/+merge/194350
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Mon, 06 Jan 2014 05:37:02 +0000
+
 ubuntu-html5-theme (0.1+13.10.20130916-0ubuntu1) saucy; urgency=low
 
   [ daker ]

@@ -34,28 +34,24 @@
     <script src="../../../0.1/ambiance/js/core.js"></script>
     <script src="../../../0.1/ambiance/js/buttons.js"></script>
     <script src="../../../0.1/ambiance/js/dialogs.js"></script>
+    <script src="../../../0.1/ambiance/js/page.js"></script>
     <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
     <script src="../../../0.1/ambiance/js/popovers.js"></script>
+    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+    <script>
+      window.onload = function () {
+      };
+    </script>
 
 </head>
 <body>
     <div data-role="page">
         <header data-role="header">
-            <nav data-role="navbar" class="tabs">
-                <div class="tabs-inner">
-                    <ul data-role="tabs">
-                        <li class="active" data-role="tab">
-                            <a href="#item1">Tab 1</a>
-                        </li>
-                        <li class="inactive" data-role="tab">
-                            <a href="#item2">Tab 2</a>
-                        </li>
-                        <li class="inactive" data-role="tab">
-                            <a href="#item3">Tab 3</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+          <ul data-role="tabs">
+            <li data-role="tab">Tab 1</li>
+            <li data-role="tab">Tab 2</li>
+            <li data-role="tab">Tab 3</li>
+          </ul>
         </header>
 
         <div data-role="content">

@@ -41,7 +41,7 @@ $(document).ready(function () {
             feeds_list.append(feeds[i],
 			      null,
 			      null,
-			      function (target, thisfeed) { console.log('load'); loadFeed(thisfeed); },
+			      function (target, thisfeed) { loadFeed(thisfeed); },
 			      feeds[i]);
         }
     }
@@ -112,7 +112,6 @@ function loadFeed(url) {
             UI.dialog("loading").hide();
 
 	    var results_list = UI.list('#resultscontent');
-	    console.log(results_list);
 	    results_list.removeAllItems();
 	    results_list.setHeader(result.feed.title);
 
