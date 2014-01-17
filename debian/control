@@ -60,7 +60,7 @@ Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  for Ubuntu. This package contains autopilot tests for it.
 
 Package: ubuntu-html5-container
-Architecture: all
+Architecture: any
 Depends: ${misc:Depends},
          ${python:Depends},
          dpkg-dev,
