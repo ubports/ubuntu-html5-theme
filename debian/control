@@ -62,6 +62,7 @@ Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
 Package: ubuntu-html5-container
 Architecture: any
 Depends: ${misc:Depends},
+         ${shlibs:Depends},
          ${python:Depends},
          dpkg-dev,
          libqt5webkit5-qmlwebkitplugin,
