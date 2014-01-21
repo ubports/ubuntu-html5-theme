@@ -46,7 +46,7 @@ QString getContainerImportPath()
 {
     static QString mainQml =
       ! isRunningInstalled()
-      ? QString("@CMAKE_SOURCE_DIR@/src/ubuntu-html5-container-qml")
+      ? QString("@CMAKE_SOURCE_DIR@/src/qml")
       : QString();
     return mainQml;
 }
