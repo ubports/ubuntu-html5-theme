@@ -60,8 +60,9 @@ Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  for Ubuntu. This package contains autopilot tests for it.
 
 Package: ubuntu-html5-container
-Architecture: all
+Architecture: any
 Depends: ${misc:Depends},
+         ${shlibs:Depends},
          ${python:Depends},
          dpkg-dev,
          libqt5webkit5-qmlwebkitplugin,
@@ -69,7 +70,7 @@ Depends: ${misc:Depends},
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,
          qmlscene,
-         ubuntu-html5-theme (= ${binary:Version}),
+         ubuntu-html5-theme (= ${source:Version}),
 Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
  This package contains the Ubuntu HTML5 QML component used to embed HTML5
  apps at runtime.
