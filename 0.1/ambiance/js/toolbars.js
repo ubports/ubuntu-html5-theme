@@ -21,10 +21,10 @@
  */
 
 /**
- * A Toolbar is the JavaScript representation of an Ubuntu HTML5 app <em>footer</em>. 
+ * A Toolbar is the JavaScript representation of an Ubuntu HTML5 app <em>footer</em>.
 
 ######Contained List provides buttons
-The Toolbar contains a List, where each list item is treated as a Button (see below). List items (Buttons) are pushed to the right. The default Back button always exists to the left and does not need to be declared. 
+The Toolbar contains a List, where each list item is treated as a Button (see below). List items (Buttons) are pushed to the right. The default Back button always exists to the left and does not need to be declared.
 
 #####Default and custom footers
 See the Pagestack class documentation for information about the default application-wide Footer, customizing it, and adding Page-specific Footers.
@@ -33,12 +33,12 @@ See the Pagestack class documentation for information about the default applicat
  * @namespace UbuntuUI
  * @example
       <footer data-role="footer" class="revealed" id="footerID">
-        <div data-role="list">
+        <nav>
           <ul>
             <li>
               <a href="#" id="home">Home</a>
             </li>
-          </ul>
+          </nav>
         </div>
       </footer>
 
