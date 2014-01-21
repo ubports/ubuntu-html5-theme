@@ -27,7 +27,7 @@ import CordovaUbuntu 2.8
     \ingroup ubuntu
     \brief WebAppContainer is the root Item that should be used for all HTML5 applications.
 */
-MainView {
+Item {
     id: root
     objectName: "root"
 
