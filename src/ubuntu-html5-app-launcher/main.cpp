@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <QGuiApplication>
+#include <QtNetwork/QNetworkInterface>
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickView>
 #include <QDebug>
@@ -52,6 +53,7 @@ int main(int argc, char *argv[])
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
     const QString ARG_HEADER = "--";
     const QString VALUE_HEADER = "=";
+    const QString INSPECTOR = "--inspector";
 
     QHash<QString, QString> properties;
     QString wwwfolder;
@@ -90,6 +92,24 @@ int main(int argc, char *argv[])
                      << value;
 
             properties.insert(property, value);
+        }
+        else
+        if (argument.contains(INSPECTOR))
+        {
+            QString host;
+            Q_FOREACH(QHostAddress address, QNetworkInterface::allAddresses()) {
+                if (!address.isLoopback() && (address.protocol() == QAbstractSocket::IPv4Protocol)) {
+                    host = address.toString();
+                    break;
+                }
+            }
+            QString server;
+            if (host.isEmpty()) {
+                server = QString::number(REMOTE_INSPECTOR_PORT);
+            } else {
+                server = QString("%1:%2").arg(host, QString::number(REMOTE_INSPECTOR_PORT));
+            }
+            qputenv("QTWEBKIT_INSPECTOR_SERVER", server.toUtf8());
         }
         else
         {
