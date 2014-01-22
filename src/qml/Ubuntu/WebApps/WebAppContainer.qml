@@ -19,6 +19,7 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import CordovaUbuntu 2.8
+import Ubuntu.UnityWebApps 0.1
 
 
 /*!
@@ -44,10 +45,21 @@ Item {
       \internal
      */
     CordovaView {
-        id: view
+        id: cordovaView
         objectName: "view"
 
         anchors.fill: parent
+    }
+
+    function getUnityWebappsProxies() {
+        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
+    }
+
+    UnityWebApps {
+        id: webapps
+        bindee: root
+	injectExtraUbuntuApis: true
+	requiresInit: false
     }
 }
 
