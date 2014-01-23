@@ -23,6 +23,8 @@
 #include <QtCore/QDir>
 #include <QtCore/QString>
 
+#define REMOTE_INSPECTOR_PORT 9221
+
 namespace Webapp {
 
 namespace Config {
