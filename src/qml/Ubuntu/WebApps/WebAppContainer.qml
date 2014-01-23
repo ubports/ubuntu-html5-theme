@@ -39,7 +39,7 @@ Item {
 
       The path is absolute or relative to the current dir.
       */
-    property alias htmlIndexDirectory: view.wwwDir
+    property alias htmlIndexDirectory: cordovaView.wwwDir
 
     /*!
       \internal
@@ -55,11 +55,22 @@ Item {
         return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
     }
 
-    UnityWebApps {
-        id: webapps
-        bindee: root
-	injectExtraUbuntuApis: true
-	requiresInit: false
+    Loader {
+    	id: webappBindingsLoader
+        visible: false
+        anchors.fill: parent
+        sourceComponent: cordovaView.mainWebview ? webappBindingsComponent : undefined
+    }
+
+    Component {
+        id: webappBindingsComponent
+
+        UnityWebApps {
+            id: webapps
+            bindee: root
+            injectExtraUbuntuApis: true
+            requiresInit: false
+        }
     }
 }
 
