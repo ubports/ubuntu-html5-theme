@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
  * License granted by Canonical Limited
  *
- * This file is part of ubuntu-html5-theme.
+ * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -58,7 +58,7 @@ var UbuntuUI = (function () {
         a.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
 
         var img = d.createElement('img');
-        img.setAttribute('src', '/usr/share/ubuntu-html5-theme/0.1/ambiance/img/back@18.png');
+        img.setAttribute('src', '/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/img/back@18.png');
 
         // TODO: translation?
         img.setAttribute('alt', 'Back');

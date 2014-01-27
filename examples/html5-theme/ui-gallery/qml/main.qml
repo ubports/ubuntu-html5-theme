@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 Canonical
  *
- * This file is part of ubuntu-html5-theme.
+ * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as 

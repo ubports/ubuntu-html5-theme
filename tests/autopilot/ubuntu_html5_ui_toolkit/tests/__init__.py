@@ -5,7 +5,7 @@
 # under the terms of the GNU Lesser General Public License version 3, as published
 # by the Free Software Foundation.
 
-"""Tests for the Ubuntu HTML5 Theme package """
+"""Tests for the Ubuntu HTML5 package """
 
 import os
 import json
@@ -34,7 +34,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def serve_file(self, filename):
         import mimetypes
-        
+
         content_type = mimetypes.guess_type(filename)[0]
 
         f = open(filename, 'rb')
@@ -70,14 +70,14 @@ class UbuntuHTML5HTTPServer(threading.Thread):
 
 class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_CONTAINER_PATH = "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../tools/qml/webview.qml')
-    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-theme/autopilot-tests/qml/webview.qml'
+    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-ui-toolkit/autopilot-tests/qml/webview.qml'
     arch = subprocess.check_output(
         ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip()
     BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
 
     # TODO: fix version
     LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/'))
-    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-theme/0.1/examples'
+    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-ui-toolkit/0.1/examples'
 
     APPS_SUBFOLDER_NAME = 'apps'
 
@@ -157,7 +157,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         webview.slots.evalInPageUnsafe(expr)
         self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
         return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
-        
+
     def get_dom_node_id_attribute(self, id, attribute):
         webview = self.get_webviewContainer()
         prev_emissions = self.watcher.num_emissions
@@ -200,6 +200,3 @@ class UbuntuThemeWithHttpServerTestCaseBase(UbuntuHTML5TestCaseBase):
 class UbuntuThemeRemotePageTestCaseBase(UbuntuThemeWithHttpServerTestCaseBase):
     def setUp(self):
         super(UbuntuThemeRemotePageTestCaseBase, self).setUp()
-
-
-

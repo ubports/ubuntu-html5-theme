@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
  * License granted by Canonical Limited
  *
- * This file is part of ubuntu-html5-theme.
+ * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as 
