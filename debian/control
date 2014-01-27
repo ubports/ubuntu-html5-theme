@@ -20,7 +20,7 @@ Standards-Version: 3.9.5
 # directly to Ubuntu, don't worry: your changes will be merged back into the
 # upstream branch
 Homepage: https://launchpad.net/ubuntu-html5-theme
-Vcs-Bzr: lp:ubuntu-html5-theme/
+Vcs-Bzr: lp:ubuntu-html5-theme
 Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-theme/ambiance
 
 Package: ubuntu-html5-ui-toolkit
