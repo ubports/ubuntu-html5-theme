@@ -51,10 +51,16 @@ Item {
         anchors.fill: parent
     }
 
+    /*!
+      \internal
+     */
     function getUnityWebappsProxies() {
         return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
     }
 
+    /*!
+      \internal
+     */
     Loader {
     	id: webappBindingsLoader
         visible: false
@@ -62,6 +68,9 @@ Item {
         sourceComponent: cordovaView.mainWebview ? webappBindingsComponent : undefined
     }
 
+    /*!
+      \internal
+     */
     Component {
         id: webappBindingsComponent
 
