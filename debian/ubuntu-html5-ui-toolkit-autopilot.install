@@ -1,0 +1,3 @@
+tests/autopilot/tools/* usr/share/ubuntu-html5-ui-toolkit/autopilot-tests/
+tests/data/* usr/share/ubuntu-html5-ui-toolkit/tests/data/
+usr/lib/python*
