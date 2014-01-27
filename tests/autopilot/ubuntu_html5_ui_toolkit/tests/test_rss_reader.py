@@ -12,7 +12,7 @@ import time
 from testtools.matchers import Contains, Equals
 from autopilot.matchers import Eventually
 
-from ubuntu_html5_theme.tests import UbuntuHTML5TestCaseBase, UbuntuThemeRemotePageTestCaseBase
+from ubuntu_html5_ui_toolkit.tests import UbuntuHTML5TestCaseBase, UbuntuThemeRemotePageTestCaseBase
 
 class UbuntuThemeRSSReaderTestCase(UbuntuHTML5TestCaseBase):
     def setUp(self):
@@ -32,6 +32,3 @@ class UbuntuThemeRSSReaderTestCase(UbuntuHTML5TestCaseBase):
         self.assertThat(lambda: self.is_dom_node_visible('main'), Eventually(Equals(False)))
         self.assertThat(self.is_dom_node_visible('article'), Equals(False))
         self.assertThat(self.is_dom_node_visible('results'), Equals(True))
-
-
-

@@ -12,7 +12,7 @@ import time
 from testtools.matchers import Contains, Equals
 from autopilot.matchers import Eventually
 
-from ubuntu_html5_theme.tests import UbuntuHTML5TestCaseBase, UbuntuThemeRemotePageTestCaseBase
+from ubuntu_html5_ui_toolkit.tests import UbuntuHTML5TestCaseBase, UbuntuThemeRemotePageTestCaseBase
 
 class UbuntuThemePageStackTestCase(UbuntuHTML5TestCaseBase):
 
@@ -40,4 +40,3 @@ class UbuntuThemePageStackTestCase(UbuntuHTML5TestCaseBase):
         self.assertThat(self.is_dom_node_visible('main'), Equals(False))
         self.assertThat(self.is_dom_node_visible('results'), Equals(True))
         self.assertThat(self.is_dom_node_visible('article'), Equals(False))
-
