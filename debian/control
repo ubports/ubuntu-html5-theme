@@ -31,7 +31,7 @@ Depends: cordova-ubuntu-2.8,
          cordova-ubuntu-autopilot,
          cordova-ubuntu-tests,
          qtdeclarative5-cordova-2.8-plugin,
-         ubuntu-html5-api-bindings,
+         qtdeclarative5-ubuntu-html5-api,
          ubuntu-html5-container,
          ubuntu-html5-ui-toolkit,
 Description: Ubuntu HTML5 SDK Metapackage
