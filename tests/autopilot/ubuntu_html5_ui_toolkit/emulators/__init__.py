@@ -5,6 +5,6 @@
 # under the terms of the GNU Lesser General Public License version 3, as published
 # by the Free Software Foundation.
 
-"""Tests for the Ubuntu HTML5 Theme package """
+"""Tests for the Ubuntu HTML5 UI SDK package """
 
 

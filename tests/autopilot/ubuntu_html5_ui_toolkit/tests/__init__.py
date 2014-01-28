@@ -76,7 +76,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
 
     # TODO: fix version
-    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/'))
+    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../examples/html5-theme'))
     INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-ui-toolkit/0.1/examples'
 
     APPS_SUBFOLDER_NAME = 'apps'
