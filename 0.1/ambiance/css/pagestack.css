@@ -40,6 +40,7 @@
     box-sizing: border-box;
 }
 
+[data-role="pagestack"]>[data-role="page"]:first-child,
 [data-role="mainview"]>[data-role="page"] {
     display: block;
 }
