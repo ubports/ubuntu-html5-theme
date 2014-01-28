@@ -35,8 +35,16 @@ void setUpQmlImportPathIfNecessary()
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
     {
-        qDebug() << "Setting import path to: " << importPath;
-        qputenv("QML2_IMPORT_PATH", importPath.toLatin1());
+        QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
+        existingImportPath = existingImportPath.trimmed();
+
+        if ( ! existingImportPath.trimmed().isEmpty())
+           existingImportPath.append(":");
+        existingImportPath.append(importPath);
+
+        qDebug() << "Setting import path to: " << existingImportPath;
+
+        qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
     }
 }
 
