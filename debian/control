@@ -28,8 +28,6 @@ Architecture: all
 Depends: cordova-ubuntu-2.8,
          cordova-ubuntu-2.8-dev,
          cordova-ubuntu-2.8-examples,
-         cordova-ubuntu-autopilot,
-         cordova-ubuntu-tests,
          qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-ubuntu-webapps-api,
          ubuntu-html5-container,
