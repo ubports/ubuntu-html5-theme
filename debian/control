@@ -70,7 +70,7 @@ Depends: ${misc:Depends},
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,
          qmlscene,
-         unity-webapps-qml,
+         unity-webapps-qml (>= 0.1+14.04.20131106-0ubuntu2),
          ubuntu-html5-theme (= ${source:Version}),
 Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
  This package contains the Ubuntu HTML5 QML component used to embed HTML5
