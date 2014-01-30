@@ -33,10 +33,10 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
         <div data-role="page">
           <header data-role="header" id="headerID">
             <ul data-role="tabs">
-              <li data-role="tab" data-page="main">
+              <li data-role="tabitem" data-page="main">
                 Main
               </li>
-              <li data-role="tab" data-page="page2">
+              <li data-role="tabitem" data-page="page2">
                 Two
               </li>
             </ul>
@@ -94,7 +94,7 @@ var Tabs = (function () {
         if (touchEvents.touchLeave) {
             this._tabs.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
         }
-        
+
         // initialize default page
         this.__setupInitialTabVisibility();
     };
@@ -149,15 +149,15 @@ var Tabs = (function () {
          * @private
          */
         __setupInitialTabVisibility: function() {
-            var tab = this._tabs.querySelector('[data-role="tab"]:first-child');
+            var tab = this._tabs.querySelector('[data-role="tabitem"]:first-child');
             tab.classList.add('active');
             var updateDisplayStyle = function(tab, value) {
                 var targetPage = document.getElementById(tab.getAttribute('data-page'));
-		if (targetPage)
-		    targetPage.style.display=value;
+                if (targetPage)
+                    targetPage.style.display=value;
             };
             [].slice.
-                call(this._tabs.querySelectorAll('[data-role="tab"]:not(:first-child)')).
+                call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(:first-child)')).
                 forEach(function(element) {
                     updateDisplayStyle(element, 'none');
                 });
@@ -282,14 +282,14 @@ var Tabs = (function () {
         __endNavigation: function () {
             if (state !== STATES.navigating) return;
 
-            var activeTab = document.querySelector('[data-role="tab"].active');
+            var activeTab = document.querySelector('[data-role="tabitem"].active');
             if (! activeTab) return;
 
             var offsetX = activeTab.offsetLeft;
             this._tabs.style['-webkit-transition-duration'] = '.3s';
             this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-            
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+
+            [].forEach.call(document.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
                 el.classList.toggle('inactive');
             });
         },
@@ -301,7 +301,7 @@ var Tabs = (function () {
             if (state !== STATES.transitioning_to_navigation) return;
 
             // TODO constraint a bit the selector
-            [].forEach.call(document.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+            [].forEach.call(document.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
                 el.classList.toggle('inactive');
             });
         },
@@ -344,19 +344,19 @@ var Tabs = (function () {
             var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
             if (selectedTab == null)
                 return;
-            if (selectedTab.getAttribute("data-role") !== 'tab')
+            if (selectedTab.getAttribute("data-role") !== 'tabitem')
                 return;
             if ((selectedTab.className).indexOf('inactive') > -1) {
                 window.clearTimeout(t2);
 
-                activeTab = this._tabs.querySelector('[data-role="tab"].active');
+                activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
                 offsetX = this.offsetLeft;
                 this._tabs.style['-webkit-transition-duration'] = '.3s';
                 this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
 
                 this.__updateActiveTab(selectedTab, activeTab);
 
-                [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (e) {
+                [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (e) {
                     e.classList.remove('inactive');
                 });
 
@@ -365,11 +365,11 @@ var Tabs = (function () {
                 this.__dispatchTabChangedEvent(targetPageId);
             } else {
 
-                [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
                 t2 = window.setTimeout(function () {
-                    [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]:not(.active)'), function (el) {
+                    [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
                         el.classList.toggle('inactive');
                     });
                 }, 3000);
@@ -387,7 +387,7 @@ var Tabs = (function () {
             if (!activeTab)
                 return;
 
-            [].forEach.call(this._tabs.querySelectorAll('[data-role="tab"]'), function (e) {
+            [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]'), function (e) {
                 e.classList.remove('active');
                 e.classList.remove('inactive');
             });
