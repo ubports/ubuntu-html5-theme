@@ -19,6 +19,7 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import CordovaUbuntu 2.8
+import Ubuntu.UnityWebApps 0.1
 
 
 /*!
@@ -38,16 +39,47 @@ Item {
 
       The path is absolute or relative to the current dir.
       */
-    property alias htmlIndexDirectory: view.wwwDir
+    property alias htmlIndexDirectory: cordovaView.wwwDir
 
     /*!
       \internal
      */
     CordovaView {
-        id: view
+        id: cordovaView
         objectName: "view"
 
         anchors.fill: parent
+    }
+
+    /*!
+      \internal
+     */
+    function getUnityWebappsProxies() {
+        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
+    }
+
+    /*!
+      \internal
+     */
+    Loader {
+    	id: webappBindingsLoader
+        visible: false
+        anchors.fill: parent
+        sourceComponent: cordovaView.mainWebview ? webappBindingsComponent : undefined
+    }
+
+    /*!
+      \internal
+     */
+    Component {
+        id: webappBindingsComponent
+
+        UnityWebApps {
+            id: webapps
+            bindee: root
+            injectExtraUbuntuApis: true
+            requiresInit: false
+        }
     }
 }
 

@@ -1,13 +1,13 @@
 /*
  * Copyright 2013 Canonical Ltd.
  *
- * This file is part of ubuntu-html5-theme.
+ * This file is part of ubuntu-html5-ui-toolkit.
  *
- * ubuntu-html5-theme is free software; you can redistribute it and/or modify
+ * ubuntu-html5-ui-toolkit is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 3.
  *
- * ubuntu-html5-theme is distributed in the hope that it will be useful,
+ * ubuntu-html5-ui-toolkit is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <QGuiApplication>
+#include <QtNetwork/QNetworkInterface>
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickView>
 #include <QDebug>
@@ -34,8 +35,16 @@ void setUpQmlImportPathIfNecessary()
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
     {
-        qDebug() << "Setting import path to: " << importPath;
-        qputenv("QML2_IMPORT_PATH", importPath.toLatin1());
+        QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
+        existingImportPath = existingImportPath.trimmed();
+
+        if ( ! existingImportPath.trimmed().isEmpty())
+           existingImportPath.append(":");
+        existingImportPath.append(importPath);
+
+        qDebug() << "Setting import path to: " << existingImportPath;
+
+        qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
     }
 }
 
@@ -52,6 +61,7 @@ int main(int argc, char *argv[])
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
     const QString ARG_HEADER = "--";
     const QString VALUE_HEADER = "=";
+    const QString INSPECTOR = "--inspector";
 
     QHash<QString, QString> properties;
     QString wwwfolder;
@@ -90,6 +100,24 @@ int main(int argc, char *argv[])
                      << value;
 
             properties.insert(property, value);
+        }
+        else
+        if (argument.contains(INSPECTOR))
+        {
+            QString host;
+            Q_FOREACH(QHostAddress address, QNetworkInterface::allAddresses()) {
+                if (!address.isLoopback() && (address.protocol() == QAbstractSocket::IPv4Protocol)) {
+                    host = address.toString();
+                    break;
+                }
+            }
+            QString server;
+            if (host.isEmpty()) {
+                server = QString::number(REMOTE_INSPECTOR_PORT);
+            } else {
+                server = QString("%1:%2").arg(host, QString::number(REMOTE_INSPECTOR_PORT));
+            }
+            qputenv("QTWEBKIT_INSPECTOR_SERVER", server.toUtf8());
         }
         else
         {

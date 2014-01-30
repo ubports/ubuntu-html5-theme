@@ -4,10 +4,10 @@ Priority: optional
 Maintainer: Michael Hall <mhall119@ubuntu.com>
 Build-Depends: cmake (>= 2.8.9),
                debhelper (>= 9),
-               python (>= 2.7),
-               python-setuptools,
                libqt5webkit5-dev,
                libqt5webkit5-qmlwebkitplugin,
+               python (>= 2.7),
+               python-setuptools,
                qt5-default,
                qt5-qmake,
                qtbase5-dev,
@@ -15,63 +15,86 @@ Build-Depends: cmake (>= 2.8.9),
                qtdeclarative5-dev,
                qtdeclarative5-qtquick2-plugin,
                qtdeclarative5-ubuntu-ui-toolkit-plugin,
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
+# if you don't have have commit access to this branch but would like to upload
+# directly to Ubuntu, don't worry: your changes will be merged back into the
+# upstream branch
 Homepage: https://launchpad.net/ubuntu-html5-theme
-# If you aren't a member of ~ubuntu-html5-theme-devs but need to upload packaging changes,
-# just go ahead.  ~ubuntu-html5-theme-devs will notice and sync up the code again.
-Vcs-Bzr: bzr+ssh://bazaar.launchpad.net/+branch/ubuntu-html5-theme/
+Vcs-Bzr: lp:ubuntu-html5-theme
 Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-theme/ambiance
 
-Package: ubuntu-html5-theme
+Package: ubuntu-html5-sdk
+Architecture: all
+Depends: cordova-ubuntu-2.8,
+         cordova-ubuntu-2.8-dev,
+         cordova-ubuntu-2.8-examples,
+         qtdeclarative5-cordova-2.8-plugin,
+         qtdeclarative5-ubuntu-webapps-api,
+         ubuntu-html5-container,
+         ubuntu-html5-ui-toolkit,
+Description: Ubuntu HTML5 SDK Metapackage
+ This package depends on all components of the HTML5 app stack, allowing
+ for easy installation of all necessary components.
+
+Package: ubuntu-html5-ui-toolkit
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends},
-Description: Toolkit styles for Ubuntu HTML5 Apps
+Replaces: ubuntu-html5-theme,
+Conflicts: ubuntu-html5-theme,
+Provides: ubuntu-html5-theme,
+Description: Toolkit for Ubuntu HTML5 Apps
  This package provides common CSS and Javascript for developing native-
  looking HTML5 applications for Ubuntu
 
-Package: ubuntu-html5-theme-examples
+Package: ubuntu-html5-ui-toolkit-examples
 Architecture: all
-Depends: ubuntu-html5-theme (= ${binary:Version}),
-	 qmlscene,
-         libjs-jquery,
+Depends: libjs-jquery,
          libqt5webkit5-qmlwebkitplugin,
+         qmlscene,
          qtdeclarative5-qtquick2-plugin,
+         ubuntu-html5-ui-toolkit (= ${binary:Version}),
          ${misc:Depends},
-Description: Examples for Toolkit styles for Ubuntu HTML5 Apps
+Replaces: ubuntu-html5-theme-examples,
+Conflicts: ubuntu-html5-theme-examples,
+Provides: ubuntu-html5-theme-examples,
+Description: Examples for Toolkit for Ubuntu HTML5 Apps
  This package provides examples of native-looing HTML5 applications for Ubuntu
- based on the ubuntu-html5-theme CSS and Javascript Ubuntu framework.
+ based on the ubuntu-html5-ui-toolkit CSS and Javascript Ubuntu framework.
 
-Package: ubuntu-html5-theme-autopilot
+Package: ubuntu-html5-ui-toolkit-autopilot
 Architecture: all
-Depends: ${misc:Depends},
-         ${python:Depends},
-         dpkg-dev,
+Depends: dpkg-dev,
          libautopilot-qt,
          libjs-jquery,
          libqt5test5,
          libqt5webkit5-qmlwebkitplugin,
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
-         ubuntu-html5-theme (= ${binary:Version}),
-         ubuntu-html5-theme-examples (= ${binary:Version}),
+         ubuntu-html5-ui-toolkit (= ${binary:Version}),
+         ubuntu-html5-ui-toolkit-examples (= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Replaces: ubuntu-html5-theme-autopilot,
+Conflicts: ubuntu-html5-theme-autopilot,
+Provides: ubuntu-html5-theme-autopilot,
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  Common CSS and Javascript for developing native-looking HTML5 applications
  for Ubuntu. This package contains autopilot tests for it.
 
 Package: ubuntu-html5-container
 Architecture: any
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${python:Depends},
-         dpkg-dev,
+Depends: dpkg-dev,
          libqt5webkit5-qmlwebkitplugin,
+         qmlscene,
          qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,
-         qmlscene,
-         ubuntu-html5-theme (= ${source:Version}),
+         unity-webapps-qml (>= 0.1+14.04.20131106-0ubuntu2),
+         ubuntu-html5-ui-toolkit (= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+         ${shlibs:Depends},
 Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
  This package contains the Ubuntu HTML5 QML component used to embed HTML5
  apps at runtime.
-

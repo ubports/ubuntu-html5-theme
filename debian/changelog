@@ -1,3 +1,10 @@
+ubuntu-html5-theme (0.1+14.04.20140127-0ubuntu1) trusty; urgency=low
+
+  [ Robert Bruce Park ]
+  * Rename binary package from ubuntu-html5-theme to ubuntu-html5-ui-toolkit.
+
+ -- Robert Bruce Park <robert.park@canonical.com>  Mon, 27 Jan 2014 10:22:22 -0800
+
 ubuntu-html5-theme (0.1+14.04.20140107-0ubuntu1) trusty; urgency=low
 
   [ Adnane Belmadiaf ]

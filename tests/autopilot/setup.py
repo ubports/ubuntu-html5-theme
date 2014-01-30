@@ -12,9 +12,9 @@ from distutils.core import setup
 from setuptools import find_packages
 
 setup(
-    name='ubuntu-html5-theme',
+    name='ubuntu-html5-ui-toolkit',
     version='0.1',
-    description='ubuntu html5 theme autopilot tests.',
+    description='ubuntu html5 autopilot tests.',
     url='https://launchpad.net/ubuntu-html5-theme',
     license='GPLv3',
     packages=find_packages(),
