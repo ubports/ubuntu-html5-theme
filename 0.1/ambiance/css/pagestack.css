@@ -5,18 +5,18 @@
  * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation; either version 3 of the 
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of the
  * License, or
  * (at your option) any later version.
- 
+
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this program. If not, see 
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 
@@ -30,7 +30,7 @@
     transition: all 0 linear;
 }
 
-[data-role="pagestack"] [data-role="page"] {
+[data-role="page"] {
     vertical-align: top;
     width: 100%;
     height: 100%;
@@ -40,6 +40,7 @@
     box-sizing: border-box;
 }
 
-[data-role="pagestack"] [data-role="page"]:first-child {
+[data-role="pagestack"]>[data-role="page"]:first-child,
+[data-role="mainview"]>[data-role="page"] {
     display: block;
 }
