@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
     }
 
     // Ensure that application-specific data is written where it ought to.
-    if (qgetenv("APP_ID") != NULL)
+    if (qgetenv("APP_ID").data() != NULL)
     {
         QString appPkgName = qgetenv("APP_ID").split('_').first();
         QCoreApplication::setApplicationName(appPkgName);
