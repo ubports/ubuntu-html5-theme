@@ -26,11 +26,11 @@ Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-th
 Package: ubuntu-html5-sdk
 Architecture: all
 Depends: cordova-ubuntu-2.8,
-         cordova-ubuntu-2.8-examples,
          qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-ubuntu-webapps-api,
          ubuntu-html5-container,
          ubuntu-html5-ui-toolkit,
+Recommends: cordova-ubuntu-2.8-examples,
 Description: Ubuntu HTML5 SDK Metapackage
  This package depends on all components of the HTML5 app stack, allowing
  for easy installation of all necessary components.
