@@ -15,4 +15,6 @@ override_dh_install:
 	done; \
 	cd $(CURDIR)
 	dh_install -X'*.pyc' --fail-missing
-
+#	Transitional symlink because package was renamed.
+	ln -vs /usr/share/ubuntu-html5-ui-toolkit \
+	       $(CURDIR)/debian/ubuntu-html5-ui-toolkit/usr/share/ubuntu-html5-theme
