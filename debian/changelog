@@ -1,3 +1,44 @@
+ubuntu-html5-theme (0.1+14.04.20140201.1-0ubuntu1) trusty; urgency=low
+
+  [ daker ]
+  * Fixed the listitems chevron.
+  * Fixed the toolbar to match the sdk. (LP: #1253444)
+  * Fixed Toolbar docs example.
+  * Update the html document structure.
+
+  [ Dmitrijs Ledkovs ]
+  * changelog-sync for distro upload
+    https://launchpad.net/ubuntu/+source/ubuntu-html5-
+    theme/0.1+13.10.20130916-0ubuntu2.
+
+  [ David Barth ]
+  * add --inspector argument to turn on a web inspector server and debug
+    html5 apps.
+
+  [ Robert Bruce Park ]
+  * Create ubuntu-html5-sdk metapackage.
+  * Drop -dev dependencies of the -sdk package.
+  * Add symlink to aid with package rename transition (LP: #1274881).
+    (LP: #1274881)
+  * Fix build failure.
+
+  [ Alexandre Abreu ]
+  * Fix all architecture to any in the debian/control. (LP: #1265625)
+  * Remove margin that breaks the ui.
+  * Remove invasive mainview in the html5 container in favor of a plain
+    item. (LP: #1271337)
+  * Fix autopilot tests. They were failing after some of the projects
+    bits have been restructured & shuffled around.
+  * Expose Ubuntu API bindings to HTML5 applications.
+  * Update the html document structure.
+  * Set the applicationName according to the potential APP_ID to ensure
+    a smooth confinment of application assets. (LP: #1197056)
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 117
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Sat, 01 Feb 2014 00:55:38 +0000
+
 ubuntu-html5-theme (0.1+14.04.20140127-0ubuntu3) trusty; urgency=low
 
   * Cordova examples are only 'Recommends', not a hard dependency
