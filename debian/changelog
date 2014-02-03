@@ -1,3 +1,14 @@
+ubuntu-html5-theme (0.1+14.04.20140203-0ubuntu1) trusty; urgency=low
+
+  [ Alexandre Abreu ]
+  * fix sdk package for now bc unity-webapps-qml hasn't been uploaded
+    yet.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 119
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 03 Feb 2014 14:15:30 +0000
+
 ubuntu-html5-theme (0.1+14.04.20140201.1-0ubuntu1) trusty; urgency=low
 
   [ daker ]
