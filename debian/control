@@ -103,3 +103,15 @@ Architecture: all
 Depends: ubuntu-html5-ui-toolkit,
 Description: Transitional package for theme/ui-toolkit rename.
  This can be safely removed.
+
+Package: ubuntu-html5-theme-examples
+Architecture: all
+Depends: ubuntu-html5-ui-toolkit-examples,
+Description: Transitional package for theme/ui-toolkit rename.
+ This can be safely removed.
+
+Package: ubuntu-html5-theme-autopilot
+Architecture: all
+Depends: ubuntu-html5-ui-toolkit-autopilot,
+Description: Transitional package for theme/ui-toolkit rename.
+ This can be safely removed.
