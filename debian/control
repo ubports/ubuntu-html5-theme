@@ -27,9 +27,9 @@ Package: ubuntu-html5-sdk
 Architecture: all
 Depends: cordova-ubuntu-2.8,
          qtdeclarative5-cordova-2.8-plugin,
-         unity-webapps-qml,
          ubuntu-html5-container,
          ubuntu-html5-ui-toolkit,
+         unity-webapps-qml,
 Recommends: cordova-ubuntu-2.8-examples,
 Description: Ubuntu HTML5 SDK Metapackage
  This package depends on all components of the HTML5 app stack, allowing
@@ -39,8 +39,8 @@ Package: ubuntu-html5-ui-toolkit
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends},
-Replaces: ubuntu-html5-theme,
-Conflicts: ubuntu-html5-theme,
+Replaces: ubuntu-html5-theme (<< 0.1.1),
+Conflicts: ubuntu-html5-theme (<< 0.1.1),
 Provides: ubuntu-html5-theme,
 Description: Toolkit for Ubuntu HTML5 Apps
  This package provides common CSS and Javascript for developing native-
@@ -54,8 +54,8 @@ Depends: libjs-jquery,
          qtdeclarative5-qtquick2-plugin,
          ubuntu-html5-ui-toolkit (= ${binary:Version}),
          ${misc:Depends},
-Replaces: ubuntu-html5-theme-examples,
-Conflicts: ubuntu-html5-theme-examples,
+Replaces: ubuntu-html5-theme-examples (<< 0.1.1),
+Conflicts: ubuntu-html5-theme-examples (<< 0.1.1),
 Provides: ubuntu-html5-theme-examples,
 Description: Examples for Toolkit for Ubuntu HTML5 Apps
  This package provides examples of native-looing HTML5 applications for Ubuntu
@@ -74,8 +74,8 @@ Depends: dpkg-dev,
          ubuntu-html5-ui-toolkit-examples (= ${binary:Version}),
          ${misc:Depends},
          ${python:Depends},
-Replaces: ubuntu-html5-theme-autopilot,
-Conflicts: ubuntu-html5-theme-autopilot,
+Replaces: ubuntu-html5-theme-autopilot (<< 0.1.1),
+Conflicts: ubuntu-html5-theme-autopilot (<< 0.1.1),
 Provides: ubuntu-html5-theme-autopilot,
 Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
  Common CSS and Javascript for developing native-looking HTML5 applications
@@ -89,11 +89,35 @@ Depends: dpkg-dev,
          qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,
-         unity-webapps-qml (>= 0.1+14.04.20131106-0ubuntu2),
          ubuntu-html5-ui-toolkit (= ${source:Version}),
+         unity-webapps-qml (>= 0.1+14.04.20131106-0ubuntu2),
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends},
 Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
  This package contains the Ubuntu HTML5 QML component used to embed HTML5
  apps at runtime.
+
+Package: ubuntu-html5-theme
+Section: oldlibs
+Architecture: all
+Depends: ubuntu-html5-ui-toolkit,
+         ${misc:Depends},
+Description: Transitional package for theme/ui-toolkit rename.
+ This can be safely removed.
+
+Package: ubuntu-html5-theme-examples
+Section: oldlibs
+Architecture: all
+Depends: ubuntu-html5-ui-toolkit-examples,
+         ${misc:Depends},
+Description: Transitional package for theme/ui-toolkit rename.
+ This can be safely removed.
+
+Package: ubuntu-html5-theme-autopilot
+Section: oldlibs
+Architecture: all
+Depends: ubuntu-html5-ui-toolkit-autopilot,
+         ${misc:Depends},
+Description: Transitional package for theme/ui-toolkit rename.
+ This can be safely removed.
