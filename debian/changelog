@@ -1,9 +1,12 @@
-ubuntu-html5-theme (0.1.1-0ubuntu1) UNRELEASED; urgency=low
+ubuntu-html5-theme (0.1.1+14.04.20140204-0ubuntu1) trusty; urgency=low
 
   [ Robert Bruce Park ]
   * Add transitional packages to assist with package rename effort.
 
- -- Robert Bruce Park <robert.park@canonical.com>  Tue, 04 Feb 2014 11:10:20 +0000
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 122
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 04 Feb 2014 14:42:31 +0000
 
 ubuntu-html5-theme (0.1+14.04.20140203.is.0.1+14.04.20140107-0ubuntu1) trusty; urgency=medium
 
