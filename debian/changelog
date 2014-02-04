@@ -5,6 +5,13 @@ ubuntu-html5-theme (0.1.1-0ubuntu1) UNRELEASED; urgency=low
 
  -- Robert Bruce Park <robert.park@canonical.com>  Tue, 04 Feb 2014 11:10:20 +0000
 
+ubuntu-html5-theme (0.1+14.04.20140203.is.0.1+14.04.20140107-0ubuntu1) trusty; urgency=medium
+
+  * Reverting to 0.1+14.04.20140107 which was the last version published into
+    the ubuntu release pocket. That will make the Touch image buildable again.
+
+ -- Didier Roche <didrocks@ubuntu.com>  Mon, 03 Feb 2014 19:33:06 +0000
+
 ubuntu-html5-theme (0.1+14.04.20140203-0ubuntu1) trusty; urgency=low
 
   [ Alexandre Abreu ]
