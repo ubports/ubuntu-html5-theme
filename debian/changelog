@@ -1,3 +1,10 @@
+ubuntu-html5-theme (0.1.2+14.04.20140205-0ubuntu1) UNRELEASED; urgency=low
+
+  [ Robert Bruce Park ]
+  * Version bump to get past incorrectly-versioned manual upload in a PPA.
+
+ -- Robert Bruce Park <robert.park@canonical.com>  Tue, 04 Feb 2014 11:10:20 +0000
+
 ubuntu-html5-theme (0.1.1+14.04.20140204-0ubuntu1) trusty; urgency=low
 
   [ Robert Bruce Park ]
