@@ -25,21 +25,33 @@
     <meta charset="utf-8">
     <meta name="copyright" content="Adnane Belmadiaf <daker@ubuntu.com>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ubuntu UI HTML5: UI Gallery</title>
+
+    <title>Ubuntu HTML5 SDK: UI Gallery</title>
     <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <!-- Ubuntu UI javascript imports - Ambiance theme -->
+    <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/page.js"></script>
+    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+    <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
+
+    <script>
+        var UI = new UbuntuUI();
+        window.onload = function() {
+            UI.init();
+        };
+    </script>
+
 </head>
+
 <body>
-    <div data-role="page">
+    <div data-role="mainview">
+
         <header data-role="header">
-            <nav data-role="navbar" class="tabs">
-                <div class="tabs-inner">
-                    <ul data-role="tabs">
-                        <li data-role="tab" class="active">
-                            <a href="#item1">Ubuntu UI HTML5 Theme</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <ul data-role="tabs">
+                <li data-role="tabitem" data-page="main">Ubuntu HTML5 UI Toolkit</li>
+            </ul>
         </header>
 
         <div data-role="content">
@@ -48,4 +60,5 @@
         </div>
     </div>
 </body>
+
 </html>
