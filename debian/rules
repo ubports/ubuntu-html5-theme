@@ -7,14 +7,12 @@
 %:
 	dh $@ --fail-missing --with python2
 
+override_dh_auto_install:
+        $(MAKE) DESTDIR=$$(pwd)/debian/ubuntu-html5-app-launcher prefix=/usr install
+
 override_dh_install:
-	# install autopilot tests
-	cd tests/autopilot; \
-	set -ex; for python in $(shell pyversions -r); do \
-		$$python setup.py install --root=$(CURDIR)/debian/tmp --install-layout=deb; \
-	done; \
 	cd $(CURDIR)
-	dh_install -X'*.pyc' --fail-missing
+	dh_install --fail-missing
 #	Transitional symlink because package was renamed.
 	mkdir -p $(CURDIR)/debian/ubuntu-html5-ui-toolkit/usr/share/
 	ln -vs /usr/share/ubuntu-html5-ui-toolkit \

@@ -30,22 +30,36 @@
 #include <QQmlComponent>
 
 
+void addPathToQmlImport(const QString & importPath)
+{
+    QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
+
+    existingImportPath = existingImportPath.trimmed();
+    if ( ! existingImportPath.trimmed().isEmpty())
+       existingImportPath.append(":");
+
+    existingImportPath.append(importPath);
+
+    qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
+}
+
 void setUpQmlImportPathIfNecessary()
 {
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
     {
-        QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
-        existingImportPath = existingImportPath.trimmed();
-
-        if ( ! existingImportPath.trimmed().isEmpty())
-           existingImportPath.append(":");
-        existingImportPath.append(importPath);
-
-        qDebug() << "Setting import path to: " << existingImportPath;
-
-        qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
+        addPathToQmlImport(importPath);
     }
+
+    // Note: By default we add the local path to the import path
+    //  mostly to account for potential Cordova 3.0 qml plugin
+    //  not installed globally but embedded into apps. So the
+    //  one embedded should take precedence over the one installed
+    //  system wide (2.8).
+    addPathToQmlImport(".");
+
+    qDebug() << "Setting import path to: "
+             << qgetenv("QML2_IMPORT_PATH").data();
 }
 
 int main(int argc, char *argv[])
@@ -57,6 +71,9 @@ int main(int argc, char *argv[])
         qCritical() << "Invalid inputs args";
         return EXIT_FAILURE;
     }
+
+    setUpQmlImportPathIfNecessary();
+
     const QString WWW_LOCATION_ARG_HEADER = "--www=";
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
     const QString ARG_HEADER = "--";
@@ -64,42 +81,22 @@ int main(int argc, char *argv[])
     const QString INSPECTOR = "--inspector";
 
     QHash<QString, QString> properties;
-    QString wwwfolder;
+    QString wwwfolderArg;
     bool maximized = false;
 
     QStringList arguments = app.arguments();
     arguments.pop_front();
+
     Q_FOREACH(QString argument, arguments)
     {
         if (argument.contains(WWW_LOCATION_ARG_HEADER))
         {
-            wwwfolder = argument.right(argument.count() - WWW_LOCATION_ARG_HEADER.count());
+            wwwfolderArg = argument.right(argument.count() - WWW_LOCATION_ARG_HEADER.count());
         }
         else
         if (argument.contains(MAXIMIZED_ARG_HEADER))
         {
             maximized = true;
-        }
-        else
-        if (argument.startsWith(ARG_HEADER)
-            && argument.right(argument.count() - ARG_HEADER.count()).contains("="))
-        {
-            QString property = argument.right(argument.count() - ARG_HEADER.count());
-            property = property.left(property.indexOf(VALUE_HEADER));
-            if (property.isEmpty())
-                continue;
-
-            QString value = argument.right(argument.count() - argument.indexOf(VALUE_HEADER) - 1);
-            if (value.isEmpty())
-                continue;
-
-            qDebug() << "Adding property: "
-                     << property
-                     << ", "
-                     << "value: "
-                     << value;
-
-            properties.insert(property, value);
         }
         else
         if (argument.contains(INSPECTOR))
@@ -125,20 +122,21 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (wwwfolder.isEmpty())
+    if (wwwfolderArg.isEmpty())
     {
         qCritical() << "No (or empty) WWW folder path specified";
         return EXIT_FAILURE;
     }
 
-    QFileInfo f(wwwfolder);
-    if (f.isRelative())
+    QFileInfo wwwFolder(wwwfolderArg);
+    if (wwwFolder.isRelative())
     {
-        f.makeAbsolute();
+        wwwFolder.makeAbsolute();
     }
-    if (!f.exists() || !f.isDir())
+    if (!wwwFolder.exists() || !wwwFolder.isDir())
     {
-        qCritical() << "WWW folder not found or not a proper directory: " << wwwfolder;
+        qCritical() << "WWW folder not found or not a proper directory: "
+                    << wwwFolder.absoluteFilePath();
         return EXIT_FAILURE;
     }
 
@@ -149,29 +147,25 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
 
-    setUpQmlImportPathIfNecessary();
-
     QQuickView view;
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
-
     if (view.status() != QQuickView::Ready)
     {
         qWarning() << "Component not ready";
-        return -1;
+        return EXIT_FAILURE;
     }
-
     
     QQuickItem *object = view.rootObject();
     if ( ! object)
     {
         qCritical() << "Cannot create object from qml base file";
-        return -1;
+        return EXIT_FAILURE;
     }
 
     QQuickWindow* window = qobject_cast<QQuickWindow*>(&view);
 
-    object->setProperty("htmlIndexDirectory", wwwfolder);
+    object->setProperty("htmlIndexDirectory", wwwFolder.absoluteFilePath());
 
     QHash<QString, QString>::iterator it;
     for(it = properties.begin();

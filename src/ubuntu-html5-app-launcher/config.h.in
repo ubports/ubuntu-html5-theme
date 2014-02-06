@@ -48,7 +48,7 @@ QString getContainerImportPath()
 {
     static QString mainQml =
       ! isRunningInstalled()
-      ? QString("@CMAKE_SOURCE_DIR@/src/qml")
+      ? QString("@CMAKE_SOURCE_DIR@/src/plugin")
       : QString();
     return mainQml;
 }

@@ -18,15 +18,14 @@
 
 import QtQuick 2.0
 import Ubuntu.Components 0.1
-import CordovaUbuntu 2.8
-import Ubuntu.UnityWebApps 0.1
+import "."
 
 
 /*!
     \qmltype WebAppContainer
     \inqmlmodule Ubuntu.WebApps 0.1
     \ingroup ubuntu
-    \brief WebAppContainer is the root Item that should be used for all HTML5 applications.
+    \brief WebAppContainer is the root element that should be used for all HTML5 applications.
 */
 Item {
     id: root
@@ -39,47 +38,22 @@ Item {
 
       The path is absolute or relative to the current dir.
       */
-    property alias htmlIndexDirectory: cordovaView.wwwDir
+    property alias htmlIndexDirectory: cordovaWebviewProvider.htmlIndexDirectory
 
     /*!
       \internal
      */
-    CordovaView {
-        id: cordovaView
-        objectName: "view"
-
+    CordovaLoader {
+        id: cordovaWebviewProvider
         anchors.fill: parent
     }
 
     /*!
       \internal
      */
-    function getUnityWebappsProxies() {
-        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
-    }
-
-    /*!
-      \internal
-     */
-    Loader {
-    	id: webappBindingsLoader
-        visible: false
-        anchors.fill: parent
-        sourceComponent: cordovaView.mainWebview ? webappBindingsComponent : undefined
-    }
-
-    /*!
-      \internal
-     */
-    Component {
-        id: webappBindingsComponent
-
-        UnityWebApps {
-            id: webapps
-            bindee: root
-            injectExtraUbuntuApis: true
-            requiresInit: false
-        }
+    UbuntuJavascriptBindings {
+        id: bindings
+        webviewProvider: cordovaWebviewProvider.cordovaInstance
     }
 }
 
