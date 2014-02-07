@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
     const QString VALUE_HEADER = "=";
     const QString INSPECTOR = "--inspector";
 
-    QHash<QString, QString> properties;
     QString wwwfolder;
     bool maximized = false;
 
@@ -79,27 +78,6 @@ int main(int argc, char *argv[])
         if (argument.contains(MAXIMIZED_ARG_HEADER))
         {
             maximized = true;
-        }
-        else
-        if (argument.startsWith(ARG_HEADER)
-            && argument.right(argument.count() - ARG_HEADER.count()).contains("="))
-        {
-            QString property = argument.right(argument.count() - ARG_HEADER.count());
-            property = property.left(property.indexOf(VALUE_HEADER));
-            if (property.isEmpty())
-                continue;
-
-            QString value = argument.right(argument.count() - argument.indexOf(VALUE_HEADER) - 1);
-            if (value.isEmpty())
-                continue;
-
-            qDebug() << "Adding property: "
-                     << property
-                     << ", "
-                     << "value: "
-                     << value;
-
-            properties.insert(property, value);
         }
         else
         if (argument.contains(INSPECTOR))
@@ -138,7 +116,8 @@ int main(int argc, char *argv[])
     }
     if (!f.exists() || !f.isDir())
     {
-        qCritical() << "WWW folder not found or not a proper directory: " << wwwfolder;
+        qCritical() << "WWW folder not found or not a proper directory: "
+                    << wwwfolder;
         return EXIT_FAILURE;
     }
 
@@ -154,42 +133,19 @@ int main(int argc, char *argv[])
     QQuickView view;
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
-
     if (view.status() != QQuickView::Ready)
     {
-        qWarning() << "Component not ready";
-        return -1;
+        qCritical() << "Main application component cannot be loaded.";
+        return EXIT_FAILURE;
     }
+    view.rootObject()->setProperty("htmlIndexDirectory", wwwfolder);
 
-    
-    QQuickItem *object = view.rootObject();
-    if ( ! object)
-    {
-        qCritical() << "Cannot create object from qml base file";
-        return -1;
-    }
+    view.setTitle(QCoreApplication::applicationName());
 
-    QQuickWindow* window = qobject_cast<QQuickWindow*>(&view);
-
-    object->setProperty("htmlIndexDirectory", wwwfolder);
-
-    QHash<QString, QString>::iterator it;
-    for(it = properties.begin();
-        properties.end() != it;
-        ++it)
-    {
-        const char * const pname = it.key().toStdString().c_str();
-        if (object->property(pname).isValid())
-            object->setProperty(pname, it.value());
-    }
-
-    if (window)
-    {
-        if (maximized)
-            window->showMaximized();
-        else
-            window->show();
-    }
+    if (maximized)
+        view.showMaximized();
+    else
+        view.show();
 
     return app.exec();
 }

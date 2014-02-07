@@ -28,9 +28,11 @@ import Ubuntu.UnityWebApps 0.1
     \ingroup ubuntu
     \brief WebAppContainer is the root Item that should be used for all HTML5 applications.
 */
-Item {
+MainView {
     id: root
     objectName: "root"
+
+    automaticOrientation: true
 
     /*!
       \preliminary
@@ -39,46 +41,50 @@ Item {
 
       The path is absolute or relative to the current dir.
       */
-    property alias htmlIndexDirectory: cordovaView.wwwDir
+    property string htmlIndexDirectory
 
-    /*!
-      \internal
-     */
-    CordovaView {
-        id: cordovaView
-        objectName: "view"
+    Page {
+        id: mainPage
 
-        anchors.fill: parent
-    }
+        /*!
+          \internal
+         */
+        CordovaView {
+            id: cordovaView
+            objectName: "view"
+            wwwDir: root.htmlIndexDirectory
+            anchors.fill: parent
+        }
 
-    /*!
-      \internal
-     */
-    function getUnityWebappsProxies() {
-        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
-    }
+        /*!
+          \internal
+         */
+        function getUnityWebappsProxies() {
+            return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(cordovaView.mainWebview);
+        }
 
-    /*!
-      \internal
-     */
-    Loader {
-    	id: webappBindingsLoader
-        visible: false
-        anchors.fill: parent
-        sourceComponent: cordovaView.mainWebview ? webappBindingsComponent : undefined
-    }
+        /*!
+          \internal
+         */
+        Loader {
+            id: webappBindingsLoader
+            visible: false
+            anchors.fill: parent
+            sourceComponent: cordovaView.mainWebview ? webappBindingsComponent : undefined
+        }
 
-    /*!
-      \internal
-     */
-    Component {
-        id: webappBindingsComponent
+        /*!
+          \internal
+         */
+        Component {
+            id: webappBindingsComponent
 
-        UnityWebApps {
-            id: webapps
-            bindee: root
-            injectExtraUbuntuApis: true
-            requiresInit: false
+            UnityWebApps {
+                id: webapps
+                bindee: mainPage
+                injectExtraUbuntuApis: true
+                requiresInit: false
+            }
         }
     }
 }
