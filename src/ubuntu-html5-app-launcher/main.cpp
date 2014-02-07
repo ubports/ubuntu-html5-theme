@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     if (!app.arguments().count())
     {
         qCritical() << "Invalid inputs args";
-	usage();
+        usage();
         return EXIT_FAILURE;
     }
 
@@ -96,7 +96,6 @@ int main(int argc, char *argv[])
     const QString VALUE_HEADER = "=";
     const QString INSPECTOR = "--inspector";
 
-    QHash<QString, QString> properties;
     QString wwwfolderArg;
     bool maximized = false;
 
@@ -141,7 +140,7 @@ int main(int argc, char *argv[])
     if (wwwfolderArg.isEmpty())
     {
         qCritical() << "No (or empty) WWW folder path specified";
-	usage();
+        usage();
         return EXIT_FAILURE;
     }
 
@@ -182,17 +181,7 @@ int main(int argc, char *argv[])
 
     QQuickWindow* window = qobject_cast<QQuickWindow*>(&view);
 
-    object->setProperty("htmlIndexDirectory", wwwFolder.absoluteFilePath());
-
-    QHash<QString, QString>::iterator it;
-    for(it = properties.begin();
-        properties.end() != it;
-        ++it)
-    {
-        const char * const pname = it.key().toStdString().c_str();
-        if (object->property(pname).isValid())
-            object->setProperty(pname, it.value());
-    }
+    object->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
 
     if (window)
     {

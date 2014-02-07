@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Canonical Ltd.
+ * Copyright 2014 Canonical Ltd.
  *
  * This file is part of ubuntu-html5-container.
  *
@@ -18,6 +18,7 @@
 
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import Ubuntu.Components.Extras.Browser 0.1
 
 
 /*!
@@ -45,6 +46,41 @@ Item {
     CordovaLoader {
         id: cordovaWebviewProvider
         anchors.fill: parent
+        onCreationError: {
+            _onCordovaCreationError();
+        }
+        onCreated: {
+            bindings.webviewProvider = cordovaInstance;
+        }
+    }
+
+    function _onCordovaCreationError() {
+        _fallbackToWebview();
+    }
+
+    function _fallbackToWebview() {
+        console.debug('Falling back on the plain Webview backend.')
+
+        webviewComponentLoader.sourceComponent = Qt.binding(function() {
+            return htmlIndexDirectory.length !== 0 && webviewComponent ? webviewComponent : null;
+        });
+    }
+
+    function _getAppStartupIndexFileUri() {
+        return 'file://' + root.htmlIndexDirectory + '/index.html';
+    }
+
+    Loader {
+        id: webviewComponentLoader
+        anchors.fill: parent
+        onLoaded: bindings.webviewProvider = item.currentWebview;
+    }
+
+    Component {
+        id: webviewComponent
+        UbuntuWebView {
+            url: _getAppStartupIndexFileUri()
+        }
     }
 
     /*!
@@ -52,7 +88,6 @@ Item {
      */
     UbuntuJavascriptBindings {
         id: bindings
-        webviewProvider: cordovaWebviewProvider.cordovaInstance
     }
 }
 

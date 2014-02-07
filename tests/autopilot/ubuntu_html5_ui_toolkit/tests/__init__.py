@@ -99,7 +99,10 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
 
     def setUp(self):
         self.setup_base_path()
-        self.pointer = Pointer(Mouse.create())
+        if model() == "Desktop":
+            self.pointer = Pointer(Mouse.create())
+        else:
+            self.pointer = Pointer(Touch.create())
         self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path())
         self.webviewContainer = self.get_webviewContainer()
         self.watcher = self.webviewContainer.watch_signal('resultUpdated(QString)')
