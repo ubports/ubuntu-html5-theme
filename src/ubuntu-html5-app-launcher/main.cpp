@@ -54,12 +54,27 @@ void setUpQmlImportPathIfNecessary()
     // Note: By default we add the local path to the import path
     //  mostly to account for potential Cordova 3.0 qml plugin
     //  not installed globally but embedded into apps. So the
-    //  one embedded should take precedence over the one installed
+    //  one embedded should take precedence over the ones installed
     //  system wide (2.8).
     addPathToQmlImport(".");
 
     qDebug() << "Setting import path to: "
              << qgetenv("QML2_IMPORT_PATH").data();
+}
+
+void usage()
+{
+    QTextStream out(stdout);
+    QString command = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
+    out << "Usage: "
+	<< command
+	<< " [-h|--help] [--www=<index.html folder>] [--inspector]" << endl;
+    out << "Options:" << endl;
+    out << "  -h, --help                     display this help message and exit" << endl;
+    out << "  --www=PATH                     relative or absolute path to the 'index.html' root file" << endl;
+    out << "  --maximized                    maximize the app window at startup time" << endl;
+    out << "  --inspector                    run a remote inspector on port "
+	<< REMOTE_INSPECTOR_PORT << endl;
 }
 
 int main(int argc, char *argv[])
@@ -69,6 +84,7 @@ int main(int argc, char *argv[])
     if (!app.arguments().count())
     {
         qCritical() << "Invalid inputs args";
+	usage();
         return EXIT_FAILURE;
     }
 
@@ -125,6 +141,7 @@ int main(int argc, char *argv[])
     if (wwwfolderArg.isEmpty())
     {
         qCritical() << "No (or empty) WWW folder path specified";
+	usage();
         return EXIT_FAILURE;
     }
 

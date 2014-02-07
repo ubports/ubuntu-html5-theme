@@ -5,14 +5,10 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@ --fail-missing --with python2
-
-override_dh_auto_install:
-        $(MAKE) DESTDIR=$$(pwd)/debian/ubuntu-html5-app-launcher prefix=/usr install
+	dh $@
 
 override_dh_install:
-	cd $(CURDIR)
-	dh_install --fail-missing
+	dh_install
 #	Transitional symlink because package was renamed.
 	mkdir -p $(CURDIR)/debian/ubuntu-html5-ui-toolkit/usr/share/
 	ln -vs /usr/share/ubuntu-html5-ui-toolkit \

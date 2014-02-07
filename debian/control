@@ -100,8 +100,7 @@ Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
 
 Package: ubuntu-html5-container-autopilot
 Architecture: all
-Depends: dpkg-dev,
-         libautopilot-qt (>= 1.4),
+Depends: libautopilot-qt (>= 1.4),
          libqt5test5,
          libqt5webkit5-qmlwebkitplugin,
          qtdeclarative5-qtquick2-plugin,
