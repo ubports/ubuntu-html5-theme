@@ -62,6 +62,22 @@ void setUpQmlImportPathIfNecessary()
              << qgetenv("QML2_IMPORT_PATH").data();
 }
 
+QString pluginPathForCurrentArchitecture()
+{
+#if defined(__i386__)
+    return QLatin1String("/lib/i386-linux-gnu");
+#endif
+#if defined(__x86_64__)
+    return QLatin1String("/lib/x86_64-linux-gnu");
+#endif
+#if defined(__arm__)
+    return QLatin1String("/lib/arm-linux-gnueabihf");
+#endif
+
+    return QLatin1String("bad");
+}
+
+
 void usage()
 {
     QTextStream out(stdout);
@@ -164,7 +180,11 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
 
+    QString plugin_path = wwwFolder.absoluteFilePath() +
+        pluginPathForCurrentArchitecture();
+
     QQuickView view;
+    view.engine()->addPluginPath(plugin_path);    
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
