@@ -55,7 +55,7 @@ MainView {
                 mainPage._onCordovaCreationError();
             }
             onCreated: {
-                bindings.webviewProvider = cordovaInstance;
+                bindings.bindingMainWebview = cordovaInstance.mainWebview;
             }
         }
 
@@ -91,7 +91,9 @@ MainView {
         Loader {
             id: webviewFallbackComponentLoader
             anchors.fill: parent
-            onLoaded: bindings.webviewProvider = item.currentWebview;
+            onLoaded: {
+                bindings.bindingMainWebview = item;
+            }
         }
 
         /*!

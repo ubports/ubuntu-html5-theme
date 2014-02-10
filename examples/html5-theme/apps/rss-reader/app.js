@@ -22,6 +22,8 @@
 
 var UI = new UbuntuUI();
 
+document.addEventListener('deviceready', function() { console.log('device ready') }, true);
+
 $(document).ready(function () {
 
     UI.init();
