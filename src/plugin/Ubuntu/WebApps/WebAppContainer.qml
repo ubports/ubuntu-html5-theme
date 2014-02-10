@@ -27,9 +27,11 @@ import Ubuntu.Components.Extras.Browser 0.1
     \ingroup ubuntu
     \brief WebAppContainer is the root element that should be used for all HTML5 applications.
 */
-Item {
+MainView {
     id: root
     objectName: "root"
+
+    automaticOrientation: true
 
     /*!
       \preliminary
@@ -40,69 +42,91 @@ Item {
       */
     property alias htmlIndexDirectory: cordovaWebviewProvider.htmlIndexDirectory
 
-    /*!
-      \internal
-     */
-    CordovaLoader {
-        id: cordovaWebviewProvider
-        anchors.fill: parent
-        onCreationError: {
-            _onCordovaCreationError();
+    Page {
+        id: mainPage
+
+        /*!
+          \internal
+         */
+        CordovaLoader {
+            id: cordovaWebviewProvider
+            anchors.fill: parent
+            onCreationError: {
+                mainPage._onCordovaCreationError();
+            }
+            onCreated: {
+                bindings.webviewProvider = cordovaInstance;
+            }
         }
-        onCreated: {
-            bindings.webviewProvider = cordovaInstance;
+
+        /*!
+          \internal
+         */
+        function _onCordovaCreationError() {
+            mainPage._fallbackToWebview();
         }
-    }
 
-    /*!
-      \internal
-     */
-    function _onCordovaCreationError() {
-        _fallbackToWebview();
-    }
+        /*!
+          \internal
+         */
+        function _fallbackToWebview() {
+            console.debug('Falling back on the plain Webview backend.')
 
-    /*!
-      \internal
-     */
-    function _fallbackToWebview() {
-        console.debug('Falling back on the plain Webview backend.')
-
-        webviewComponentLoader.sourceComponent = Qt.binding(function() {
-            return htmlIndexDirectory.length !== 0 && webviewComponent ? webviewComponent : null;
-        });
-    }
-
-    /*!
-      \internal
-     */
-    function _getAppStartupIndexFileUri() {
-        return 'file://' + root.htmlIndexDirectory + '/index.html';
-    }
-
-    /*!
-      \internal
-     */
-    Loader {
-        id: webviewFallbackComponentLoader
-        anchors.fill: parent
-        onLoaded: bindings.webviewProvider = item.currentWebview;
-    }
-
-    /*!
-      \internal
-     */
-    Component {
-        id: webviewFallbackComponent
-        UbuntuWebView {
-            url: _getAppStartupIndexFileUri()
+            webviewFallbackComponentLoader.sourceComponent = Qt.binding(function() {
+                return root.htmlIndexDirectory.length !== 0
+                        ? webviewFallbackComponent : null;
+            });
         }
-    }
 
-    /*!
-      \internal
-     */
-    UbuntuJavascriptBindings {
-        id: bindings
+        /*!
+          \internal
+         */
+        function _getAppStartupIndexFileUri() {
+            return 'file://' + root.htmlIndexDirectory + '/index.html';
+        }
+
+        /*!
+          \internal
+         */
+        Loader {
+            id: webviewFallbackComponentLoader
+            anchors.fill: parent
+            onLoaded: bindings.webviewProvider = item.currentWebview;
+        }
+
+        /*!
+          \internal
+         */
+        Component {
+            id: webviewFallbackComponent
+            UbuntuWebView {
+                url: mainPage._getAppStartupIndexFileUri()
+
+                experimental.preferences.localStorageEnabled: true
+                experimental.preferences.offlineWebApplicationCacheEnabled: true
+                experimental.preferences.universalAccessFromFileURLsAllowed: true
+                experimental.preferences.webGLEnabled: true
+
+                experimental.databaseQuotaDialog: Item {
+                    Timer {
+                        interval: 1
+                        running: true
+                        onTriggered: {
+                            model.accept(model.expectedUsage)
+                        }
+                    }
+                }
+                // port in QTWEBKIT_INSPECTOR_SERVER enviroment variable
+                experimental.preferences.developerExtrasEnabled: true
+            }
+        }
+
+        /*!
+          \internal
+         */
+        UbuntuJavascriptBindings {
+            id: bindings
+        }
     }
 }
 

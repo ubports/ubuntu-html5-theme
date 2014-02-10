@@ -168,28 +168,17 @@ int main(int argc, char *argv[])
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
     {
-        qWarning() << "Component not ready";
+        qCritical() << "Main application component cannot be loaded.";
         return EXIT_FAILURE;
     }
-    
-    QQuickItem *object = view.rootObject();
-    if ( ! object)
-    {
-        qCritical() << "Cannot create object from qml base file";
-        return EXIT_FAILURE;
-    }
+    view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
 
-    QQuickWindow* window = qobject_cast<QQuickWindow*>(&view);
+    view.setTitle(QCoreApplication::applicationName());
 
-    object->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
-
-    if (window)
-    {
-        if (maximized)
-            window->showMaximized();
-        else
-            window->show();
-    }
+    if (maximized)
+        view.showMaximized();
+    else
+        view.show();
 
     return app.exec();
 }
