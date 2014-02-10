@@ -54,10 +54,16 @@ Item {
         }
     }
 
+    /*!
+      \internal
+     */
     function _onCordovaCreationError() {
         _fallbackToWebview();
     }
 
+    /*!
+      \internal
+     */
     function _fallbackToWebview() {
         console.debug('Falling back on the plain Webview backend.')
 
@@ -66,18 +72,27 @@ Item {
         });
     }
 
+    /*!
+      \internal
+     */
     function _getAppStartupIndexFileUri() {
         return 'file://' + root.htmlIndexDirectory + '/index.html';
     }
 
+    /*!
+      \internal
+     */
     Loader {
-        id: webviewComponentLoader
+        id: webviewFallbackComponentLoader
         anchors.fill: parent
         onLoaded: bindings.webviewProvider = item.currentWebview;
     }
 
+    /*!
+      \internal
+     */
     Component {
-        id: webviewComponent
+        id: webviewFallbackComponent
         UbuntuWebView {
             url: _getAppStartupIndexFileUri()
         }

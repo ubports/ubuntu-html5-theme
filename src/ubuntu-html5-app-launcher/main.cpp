@@ -67,14 +67,14 @@ void usage()
     QTextStream out(stdout);
     QString command = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
     out << "Usage: "
-	<< command
-	<< " [-h|--help] [--www=<index.html folder>] [--inspector]" << endl;
+        << command
+        << " [-h|--help] [--www=<index.html folder>] [--inspector]" << endl;
     out << "Options:" << endl;
     out << "  -h, --help                     display this help message and exit" << endl;
     out << "  --www=PATH                     relative or absolute path to the 'index.html' root file" << endl;
     out << "  --maximized                    maximize the app window at startup time" << endl;
     out << "  --inspector                    run a remote inspector on port "
-	<< REMOTE_INSPECTOR_PORT << endl;
+        << REMOTE_INSPECTOR_PORT << endl;
 }
 
 int main(int argc, char *argv[])

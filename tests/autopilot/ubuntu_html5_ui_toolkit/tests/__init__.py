@@ -20,6 +20,8 @@ from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from autopilot.input import Mouse, Touch, Pointer
 
+from autopilot import platform
+
 # from autopilot.introspection.qt import QtIntrospectionTestMixin
 
 
@@ -99,7 +101,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
 
     def setUp(self):
         self.setup_base_path()
-        if model() == "Desktop":
+        if platform.model() == "Desktop":
             self.pointer = Pointer(Mouse.create())
         else:
             self.pointer = Pointer(Touch.create())

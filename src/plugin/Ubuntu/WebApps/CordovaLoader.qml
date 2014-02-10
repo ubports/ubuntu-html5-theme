@@ -26,7 +26,10 @@ Item {
     // Cordova plugin instance
     property var cordovaInstance: null
 
+    // the cordova qml instance was created successfully
     signal created();
+
+    // an error occured while creating the cordova instance
     signal creationError();
 
     function _tryCreateObject(statement, parent) {
