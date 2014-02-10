@@ -55,7 +55,9 @@ MainView {
                 mainPage._onCordovaCreationError();
             }
             onCreated: {
-                bindings.bindingMainWebview = cordovaInstance.mainWebview;
+                bindings.bindingMainWebview = Qt.binding(function() {
+                    return cordovaInstance.mainWebview;
+                });
             }
         }
 
