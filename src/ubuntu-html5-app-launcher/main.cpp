@@ -66,15 +66,13 @@ QString pluginPathForCurrentArchitecture()
 {
 #if defined(__i386__)
     return QLatin1String("/lib/i386-linux-gnu");
-#endif
-#if defined(__x86_64__)
+#elif defined(__x86_64__)
     return QLatin1String("/lib/x86_64-linux-gnu");
-#endif
-#if defined(__arm__)
+#elif defined(__arm__)
     return QLatin1String("/lib/arm-linux-gnueabihf");
+#else
+#error Unable to determine target architecture
 #endif
-
-    return QLatin1String("bad");
 }
 
 
