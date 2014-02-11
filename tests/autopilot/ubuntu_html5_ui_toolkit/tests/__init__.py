@@ -188,8 +188,11 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assertThat(addressbar.activeFocus, Eventually(Equals(True)))
 
         self.keyboard.type(url, 0.001)
-        button = self.get_address_bar_action_button();
 
+        self.pointer.click_object(self.get_webview())
+        time.sleep(1)
+
+        button = self.get_address_bar_action_button();
         self.pointer.move_to_object(button)
         self.pointer.press()
         time.sleep(1)
