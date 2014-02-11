@@ -5,10 +5,10 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@
+	dh $@ --fail-missing
 
 override_dh_install:
-	dh_install
+	dh_install --fail-missing
 #	Transitional symlink because package was renamed.
 	mkdir -p $(CURDIR)/debian/ubuntu-html5-ui-toolkit/usr/share/
 	ln -vs /usr/share/ubuntu-html5-ui-toolkit \
