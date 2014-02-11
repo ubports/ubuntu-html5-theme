@@ -183,12 +183,17 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         return addressbar.select_single(objectName="browseButton")
 
     def browse_to_url(self, url):
+        import time
         addressbar = self.get_addressbar()
         self.assertThat(addressbar.activeFocus, Eventually(Equals(True)))
 
         self.keyboard.type(url, 0.001)
         button = self.get_address_bar_action_button();
-        self.pointer.click_object(button)
+
+        self.pointer.move_to_object(button)
+        self.pointer.press()
+        time.sleep(1)
+        self.pointer.release()
 
         self.assert_url_eventually_loaded(url);
 
