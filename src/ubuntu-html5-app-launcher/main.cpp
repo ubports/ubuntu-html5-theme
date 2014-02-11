@@ -43,7 +43,7 @@ void addPathToQmlImport(const QString & importPath)
     qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
 }
 
-void setUpQmlImportPathIfNecessary()
+void setUpQmlImportPathIfNecessary(const QString & applicationLocalSearchPath)
 {
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
@@ -56,7 +56,7 @@ void setUpQmlImportPathIfNecessary()
     //  not installed globally but embedded into apps. So the
     //  one embedded should take precedence over the ones installed
     //  system wide (2.8).
-    addPathToQmlImport(".");
+    addPathToQmlImport(applicationLocalSearchPath);
 
     qDebug() << "Setting import path to: "
              << qgetenv("QML2_IMPORT_PATH").data();
@@ -87,8 +87,6 @@ int main(int argc, char *argv[])
         usage();
         return EXIT_FAILURE;
     }
-
-    setUpQmlImportPathIfNecessary();
 
     const QString WWW_LOCATION_ARG_HEADER = "--www=";
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
@@ -162,6 +160,8 @@ int main(int argc, char *argv[])
         QString appPkgName = qgetenv("APP_ID").split('_').first();
         QCoreApplication::setApplicationName(appPkgName);
     }
+
+    setUpQmlImportPathIfNecessary(wwwFolder.canonicalFilePath());
 
     QQuickView view;
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
