@@ -20,7 +20,7 @@ import QtQuick 2.0
 import QtWebKit 3.0
 import QtWebKit.experimental 1.0
 
-Rectangle {
+Item {
     id: root
     objectName: "webviewContainer"
 
@@ -133,7 +133,9 @@ Rectangle {
         id: webview
 
         url: parent.url
+
         width: parent.width
+        height: parent.height - 100
 
         anchors {
             top: parent.top
@@ -141,8 +143,6 @@ Rectangle {
             right: parent.right
             left: parent.left
         }
-
-        height: parent.height - 100
 
         experimental.userScripts: []
         experimental.preferences.navigatorQtObjectEnabled: true
