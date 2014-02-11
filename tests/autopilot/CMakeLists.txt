@@ -5,3 +5,7 @@ install(DIRECTORY ubuntu_html5_container ubuntu_html5_ui_toolkit
     DESTINATION ${PYTHON_PACKAGE_DIR}
     )
 
+install(DIRECTORY tools
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/ubuntu-html5-ui-toolkit/tests
+        )
+

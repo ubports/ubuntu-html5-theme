@@ -72,14 +72,14 @@ class UbuntuHTML5HTTPServer(threading.Thread):
 
 class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_CONTAINER_PATH = "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../tools/qml/webview.qml')
-    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-ui-toolkit/autopilot-tests/qml/webview.qml'
+    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-ui-toolkit/tests/tools/qml/webview.qml'
     arch = subprocess.check_output(
         ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip()
     BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
 
     # TODO: fix version
-    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../examples/html5-theme'))
-    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-ui-toolkit/0.1/examples'
+    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../'))
+    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-ui-toolkit/tests/'
 
     APPS_SUBFOLDER_NAME = 'apps'
 
@@ -202,7 +202,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
 
     def browse_to_app(self, appname):
         appfilepath = os.path.abspath(self.BASE_PATH +
-            '/../../tests/data/html/' +
+            '/data/html/' +
             self.APPS_SUBFOLDER_NAME +
             '/' +
             appname +
@@ -213,7 +213,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.browse_to_url(APP_HTML_PATH)
 
     def browse_to_test_html(self, html_filename):
-        self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + html_filename)))
+        self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/data/html/' + html_filename)))
 
 
 class UbuntuThemeWithHttpServerTestCaseBase(UbuntuHTML5TestCaseBase):
