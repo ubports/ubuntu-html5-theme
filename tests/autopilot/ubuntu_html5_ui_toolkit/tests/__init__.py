@@ -105,7 +105,15 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
             self.pointer = Pointer(Mouse.create())
         else:
             self.pointer = Pointer(Touch.create())
-        self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path())
+
+        params = [self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path()]
+        if (platform.model() <> 'Desktop'):
+            params.append('--desktop_file_hint=/usr/share/applications/unitywebappsqmllauncher.desktop')
+
+        self.app = self.launch_test_application(
+            *params,
+            app_type='qt')
+
         self.webviewContainer = self.get_webviewContainer()
         self.watcher = self.webviewContainer.watch_signal('resultUpdated(QString)')
         super(UbuntuHTML5TestCaseBase, self).setUp()
@@ -170,21 +178,30 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
         return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
 
+    def get_address_bar_action_button(self):
+        addressbar = self.get_addressbar()
+        return addressbar.select_single(objectName="browseButton")
+
     def browse_to_url(self, url):
         addressbar = self.get_addressbar()
-        self.pointer.move_to_object(addressbar)
-        self.pointer.click()
+        self.assertThat(addressbar.activeFocus, Eventually(Equals(True)))
 
         self.keyboard.type(url, 0.001)
-
-        button = self.get_button()
-        self.pointer.move_to_object(button)
-        self.pointer.click()
+        button = self.get_address_bar_action_button();
+        self.pointer.click_object(button)
 
         self.assert_url_eventually_loaded(url);
 
     def browse_to_app(self, appname):
-        APP_HTML_PATH = self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/index.html'))
+        appfilepath = os.path.abspath(self.BASE_PATH +
+            '/../../tests/data/html/' +
+            self.APPS_SUBFOLDER_NAME +
+            '/' +
+            appname +
+            '/index.html')
+
+        APP_HTML_PATH = self.create_file_url_from(appfilepath)
+
         self.browse_to_url(APP_HTML_PATH)
 
     def browse_to_test_html(self, html_filename):
