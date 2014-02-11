@@ -30,22 +30,51 @@
 #include <QQmlComponent>
 
 
+void addPathToQmlImport(const QString & importPath)
+{
+    QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
+
+    existingImportPath = existingImportPath.trimmed();
+    if ( ! existingImportPath.trimmed().isEmpty())
+       existingImportPath.append(":");
+
+    existingImportPath.append(importPath);
+
+    qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
+}
+
 void setUpQmlImportPathIfNecessary()
 {
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
     {
-        QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
-        existingImportPath = existingImportPath.trimmed();
-
-        if ( ! existingImportPath.trimmed().isEmpty())
-           existingImportPath.append(":");
-        existingImportPath.append(importPath);
-
-        qDebug() << "Setting import path to: " << existingImportPath;
-
-        qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
+        addPathToQmlImport(importPath);
     }
+
+    // Note: By default we add the local path to the import path
+    //  mostly to account for potential Cordova 3.0 qml plugin
+    //  not installed globally but embedded into apps. So the
+    //  one embedded should take precedence over the ones installed
+    //  system wide (2.8).
+    addPathToQmlImport(".");
+
+    qDebug() << "Setting import path to: "
+             << qgetenv("QML2_IMPORT_PATH").data();
+}
+
+void usage()
+{
+    QTextStream out(stdout);
+    QString command = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
+    out << "Usage: "
+        << command
+        << " [-h|--help] [--www=<index.html folder>] [--inspector]" << endl;
+    out << "Options:" << endl;
+    out << "  -h, --help                     display this help message and exit" << endl;
+    out << "  --www=PATH                     relative or absolute path to the 'index.html' root file" << endl;
+    out << "  --maximized                    maximize the app window at startup time" << endl;
+    out << "  --inspector                    run a remote inspector on port "
+        << REMOTE_INSPECTOR_PORT << endl;
 }
 
 int main(int argc, char *argv[])
@@ -55,24 +84,29 @@ int main(int argc, char *argv[])
     if (!app.arguments().count())
     {
         qCritical() << "Invalid inputs args";
+        usage();
         return EXIT_FAILURE;
     }
+
+    setUpQmlImportPathIfNecessary();
+
     const QString WWW_LOCATION_ARG_HEADER = "--www=";
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
     const QString ARG_HEADER = "--";
     const QString VALUE_HEADER = "=";
     const QString INSPECTOR = "--inspector";
 
-    QString wwwfolder;
+    QString wwwfolderArg;
     bool maximized = false;
 
     QStringList arguments = app.arguments();
     arguments.pop_front();
+
     Q_FOREACH(QString argument, arguments)
     {
         if (argument.contains(WWW_LOCATION_ARG_HEADER))
         {
-            wwwfolder = argument.right(argument.count() - WWW_LOCATION_ARG_HEADER.count());
+            wwwfolderArg = argument.right(argument.count() - WWW_LOCATION_ARG_HEADER.count());
         }
         else
         if (argument.contains(MAXIMIZED_ARG_HEADER))
@@ -103,21 +137,22 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (wwwfolder.isEmpty())
+    if (wwwfolderArg.isEmpty())
     {
         qCritical() << "No (or empty) WWW folder path specified";
+        usage();
         return EXIT_FAILURE;
     }
 
-    QFileInfo f(wwwfolder);
-    if (f.isRelative())
+    QFileInfo wwwFolder(wwwfolderArg);
+    if (wwwFolder.isRelative())
     {
-        f.makeAbsolute();
+        wwwFolder.makeAbsolute();
     }
-    if (!f.exists() || !f.isDir())
+    if (!wwwFolder.exists() || !wwwFolder.isDir())
     {
         qCritical() << "WWW folder not found or not a proper directory: "
-                    << wwwfolder;
+                    << wwwFolder.absoluteFilePath();
         return EXIT_FAILURE;
     }
 
@@ -128,8 +163,6 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
 
-    setUpQmlImportPathIfNecessary();
-
     QQuickView view;
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
@@ -138,7 +171,7 @@ int main(int argc, char *argv[])
         qCritical() << "Main application component cannot be loaded.";
         return EXIT_FAILURE;
     }
-    view.rootObject()->setProperty("htmlIndexDirectory", wwwfolder);
+    view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
 
     view.setTitle(QCoreApplication::applicationName());
 

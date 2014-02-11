@@ -12,7 +12,6 @@ include_directories(
 
 # ubuntu-html5-app binary
 set(HTML5_LAUNCHER ubuntu-html5-app-launcher)
-
 set(HTML5_LAUNCHER_SRC
     main.cpp
 )

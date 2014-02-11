@@ -64,7 +64,7 @@ Description: Examples for Toolkit for Ubuntu HTML5 Apps
 Package: ubuntu-html5-ui-toolkit-autopilot
 Architecture: all
 Depends: dpkg-dev,
-         libautopilot-qt,
+         libautopilot-qt (>= 1.4),
          libjs-jquery,
          libqt5test5,
          libqt5webkit5-qmlwebkitplugin,
@@ -97,6 +97,19 @@ Depends: dpkg-dev,
 Description: Ubuntu HTML5 QML container component for HTML5 touch apps.
  This package contains the Ubuntu HTML5 QML component used to embed HTML5
  apps at runtime.
+
+Package: ubuntu-html5-container-autopilot
+Architecture: all
+Depends: libautopilot-qt (>= 1.4),
+         libqt5test5,
+         libqt5webkit5-qmlwebkitplugin,
+         qtdeclarative5-qtquick2-plugin,
+         ubuntu-html5-container (>= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Description: Autopilot tests for the Ubuntu HTML5 QML container component for HTML5 touch apps.
+ This package contains the Ubuntu HTML5 QML component used to embed HTML5
+ apps at runtime. This package contains the autopilot tests.
 
 Package: ubuntu-html5-theme
 Section: oldlibs

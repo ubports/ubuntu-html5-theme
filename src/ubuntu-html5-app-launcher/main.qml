@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Canonical Ltd.
+ * Copyright 2014 Canonical Ltd.
  *
  * This file is part of ubuntu-html5-ui-toolkit.
  *
@@ -17,10 +17,11 @@
  */
 
 import QtQuick 2.0
-import Ubuntu.WebApps 0.1
 import Ubuntu.Components 0.1
+import Ubuntu.WebApps 0.1
 
 WebAppContainer {
     width: units.gu(100)
     height: units.gu(75)
 }
+
