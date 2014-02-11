@@ -1,9 +1,24 @@
-ubuntu-html5-theme (0.1.2+14.04.20140205-0ubuntu1) UNRELEASED; urgency=low
+ubuntu-html5-theme (0.1.2+14.04.20140211.1-0ubuntu1) trusty; urgency=low
 
   [ Robert Bruce Park ]
   * Version bump to get past incorrectly-versioned manual upload in a PPA.
 
- -- Robert Bruce Park <robert.park@canonical.com>  Tue, 04 Feb 2014 11:10:20 +0000
+  [ CI bot ]
+  * Null merge to trigger a CI Train trunk release.
+
+  [ Alexandre Abreu ]
+  * small tweak of the basic size for the container.
+  * use ubuntu sdk mainview instead of item to e.g. use automatic
+    orientation features.
+  * Add a better cordova qml component search pattern for the
+    cordovaview mostly to account for the cordova 3.4 version that is to
+    be installed locally; Add autopilot tests for the container,. (LP:
+    #1277665)
+  * Fix additional import path for potential Cordova qml components to
+    be set according to the www canonical path
+  * remove cordova 2.8 examples package from recommends
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 11 Feb 2014 20:00:09 +0000
 
 ubuntu-html5-theme (0.1.1+14.04.20140204-0ubuntu1) trusty; urgency=low
 
