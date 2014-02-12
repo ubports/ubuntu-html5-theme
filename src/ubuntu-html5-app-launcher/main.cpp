@@ -154,22 +154,28 @@ int main(int argc, char *argv[])
 
     if (wwwfolderArg.isEmpty())
     {
-        qCritical() << "No (or empty) WWW folder path specified";
-	usage();
-        return EXIT_FAILURE;
+        wwwfolderArg = QDir::currentPath();
+        qDebug() << "No (or empty) WWW folder path specified." << endl
+                 << "Defaulting to the current directory:" << wwwfolderArg;
     }
 
     QFileInfo wwwFolder(wwwfolderArg);
+
     if (wwwFolder.isRelative())
     {
         wwwFolder.makeAbsolute();
     }
+
     if (!wwwFolder.exists() || !wwwFolder.isDir())
     {
         qCritical() << "WWW folder not found or not a proper directory: "
                     << wwwFolder.absoluteFilePath();
         return EXIT_FAILURE;
     }
+
+    // set the current directory to the project/application folder
+    // to help use relative paths for the embedded js components as well
+    QDir::setCurrent(wwwFolder.absoluteFilePath());
 
     // Ensure that application-specific data is written where it ought to.
     if (qgetenv("APP_ID").data() != NULL)
