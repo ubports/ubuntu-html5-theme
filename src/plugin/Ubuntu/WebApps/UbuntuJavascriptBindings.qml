@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Canonical Ltd.
+ * Copyright 2014 Canonical Ltd.
  *
  * This file is part of ubuntu-html5-container.
  *
@@ -23,13 +23,13 @@ import Ubuntu.UnityWebApps 0.1
 Item {
     id: root
 
-    property var webviewProvider: null
+    property var bindingMainWebview: null
 
     /*!
       \internal
      */
     function getUnityWebappsProxies() {
-        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(webviewProvider.mainWebview);
+        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(bindingMainWebview);
     }
 
     /*!
@@ -39,7 +39,7 @@ Item {
         id: webappBindingsLoader
         visible: false
         anchors.fill: parent
-        sourceComponent: (webviewProvider && webviewProvider.mainWebview) ? webappBindingsComponent : undefined
+        sourceComponent: bindingMainWebview ? webappBindingsComponent : undefined
     }
 
     /*!

@@ -43,7 +43,7 @@ void addPathToQmlImport(const QString & importPath)
     qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
 }
 
-void setUpQmlImportPathIfNecessary()
+void setUpQmlImportPathIfNecessary(const QString & applicationLocalSearchPath)
 {
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
@@ -56,7 +56,7 @@ void setUpQmlImportPathIfNecessary()
     //  not installed globally but embedded into apps. So the
     //  one embedded should take precedence over the ones installed
     //  system wide (2.8).
-    addPathToQmlImport(".");
+    addPathToQmlImport(applicationLocalSearchPath);
 
     qDebug() << "Setting import path to: "
              << qgetenv("QML2_IMPORT_PATH").data();
@@ -81,14 +81,14 @@ void usage()
     QTextStream out(stdout);
     QString command = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
     out << "Usage: "
-	<< command
-	<< " [-h|--help] [--www=<index.html folder>] [--inspector]" << endl;
+        << command
+        << " [-h|--help] [--www=<index.html folder>] [--inspector]" << endl;
     out << "Options:" << endl;
     out << "  -h, --help                     display this help message and exit" << endl;
     out << "  --www=PATH                     relative or absolute path to the 'index.html' root file" << endl;
     out << "  --maximized                    maximize the app window at startup time" << endl;
     out << "  --inspector                    run a remote inspector on port "
-	<< REMOTE_INSPECTOR_PORT << endl;
+        << REMOTE_INSPECTOR_PORT << endl;
 }
 
 int main(int argc, char *argv[])
@@ -98,11 +98,9 @@ int main(int argc, char *argv[])
     if (!app.arguments().count())
     {
         qCritical() << "Invalid inputs args";
-	usage();
+        usage();
         return EXIT_FAILURE;
     }
-
-    setUpQmlImportPathIfNecessary();
 
     const QString WWW_LOCATION_ARG_HEADER = "--www=";
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
@@ -110,7 +108,6 @@ int main(int argc, char *argv[])
     const QString VALUE_HEADER = "=";
     const QString INSPECTOR = "--inspector";
 
-    QHash<QString, QString> properties;
     QString wwwfolderArg;
     bool maximized = false;
 
@@ -184,6 +181,8 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
 
+    setUpQmlImportPathIfNecessary(wwwFolder.canonicalFilePath());
+
     QString plugin_path = wwwFolder.absoluteFilePath() +
         pluginPathForCurrentArchitecture();
 
@@ -193,38 +192,17 @@ int main(int argc, char *argv[])
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
     {
-        qWarning() << "Component not ready";
+        qCritical() << "Main application component cannot be loaded.";
         return EXIT_FAILURE;
     }
-    
-    QQuickItem *object = view.rootObject();
-    if ( ! object)
-    {
-        qCritical() << "Cannot create object from qml base file";
-        return EXIT_FAILURE;
-    }
+    view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
 
-    QQuickWindow* window = qobject_cast<QQuickWindow*>(&view);
+    view.setTitle(QCoreApplication::applicationName());
 
-    object->setProperty("htmlIndexDirectory", wwwFolder.absoluteFilePath());
-
-    QHash<QString, QString>::iterator it;
-    for(it = properties.begin();
-        properties.end() != it;
-        ++it)
-    {
-        const char * const pname = it.key().toStdString().c_str();
-        if (object->property(pname).isValid())
-            object->setProperty(pname, it.value());
-    }
-
-    if (window)
-    {
-        if (maximized)
-            window->showMaximized();
-        else
-            window->show();
-    }
+    if (maximized)
+        view.showMaximized();
+    else
+        view.show();
 
     return app.exec();
 }

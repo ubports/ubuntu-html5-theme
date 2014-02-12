@@ -20,6 +20,8 @@ from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from autopilot.input import Mouse, Touch, Pointer
 
+from autopilot import platform
+
 # from autopilot.introspection.qt import QtIntrospectionTestMixin
 
 
@@ -70,14 +72,14 @@ class UbuntuHTML5HTTPServer(threading.Thread):
 
 class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     BROWSER_CONTAINER_PATH = "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../tools/qml/webview.qml')
-    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-ui-toolkit/autopilot-tests/qml/webview.qml'
+    INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-ui-toolkit/tests/tools/qml/webview.qml'
     arch = subprocess.check_output(
         ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip()
     BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
 
     # TODO: fix version
-    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../examples/html5-theme'))
-    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-ui-toolkit/0.1/examples'
+    LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../tests'))
+    INSTALLED_HTML_EXAMPLES_PATH = '/usr/share/ubuntu-html5-ui-toolkit/tests/'
 
     APPS_SUBFOLDER_NAME = 'apps'
 
@@ -99,8 +101,19 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
 
     def setUp(self):
         self.setup_base_path()
-        self.pointer = Pointer(Mouse.create())
-        self.app = self.launch_test_application(self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path())
+        if platform.model() == "Desktop":
+            self.pointer = Pointer(Mouse.create())
+        else:
+            self.pointer = Pointer(Touch.create())
+
+        params = [self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path()]
+        if (platform.model() <> 'Desktop'):
+            params.append('--desktop_file_hint=/usr/share/applications/unitywebappsqmllauncher.desktop')
+
+        self.app = self.launch_test_application(
+            *params,
+            app_type='qt')
+
         self.webviewContainer = self.get_webviewContainer()
         self.watcher = self.webviewContainer.watch_signal('resultUpdated(QString)')
         super(UbuntuHTML5TestCaseBase, self).setUp()
@@ -165,25 +178,42 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         self.assertThat(lambda: self.watcher.num_emissions, Eventually(GreaterThan(prev_emissions)))
         return json.loads(webview.get_signal_emissions('resultUpdated(QString)')[-1][0])['result']
 
-    def browse_to_url(self, url):
+    def get_address_bar_action_button(self):
         addressbar = self.get_addressbar()
-        self.pointer.move_to_object(addressbar)
-        self.pointer.click()
+        return addressbar.select_single(objectName="browseButton")
+
+    def browse_to_url(self, url):
+        import time
+        addressbar = self.get_addressbar()
+        self.assertThat(addressbar.activeFocus, Eventually(Equals(True)))
 
         self.keyboard.type(url, 0.001)
 
-        button = self.get_button()
+        self.pointer.click_object(self.get_webview())
+        time.sleep(1)
+
+        button = self.get_address_bar_action_button();
         self.pointer.move_to_object(button)
-        self.pointer.click()
+        self.pointer.press()
+        time.sleep(1)
+        self.pointer.release()
 
         self.assert_url_eventually_loaded(url);
 
     def browse_to_app(self, appname):
-        APP_HTML_PATH = self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + self.APPS_SUBFOLDER_NAME + '/' + appname + '/index.html'))
+        appfilepath = os.path.abspath(self.BASE_PATH +
+            '/data/html/' +
+            self.APPS_SUBFOLDER_NAME +
+            '/' +
+            appname +
+            '/index.html')
+
+        APP_HTML_PATH = self.create_file_url_from(appfilepath)
+
         self.browse_to_url(APP_HTML_PATH)
 
     def browse_to_test_html(self, html_filename):
-        self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/../../tests/data/html/' + html_filename)))
+        self.browse_to_url(self.create_file_url_from(os.path.abspath(self.BASE_PATH + '/data/html/' + html_filename)))
 
 
 class UbuntuThemeWithHttpServerTestCaseBase(UbuntuHTML5TestCaseBase):

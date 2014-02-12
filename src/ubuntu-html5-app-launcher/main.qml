@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Canonical Ltd.
+ * Copyright 2014 Canonical Ltd.
  *
  * This file is part of ubuntu-html5-ui-toolkit.
  *
@@ -24,3 +24,4 @@ WebAppContainer {
     width: units.gu(100)
     height: units.gu(75)
 }
+

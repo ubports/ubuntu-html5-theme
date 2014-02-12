@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Canonical Ltd.
+ * Copyright 2014 Canonical Ltd.
  *
  * This file is part of ubuntu-html5-ui-toolkit.
  *
@@ -25,6 +25,12 @@ Item {
 
     // Cordova plugin instance
     property var cordovaInstance: null
+
+    // the cordova qml instance was created successfully
+    signal created();
+
+    // an error occured while creating the cordova instance
+    signal creationError();
 
     function _tryCreateObject(statement, parent) {
         var result = null;
@@ -52,7 +58,6 @@ Item {
 
     function _ensureCordovaInitDone() {
         if (cordovaInstance && htmlIndexDirectory.length !== 0) {
-            console.debug('cordova instance ok, html index directory: ' + htmlIndexDirectory)
             cordovaInstance.wwwDir = htmlIndexDirectory;
         }
     }
@@ -63,8 +68,7 @@ Item {
         // selectively try to load cordova
         var cordova = null;
 
-        var candidates = [{version: '3.4', paramString: 'contentFile: "index.html"'}
-                          , {version: '2.8'}];
+        var candidates = [{version: '3.4', paramString: 'contentFile: "index.html"'}];
         for (var i = 0; i < candidates.length; ++i) {
             cordova = _tryCreateCordovaObject(candidates[i].version,
                                               candidates[i].paramString);
@@ -73,12 +77,15 @@ Item {
         }
 
         if ( ! cordova) {
-            console.error('Cannot create CordovaView object');
+            console.error('Cannot create CordovaView object.');
+            creationError();
             return;
         }
 
         root.cordovaInstance = cordova;
 
         _ensureCordovaInitDone();
+
+        created();
     }
 }
