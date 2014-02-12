@@ -31,49 +31,60 @@
 </head>
 
 <body>
-    <div data-role="mainview">
+  <div data-role="mainview">
+    
+    <div data-role="content">
+      
+      <!-- Checkboxes -->
+      
+      <div style="padding-bottom: 40px">
+	<div class="large-font">
+	    Checkbox
+	  </div>
 
-        <div data-role="content">
-
-	  Checkbox
-            <div>
-                <label>
-                    <input type="checkbox" checked="">
-                    <span></span>
-                </label>
-            </div>
             <div class="inset">
+	      <span  class="medium-font">Unchecked</span>
                 <label>
                     <input type="checkbox">
                     <span></span>
                 </label>
             </div>
-            <div class="inset">
+            <div>
+	      <span  class="medium-font">Checked</span>
                 <label>
-                    <input type="checkbox" checked="" disabled="">
-                    <span></span>
-                </label>
-            </div>
-            <div class="inset">
-                <label>
-                    <input type="checkbox" disabled="">
+                    <input type="checkbox" checked="">
                     <span></span>
                 </label>
             </div>
 
+	    <div>
+	      <span  class="medium-font">Disabled</span>
+              <div class="inset" style="display:inline">
+                <label>
+                  <input type="checkbox" checked="" disabled="">
+                  <span></span>
+                </label>
+              </div>
+              <div class="inset" style="display: inline">
+                <label>
+                  <input type="checkbox" disabled="">
+                  <span></span>
+                </label>
+              </div>
+	    </div>
+
+</div>
+
+<!-- Switch -->
+
+<div>
+	  <div class="large-font">
 	    Switch
+	  </div>
 
             <div class="inset">
-                <label>
-                    <input type="checkbox" data-type="switch" checked="">
-                    <span class="toggle">
-                        <span class="toggle-handle"></span>
-                        <span class="toggle-bg"></span>
-                    </span>
-                </label>
-            </div>
-            <div class="inset">
-                <label>
+                <span  class="medium-font">Unchecked</span>
+		<label>
                     <input type="checkbox" data-type="switch">
                     <span class="toggle">
                         <span class="toggle-handle"></span>
@@ -82,23 +93,40 @@
                 </label>
             </div>
             <div class="inset">
-                <label>
-                    <input type="checkbox" data-type="switch" checked="" disabled="">
+                <span  class="medium-font">Checked</span>
+		<label>
+                    <input type="checkbox" data-type="switch" checked="">
                     <span class="toggle">
                         <span class="toggle-handle"></span>
                         <span class="toggle-bg"></span>
                     </span>
                 </label>
             </div>
-            <div class="inset">
+
+	    <div>
+	      <span  class="medium-font">Disabled</span>
+
+              <div class="inset" style="display: inline">
                 <label>
-                    <input type="checkbox" data-type="switch" disabled="">
-                    <span class="toggle">
-                        <span class="toggle-handle"></span>
-                        <span class="toggle-bg"></span>
-                    </span>
+                  <input type="checkbox" data-type="switch" checked="" disabled="">
+                  <span class="toggle">
+                    <span class="toggle-handle"></span>
+                    <span class="toggle-bg"></span>
+                  </span>
                 </label>
-            </div>
+              </div>
+              <div class="inset" style="display: inline">
+                <label>
+                  <input type="checkbox" data-type="switch" disabled="">
+                  <span class="toggle">
+                    <span class="toggle-handle"></span>
+                    <span class="toggle-bg"></span>
+                  </span>
+                </label>
+              </div>
+	    </div>
+</div>
+
         </div>
     </div>
 </body>

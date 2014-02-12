@@ -68,7 +68,6 @@ body {
 [data-role="content"] h3 {
     color: #747278;
     font: 1.3rem "Ubuntu Light";
-    font-weight: bold;
 }
 
 [data-role="content"] h2 {
@@ -86,4 +85,44 @@ body {
 
 .inset {
     margin-bottom: 10px;
+}
+
+/**
+   To be factored out
+  */
+
+.xlarge-font {
+    font-size: 33px !important;
+    font-family: "Ubuntu";
+    color: #787878 ;
+}
+
+.large-font {
+    font-size: 20px !important;
+    font-family: "Ubuntu";
+    color: #787878;
+}
+
+.medium-font {
+    font-size: 14px !important;
+    font-family: "Ubuntu";
+    color: #787878;
+}
+
+.small-font {
+    font-size: 12px !important;
+    font-family: "Ubuntu";
+    color: #787878;
+}
+
+.xsmall-font {
+    font-size: 10px !important;
+    font-family: "Ubuntu";
+    color: #787878;
+}
+
+.xxsmall-font {
+    font-size: 8px !important;
+    font-family: "Ubuntu";
+    color: #787878;
 }
