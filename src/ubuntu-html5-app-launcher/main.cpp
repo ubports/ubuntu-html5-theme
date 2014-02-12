@@ -62,6 +62,20 @@ void setUpQmlImportPathIfNecessary(const QString & applicationLocalSearchPath)
              << qgetenv("QML2_IMPORT_PATH").data();
 }
 
+QString pluginPathForCurrentArchitecture()
+{
+#if defined(__i386__)
+    return QLatin1String("/lib/i386-linux-gnu");
+#elif defined(__x86_64__)
+    return QLatin1String("/lib/x86_64-linux-gnu");
+#elif defined(__arm__)
+    return QLatin1String("/lib/arm-linux-gnueabihf");
+#else
+#error Unable to determine target architecture
+#endif
+}
+
+
 void usage()
 {
     QTextStream out(stdout);
@@ -137,22 +151,28 @@ int main(int argc, char *argv[])
 
     if (wwwfolderArg.isEmpty())
     {
-        qCritical() << "No (or empty) WWW folder path specified";
-        usage();
-        return EXIT_FAILURE;
+        wwwfolderArg = QDir::currentPath();
+        qDebug() << "No (or empty) WWW folder path specified." << endl
+                 << "Defaulting to the current directory:" << wwwfolderArg;
     }
 
     QFileInfo wwwFolder(wwwfolderArg);
+
     if (wwwFolder.isRelative())
     {
         wwwFolder.makeAbsolute();
     }
+
     if (!wwwFolder.exists() || !wwwFolder.isDir())
     {
         qCritical() << "WWW folder not found or not a proper directory: "
                     << wwwFolder.absoluteFilePath();
         return EXIT_FAILURE;
     }
+
+    // set the current directory to the project/application folder
+    // to help use relative paths for the embedded js components as well
+    QDir::setCurrent(wwwFolder.absoluteFilePath());
 
     // Ensure that application-specific data is written where it ought to.
     if (qgetenv("APP_ID").data() != NULL)
@@ -163,7 +183,11 @@ int main(int argc, char *argv[])
 
     setUpQmlImportPathIfNecessary(wwwFolder.canonicalFilePath());
 
+    QString plugin_path = wwwFolder.absoluteFilePath() +
+        pluginPathForCurrentArchitecture();
+
     QQuickView view;
+    view.engine()->addPluginPath(plugin_path);    
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
