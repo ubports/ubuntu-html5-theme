@@ -101,7 +101,7 @@ var UbuntuUI = (function () {
 
     function UbuntuUI() {
         var U = this;
-        U.isTouch = "ontouchstart" in window;
+        U.isTouch = "ontouchstart" in window && window.ontouchstart != null;
         U.touchEvents = {
             touchStart: U.isTouch ? 'touchstart' : 'mousedown',
             touchMove: U.isTouch ? 'touchmove' : 'mousemove',
