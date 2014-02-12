@@ -29,31 +29,42 @@
     <title>Ubuntu UI HTML5: UbuntuShape</title>
     <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-    <div data-role="page">
-        <header data-role="header">
-            <nav data-role="navbar" class="tabs">
-                <div class="tabs-inner">
-                    <ul data-role="tabs">
-                        <li class="active" data-role="tab">
-                            <a href="#item1">Tab 1</a>
-                        </li>
-                        <li class="inactive" data-role="tab">
-                            <a href="#item2">Tab 2</a>
-                        </li>
-                        <li class="inactive" data-role="tab">
-                            <a href="#item3">Tab 3</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
 
-        <div data-role="content">
-            <div data-role="shape">
-                <img src="img/map_icon.png">
-            </div>
-        </div>
+<body>
+    <div data-role="mainview">
+
+      <div class="large-font" style="padding-bottom: 40px">
+	Ubuntu Shape
+      </div>
+
+      <div class="medium-font">
+	<span>Color</span>
+	<div data-role="content" style="display: inline">
+          <div data-role="shape">
+            <div style="background-color: #dd4814"/>
+          </div>
+	</div>
+	<div data-role="content" style="display: inline">
+          <div data-role="shape">
+            <div style="background-color: violet"/>
+          </div>
+	</div>
+	<div data-role="content" style="display: inline">
+          <div data-role="shape">
+            <div style="background-color: gray"/>
+          </div>
+	</div>
+      </div>
+
+      <div class="medium-font">
+	<span>Image</span>
+	<div data-role="content" style="display: inline">
+          <div data-role="shape">
+            <img src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/img/map_icon.png">
+          </div>
+	</div>
+      </div>
+
     </div>
 </body>
 </html>
