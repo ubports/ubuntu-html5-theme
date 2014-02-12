@@ -1,3 +1,18 @@
+ubuntu-html5-theme (0.1.2+14.04.20140212.4-0ubuntu1) trusty; urgency=low
+
+  [ Alexandre Abreu ]
+  * Fix gallery app (needs more fixing though) and update the css to be
+    closer to qml
+
+  [ Robert Bruce Park ]
+  * Make -sdk depend on qtdeclarative5-ubuntu-webapps-api.
+  * Add python-xlib dependency which is required for AP tests to pass.
+
+  [ David Barth ]
+  * Set the plugin-path to load the pre-built cordova runtime
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 12 Feb 2014 21:47:19 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140211.1-0ubuntu1) trusty; urgency=low
 
   [ Robert Bruce Park ]
