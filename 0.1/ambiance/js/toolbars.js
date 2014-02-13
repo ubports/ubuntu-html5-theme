@@ -61,13 +61,12 @@ var Toolbar = (function () {
 
         this.phase = null;
 
-        this.UI = UI;
-
         this.toolbar = document.getElementById(id);
+        if ( ! this.toolbar)
+            throw "Invalid toolbar id";
 
+        this._touchDown = false;
         this._touchInfoDelegate = touchInfoDelegate;
-
-        var touchEvents = touchInfoDelegate.touchEvents;
 
         this.fingerData = [];
         this.fingerData.push({
@@ -82,10 +81,15 @@ var Toolbar = (function () {
             identifier: 0
         });
 
-        this.toolbar.addEventListener(touchEvents.touchStart, this.__onTouchStart.bind(this));
-        this.toolbar.addEventListener(touchEvents.touchMove, this.__onTouchMove.bind(this));
-        this.toolbar.addEventListener(touchEvents.touchEnd, this.__onTouchEnd.bind(this));
-        this.toolbar.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
+        var touchEvents = touchInfoDelegate.touchEvents;
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchStart, this.toolbar, this.__onTouchStart.bind(this));
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchEnd, this.toolbar, this.__onTouchEnd.bind(this));
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchMove, this.toolbar, this.__onTouchMove.bind(this));
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchLeave, this.toolbar, this.__onTouchLeave.bind(this));
     };
 
     Toolbar.prototype = {
@@ -114,15 +118,6 @@ var Toolbar = (function () {
         },
 
         /**
-         * Provide a callback function that's called with the Toolbar is touched
-         * @method touch
-         * @param {Function} function - The function that is called when the Toolbar is touched
-         */
-        touch: function (callback) {
-            this.toolbar.addEventListener(this.touchEvents.touchEnd, callback);
-        },
-
-        /**
          * Returns the DOM element associated with the id this widget is bind to.
          * @method element
          * @example
@@ -136,43 +131,44 @@ var Toolbar = (function () {
          * @private
          */
         __onTouchStart: function (evt) {
+            this._touchDown = true;
+
+            evt.preventDefault();
 
             this.phase = this.PHASE_START;
             var identifier = evt.identifier !== undefined ? evt.identifier : 0;
 
-            if (!this.UI.isTouch) {
-                evt.touches = [{
-                    pageX: evt.pageX,
-                    pageY: evt.pageY
-                }];
-            }
+            var touchEvent =
+                this._touchInfoDelegate.translateTouchEvent(evt);
 
             this.fingerData[0].identifier = identifier;
-            this.fingerData[0].start.x = this.fingerData[0].end.x = evt.touches[0].pageX;
-            this.fingerData[0].start.y = this.fingerData[0].end.y = evt.touches[0].pageY;
+            this.fingerData[0].start.x =
+                this.fingerData[0].end.x = touchEvent.touches[0].pageX;
+            this.fingerData[0].start.y =
+                this.fingerData[0].end.y = touchEvent.touches[0].pageY;
         },
 
         /**
          * @private
          */
         __onTouchMove: function (evt) {
+            if ( ! this._touchDown)
+                return;
 
             if (this.phase === this.PHASE_END || this.phase === this.PHASE_CANCEL)
                 return;
 
             if (this.phase == this.PHASE_START) {
-                if (!this.UI.isTouch) {
-                    evt.touches = [{
-                        pageX: evt.pageX,
-                        pageY: evt.pageY
-                    }];
-                }
+                evt.preventDefault();
+
+                var touchEvent =
+                    this._touchInfoDelegate.translateTouchEvent(evt);
 
                 var identifier = evt.identifier !== undefined ? evt.identifier : 0;
                 var f = this.__getFingerData(identifier);
 
-                f.end.x = evt.touches[0].pageX;
-                f.end.y = evt.touches[0].pageY;
+                f.end.x = touchEvent.touches[0].pageX;
+                f.end.y = touchEvent.touches[0].pageY;
 
                 direction = this.__calculateDirection(f.start, f.end);
 
@@ -192,6 +188,7 @@ var Toolbar = (function () {
          * @private
          */
         __onTouchEnd: function (e) {
+            this._touchDown = false;
             phase = this.PHASE_END;
         },
 
@@ -199,6 +196,7 @@ var Toolbar = (function () {
          * @private
          */
         __onTouchLeave: function (e) {
+            this._touchDown = false;
             phase = this.PHASE_CANCEL;
         },
 

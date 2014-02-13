@@ -28,8 +28,6 @@ $(document).ready(function () {
 
     UI.init();
     UI.pagestack.push("main");
-    toolbar = UI.toolbar("footer1");
-
 
     if (typeof localStorage["feeds"] == "undefined") {
         restoreDefault();
