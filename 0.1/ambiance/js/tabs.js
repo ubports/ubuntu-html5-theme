@@ -75,7 +75,7 @@ var Tabs = (function () {
         if (tabs == null || touchInfoDelegate == null) {
             return;
         }
-	this._touchDown = false;
+        this._touchDown = false;
         this._tabs = tabs;
 
         this._infos = {
@@ -86,20 +86,20 @@ var Tabs = (function () {
 
         var touchEvents = touchInfoDelegate.touchEvents;
 
-	touchInfoDelegate.registerTouchEvent(
-	    touchEvents.touchStart,
-	    this._tabs,
-	    this.__onTouchStart.bind(this));
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchStart,
+            this._tabs,
+            this.__onTouchStart.bind(this));
 
-	touchInfoDelegate.registerTouchEvent(
-	    touchEvents.touchMove,
-	    this._tabs,
-	    this.__onTouchMove.bind(this));
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchMove,
+            this._tabs,
+            this.__onTouchMove.bind(this));
 
-	touchInfoDelegate.registerTouchEvent(
-	    touchEvents.touchEnd,
-	    this._tabs,
-	    this.__onTouchEnd.bind(this));
+        touchInfoDelegate.registerTouchEvent(
+            touchEvents.touchEnd,
+            this._tabs,
+            this.__onTouchEnd.bind(this));
 
         // initialize default page
         this.__setupInitialTabVisibility();
@@ -162,7 +162,7 @@ var Tabs = (function () {
                 if (targetPage)
                     targetPage.style.display=value;
             };
-	    updateDisplayStyle(tab, 'block');
+            updateDisplayStyle(tab, 'block');
             [].slice.
                 call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(:first-child)')).
                 forEach(function(element) {
@@ -212,7 +212,7 @@ var Tabs = (function () {
         __onTouchStart: function (e) {
             if (!this._tabs) return;
 
-	    e.preventDefault();
+            e.preventDefault();
 
             this.__clearInternalState();
 
@@ -229,18 +229,18 @@ var Tabs = (function () {
 
             this._tabs.style['-webkit-transition-duration'] = 0;
 
-	    this._touchDown = true;
+            this._touchDown = true;
         },
 
         /**
          * @private
          */
         __onTouchMove: function (e) {
-	    if (!this._touchDown) {
-		return;
-	    }
+            if (!this._touchDown) {
+                return;
+            }
 
-	    e.preventDefault();
+            e.preventDefault();
 
             var _e = this._touchInfoDelegate.translateTouchEvent(e);
             deltaX = _e.touches[0].pageX - pageX;
@@ -259,14 +259,14 @@ var Tabs = (function () {
 
             offsetX = (deltaX / resistance) + this.__getScroll();
 
-	    var firstTab = this._tabs.querySelector('li:first-child');
+            var firstTab = this._tabs.querySelector('li:first-child');
             var maxRightScrollReached = 
-		firstTab.getBoundingClientRect().left >= 0 &&
+                firstTab.getBoundingClientRect().left >= 0 &&
                 deltaX > 0;
 
-	    var lastTab = this._tabs.querySelector('li:last-child');
+            var lastTab = this._tabs.querySelector('li:last-child');
             var maxLeftScrollReached = 
-		lastTab.getBoundingClientRect().right <= this.__getHeaderWidth() &&
+                lastTab.getBoundingClientRect().right <= this.__getHeaderWidth() &&
                 deltaX < 0;
 
             if (!maxRightScrollReached && !maxLeftScrollReached) {
@@ -280,8 +280,8 @@ var Tabs = (function () {
         __onTouchEnd: function (e) {
             if (!this._tabs || isScrolling) return;
 
-	    e.preventDefault();
-	    this._touchDown = false;
+            e.preventDefault();
+            this._touchDown = false;
 
             var _e = this._touchInfoDelegate.translateTouchEvent(e);
 
@@ -290,7 +290,7 @@ var Tabs = (function () {
                 state = STATES.navigating;
             }
             else if (state === STATES.navigating &&
-		     Math.abs((_e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
+                     Math.abs((_e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
                 this.__onClicked(_e);
                 // Timer should have been cancelled, back to basic
                 state = STATES.basic;

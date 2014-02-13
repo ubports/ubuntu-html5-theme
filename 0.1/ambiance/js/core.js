@@ -187,20 +187,20 @@ var UbuntuUI = (function () {
                 get isTouch() {
                     return self.isTouch;
                 },
-		registerTouchEvent: function(eventId,
-					     element,
-					     callback) {
-		    if ( ! eventId
-			 || typeof(eventId) !== 'object'
-			 || eventId.length === 0) {
-			console.log('Invalid or empty eventId for registerTouchEvent: ' + eventId.toString() + ' ' + typeof(eventId));
-			return;
-		    }
+                registerTouchEvent: function(eventId,
+                                             element,
+                                             callback) {
+                    if ( ! eventId
+                         || typeof(eventId) !== 'object'
+                         || eventId.length === 0) {
+                        console.log('Invalid or empty eventId for registerTouchEvent: ' + eventId.toString() + ' ' + typeof(eventId));
+                        return;
+                    }
 
-		    for (var i = 0; i < eventId.length; ++i) {
-			element.addEventListener(eventId[i], callback);
-		    }
-		},
+                    for (var i = 0; i < eventId.length; ++i) {
+                        element.addEventListener(eventId[i], callback);
+                    }
+                },
                 touchEvents: {
                     get touchStart() {
                         return self.touchEvents.touchStart;
