@@ -85,16 +85,21 @@ var Tabs = (function () {
         this._touchInfoDelegate = touchInfoDelegate;
 
         var touchEvents = touchInfoDelegate.touchEvents;
-        this._tabs.addEventListener(touchEvents.touchStart,
-                                    this.__onTouchStart.bind(this));
-        this._tabs.addEventListener(touchEvents.touchMove, this.__onTouchMove.bind(this));
-        this._tabs.addEventListener(touchEvents.touchEnd, this.__onTouchEnd.bind(this));
 
-        // we only have leave events on desktop, we manually calcuate
-        // leave on touch as its not supported in webkit
-        if (touchEvents.touchLeave) {
-            this._tabs.addEventListener(touchEvents.touchLeave, this.__onTouchLeave.bind(this));
-        }
+	touchInfoDelegate.registerTouchEvent(
+	    touchEvents.touchStart,
+	    this._tabs,
+	    this.__onTouchStart.bind(this));
+
+	touchInfoDelegate.registerTouchEvent(
+	    touchEvents.touchMove,
+	    this._tabs,
+	    this.__onTouchMove.bind(this));
+
+	touchInfoDelegate.registerTouchEvent(
+	    touchEvents.touchEnd,
+	    this._tabs,
+	    this.__onTouchEnd.bind(this));
 
         // initialize default page
         this.__setupInitialTabVisibility();
@@ -206,6 +211,9 @@ var Tabs = (function () {
          */
         __onTouchStart: function (e) {
             if (!this._tabs) return;
+
+	    e.preventDefault();
+
             this.__clearInternalState();
 
             if (state === STATES.basic) {
@@ -228,9 +236,11 @@ var Tabs = (function () {
          * @private
          */
         __onTouchMove: function (e) {
-	    if ( ! this._touchInfoDelegate.isTouch && !this._touchDown) {
+	    if (!this._touchDown) {
 		return;
 	    }
+
+	    e.preventDefault();
 
             var _e = this._touchInfoDelegate.translateTouchEvent(e);
             deltaX = _e.touches[0].pageX - pageX;
@@ -270,6 +280,7 @@ var Tabs = (function () {
         __onTouchEnd: function (e) {
             if (!this._tabs || isScrolling) return;
 
+	    e.preventDefault();
 	    this._touchDown = false;
 
             var _e = this._touchInfoDelegate.translateTouchEvent(e);
