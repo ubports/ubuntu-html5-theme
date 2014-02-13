@@ -23,28 +23,29 @@
 /**
  * An Ubuntu app consists of a Pagestack containing one or more Pages. Each page displays full-screen. See the Pagestack class.
 
-Each Page must have an <em>id</em> attriubute. This is used to push the Page to the top of the Pagestack (see the Pagestack class).
+Each Page must have <em>id</em> and <em>data-title</em> attributes. The <em>id</em> attribute is used a unique reference to push the Page to the top of the Pagestack (see the Pagestack class). The <em>data-title</em> attribute is used to update the Header title as pages are pushed and poped.
 
-Navigation between Pages is typically provided by the Header and its Tabs. See the Header class.
  * @class Page
  * @constructor
  * @namespace UbuntuUI
  * @example
       </body>
-        <div data-role="page">
+        <div data-role="mainview">
+
           <header data-role="header">
-            [...]
           </header>
+
           <div data-role="content">
             <div data-role="pagestack">
-              <div data-role="page" id="main">
+              <div data-role="page" data-title="Main" id="main">
                 [...]
               </div>
-              <div data-role="page" id="ID">
+              <div data-role="page" data-title="My Data" id="data">
                 [...]
               </div>
             </div>
           </div>
+
         </div>
       </body>
 
@@ -115,6 +116,39 @@ Page.prototype = {
             footer.style.display = 'block';
             footer.classList.add('revealed');
         });
+	this.__updateHeaderTitle();
+    },
+
+    /**
+     * @private
+     */
+    __updateHeaderTitle: function () {
+	var header =
+	    document.querySelector('div[data-role="mainview"] header');
+	if ( ! header)
+	    return;
+	var ul = header.querySelector('ul');
+	if ( ! ul) {
+	    ul = document.createElement('ul');
+	    ul.setAttribute('data-role', 'tabs');
+	    header.appendChild(ul);
+	}
+
+	var titles = header.querySelectorAll('ul li');
+	for (var i = 0; i < titles.length; ++i) {
+	    ul.removeChild(titles[i]);
+	}
+	var li = document.createElement('li');
+	li.setAttribute('data-role', 'tabitem');
+	li.setAttribute('data-page', this.id);
+        li.classList.add('active');
+	var title = 'Unknown Title';
+	try {
+	    title = this.element().getAttribute('data-title');
+	} catch(e) {}
+	var text = document.createTextNode(title);
+	li.appendChild(text);
+	ul.appendChild(li);
     },
 
     /**
