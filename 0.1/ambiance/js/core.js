@@ -103,10 +103,10 @@ var UbuntuUI = (function () {
         var U = this;
         U.isTouch = "ontouchstart" in window;
         U.touchEvents = {
-            touchStart: U.isTouch ? 'touchstart' : 'mousedown',
-            touchMove: U.isTouch ? 'touchmove' : 'mousemove',
-            touchEnd: U.isTouch ? 'touchend' : 'mouseup',
-            touchLeave: U.isTouch ? null : 'mouseleave' //we manually detect leave on touch devices, so null event here
+            touchStart: ['touchstart','mousedown'],
+            touchMove: ['touchmove','mousemove'],
+            touchEnd: ['touchend','mouseup'],
+            touchLeave: ['mouseleave'],
         };
     };
 
@@ -187,6 +187,20 @@ var UbuntuUI = (function () {
                 get isTouch() {
                     return self.isTouch;
                 },
+                registerTouchEvent: function(eventId,
+                                             element,
+                                             callback) {
+                    if ( ! eventId
+                         || typeof(eventId) !== 'object'
+                         || eventId.length === 0) {
+                        console.log('Invalid or empty eventId for registerTouchEvent: ' + eventId.toString() + ' ' + typeof(eventId));
+                        return;
+                    }
+
+                    for (var i = 0; i < eventId.length; ++i) {
+                        element.addEventListener(eventId[i], callback);
+                    }
+                },
                 touchEvents: {
                     get touchStart() {
                         return self.touchEvents.touchStart;
@@ -202,8 +216,6 @@ var UbuntuUI = (function () {
                     },
                 },
                 translateTouchEvent: function(event) {
-                    if (self.isTouch)
-                        return event;
                     var touch = __createTouchObject(event);
                     var translatedTouchEvent = event;
                     translatedTouchEvent.changedTouches = [touch];
