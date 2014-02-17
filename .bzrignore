@@ -24,3 +24,4 @@ debian/*.debhelper.log
 debian/*.substvars
 debian/stamp-*
 
+.sass-cache
