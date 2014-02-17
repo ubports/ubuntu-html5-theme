@@ -41,25 +41,33 @@ A <em>page</em> may declare a page-specific <em>footer</em> as a child element.
  * @constructor
  * @example
 
-     <div data-role="page">
+     <div data-role="mainview">
+
         <header data-role="header">
-          [...]
         </header>
+
         <div data-role="content">
+
           <div data-role="pagestack">
-            <div data-role="page" id="main">
+
+            <div data-role="page" id="main" data-title="Page 1">
             </div>
-            <div data-role="page" id="page2">
+
+            <div data-role="page" id="page2" data-title="Page 2">
               [...]
               <footer data-role="footer" class="revealed" id="footerPage2">
                 [...]
               </footer>
             </div>
+
             <footer data-role="footer" class="revealed" id="footerAppWide">
               [...]
             </footer>
+
           </div>  <!-- end of Pagestack div -->
+
         </div>
+
       </div>
 
       JavaScript:

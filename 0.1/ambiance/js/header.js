@@ -32,22 +32,19 @@ A contained unordered list has list items, each of which has an anchor (&lt;a&gt
  * @namespace UbuntuUI
  * @example
       <body>
-        <div data-role="page">
+        <div data-role="mainview">
+
           <header data-role="header" id="headerID">
-            <div class="tabs-inner">
-              <ul data-role="tabs">
-                <li class="active" data-role="tab">
-                  <a href="#main">Main</a>
-                </li>
-                <li data-role="tab">
-                  <a href="#page2">Two</a>
-                </li>
-              </ul>
-            </div>
+            <ul data-role="tabs">
+              <li data-role="tab-item" data-page="main">Main</li>
+              <li data-role="tabitem" data-page="two">Two</li>
+            </ul>
           </header>
+
           <div data-role="content">
             [...]
           </div>
+
         </div>
       </body>
 

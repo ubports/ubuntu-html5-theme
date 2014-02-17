@@ -30,7 +30,7 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
  * @namespace UbuntuUI
  * @example
       <body>
-        <div data-role="page">
+        <div data-role="mainview">
           <header data-role="header" id="headerID">
             <ul data-role="tabs">
               <li data-role="tabitem" data-page="main">
