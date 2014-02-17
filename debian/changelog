@@ -1,3 +1,19 @@
+ubuntu-html5-theme (0.1.2+14.04.20140217-0ubuntu1) trusty; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Fix page & pagestack behavior regarding the page title updates &
+    tabs relationship which is very flawed atm. A page should have a
+    title. In a page stack, the page's title should be reflected
+    *dynamically* in the header as the page is pushed/popped. (LP:
+    #1279891)
+  * Fix touch detection on UbuntuTouch & Desktop: we handle both. Touch
+    detection does not work reliably, we should embrace the dual world.
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 17 Feb 2014 17:03:15 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140212.4-0ubuntu1) trusty; urgency=low
 
   [ Alexandre Abreu ]
