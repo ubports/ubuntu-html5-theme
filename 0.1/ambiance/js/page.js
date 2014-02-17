@@ -144,10 +144,12 @@ Page.prototype = {
 	li.setAttribute('data-role', 'tabitem');
 	li.setAttribute('data-page', this.id);
         li.classList.add('active');
-	var title = 'Unknown Title';
+	var DEFAULT_TITLE = 'Unknown';
+	var title = DEFAULT_TITLE;
 	try {
 	    title = this.element().getAttribute('data-title');
 	} catch(e) {}
+	title = title || DEFAULT_TITLE;
 	var text = document.createTextNode(title);
 	li.appendChild(text);
 	ul.appendChild(li);
