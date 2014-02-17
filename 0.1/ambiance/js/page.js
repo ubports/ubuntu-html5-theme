@@ -123,6 +123,8 @@ Page.prototype = {
      * @private
      */
     __updateHeaderTitle: function () {
+	if ( ! this.element().getAttribute('data-title'))
+	    return;
 	var header =
 	    document.querySelector('div[data-role="mainview"] header');
 	if ( ! header)
