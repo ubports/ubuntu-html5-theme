@@ -1,3 +1,14 @@
+ubuntu-html5-theme (0.1.2+14.04.20140218-0ubuntu1) trusty; urgency=low
+
+  [ Alexandre Abreu ]
+  * Based on a branch from daker: lp:~daker/ubuntu-html5-
+    theme/fix.1202349 Revamped & made it work on desktop and touch.
+    Remove the need to declare the toolbar in js. (LP: #1202349)
+  * Resize the root object to the view (LP: #1279932)
+  * need to add an example of shape + text inside (LP: #1279936)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 18 Feb 2014 17:24:08 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140217-0ubuntu1) trusty; urgency=low
 
   [ Ubuntu daily release ]
