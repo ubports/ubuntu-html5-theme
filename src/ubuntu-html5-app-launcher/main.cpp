@@ -198,6 +198,7 @@ int main(int argc, char *argv[])
     view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
 
     view.setTitle(QCoreApplication::applicationName());
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
 
     if (maximized)
         view.showMaximized();
