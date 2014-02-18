@@ -44,6 +44,7 @@ MainView {
 
     Page {
         id: mainPage
+        anchors.fill: parent
 
         /*!
           \internal
