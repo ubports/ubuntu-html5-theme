@@ -227,6 +227,18 @@ var UbuntuUI = (function () {
             };
         },
 
+        __setupToolbars: function(document) {
+            var toolbars =
+                document.querySelectorAll('footer[data-role="footer"]');
+            for (var i = 0; i < toolbars.length; ++i) {
+                var id = toolbars[i].getAttribute('id');
+                if ( !id)
+                    continue;
+                var toolbar = new Toolbar(
+                    id, this.__getTabInfosDelegate());
+            }
+        },
+
         __setupTabs: function (document) {
             if (this._tabs != null)
                 return;
@@ -256,6 +268,7 @@ var UbuntuUI = (function () {
         init: function () {
             this.__setupTabs(document);
             this.__setupPage(document);
+            this.__setupToolbars(document);
         },
 
         /**
@@ -339,7 +352,7 @@ var UbuntuUI = (function () {
          */
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
-                return new Toolbar(this, id);
+                return new Toolbar(id, this.__getTabInfosDelegate());
             }
         },
 

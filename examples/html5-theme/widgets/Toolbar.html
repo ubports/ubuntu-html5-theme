@@ -40,6 +40,7 @@
 </head>
 
 <body>
+
     <div data-role="mainview">
 
         <div data-role="content">
@@ -66,12 +67,12 @@
         </div>
     </div>
     <script type="text/javascript">
-        var UI = new UbuntuUI(),
-            tabs = UI.tabs("[data-role='tabs']");
+        var UI = new UbuntuUI();
+        window.onload = function() {
+            UI.init();
             toolbar = UI.toolbar("footer1");
-            toolbar.touch(function (event) {
-                toolbar.toggle();
-            });
+        };
+    </script>
     </script>
 </body>
 </html>
