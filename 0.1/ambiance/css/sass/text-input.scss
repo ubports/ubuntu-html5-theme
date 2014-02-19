@@ -32,7 +32,6 @@ input[type="search"],
 input[type="url"],
 input[type="number"],
 textarea {
-    @include box_shadow (0 1px 1px rgba(0.5, 0.5, 0.5, 0.5));
     background: #cfcfcf;
     border: 0;
     border-radius: 6px;
@@ -40,6 +39,7 @@ textarea {
     font-family: Ubuntu;
     font-size: 0.8rem;
     padding: 8px;
+    text-shadow: 0 1px 1px;
 
     &:focus {
         background: #fff;

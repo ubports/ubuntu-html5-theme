@@ -116,7 +116,7 @@ label input[type="checkbox"][data-type="switch"] {
     }
 
     &:checked + span.toggle {
-        background: rgba(136, 136, 136, 0.3);
+        background: rgba(136, 136, 136, 0.3) !important;
 
         > span.toggle-bg {
             background: transparent url(../img/Checkbox.png) no-repeat 0.4rem 0.35rem;
@@ -133,7 +133,7 @@ label input[type="checkbox"][data-type="switch"] {
 
 label input[data-type="switch"]:disabled {
     + span.toggle {
-        background: rgba(136, 136, 136, 0.3)!important;
+        background: rgba(136, 136, 136, 0.3) !important;
 
         > span.toggle-handle {
             opacity: 0.4;
