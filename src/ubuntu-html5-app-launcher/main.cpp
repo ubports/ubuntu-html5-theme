@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
 
-    QString plugin_path = wwwFolder.absoluteFilePath() +
+    QString plugin_path = wwwFolder.absoluteFilePath() + "/.." +
         pluginPathForCurrentArchitecture();
 
     setUpQmlImportPathIfNecessary(plugin_path);
