@@ -1,3 +1,21 @@
+ubuntu-html5-theme (0.1.2+14.04.20140219-0ubuntu1) trusty; urgency=low
+
+  [ Alexandre Abreu ]
+  * In order to allow the local CordovaUbuntu 3.4. plugin to be embedded
+    locally in an HTML5 click package, the cordova-ubuntu-container bits
+    are being copied over in arch specific paths, e.g.
+    ./lib/<arch>/CordovaUbuntu.3.4. The function that was used before
+    QQmlEngine::addPluginPath works only (from what I can see) when
+    *from within* a qml plugin that defines a binary plugin, one wants
+    to add a library search path which is not the situation we are in.
+    See
+    http://code.woboq.org/qt5/qtdeclarative/src/qml/qml/qqmlimport.cpp.h
+    tml#_ZN18QQmlImportDatabase13resolvePluginEP14QQmlTypeLoaderRK7QStri
+    ngS4_S4_RK11QStringListS4_ (filePluginPath being the path specified
+    w/ QQmlEngine::addPluginPath).
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 19 Feb 2014 22:14:33 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140218-0ubuntu1) trusty; urgency=low
 
   [ Alexandre Abreu ]
