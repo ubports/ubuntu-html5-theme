@@ -181,13 +181,12 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
 
-    setUpQmlImportPathIfNecessary(wwwFolder.canonicalFilePath());
-
     QString plugin_path = wwwFolder.absoluteFilePath() +
         pluginPathForCurrentArchitecture();
 
+    setUpQmlImportPathIfNecessary(plugin_path);
+
     QQuickView view;
-    view.engine()->addPluginPath(plugin_path);    
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
