@@ -35,7 +35,7 @@
     -webkit-transition: -webkit-transform 0.1s ease-in-out;
     transition: transform 0.1s ease-in-out;
 
-    .revealed {
+    &.revealed {
         -webkit-transform: translate3d(0, -65px, 0);
         transform: translate3d(0, -65px, 0);
     }
