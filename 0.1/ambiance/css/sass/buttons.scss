@@ -24,10 +24,9 @@
  * Buttons
  * ---------------------------------- */
 
-[data-role="button"]{
+[data-role="button"] {
+    @include box_sizing (border-box);
     max-width: 200px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     display: inline-block;
     vertical-align: middle;
     text-overflow: ellipsis;
@@ -43,54 +42,54 @@
     text-align: center;
     text-decoration: none;
     position: relative;
-}
 
-[data-role="button"]:after {
-    background: url(../img/ubuntushape_small_radius_idle@18.png) no-repeat;
-    background-size: 100% 100%;
-    content: ' ';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+    &:after {
+        background: url(../img/ubuntushape_small_radius_idle@18.png) no-repeat;
+        background-size: 100% 100%;
+        content: ' ';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-[data-role="button"]:active:after {
-    background: url(../img/ubuntushape_small_radius_pressed@18.png) no-repeat;
-    background-size: 100% 100%;
-    content: ' ';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+    &:active:after {
+        background: url(../img/ubuntushape_small_radius_pressed@18.png) no-repeat;
+        background-size: 100% 100%;
+        content: ' ';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-[data-role="button"].ubuntu {
-    background: #dd4814;
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}
+    &.ubuntu {
+        background: $ubuntu_orange;
+        color: #ffffff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
 
-[data-role="button"].danger {
-    background: red;
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}
+    &.danger {
+        background: red;
+        color: #ffffff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
 
-[data-role="button"].warning {
-    background: #faa732;
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}
+    &.warning {
+        background: #faa732;
+        color: #ffffff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
 
-[data-role="button"].success {
-    background: #5da357;
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}
+    &.success {
+        background: #5da357;
+        color: #ffffff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
 
-[data-role="button"].disabled {
-    color: rgba(255,255,255,0.6);
+    &.disabled {
+        color: rgba(255,255,255,0.6);
+    }
 }

@@ -1,0 +1,28 @@
+======
+README
+======
+
+Ubuntu HTML5 UI SDK for Html5 apps that brings a collection of HTML5 widgets
+and js runtime support for HTML5 apps along with the HTML5 WebRuntime that is
+meant to host those apps.
+
+=======
+HACKING
+=======
+
+Here is how to develop on this code base.
+
+Install SASS
+============
+
+Complete the steps in globally install SASS if you currently do not have it
+installed:
+http://sass-lang.com/install
+
+Running SASS
+============
+
+Once you have SASS installed. Open terminal (CTRL+Alt+T) and cd into your
+branch folder. Then enter this command to begin watching your scss files:
+$ sass --watch 0.1/ambiance/css/sass/default.scss:0.1/ambiance/css/appTemplate.css --style compressed
+
