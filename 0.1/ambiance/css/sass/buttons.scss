@@ -26,70 +26,44 @@
 
 [data-role="button"] {
     @include box_sizing (border-box);
-    max-width: 200px;
     display: inline-block;
+    width: 100%;
+    height: 42px;
     vertical-align: middle;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    background: #cccccc;
-    border: 0;
+    background: $ubuntu_orange;
+    border: 2px solid $ubuntu_orange;
     border-radius: 6px;
-    color: #333;
-    font-family: Ubuntu;
-    font-size: 0.9rem;
-    padding: 6px 25px;
+    color: $white;
+    font-family: $font-family;
+    font-size: 1rem;
+    padding: 9px 25px;
     text-align: center;
     text-decoration: none;
     position: relative;
 
-    &:after {
-        background: url(../img/ubuntushape_small_radius_idle@18.png) no-repeat;
-        background-size: 100% 100%;
-        content: ' ';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+    &.positive {
+        background: $green;
+        color: $white;
+        border-color: $green;
     }
 
-    &:active:after {
-        background: url(../img/ubuntushape_small_radius_pressed@18.png) no-repeat;
-        background-size: 100% 100%;
-        content: ' ';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+    &.information {
+        background: $blue;
+        color: $white;
+        border-color: $blue;
     }
 
-    &.ubuntu {
-        background: $ubuntu_orange;
-        color: #ffffff;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &.secondary {
+        background: $white;
+        color: $warm_grey;
     }
 
-    &.danger {
-        background: red;
-        color: #ffffff;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    }
-
-    &.warning {
-        background: #faa732;
-        color: #ffffff;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    }
-
-    &.success {
-        background: #5da357;
-        color: #ffffff;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    }
-
-    &.disabled {
-        color: rgba(255,255,255,0.6);
+    &.negative {
+        background: $light_grey;
+        color: $white;
+        border-color: $light_grey;
     }
 }
