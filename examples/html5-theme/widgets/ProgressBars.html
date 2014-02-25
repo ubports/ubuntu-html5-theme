@@ -28,22 +28,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ubuntu UI HTML5: ProgressBars</title>
     <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/progress.js"></script>
 </head>
 
 <body>
     <div data-role="mainview">
 
         <div data-role="content">
+            <h1>Progress Bar</h1>
+            <div class="inset">
+                <p>Standard</p>
+                 <div style="width: 400px;">
+                    <progress id="progress1" value="80" max="100"></progress>
+                </div>
+            </div>
+            <div class="inset">
+                <p>Infinite</p>
+                <div style="width: 400px;">
+                   <progress id="progress2" class="infinite" value="100" max="100"></progress>
+                </div>
+            </div>
+            <h1>Activity indicator</h1>
             <div class="inset">
                 <progress></progress>
-            </div>
-            <div class="inset">
-                <progress value="80" max="100"></progress>
-            </div>
-            <div class="inset">
-                <progress class="infinite" value="100" max="100"></progress>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+ <script type="text/javascript">
+    var UI = new UbuntuUI();
+    UI.progress('progress2');
+
+    var demo = UI.progress('progress1');
+    var i = 0;
+    window.setInterval(function(){
+        demo.update(i);
+        if( i++ > 100 ){ i = 0; }
+    }, 50);
+</script>

@@ -308,6 +308,18 @@ var UbuntuUI = (function () {
         },
 
         /**
+         * Gets an Ubuntu Progress object
+         * @method progress
+         * @param {ID} id - The element's id attrubute
+         * @return {Progress} - The Progress with the specified id
+         */
+        progress: function (id) {
+            if (typeof Progress != 'undefined' && Progress) {
+                return new Progress(id);
+            }
+        },
+
+        /**
          * Gets an Ubuntu Dialog object
          * @method dialog
          * @param {ID} id - The element's id attrubute
