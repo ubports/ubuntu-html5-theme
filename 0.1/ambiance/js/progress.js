@@ -23,7 +23,7 @@
 /**
  * A Progress.
 
- Note the Ubuntu CSS style classes: <em>bigger</em>, <em>infinite</em>
+ Note the Ubuntu CSS style classes: <em>infinite</em>
 
  * @class Progress
  * @constructor
@@ -39,7 +39,7 @@ var Progress = (function () {
     function Progress(id) {
         this.id = id;
         this.max = 1;
-        this.infinite = false;
+        this.ele = this.element();
         this.__setupMessage();
     }
 
@@ -51,7 +51,9 @@ var Progress = (function () {
             var myprogress = UI.progress("progressid").element();
          */
         element: function() {
-            return document.getElementById(this.id);
+            if(document.getElementById(this.id)) {
+                return document.getElementById(this.id);
+            }
         },
 
         /**
@@ -62,10 +64,10 @@ var Progress = (function () {
          */
         update: function(value) {
             if(value != null && this.__IsNumeric(value)) {
-                this.element().value = value;
+                this.ele.value = value;
                 this.__updateMessage(value);
             }else{
-                console.error('Progress bar NaN value ID:', this.id);
+                console.error('Progress bar value element is NaN - ID:', this.id);
             }
         },
 
@@ -73,16 +75,17 @@ var Progress = (function () {
          * @private
          */
         __setupMessage: function() {
-            if(this.element()) {
-                this.__hasClass("infinite");
-                if(this.element().getAttribute("max")) {
-                    this.max = this.element().getAttribute("max");
-                }
-                if(this.element().getAttribute("value")) {
-                    this.update(this.element().getAttribute("value"));
+            if(this.ele) {
+                if(this.ele.getAttribute("max") && this.__IsNumeric(this.ele.getAttribute("max"))) {
+                    this.max = this.ele.getAttribute("max");
+                }else{
+                console.error('Progress bar max element is NaN - ID:', this.id);
+            }
+                if(this.ele.getAttribute("value")) {
+                    this.update(this.ele.getAttribute("value"));
                 }
             }else{
-                console.error('Progress bar missing ID:', this.id);
+                console.error('Progress bar missing - ID:', this.id);
             }
         },
 
@@ -90,18 +93,7 @@ var Progress = (function () {
          * @private
          */
         __updateMessage: function(value) {
-            if(!this.infinite) {
-                this.element().setAttribute('data-percentage', Math.max(0, Math.min(100, Math.floor((100 / this.max) * value))) + '%');
-            }
-        },
-
-        /**
-         * @private
-         */
-        __hasClass: function(className) {
-            if(this.element().className) {
-                return this.element().className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.element().className);
-            }
+            this.ele.setAttribute('data-percentage', Math.max(0, Math.min(100, Math.floor((100 / this.max) * value))) + '%');
         },
 
         /**
