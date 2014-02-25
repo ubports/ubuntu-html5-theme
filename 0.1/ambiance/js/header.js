@@ -21,11 +21,19 @@
  */
 
 /**
- * An Ubuntu Header wraps Tabs. Together they provide the main navigation widget at the top of an Ubuntu HTML5 app.
+ * An Ubuntu Header wraps the general Tabs definitions and interaction in the case of a Tab
+   navigation pattern or is used to display the title of the current page when using a PageStack navigation pattern.
 
-Declare the Header and its Tabs in HTML as a direct child of the top level Page as a sibling to the <em>content</em> div.
+In the case of a Tab navigation pattern, declare the Header and its Tabs in HTML as a direct child
+of the top level MainView as a sibling to the <em>content</em> div.
+
+In the case of a PageStack navigation pattern, the Ubuntu Header HTML element, should be present
+and can be left empty. It will be automatically updated to hole the Title of the current Page being
+visited. The value of such a title is taken from the data-title attribute of the currently visited
+Page as it is being pushed at the top of the stack (see PageStack.push()).
+
 ######Contained list provides Page navigation
-A contained unordered list has list items, each of which has an anchor (&lt;a&gt;) whose <em>href</em> attribute is a hash char ("#") followed by a Page ID. Clicking the Header/Tabs allows the user to navigate to the Pages identified by these IDs.
+A contained unordered list has list items, each of which has "data-page" data attribute whose value of a Page ID that it targets. Clicking the Header/Tabs allows the user to navigate to the Pages identified by these IDs.
 
  * @class Header
  * @constructor
@@ -42,7 +50,12 @@ A contained unordered list has list items, each of which has an anchor (&lt;a&gt
           </header>
 
           <div data-role="content">
+	    <div data-role="tab" id="main">
             [...]
+	    </div>
+	    <div data-role="tab" id="two">
+            [...]
+	    </div>
           </div>
 
         </div>
