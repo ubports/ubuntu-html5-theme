@@ -21,7 +21,9 @@
  */
 
 /**
- * Tabs are the standard way to provide app navigation from your application Header. See the Header class for more information.
+ * One of the navigation pattern that can be used within an Ubuntu App is the flat navigation. Tabs are the standard way to provide such a navigation pattern from within your application.
+
+Tabs are defined from within the Header part of your application HTML. See the Header class for more information.
 
 Declare the Header and Tabs in HTML as a direct child of the top level Page as a sibling to the content div.
 
@@ -31,7 +33,8 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
  * @example
       <body>
         <div data-role="mainview">
-          <header data-role="header" id="headerID">
+
+          <header data-role="header">
             <ul data-role="tabs">
               <li data-role="tabitem" data-page="main">
                 Main
@@ -41,9 +44,17 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
               </li>
             </ul>
           </header>
+
           <div data-role="content">
-            [...]
+	    <div data-role="tab" id="main">
+              [...]
+	    </div>
+
+	    <div data-role="tab" id="page2">
+              [...]
+	    </div>
           </div>
+
         </div>
       </body>
 
