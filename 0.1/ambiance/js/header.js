@@ -27,8 +27,8 @@
 In the case of a Tab navigation pattern, declare the Header and its Tabs in HTML as a direct child
 of the top level MainView as a sibling to the <em>content</em> div.
 
-In the case of a PageStack navigation pattern, the Ubuntu Header HTML element, should be present
-and can be left empty. It will be automatically updated to hole the Title of the current Page being
+In the case of a PageStack navigation pattern, the Ubuntu Header HTML element should be present
+and can be left empty. It will be automatically updated to hold the Title of the current Page being
 visited. The value of such a title is taken from the data-title attribute of the currently visited
 Page as it is being pushed at the top of the stack (see PageStack.push()).
 
