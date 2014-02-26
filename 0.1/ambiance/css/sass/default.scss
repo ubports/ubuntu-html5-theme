@@ -24,6 +24,7 @@
 @import "mixins";
 @import "reset";
 @import "tabs";
+@import "icons";
 @import "pagestack";
 @import "text-input";
 @import "progress-bars";
@@ -37,7 +38,6 @@
 @import "shapes";
 @import "indexbar";
 @import "option-selector";
-@import "icons";
 
 
 * {
@@ -88,6 +88,9 @@ body {
 
 .inset {
     margin-bottom: 10px;
+    margin-top: 10px;
+    clear: both;
+    overflow: hidden;
 }
 
 /**

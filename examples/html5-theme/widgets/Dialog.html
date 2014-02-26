@@ -5,18 +5,18 @@
  This file is part of ubuntu-html5-ui-toolkit.
 
  This package is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as 
- published by the Free Software Foundation; either version 3 of the 
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 3 of the
  License, or
  (at your option) any later version.
- 
+
  This package is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
- You should have received a copy of the GNU Lesser General Public 
- License along with this program. If not, see 
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program. If not, see
  <http://www.gnu.org/licenses/>.
 -->
 
@@ -40,15 +40,17 @@
         </header>
 
         <div data-role="content">
-            <a data-role="button" href="#dialog1">Open</a>
+            <div style="width: 100px;">
+                <a data-role="button" href="#dialog1">Open</a>
+            </div>
             <div data-role="dialog" id="dialog1" style="display: block">
                 <section>
                     <h1>Simple Dialog</h1>
                     <!-- this heading is optional -->
                     <p>Are you sure you want to delete this file?</p>
                     <menu>
-                        <button data-role="button" id="no">Cancel</button>
-                        <button data-role="button" class="danger" id="yes">Delete</button>
+                        <button data-role="button" class="negative" id="no">Cancel</button>
+                        <button data-role="button" id="yes">Delete</button>
                     </menu>
                 </section>
             </div>
