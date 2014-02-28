@@ -253,8 +253,8 @@ var UbuntuUI = (function () {
                     this._tabs.onTabChanged(function (e) {
                         if (!e || !e.infos)
                             return;
-                        if (e.infos.pageId) {
-                            (new Page(e.infos.pageId)).activate();
+                        if (e.infos.tabId) {
+                            (new Tab(e.infos.tabId)).activate();
                         }
                     }.bind(this));
                 }
@@ -274,12 +274,30 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Page object
          * @method page
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Page} - The Page with the specified id
          */
         page: function (id) {
             if (typeof Page != 'undefined' && Page ) {
                 return new Page(id);
+            }
+            else {
+                console.error('Could not find the Page element. You might be missing the "page.js" Page definition script. Please add a <script> declaration to include it.');
+            }
+        },
+
+        /**
+         * Gets an Ubuntu Tab object
+         * @method tab
+         * @param {ID} id - The element's id attribute
+         * @return {Tab} - The Tab with the specified id
+         */
+        tab: function (id) {
+            if (typeof Tab != 'undefined' && Tab ) {
+                return new Tab(id);
+            }
+            else {
+                console.error('Could not find the Tab element. You might be missing the "tab.js" Tab definition script. Please add a <script> declaration to include it.');
             }
         },
 
@@ -293,29 +311,38 @@ var UbuntuUI = (function () {
             if (typeof Shape != 'undefined' && Shape ) {
                 return new Shape(id);
             }
+            else {
+                console.error('Could not find the Shape element. You might be missing the "shape.js" Shape definition script. Please add a <script> declaration to include it.');
+            }
         },
 
         /**
          * Gets an Ubuntu Button object
          * @method button
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Button} - The Button with the specified id
          */
         button: function (id) {
             if (typeof Button != 'undefined' && Button) {
                 return new Button(id);
             }
+            else {
+                console.error('Could not find the Button element. You might be missing the "button.js" Button definition script. Please add a <script> declaration to include it.');
+            }
         },
 
         /**
          * Gets an Ubuntu Dialog object
          * @method dialog
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Dialog} - The Dialog with the specified id
          */
         dialog: function (id) {
             if (typeof Dialog != 'undefined' && Dialog) {
                 return new Dialog(id);
+            }
+            else {
+                console.error('Could not find the Dialog element. You might be missing the "dialog.js" Dialog definition script. Please add a <script> declaration to include it.');
             }
         },
 
@@ -323,36 +350,45 @@ var UbuntuUI = (function () {
          * Gets an Ubuntu Popover object
          * @method popover
          * @param {Element} el - The element to which the Popover's position is relative
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Popover} - The Popover with the specified id
          */
         popover: function (elem, id) {
             if (typeof Popover != 'undefined' && Popover) {
                 return new Popover(elem, id);
             }
+            else {
+                console.error('Could not find the Popover element. You might be missing the "popover.js" Popover definition script. Please add a <script> declaration to include it.');
+            }
         },
 
         /**
          * Gets an Ubuntu Header object
          * @method header
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Header} - The Header with the specified id
          */
         header: function (id) {
             if (typeof Header != 'undefined' && Header) {
                 return new Header(id);
             }
+            else {
+                console.error('Could not find the Header element. You might be missing the "header.js" Header definition script. Please add a <script> declaration to include it.');
+            }
         },
 
         /**
          * Gets an Ubuntu Toolbar object
          * @method toolbar
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Toolbar} - The Toolbar with the specified id
          */
         toolbar: function (id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
                 return new Toolbar(id, this.__getTabInfosDelegate());
+            }
+            else {
+                console.error('Could not find the Toolbar element. You might be missing the "toolbar.js" Toolbar definition script. Please add a <script> declaration to include it.');
             }
         },
 
@@ -366,12 +402,15 @@ var UbuntuUI = (function () {
             if (typeof List != 'undefined' && List) {
                 return new List(selector);
             }
+            else {
+                console.error('Could not find the List element. You might be missing the "list.js" List definition script. Please add a <script> declaration to include it.');
+            }
         },
 
         /**
          * Gets an Ubuntu Option Selector
          * @method optionselector
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @param {Boolean} expanded - Specifies whether the list is always expanded
          * @param {Boolean} multiSelection - If multiple choice selection is enabled the list is always expanded.
          * @return {OptionSelector}
@@ -379,6 +418,9 @@ var UbuntuUI = (function () {
         optionselector: function (id, expanded, multiSelection) {
             if (typeof OptionSelector != 'undefined' && OptionSelector) {
                 return new OptionSelector(id, expanded, multiSelection);
+            }
+            else {
+                console.error('Could not find the OptionSelector element. You might be missing the "option-selector.js" OptionSelector definition script. Please add a <script> declaration to include it.');
             }
         },
 
