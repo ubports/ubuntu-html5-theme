@@ -30,6 +30,35 @@
 #include <QQmlComponent>
 
 
+namespace {
+
+void loadQtTestability(const QStringList & arguments)
+{
+    // The testability driver is only loaded
+    // by QApplication but not by QGuiApplication.
+    // However, QApplication depends on QWidget which
+    // would add some unneeded overhead => Let's load the testability driver on our own.
+
+    if (arguments.contains(QLatin1String("-testability"))) {
+        QLibrary testLib(QLatin1String("qttestability"));
+
+        if (testLib.load()) {
+            typedef void (*TasInitialize)(void);
+            TasInitialize initFunction = (TasInitialize)testLib.resolve("qt_testability_init");
+            if (initFunction) {
+                initFunction();
+            } else {
+                qCritical("Library qttestability resolve failed!");
+            }
+        } else {
+            qCritical("Library qttestability load failed!");
+        }
+    }
+}
+
+} // namespace
+
+
 void addPathToQmlImport(const QString & importPath)
 {
     QString existingImportPath (qgetenv("QML2_IMPORT_PATH"));
@@ -101,6 +130,8 @@ int main(int argc, char *argv[])
         usage();
         return EXIT_FAILURE;
     }
+
+    loadQtTestability(app.arguments());
 
     const QString WWW_LOCATION_ARG_HEADER = "--www=";
     const QString MAXIMIZED_ARG_HEADER = "--maximized";
