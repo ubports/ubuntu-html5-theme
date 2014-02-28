@@ -36,7 +36,7 @@ A contained unordered list has list items, each of which has an anchor (&lt;a&gt
 
           <header data-role="header" id="headerID">
             <ul data-role="tabs">
-              <li data-role="tab-item" data-page="main">Main</li>
+              <li data-role="tabitem" data-page="main">Main</li>
               <li data-role="tabitem" data-page="two">Two</li>
             </ul>
           </header>
