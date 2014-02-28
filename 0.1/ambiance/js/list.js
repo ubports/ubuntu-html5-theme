@@ -185,6 +185,7 @@ var List = (function () {
         /**
          * Returns the DOM element associated with the selector this widget is bind to.
          * @method element
+         * @return {DOMElement}
          * @example
             var mylist = UI.list("#listid").element();
         */

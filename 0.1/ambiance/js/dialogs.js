@@ -73,6 +73,7 @@ Dialog.prototype = {
     /**
      * Returns the DOM element associated with the id this widget is bind to.
      * @method element
+     * @return {DOMElement}
      * @example
         var mydialog = UI.dialog("dialogid").element();
      */

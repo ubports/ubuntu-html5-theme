@@ -22,7 +22,7 @@
 /**
  * One of the navigation pattern that can be used within an Ubuntu App is the flat navigation. Tabs are the standard way to provide such a navigation pattern from within your application.
 
-A Tab represents the UI element that shost your tab content. This UI element is being activated by the user selecting it as part of the Header element.
+A Tab represents the UI element that hosts your tab content. This UI element is being activated by the user selecting it as part of the Header element.
 
  * @class Tab
  * @constructor
@@ -65,6 +65,7 @@ Tab.prototype = {
     /**
      * Returns the DOM element associated with the selector this widget is bind to.
      * @method element
+     * @return {DOMElement}
      * @example
        var mytab = UI.tab("tabid").element();
     */
@@ -87,7 +88,7 @@ Tab.prototype = {
 
     /**
      * Activates the current tab.
-     * @method {} deactivate
+     * @method {} activate
      */
     activate: function (id) {
         console.log('actiatin');
