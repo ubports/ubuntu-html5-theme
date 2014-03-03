@@ -107,7 +107,7 @@ Page.prototype = {
 
     /**
      * Activates the current page.
-     * @method {} deactivate
+     * @method {} activate
      */
     activate: function (id) {
         this.__hideVisibleSibling();

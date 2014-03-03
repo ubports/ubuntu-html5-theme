@@ -127,21 +127,32 @@ var Tabs = (function () {
         },
 
         /**
-         * Return the currently selected tab element
-         * @property selectedTab
-         * @return {Element} - The currently selected element or null
-         */
-        get selectedTab() {
-            return activeTab;
-        },
-
-        /**
          * Return the page associated with the currently selected tab
+         *
+         * @deprecated
+         *
          * @property currentPage
          * @return {Element} - Page DOM element associated with the currently selected tab or null
          */
         get currentPage() {
             return this.selectedTab ? this.selectedTab.querySelector('page') : null;
+        },
+
+        /**
+         * Return the currently selected tab element
+         *
+         * @property selectedTab
+         * @return {Element} - The currently selected element or null
+         */
+        get selectedTab() {
+            var selected = null;
+            if (activeTab) {
+                try {
+                    selected = document.getElementBydId(activeTab.getAttribute('data-page'));
+                }
+                catch(e) {};
+            }
+            return selected;
         },
 
         /**
@@ -155,6 +166,9 @@ var Tabs = (function () {
 
         /**
          * Return the list of DOM elements of the tab
+         *
+         * @deprecated
+         *
          * @property tabChildren
          * @return {Elements} - List of DOM elements in the tab
          */
@@ -363,10 +377,10 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __dispatchTabChangedEvent: function (pageId) {
+        __dispatchTabChangedEvent: function (tabId) {
             this._evt = document.createEvent('Event');
             this._evt.initEvent('tabchanged',true,true);
-            this._evt.infos = {pageId: pageId};
+            this._evt.infos = {tabId: tabId};
             this._tabs.dispatchEvent(this._evt);
         },
 

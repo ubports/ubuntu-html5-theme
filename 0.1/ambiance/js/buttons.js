@@ -57,6 +57,7 @@ Button.prototype = {
     /**
      * Returns the DOM element associated with the id this widget is bind to.
      * @method element
+     * @return {DOMElement}
      * @example
         var mybutton = UI.button("buttonid").element();
      */

@@ -44,7 +44,7 @@ A contained unordered list has list items, each of which has "data-page" data at
 
           <header data-role="header" id="headerID">
             <ul data-role="tabs">
-              <li data-role="tab-item" data-page="main">Main</li>
+              <li data-role="tabitem" data-page="main">Main</li>
               <li data-role="tabitem" data-page="two">Two</li>
             </ul>
           </header>
@@ -72,6 +72,7 @@ Header.prototype = {
     /**
      * Returns the DOM element associated with the id this widget is bind to.
      * @method element
+     * @return {DOMElement}
      * @example
         var myheader = UI.header("headerid").element();
      */
