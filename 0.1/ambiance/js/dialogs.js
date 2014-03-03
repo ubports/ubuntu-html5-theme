@@ -25,7 +25,7 @@
 
 Dialogs wrap arbitrary markup.
 
-Dialogs are declared inside the <em>content</em> div as a sibling to the <em>pagestack</em> div.
+Dialogs are declared at the top level inside the <em>content</em> div.
  * @class Dialog
  * @constructor
  * @namespace UbuntuUI

@@ -23,7 +23,7 @@
 /**
  * A Button.
 
- Note the Ubuntu CSS style classes: <em>success</em>, <em>warning</em>, and <em>danger</em>
+ Note the Ubuntu CSS style classes: <em>positive</em>, <em>information</em>, <em>secondary</em>, and <em>negative</em>
 
  * @class Button
  * @constructor
