@@ -38,8 +38,8 @@ See the Pagestack class documentation for information about the default applicat
             <li>
               <a href="#" id="home">Home</a>
             </li>
-          </nav>
-        </div>
+          </ul>
+        </nav>
       </footer>
 
       JavaScript access:
