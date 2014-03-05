@@ -123,7 +123,7 @@ Page.prototype = {
             footer.classList.add('revealed');
         });
         this.__updateHeaderTitle();
-	this.__dispatchActivatedEvent(properties);
+        this.__dispatchActivatedEvent(properties);
     },
 
     /**
@@ -132,35 +132,35 @@ Page.prototype = {
      * @param {Function} callback - Callback function called with activation properties (from Pagestack.push) when the page is activated
      */
     onactivated: function(callback) {
-	if (callback && typeof callback === 'function')
-	    this.onActivatedCallbacks.push(callback);
+        if (callback && typeof callback === 'function')
+            this.onActivatedCallbacks.push(callback);
     },
 
     /**
      * @private
      */
     __setup: function() {
-	var self = this;
-	if (this.id && this.element() != null) {
-	    this.element().addEventListener(
-		Page.PAGE_ACTIVATED_EVENT,
-		function(event) {
-		    if (! event.target || self.onActivatedCallbacks.length === 0)
-			return;
-		    self.onActivatedCallbacks.forEach(
-			function(callback) {
-			    callback(event.data);
-			});
-		});
-	}
+        var self = this;
+        if (this.id && this.element() != null) {
+            this.element().addEventListener(
+                Page.PAGE_ACTIVATED_EVENT,
+                function(event) {
+                    if (! event.target || self.onActivatedCallbacks.length === 0)
+                        return;
+                    self.onActivatedCallbacks.forEach(
+                        function(callback) {
+                            callback(event.data);
+                        });
+                });
+        }
     },
 
     /**
      * @private
      */
     __dispatchActivatedEvent: function (data) {
-	if ( ! this.element())
-	    return;
+        if ( ! this.element())
+            return;
         var event = document.createEvent('Event');
         event.initEvent(Page.PAGE_ACTIVATED_EVENT,true,true);
         event.data = data;
