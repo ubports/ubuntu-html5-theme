@@ -124,7 +124,7 @@ Item {
         statement += "; return __getAttributeWithId(); "
 
         webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
-		function(result) { console.log('result: ' + result); root.resultUpdated(root.__createResult(result, tid)); });
+		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
     }
 
     WebView {
