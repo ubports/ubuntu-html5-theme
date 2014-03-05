@@ -96,12 +96,12 @@ var Pagestack = (function () {
          * Push a page to the top of this pagestack
          * @method push
          * @param {String} id - The id attribute of the page element to be pushed
-         * @param {Object} properties - This param is not currently used
+         * @param {Object} properties - A list of properties passed down to the page that is to be activated
          */
         push: function (id, properties) {
             try {
                 __safeCall(this.__setAllPagesVisibility.bind(this), [false]);
-                (new Page(id)).activate(id);
+                (new Page(id)).activate(properties);
                 this._pages.push(id);
 
                 this.__dispatchPageChanged(this.currentPage());

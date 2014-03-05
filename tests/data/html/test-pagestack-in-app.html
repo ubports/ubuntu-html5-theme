@@ -37,7 +37,6 @@
     <script src="../../../0.1/ambiance/js/page.js"></script>
     <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
     <script src="../../../0.1/ambiance/js/popovers.js"></script>
-    <script src="../../../0.1/ambiance/js/tabs.js"></script>
     <script>
       window.onload = function () {
       };
@@ -46,17 +45,13 @@
 </head>
 <body>
     <div data-role="mainview">
+
         <header data-role="header">
-          <ul data-role="tabs">
-            <li data-role="tabitem">Tab 1</li>
-            <li data-role="tabitem">Tab 2</li>
-            <li data-role="tabitem">Tab 3</li>
-          </ul>
         </header>
 
         <div data-role="content">
             <div data-role="pagestack">
-                <div data-role="page" id="main">
+                <div data-role="page" id="main" data-title="Page 1">
                     <section data-role="list" id="yourfeeds"></section>
                     <footer data-role="footer" class="revealed">
                         <nav>
@@ -72,12 +67,10 @@
                     </footer>
                 </div>
 
-                <div data-role="page" id="results">
-                    <section data-role="list" id="resultscontent"></section>
+                <div data-role="page" id="results" data-title="Page 2">
                 </div>
 
-                <div data-role="page" id="article">
-                    <section id="articleinfo"></section>
+                <div data-role="page" id="article" data-title="Page 3">
                 </div>
             </div>
 
