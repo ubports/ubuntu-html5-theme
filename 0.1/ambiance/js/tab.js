@@ -91,7 +91,6 @@ Tab.prototype = {
      * @method {} activate
      */
     activate: function (id) {
-        console.log('actiatin');
         this.__hideVisibleSibling();
         this.__updateVisibleState('block', function(footer) {
             if (!footer)

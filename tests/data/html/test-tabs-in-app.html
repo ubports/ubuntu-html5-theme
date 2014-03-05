@@ -1,0 +1,93 @@
+<!--
+ Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+
+ This file is part of ubuntu-html5-ui-toolkit.
+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as 
+ published by the Free Software Foundation; either version 3 of the 
+ License, or
+ (at your option) any later version.
+ 
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public 
+ License along with this program. If not, see 
+ <http://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="copyright" content="Adnane Belmadiaf <daker@ubuntu.com>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ubuntu UI HTML5: Application Template</title>
+
+    <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <!-- Ubuntu UI javascript imports - Ambiance theme -->
+    <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/dialogs.js"></script>
+    <script src="../../../0.1/ambiance/js/page.js"></script>
+    <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
+    <script src="../../../0.1/ambiance/js/popovers.js"></script>
+    <script src="../../../0.1/ambiance/js/tab.js"></script>
+    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+    <script>
+      window.onload = function () {
+        var ui = new UbuntuUI();
+        ui.init();
+      ui.tabs.selectedTabIndex = 1; 
+      };
+    </script>
+
+</head>
+
+<body>
+
+    <div data-role="mainview">
+
+        <header data-role="header">
+          <ul data-role="tabs">
+            <li data-role="tabitem" data-page="tab1">Tab 1</li>
+            <li data-role="tabitem" data-page="tab2">Tab 2</li>
+            <li data-role="tabitem" data-page="tab3">Tab 3</li>
+          </ul>
+        </header>
+
+        <div data-role="content">
+
+          <div data-role="tab" id="tab1">
+            <footer data-role="footer" class="revealed">
+              <nav>
+                <ul>
+                  <li>
+                    <a href="#" id="addfeed">
+                      <img src="../../../0.1/ambiance/img/back@18.png" alt="Tap me!" />
+                      <span>Add feed</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </footer>
+          </div>
+
+          <div data-role="tab" id="tab2">
+          </div>
+
+          <div data-role="tab" id="tab3">
+          </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
