@@ -128,7 +128,7 @@ Page.prototype = {
 
     /**
      * Activates the current page.
-     * @method {} onactivateed
+     * @method {} onactivated
      * @param {Function} callback - Callback function called with activation properties (from Pagestack.push) when the page is activated
      */
     onactivated: function(callback) {
