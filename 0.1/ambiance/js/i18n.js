@@ -27,11 +27,13 @@ var i18n = (function () {
     var defaultLocale = 'en-US';
 
     function i18n() {
-        var userLocale = navigator.language || navigator.userLanguage;
+        this.rtl = ["ar", "dv", "fa", "ha", "he", "ks", "ku", "ps", "ur", "yi"];
         this.i18nElements = [];
 
-        console.log("[i18n] Loaded " + this.__getI18nLinks().length + " locale");
-        console.log("[i18n] Using " + userLocale + " as locale");
+        this.userLocale = navigator.language || navigator.userLanguage;
+        this.userLocale = "en";
+
+        console.log("[i18n] Using " + this.userLocale + " as locale");
 
         var nodes = document.getElementsByTagName('*'),
             n = nodes.length;
@@ -41,28 +43,58 @@ var i18n = (function () {
                 this.i18nElements.push(nodes[i]);
         }
         console.log(this.i18nElements);
-
-        this.__getI18nDict(userLocale);
+        this.__getLocalesLink();
+        this.__getI18nDict(this.userLocale);
     }
 
     i18n.prototype = {
-        /**
-         * @private
-         */
-        __getI18nDict: function (lang) {
-            var getInlineDict = function (locale) {
-                var sel = 'script[type="application/i18n"][lang="' + locale + '"]';
-                return document.querySelector(sel);
+
+
+        __load: function (url) {
+            var t = this;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, /*async: */ true);
+            if (xhr.overrideMimeType) {
+                xhr.overrideMimeType('application/json; charset=utf-8');
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status === 0) {
+                        var data = JSON.parse(xhr.responseText);
+                        // Pass on the contents for parsing
+                        t.__parse(url, data);
+                    } else {
+                        new Error('Failed to load ' + url);
+                    }
+                }
             };
-            var script = getInlineDict(lang) || getInlineDict(defaultLocale);
-            return script ? JSON.parse(script.innerHTML) : null;
+            xhr.send(null);
+
         },
 
         /**
          * @private
          */
-        __getI18nLinks: function () {
-            return document.querySelectorAll('link[type="application/i18n"]');
+        __getI18nDict: function (lang) {
+
+        },
+
+        /**
+         * @private
+         */
+        __getLocalesLink: function () {
+            var locales_index = document.querySelector('link[type="application/i18n"]').getAttribute('href');
+            console.log(locales_index);
+            this.__load(locales_index);
+            return;
+        },
+
+        __parse: function (url, data) {
+            console.log(url);
+            console.log(data);
+            if (typeof data[this.userLocale] != 'undefined') {
+                this.__load(data[this.userLocale]);
+            }
         }
     };
 
