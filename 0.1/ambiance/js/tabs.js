@@ -46,13 +46,13 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
           </header>
 
           <div data-role="content">
-	    <div data-role="tab" id="main">
+            <div data-role="tab" id="main">
               [...]
-	    </div>
+            </div>
 
-	    <div data-role="tab" id="page2">
+            <div data-role="tab" id="page2">
               [...]
-	    </div>
+            </div>
           </div>
 
         </div>
@@ -131,13 +131,13 @@ var Tabs = (function () {
          * @property selectedTabIndex
          * @param {Integer} - The zero based index of the element in the list of tabs
          */
-	set selectedTabIndex(index) {
-	    var tabs = Array.prototype.slice.call(this._tabs.querySelectorAll('li'));
-	    if (index < 0 || index > tabs.length)
-		return;
+        set selectedTabIndex(index) {
+            var tabs = Array.prototype.slice.call(this._tabs.querySelectorAll('li'));
+            if (index < 0 || index > tabs.length)
+                return;
 
-	    this.__doSelectTab(tabs[index]);
-	},
+            this.__doSelectTab(tabs[index]);
+        },
 
         /**
          * Return the page associated with the currently selected tab
@@ -204,7 +204,7 @@ var Tabs = (function () {
             [].slice.
                 call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(:first-child)')).
                 forEach(function(element) {
-		    element.classList.add('inactive');
+                    element.classList.add('inactive');
                     updateDisplayStyle(element, 'none');
                 });
         },
@@ -410,16 +410,16 @@ var Tabs = (function () {
             var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
             if (selectedTab == null)
                 return;
-	    this.__doSelectTab(selectedTab);
+            this.__doSelectTab(selectedTab);
             e.preventDefault();
         },
 
         /**
          * @private
          */
-	__doSelectTab: function(tabElement) {
-	    if ( ! tabElement)
-		return;
+        __doSelectTab: function(tabElement) {
+            if ( ! tabElement)
+                return;
 
             if (tabElement.getAttribute("data-role") !== 'tabitem')
                 return;
@@ -447,15 +447,15 @@ var Tabs = (function () {
                     el.classList.toggle('inactive');
                 });
 
-		var self = this;
+                var self = this;
                 t2 = window.setTimeout(function () {
-		    var nonActiveTabs = self._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)');
+                    var nonActiveTabs = self._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)');
                     [].forEach.call(nonActiveTabs, function (el) {
                         el.classList.toggle('inactive');
                     });
                 }, 3000);
             }
-	},
+        },
 
         /**
          * @private
