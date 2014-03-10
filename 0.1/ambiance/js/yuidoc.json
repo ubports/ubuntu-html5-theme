@@ -1,9 +1,10 @@
 {
-    "name": "Ubuntu HTML5 API",
-    "description": "Ubuntu HTML5 API: JavaScript for HTML5 Ubuntu Apps",
-    "version": "0.1",
     "options": {
-        "outdir": "./build",
+        "outdir": "./docsbuild",
         "themedir": "yuidoc-theme"
-    }
+    },
+    "name": "Ubuntu HTML5 API",
+    "version": "0.1~bzr153",
+    "majorversion": "0.1",
+    "description": "Ubuntu HTML5 API: JavaScript for HTML5 Ubuntu Apps"
 }
