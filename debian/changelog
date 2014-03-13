@@ -1,3 +1,14 @@
+ubuntu-html5-theme (0.1.2+14.04.20140313-0ubuntu1) trusty; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ daker ]
+  * Initial i18n functions
+  * More fixes
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 13 Mar 2014 15:16:25 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140303-0ubuntu1) trusty; urgency=low
 
   [ CI bot ]
