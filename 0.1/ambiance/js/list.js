@@ -78,7 +78,7 @@ var List = (function () {
          * Add or Set the List Header
          * @method setHeader
          * @param {String} text - The header text
-         */ 
+         */
         setHeader: function (text) {
             if (typeof (text) == 'string') {
                 var header = this._list.querySelectorAll('header');
@@ -93,8 +93,10 @@ var List = (function () {
                         header = null;
                 }
 
-                if (!header)
+                if (!header) {
                     header = document.createElement('header');
+                    this._list.insertBefore(header, this._list.firstChild);
+                }
 
                 header.innerText = text;
             }
@@ -143,7 +145,7 @@ var List = (function () {
          * Gets a list item &lt;li&gt; by its index, where index counting starts from 1
          * @method at
          * @param {Number} index
-         * @return The list item, or null on failure 
+         * @return The list item, or null on failure
          */
         at: function (index) {
             if (typeof (index) != 'number')
