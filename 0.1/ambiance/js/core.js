@@ -271,15 +271,6 @@ var UbuntuUI = (function () {
             this.__setupToolbars(document);
         },
 
-        i18n: function () {
-            if (typeof i18n != 'undefined' && i18n ) {
-                return new i18n();
-            }
-            else {
-                console.error('i18n error.');
-            }
-        },
-
         /**
          * Gets an Ubuntu Page object
          * @method page
