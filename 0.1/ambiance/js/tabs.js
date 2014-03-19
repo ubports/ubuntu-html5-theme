@@ -133,10 +133,10 @@ var Tabs = (function () {
          */
         set selectedTabIndex(index) {
             var tabs = Array.prototype.slice.call(this._tabs.querySelectorAll('li'));
-            if (index < 0 || index > tabs.length)
+            if (index < 0 || index >= tabs.length)
                 return;
 
-            this.__doSelectTab(tabs[index]);
+            this.__doSelectTab(tabs[index], true);
         },
 
         /**
@@ -194,6 +194,7 @@ var Tabs = (function () {
          */
         __setupInitialTabVisibility: function() {
             var tab = this._tabs.querySelector('[data-role="tabitem"]:first-child');
+            tab.classList.remove('inactive');
             tab.classList.add('active');
             var updateDisplayStyle = function(tab, value) {
                 var targetPage = document.getElementById(tab.getAttribute('data-page'));
@@ -204,7 +205,7 @@ var Tabs = (function () {
             [].slice.
                 call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(:first-child)')).
                 forEach(function(element) {
-                    element.classList.add('inactive');
+                    element.classList.remove('inactive');
                     updateDisplayStyle(element, 'none');
                 });
         },
@@ -417,14 +418,16 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __doSelectTab: function(tabElement) {
+        __doSelectTab: function(tabElement, forcedSelection) {
             if ( ! tabElement)
                 return;
 
             if (tabElement.getAttribute("data-role") !== 'tabitem')
                 return;
 
-            if ((Array.prototype.slice.call(tabElement.classList)).indexOf('inactive') > -1) {
+            if (forcedSelection ||
+		(Array.prototype.slice.call(tabElement.classList)).indexOf('inactive') > -1) {
+
                 window.clearTimeout(t2);
 
                 activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
