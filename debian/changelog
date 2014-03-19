@@ -1,3 +1,19 @@
+ubuntu-html5-theme (0.1.2+14.04.20140319.3-0ubuntu1) trusty; urgency=low
+
+  [ Adnane Belmadiaf ]
+  * Reverted unwanted changes commited to trunk accidently
+
+  [ Alexandre Abreu ]
+  * Add a set selectedTabIndex property, Add associated tabs AP tests,
+    Some minor fixes in tabs, (LP: #1288798)
+  * Add user data to page push & onactivated method to Page to allow one
+    to: 1. be informed when a page is about to be activated, 2. be able
+    from the location of the push() to pass down data to the page so
+    that it can properly initialize itself & rearrange its state (LP:
+    #1288795)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 19 Mar 2014 18:23:47 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140313-0ubuntu1) trusty; urgency=low
 
   [ Ubuntu daily release ]
