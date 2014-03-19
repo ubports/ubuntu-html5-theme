@@ -40,3 +40,24 @@ class UbuntuThemePageStackTestCase(UbuntuHTML5TestCaseBase):
         self.assertThat(self.is_dom_node_visible('main'), Equals(False))
         self.assertThat(self.is_dom_node_visible('results'), Equals(True))
         self.assertThat(self.is_dom_node_visible('article'), Equals(False))
+
+    def test_pagePushWithProperties(self):
+        self.browse_to_test_html('test-pagestack-in-app.html')
+        expression = """
+        var ui = new UbuntuUI();
+        ui.init();
+        ui.pagestack.push('main');
+
+        (new Page('results')).onactivated(
+          function(properties) {
+            document.getElementById('results').innerHTML = JSON.stringify(properties);
+          });
+
+        ui.pagestack.push('results', 'WORKS');
+        return 'ok';
+        """
+        self.assertThat(self.eval_expression_in_page_unsafe(expression), Equals('ok'));
+        self.assertThat(lambda: self.is_dom_node_visible('results'), Eventually(Equals(True)))
+        results_html_content = "return document.getElementById('results').innerHTML;"
+        self.assertThat(self.eval_expression_in_page_unsafe(results_html_content), Equals('"WORKS"'));
+

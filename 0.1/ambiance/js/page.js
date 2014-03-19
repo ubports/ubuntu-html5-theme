@@ -55,7 +55,11 @@ Each Page must have <em>id</em> and <em>data-title</em> attributes. The <em>id</
  */
 var Page = function (id) {
     this.id = id;
+    this.onActivatedCallbacks = [];
+
+    this.__setup();
 };
+Page.PAGE_ACTIVATED_EVENT = 'ubuntu-html5-on-page-activated';
 
 Page.prototype = {
     /**
@@ -108,8 +112,9 @@ Page.prototype = {
     /**
      * Activates the current page.
      * @method {} activate
+     * @param {Object} properties - Data to be passed down to any activation callback listening for the page activation (see Page.onactivated)
      */
-    activate: function (id) {
+    activate: function (properties) {
         this.__hideVisibleSibling();
         this.__updateVisibleState('block', function (footer) {
             if (!footer)
@@ -118,6 +123,48 @@ Page.prototype = {
             footer.classList.add('revealed');
         });
         this.__updateHeaderTitle();
+        this.__dispatchActivatedEvent(properties);
+    },
+
+    /**
+     * Activates the current page.
+     * @method {} onactivated
+     * @param {Function} callback - Callback function called with activation properties (from Pagestack.push) when the page is activated
+     */
+    onactivated: function(callback) {
+        if (callback && typeof callback === 'function')
+            this.onActivatedCallbacks.push(callback);
+    },
+
+    /**
+     * @private
+     */
+    __setup: function() {
+        var self = this;
+        if (this.id && this.element() != null) {
+            this.element().addEventListener(
+                Page.PAGE_ACTIVATED_EVENT,
+                function(event) {
+                    if (! event.target || self.onActivatedCallbacks.length === 0)
+                        return;
+                    self.onActivatedCallbacks.forEach(
+                        function(callback) {
+                            callback(event.data);
+                        });
+                });
+        }
+    },
+
+    /**
+     * @private
+     */
+    __dispatchActivatedEvent: function (data) {
+        if ( ! this.element())
+            return;
+        var event = document.createEvent('Event');
+        event.initEvent(Page.PAGE_ACTIVATED_EVENT,true,true);
+        event.data = data;
+        this.element().dispatchEvent(event);
     },
 
     /**
