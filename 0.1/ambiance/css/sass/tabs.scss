@@ -41,7 +41,7 @@
     }
 
     .active {
-        color: #484647;
+        color: #888888;
         padding-left: 15px;
         -webkit-opacity: 1;
         opacity: 1;
@@ -68,9 +68,8 @@
 
 [data-role="tabitem"] {
     display: inline-block;
-    font: 35px $font_family_light, $font_family;
+    font: 33px $font_family;
     font-weight: 100;
-    letter-spacing: -1px;
     line-height: 60px;
     padding-left: 35px;
     text-decoration: none;
