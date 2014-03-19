@@ -46,13 +46,13 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
           </header>
 
           <div data-role="content">
-	    <div data-role="tab" id="main">
+            <div data-role="tab" id="main">
               [...]
-	    </div>
+            </div>
 
-	    <div data-role="tab" id="page2">
+            <div data-role="tab" id="page2">
               [...]
-	    </div>
+            </div>
           </div>
 
         </div>
@@ -120,10 +120,23 @@ var Tabs = (function () {
         /**
          * Return the index of the selected tab
          * @property selectedTabIndex
-         * @return {Integer} - The index of the element in the list of tabs or -1
+         * @return {Integer} - The zero based index of the element in the list of tabs or -1
          */
         get selectedTabIndex() {
-            return [].prototype.slice.call(this._tabs.querySelector('ul').children).indexOf(activeTab);
+            return Array.prototype.slice.call(this._tabs.querySelectorAll('li')).indexOf(activeTab);
+        },
+
+        /**
+         * Sets the index of the selected tab
+         * @property selectedTabIndex
+         * @param {Integer} - The zero based index of the element in the list of tabs
+         */
+        set selectedTabIndex(index) {
+            var tabs = Array.prototype.slice.call(this._tabs.querySelectorAll('li'));
+            if (index < 0 || index >= tabs.length)
+                return;
+
+            this.__doSelectTab(tabs[index], true);
         },
 
         /**
@@ -181,6 +194,7 @@ var Tabs = (function () {
          */
         __setupInitialTabVisibility: function() {
             var tab = this._tabs.querySelector('[data-role="tabitem"]:first-child');
+            tab.classList.remove('inactive');
             tab.classList.add('active');
             var updateDisplayStyle = function(tab, value) {
                 var targetPage = document.getElementById(tab.getAttribute('data-page'));
@@ -191,6 +205,7 @@ var Tabs = (function () {
             [].slice.
                 call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(:first-child)')).
                 forEach(function(element) {
+                    element.classList.remove('inactive');
                     updateDisplayStyle(element, 'none');
                 });
         },
@@ -396,9 +411,23 @@ var Tabs = (function () {
             var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
             if (selectedTab == null)
                 return;
-            if (selectedTab.getAttribute("data-role") !== 'tabitem')
+            this.__doSelectTab(selectedTab);
+            e.preventDefault();
+        },
+
+        /**
+         * @private
+         */
+        __doSelectTab: function(tabElement, forcedSelection) {
+            if ( ! tabElement)
                 return;
-            if ((selectedTab.className).indexOf('inactive') > -1) {
+
+            if (tabElement.getAttribute("data-role") !== 'tabitem')
+                return;
+
+            if (forcedSelection ||
+		(Array.prototype.slice.call(tabElement.classList)).indexOf('inactive') > -1) {
+
                 window.clearTimeout(t2);
 
                 activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
@@ -406,13 +435,13 @@ var Tabs = (function () {
                 this._tabs.style['-webkit-transition-duration'] = '.3s';
                 this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
 
-                this.__updateActiveTab(selectedTab, activeTab);
+                this.__updateActiveTab(tabElement, activeTab);
 
                 [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (e) {
                     e.classList.remove('inactive');
                 });
 
-                var targetPageId = selectedTab.getAttribute('data-page');
+                var targetPageId = tabElement.getAttribute('data-page');
                 this.activate(targetPageId);
                 this.__dispatchTabChangedEvent(targetPageId);
             } else {
@@ -420,13 +449,15 @@ var Tabs = (function () {
                 [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
                     el.classList.toggle('inactive');
                 });
+
+                var self = this;
                 t2 = window.setTimeout(function () {
-                    [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
+                    var nonActiveTabs = self._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)');
+                    [].forEach.call(nonActiveTabs, function (el) {
                         el.classList.toggle('inactive');
                     });
                 }, 3000);
             }
-            e.preventDefault();
         },
 
         /**

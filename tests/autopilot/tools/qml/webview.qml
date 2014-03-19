@@ -116,13 +116,12 @@ Item {
     function getAttributeForElementWithId(id,attribute) {
         var tid = __gentid();
         function __getAttributeWithId() {
-            try { return document.querySelector('#' + id).getAttribute(attribute); } catch (e) {};
-            return undefined;
+            try { var value = document.querySelector('#' + id).getAttribute(attribute); return value || ""; } catch (e) { return e.toString(); };
+            return "";
         };
-
         var statement = __setupClosedVariables({'id': id, 'attribute': attribute});
         statement += __getAttributeWithId.toString();
-        statement += "; return __getAttributeWithId(id,attribute,value); "
+        statement += "; return __getAttributeWithId(); "
 
         webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
 		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
