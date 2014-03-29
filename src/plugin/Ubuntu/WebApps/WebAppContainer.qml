@@ -30,7 +30,7 @@ import Ubuntu.Components.Extras.Browser 0.1
 MainView {
     id: root
     objectName: "root"
-
+    anchorToKeyboard: true
     automaticOrientation: true
 
     /*!
