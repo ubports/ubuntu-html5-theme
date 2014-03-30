@@ -43,7 +43,7 @@ See the Pagestack class documentation for information about the default applicat
       </footer>
 
       JavaScript access:
-      var toolbar = UI.footer("footerID");
+      var toolbar = UI.toolbar("toolbarID");
       UI.button('home').click(function () {
         UI.pagestack.push("main");
       });
