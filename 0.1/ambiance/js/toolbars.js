@@ -52,6 +52,8 @@ See the Pagestack class documentation for information about the default applicat
 
 var Toolbar = (function () {
 
+    var t;
+
     function Toolbar(id, touchInfoDelegate) {
 
         this.PHASE_START = "start";
@@ -90,6 +92,11 @@ var Toolbar = (function () {
             touchEvents.touchMove, this.toolbar, this.__onTouchMove.bind(this));
         touchInfoDelegate.registerTouchEvent(
             touchEvents.touchLeave, this.toolbar, this.__onTouchLeave.bind(this));
+
+        var self = this;
+        t = window.setTimeout(function () {
+            self.hide();
+        }, 5000);
     };
 
     Toolbar.prototype = {
@@ -107,6 +114,7 @@ var Toolbar = (function () {
          */
         hide: function () {
             this.toolbar.classList.remove('revealed');
+            window.clearTimeout(t);
         },
 
         /**
@@ -115,6 +123,7 @@ var Toolbar = (function () {
          */
         toggle: function () {
             this.toolbar.classList.toggle('revealed');
+            window.clearTimeout(t);
         },
 
         /**
@@ -131,6 +140,7 @@ var Toolbar = (function () {
          * @private
          */
         __onTouchStart: function (evt) {
+            window.clearTimeout(t);
             this._touchDown = true;
 
             evt.preventDefault();
