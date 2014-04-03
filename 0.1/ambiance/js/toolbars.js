@@ -92,8 +92,6 @@ ToolbarListener.prototype = {
 
 var Toolbar = (function () {
 
-    var t;
-
     function Toolbar(id, touchInfoDelegate) {
 
         this.PHASE_START = "start";
@@ -174,7 +172,7 @@ var Toolbar = (function () {
          */
         hide: function () {
             this.toolbar.classList.remove('revealed');
-            window.clearTimeout(t);
+            window.clearTimeout(this._timer);
         },
 
         /**
@@ -183,7 +181,7 @@ var Toolbar = (function () {
          */
         toggle: function () {
             this.toolbar.classList.toggle('revealed');
-            window.clearTimeout(t);
+            window.clearTimeout(this._timer);
         },
 
         /**
@@ -200,7 +198,7 @@ var Toolbar = (function () {
          * @private
          */
         __onTouchStart: function (evt) {
-            window.clearTimeout(t);
+            window.clearTimeout(this._timer);
             this._touchDown = true;
 
             evt.preventDefault();
