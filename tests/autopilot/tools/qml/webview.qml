@@ -72,7 +72,7 @@ Item {
         var tid = __gentid();
 
         webview.experimental.evaluateJavaScript(__wrapJsCommands(expr),
-		function(result) { console.log('result: ' + result); root.resultUpdated(root.__createResult(result)); });
+		function(result) { root.resultUpdated(root.__createResult(result)); });
     }
 
     function clickAnyElementBySelector(selector) {
@@ -85,13 +85,14 @@ Item {
 
     function elementWithIdHasAttribute(id,attribute,value) {
         var tid = __gentid();
+	var hasAttributeWithIdFunc = '
         function __hasAttributeWithId() {
-            try { return document.querySelector('#' + id).getAttribute(attribute) === value; } catch (e) {};
+            try { return document.querySelector("#" + id).getAttribute(attribute) === value; } catch (e) {};
             return false;
-        };
+        };';
 
         var statement = __setupClosedVariables({'id': id, 'attribute': attribute, 'value': value});
-        statement += __hasAttributeWithId.toString();
+        statement += hasAttributeWithIdFunc;
         statement += "; return __hasAttributeWithId(id,attribute,value); "
 
         webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
@@ -100,27 +101,29 @@ Item {
 
     function isNodeWithIdVisible(id) {
         var tid = __gentid();
+	var isNodeWithIdVisibleFunc = '
         function __isNodeWithIdVisible() {
             try { return document.getElementById(id).style.display !== "none"; } catch (e) { return e.toString(); };
             return false;
-        };
+        };';
 
         var statement = __setupClosedVariables({'id': id});
-        statement += __isNodeWithIdVisible.toString();
+        statement += isNodeWithIdVisibleFunc;
         statement += "; return __isNodeWithIdVisible(id); "
-	
         webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
 		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
     }
 
     function getAttributeForElementWithId(id,attribute) {
         var tid = __gentid();
-        function __getAttributeWithId() {
-            try { var value = document.querySelector('#' + id).getAttribute(attribute); return value || ""; } catch (e) { return e.toString(); };
+        var getAttributeWithIdFunc = '
+	function __getAttributeWithId() {
+            try { var value = document.querySelector("#" + id).getAttribute(attribute); return value || ""; } catch (e) { return e.toString(); };
             return "";
-        };
+        };';
+
         var statement = __setupClosedVariables({'id': id, 'attribute': attribute});
-        statement += __getAttributeWithId.toString();
+        statement += getAttributeWithIdFunc;
         statement += "; return __getAttributeWithId(); "
 
         webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
