@@ -195,7 +195,6 @@ var Toolbar = (function () {
          * @private
          */
         __onTouchStart: function (evt) {
-            window.clearTimeout(this._timer);
             this._touchDown = true;
 
             evt.preventDefault();
