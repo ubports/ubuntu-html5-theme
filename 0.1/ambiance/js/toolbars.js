@@ -50,47 +50,46 @@ See the Pagestack class documentation for information about the default applicat
 
  */
 
-
-function ToolbarListener(id) {
-    this._id = id;
-    this._onChangedCallbacks = [];
-    this._listen();
-};
-
-ToolbarListener.prototype = {
-    onchanged: function (callback) {
-        if (callback && typeof callback === 'function')
-            this._onChangedCallbacks.push(callback);
-    },
-    _listen: function () {
-        var mutationObserverClass =
-            this._getNativeMutationObserverClass();
-        if (!mutationObserverClass) {
-            console.error(
-                'Could not listen to toolbar changes: no mutation observer found');
-            return;
-        }
-        var toolbar = document.getElementById(this._id);
-        if (toolbar) {
-            var observer = new mutationObserverClass(
-                this._onMutated.bind(this));
-            observer.observe(toolbar, {
-                attributes: true
-            });
-        }
-    },
-    _onMutated: function (mutations, observer) {
-        for (var i = 0; i < this._onChangedCallbacks.length; ++i) {
-            this._onChangedCallbacks[i](mutations);
-        }
-    },
-    _getNativeMutationObserverClass: function () {
-        return window.MutationObserver || window.WebKitMutationObserver;
-    },
-};
-
-
 var Toolbar = (function () {
+
+    function ToolbarListener(id) {
+        this._id = id;
+        this._onChangedCallbacks = [];
+        this._listen();
+    };
+
+    ToolbarListener.prototype = {
+        onchanged: function (callback) {
+            if (callback && typeof callback === 'function')
+                this._onChangedCallbacks.push(callback);
+        },
+        _listen: function () {
+            var mutationObserverClass =
+                this._getNativeMutationObserverClass();
+            if (!mutationObserverClass) {
+                console.error(
+                    'Could not listen to toolbar changes: no mutation observer found');
+                return;
+            }
+            var toolbar = document.getElementById(this._id);
+            if (toolbar) {
+                var observer = new mutationObserverClass(
+                    this._onMutated.bind(this));
+                observer.observe(toolbar, {
+                    attributes: true
+                });
+            }
+        },
+        _onMutated: function (mutations, observer) {
+            for (var i = 0; i < this._onChangedCallbacks.length; ++i) {
+                this._onChangedCallbacks[i](mutations);
+            }
+        },
+        _getNativeMutationObserverClass: function () {
+            return window.MutationObserver || window.WebKitMutationObserver;
+        },
+    };
+
 
     function Toolbar(id, touchInfoDelegate) {
 
@@ -172,7 +171,6 @@ var Toolbar = (function () {
          */
         hide: function () {
             this.toolbar.classList.remove('revealed');
-            window.clearTimeout(this._timer);
         },
 
         /**
@@ -181,7 +179,6 @@ var Toolbar = (function () {
          */
         toggle: function () {
             this.toolbar.classList.toggle('revealed');
-            window.clearTimeout(this._timer);
         },
 
         /**
