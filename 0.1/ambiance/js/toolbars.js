@@ -133,8 +133,6 @@ var Toolbar = (function () {
         __onTouchStart: function (evt) {
             this._touchDown = true;
 
-            evt.preventDefault();
-
             this.phase = this.PHASE_START;
             var identifier = evt.identifier !== undefined ? evt.identifier : 0;
 
@@ -159,8 +157,6 @@ var Toolbar = (function () {
                 return;
 
             if (this.phase == this.PHASE_START) {
-                evt.preventDefault();
-
                 var touchEvent =
                     this._touchInfoDelegate.translateTouchEvent(evt);
 
@@ -170,8 +166,16 @@ var Toolbar = (function () {
                 f.end.x = touchEvent.touches[0].pageX;
                 f.end.y = touchEvent.touches[0].pageY;
 
-                direction = this.__calculateDirection(f.start, f.end);
+		// Validate that the movement has a big enough amplitude
+		// before considering it as a 'move'. The 0.4 is a value
+		// that was setup after some experimentation on touch.
+		var amplitude = this.__norm(f.start, f.end);
+		if ((amplitude / this.toolbar.offsetHeight) < 0.4)
+			return;
 
+                evt.preventDefault();
+
+                direction = this.__calculateDirection(f.start, f.end);
                 if (direction == "DOWN") {
                     this.hide();
                 }
@@ -199,6 +203,15 @@ var Toolbar = (function () {
             this._touchDown = false;
             phase = this.PHASE_CANCEL;
         },
+
+        /**
+         * @private
+         */
+        __norm: function (p1, p2) {
+	    var vx = p2.x - p1.x;
+	    var vy = p2.y - p1.y;
+	    return Math.sqrt(vx * vx + vy * vy);
+	},
 
         /**
          * @private
