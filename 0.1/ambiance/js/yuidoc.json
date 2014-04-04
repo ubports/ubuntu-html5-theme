@@ -1,9 +1,10 @@
 {
+    "version": "HTML-14.04-dev~bzr157",
+    "majorversion": "HTML-14.04-dev",
     "name": "Ubuntu HTML5 API",
-    "description": "Ubuntu HTML5 API: JavaScript for HTML5 Ubuntu Apps",
-    "version": "0.1",
     "options": {
-        "outdir": "./build",
+        "outdir": "./docsbuild",
         "themedir": "yuidoc-theme"
-    }
+    },
+    "description": "Ubuntu HTML5 API: JavaScript for HTML5 Ubuntu Apps"
 }

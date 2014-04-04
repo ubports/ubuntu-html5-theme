@@ -25,3 +25,4 @@ debian/*.substvars
 debian/stamp-*
 
 .sass-cache
+docsbuild
