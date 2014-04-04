@@ -1,3 +1,43 @@
+ubuntu-html5-theme (0.1.2+14.04.20140404-0ubuntu1) trusty; urgency=low
+
+  [ Alexandre Abreu ]
+  * Connect qmlengine quit signal to app quit slot (LP: #1299563)
+  * Fix issues with the toolbar buttons: make sure that we dont
+    preventDefault() in all cases (even when the user tries to
+    click()),. make sure that the user's intent seems like
+    hiding/showing before doing so,. (LP: #1222874)
+
+  [ Adnane Belmadiaf ]
+  * Removed unused locales.json
+
+  [ David Barth ]
+  * This branch aggregates 3 branches to help resolve SASS/CSS conflicts
+    on the same file: merge of fix.1286362. merge of typography-update.
+    merge of the fix.gallery-dialog branch .
+
+  [ daker ]
+  * Fixed toolbar declaration (LP: #1286833)
+  * Adjust the content when the keyboard appears (LP: #1296463)
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Kyle Nitzsche ]
+  * 1) Fix lp bug https://bugs.launchpad.net/ubuntu-html5-
+    theme/+bug/1241029 2) Improve doc building as follows: * add build
+    script for docs: yuidoc-build.sh.(same as in unity-webapps-qml) *
+    add docslib.py, used by yuidoc-build.sh to obtain bzr branch rev and
+    insert it into yuidoc.json for use during build * add
+    DOCSREADMET.txt: critical info about building docs * yuidoc.json:
+    add majorversion field and set it to current framework: html-14.04-
+    dev. The bzr branch rev is appended to this to create useful version
+    field, which is consumed by yuidoc build and inserted into built
+    html. As a result, the built index.html states the framework and the
+    branch bzr rev as follows: "API Docs for: HTML-14.04-dev~bzr155"
+    (LP: #1287826)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 04 Apr 2014 14:12:11 +0000
+
 ubuntu-html5-theme (0.1.2+14.04.20140319.3-0ubuntu1) trusty; urgency=low
 
   [ Adnane Belmadiaf ]
