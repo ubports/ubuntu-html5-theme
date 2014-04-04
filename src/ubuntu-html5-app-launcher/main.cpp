@@ -230,6 +230,8 @@ int main(int argc, char *argv[])
     view.setTitle(QCoreApplication::applicationName());
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
+    QObject::connect(view.engine(), SIGNAL(quit()), &app, SLOT(quit()));
+
     if (maximized)
         view.showMaximized();
     else
