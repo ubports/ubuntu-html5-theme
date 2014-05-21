@@ -4,18 +4,18 @@
  * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation; either version 3 of the 
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of the
  * License, or
  * (at your option) any later version.
- 
+
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this program. If not, see 
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 
@@ -45,7 +45,7 @@ A Tab represents the UI element that hosts your tab content. This UI element is 
           <div data-role="content">
               <div data-role="tab" id="main">
                 [...]
-              </div> 
+              </div>
               <div data-role="tab" id="page2">
                 [...]
               </div>
@@ -58,7 +58,7 @@ A Tab represents the UI element that hosts your tab content. This UI element is 
       var tab = UI.tab("tabID");
  */
 var Tab = function (id) {
-    this.id =  id;
+    this.id = id;
 };
 
 Tab.prototype = {
@@ -78,7 +78,7 @@ Tab.prototype = {
      * @method {} deactivate
      */
     deactivate: function () {
-        this.__updateVisibleState('none', function(footer) {
+        this.__updateVisibleState('none', function (footer) {
             if (!footer)
                 return;
             footer.style.display = 'none';
@@ -92,12 +92,92 @@ Tab.prototype = {
      */
     activate: function (id) {
         this.__hideVisibleSibling();
-        this.__updateVisibleState('block', function(footer) {
+        this.__updateVisibleState('block', function (footer) {
+
+            var newActionsBar = document.querySelector('[data-role="actions"]');
+
+            // Reset the actionbar
+            newActionsBar.innerHTML = "";
+
+
             if (!footer)
                 return;
-            footer.style.display = 'block';
-            footer.classList.add('revealed');
+
+            var actionBar = footer;
+                actions = actionBar.querySelector('ul'),
+                actionButtons = actionBar.querySelectorAll('ul li'),
+                i = actionButtons.length;
+
+            if (actionButtons.length > 3) {
+
+                // Maintain the first & second item then replace the rest with an action overflow
+                var firstAction = actionButtons[0],
+                    secondAction = actionButtons[1],
+                    actionsPopover = document.createElement('div'),
+                    overflowList = document.createElement('ul'),
+                    /* Actions Buttons */
+                    firstButton = document.createElement('button'),
+                    secondButton = document.createElement('button'),
+                    overflowButton = document.createElement('button'),
+                    /* Icons */
+                    firstIcon = firstAction.querySelector('img').getAttribute('src'),
+                    secondIcon = secondAction.querySelector('img').getAttribute('src');
+
+
+                actionsPopover.setAttribute('data-role', 'popover');
+                actionsPopover.setAttribute('data-gravity', 'n');
+                actionsPopover.classList.add('has_actions');
+
+                overflowList.setAttribute('data-role', 'action-overflow-list');
+
+                // Hide the overflow
+                for (var x = 2; x < i; x++) {
+                    var li = document.createElement('li'),
+                        lbl = actionButtons[x].querySelector('span').innerHTML,
+                        icon = actionButtons[x].querySelector('img').getAttribute('src');
+
+                    li.innerHTML = lbl;
+
+                    li.style.backgroundImage = 'url( ' + icon + ' )';
+                    overflowList.appendChild(li);
+                }
+
+                // Add the action overflow button
+                overflowButton.setAttribute('data-role', 'action-overflow-icon');
+
+                actionsPopover.appendChild(overflowList);
+
+                firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
+                secondButton.style.backgroundImage = 'url( ' + secondIcon + ' )';
+
+                newActionsBar.appendChild(firstButton);
+                newActionsBar.appendChild(secondButton);
+
+                newActionsBar.appendChild(overflowButton);
+                newActionsBar.appendChild(actionsPopover);
+
+                overflowButton.onclick = function (e) {
+                    newActionsBar.parentNode.querySelector('.has_tabs').classList.remove('active');
+                    actionsPopover.classList.toggle('active');
+                    e.preventDefault();
+                };
+            } else {
+
+                for (var y = 0; y < i; y++) {
+                    var actionButton = document.createElement('button'),
+                        lbl = actionButtons[y].querySelector('span').innerHTML,
+                        icon = actionButtons[y].querySelector('img').getAttribute('src');
+                    actionButton.style.backgroundImage = 'url( ' + icon + ' )';
+                    actionButton.setAttribute('content', icon);
+                    newActionsBar.appendChild(actionButton);
+                }
+            }
+
+            // Hide the old footer
+            actionBar.classList.remove('revealed');
+            actionBar.style.display = 'none';
         });
+
     },
 
     /**
@@ -114,7 +194,7 @@ Tab.prototype = {
     /**
      * @private
      */
-    __updateVisibleState: function(displayStyle, footerHandlerFunc) {
+    __updateVisibleState: function (displayStyle, footerHandlerFunc) {
         if (!this.__isValidId(this.id))
             return;
         var tab = document.getElementById(this.id);
@@ -122,16 +202,14 @@ Tab.prototype = {
             return;
         }
         tab.style.display = displayStyle;
-        if (tab.querySelector(this.__thisSelector + ' > footer')) {
-            var footer = tab.querySelector('footer');
-            footerHandlerFunc(footer);
-        }
+        var footer = tab.querySelector('footer');
+        footerHandlerFunc(footer);
     },
 
     /**
      * @private
      */
-    __hideVisibleSibling: function() {
+    __hideVisibleSibling: function () {
         if (!this.__isValidId(this.id))
             return;
         var tab = document.getElementById(this.id);
@@ -150,13 +228,13 @@ Tab.prototype = {
      * @private
      */
     __isValidId: function (id) {
-        return id && typeof(id) === 'string';
+        return id && typeof (id) === 'string';
     },
 
     /**
      * @private
      */
-    get __thisSelector () {
+    get __thisSelector() {
         return "#" + this.id;
     }
 };

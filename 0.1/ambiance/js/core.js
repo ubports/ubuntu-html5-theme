@@ -141,7 +141,7 @@ var UbuntuUI = (function () {
             }
 
             // try to find subpages & append back button there
-            for (var idx = 0; idx < pages.length; ++idx) {
+            /*for (var idx = 0; idx < pages.length; ++idx) {
                 var page = pages[idx];
 
                 // TODO: only add the footer for now, but need to sync w/ title
@@ -158,7 +158,7 @@ var UbuntuUI = (function () {
                     footer = page.querySelectorAll("[data-role='footer']")[0];
                 }
                 __appendBackButtonToFooter(this, d, footer);
-            }
+            }*/
         },
 
         __setupPage: function (document) {
@@ -268,7 +268,7 @@ var UbuntuUI = (function () {
         init: function () {
             this.__setupTabs(document);
             this.__setupPage(document);
-            this.__setupToolbars(document);
+            //this.__setupToolbars(document);
         },
 
         /**
