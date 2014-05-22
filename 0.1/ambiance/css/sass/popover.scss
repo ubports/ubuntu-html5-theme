@@ -46,8 +46,8 @@
     @include box_shadow (0 0 2px 0 rgba(0, 0, 0, 0.3));
     position: absolute;
     background: rgba(255, 255, 255, 0.98);
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
     z-index: 110;
     left: 0;
     top: 0;
@@ -65,8 +65,8 @@
 
     .list,
     ul {
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
         width: auto;
         max-height: 250px;
         overflow: auto;
@@ -74,7 +74,7 @@
 
         li {
             position: relative;
-            padding: 20px 10px 20px 10px;
+            padding: 16px 20px;
             border-bottom: 1px solid #d9d9d9;
             text-align: center;
             font-size: 0.9rem;
