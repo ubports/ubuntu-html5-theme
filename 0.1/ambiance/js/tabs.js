@@ -215,6 +215,8 @@ var Tabs = (function () {
 
             this._overlay.onclick = function (e) {
                 self.__hideMenus();
+                var elm = document.elementFromPoint(e.pageX, e.pageY);
+                console.log(elm);
                 e.preventDefault();
             };
 
