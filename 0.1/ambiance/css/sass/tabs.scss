@@ -24,6 +24,14 @@
  * Tabs
  * ---------------------------------- */
 
+/* Workarround to load the Ubuntu Light font pad.lv/1186372 */
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Ubuntu Light'), local('Ubuntu-Light'), url(ubuntu-light.woff) format('woff');
+}
+
 [data-role="header"] {
     background: #ededed;
     height: 74px;
@@ -82,9 +90,9 @@
 }
 
 [data-role="tabtitle"] {
-    font: 33px $font_family;
-    font-weight: 100;
-    letter-spacing: -1px;
+    font-family: $font_family;
+    font-size: 33px;
+    font-weight: 300;
     text-decoration: none;
     color: #808080;
     display: inline-block;

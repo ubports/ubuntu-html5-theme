@@ -115,12 +115,12 @@
 
 .popover[data-gravity="n"]:before,
 [data-role="popover"][data-gravity="n"]:before {
-    top: -17px;
+    top: -15px;
     margin-left: -18px;
     background: transparent url(../img/UpArrow@18.png) no-repeat 0.5rem 0.5rem;
     background-size: 50% 50%;
-    width: 37px;
-    height: 18px;
+    width: 28px;
+    height: 15px;
 }
 
 .popover[data-gravity="w"]:before,
