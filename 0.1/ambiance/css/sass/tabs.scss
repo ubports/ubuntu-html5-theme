@@ -143,6 +143,14 @@
             top: 5px;
         }
     }
+
+    [data-role="actions-wrapper"] {
+        display: none;
+
+        &:first-child {
+            display: block;
+        }
+    }
 }
 
 [data-role="action-overflow-icon"] {

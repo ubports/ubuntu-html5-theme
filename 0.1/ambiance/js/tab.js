@@ -78,12 +78,7 @@ Tab.prototype = {
      * @method {} deactivate
      */
     deactivate: function () {
-        this.__updateVisibleState('none', function (footer) {
-            if (!footer)
-                return;
-            footer.style.display = 'none';
-            footer.classList.remove('revealed');
-        });
+        this.__updateVisibleState('none');
     },
 
     /**
@@ -92,91 +87,7 @@ Tab.prototype = {
      */
     activate: function (id) {
         this.__hideVisibleSibling();
-        this.__updateVisibleState('block', function (footer) {
-
-            var newActionsBar = document.querySelector('[data-role="actions"]');
-
-            // Reset the actionbar
-            newActionsBar.innerHTML = "";
-
-
-            if (!footer)
-                return;
-
-            var actionBar = footer;
-                actions = actionBar.querySelector('ul'),
-                actionButtons = actionBar.querySelectorAll('ul li'),
-                i = actionButtons.length;
-
-            if (actionButtons.length > 3) {
-
-                // Maintain the first & second item then replace the rest with an action overflow
-                var firstAction = actionButtons[0],
-                    secondAction = actionButtons[1],
-                    actionsPopover = document.createElement('div'),
-                    overflowList = document.createElement('ul'),
-                    /* Actions Buttons */
-                    firstButton = document.createElement('button'),
-                    secondButton = document.createElement('button'),
-                    overflowButton = document.createElement('button'),
-                    /* Icons */
-                    firstIcon = firstAction.querySelector('img').getAttribute('src'),
-                    secondIcon = secondAction.querySelector('img').getAttribute('src');
-
-
-                actionsPopover.setAttribute('data-role', 'popover');
-                actionsPopover.setAttribute('data-gravity', 'n');
-                actionsPopover.classList.add('has_actions');
-
-                overflowList.setAttribute('data-role', 'action-overflow-list');
-
-                // Hide the overflow
-                for (var x = 2; x < i; x++) {
-                    var li = document.createElement('li'),
-                        lbl = actionButtons[x].querySelector('span').innerHTML,
-                        icon = actionButtons[x].querySelector('img').getAttribute('src');
-
-                    li.innerHTML = lbl;
-
-                    li.style.backgroundImage = 'url( ' + icon + ' )';
-                    overflowList.appendChild(li);
-                }
-
-                // Add the action overflow button
-                overflowButton.setAttribute('data-role', 'action-overflow-icon');
-
-                actionsPopover.appendChild(overflowList);
-
-                firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
-                secondButton.style.backgroundImage = 'url( ' + secondIcon + ' )';
-
-                newActionsBar.appendChild(firstButton);
-                newActionsBar.appendChild(secondButton);
-
-                newActionsBar.appendChild(overflowButton);
-                newActionsBar.appendChild(actionsPopover);
-
-                overflowButton.onclick = function (e) {
-                    newActionsBar.parentNode.querySelector('.has_tabs').classList.remove('active');
-                    actionsPopover.classList.toggle('active');
-                    e.preventDefault();
-                };
-            } else {
-
-                for (var y = 0; y < i; y++) {
-                    var actionButton = document.createElement('button'),
-                        lbl = actionButtons[y].querySelector('span').innerHTML,
-                        icon = actionButtons[y].querySelector('img').getAttribute('src');
-                    actionButton.style.backgroundImage = 'url( ' + icon + ' )';
-                    actionButton.setAttribute('content', icon);
-                    newActionsBar.appendChild(actionButton);
-                }
-            }
-
-            // Hide the old footer
-            actionBar.classList.remove('revealed');
-            actionBar.style.display = 'none';
-        });
+        this.__updateVisibleState('block');
 
     },
 
@@ -194,7 +105,7 @@ Tab.prototype = {
     /**
      * @private
      */
-    __updateVisibleState: function (displayStyle, footerHandlerFunc) {
+    __updateVisibleState: function (displayStyle) {
         if (!this.__isValidId(this.id))
             return;
         var tab = document.getElementById(this.id);
@@ -202,8 +113,16 @@ Tab.prototype = {
             return;
         }
         tab.style.display = displayStyle;
-        var footer = tab.querySelector('footer');
-        footerHandlerFunc(footer);
+
+        [].forEach.call( document.querySelectorAll('[data-role="actions-wrapper"]'), function(el) {
+           el.style.display = 'none';
+        });
+
+        var tab_actions = document.getElementById("actions_" + this.id);
+
+        if (tab_actions !== null) {
+          tab_actions.style.display = 'block';
+        }
     },
 
     /**

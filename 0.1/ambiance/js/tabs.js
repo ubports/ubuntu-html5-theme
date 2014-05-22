@@ -194,7 +194,6 @@ var Tabs = (function () {
             tab.classList.remove('inactive');
             tab.classList.add('active');
 
-
             this._header.innerHTML = '';
             this._header.appendChild(backbtn);
             this._header.appendChild(this._tabsbtn);
@@ -208,7 +207,7 @@ var Tabs = (function () {
                 e.preventDefault();
             };
 
-        tab.click();
+            tab.click();
 
         },
 
