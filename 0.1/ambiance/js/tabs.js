@@ -181,6 +181,12 @@ var Tabs = (function () {
             this._tabsmenu.classList.add('has_tabs');
             this._tabsmenu.appendChild(this._tabs);
 
+            this._content = document.querySelector('[data-role="content"]');
+
+            this._overlay = document.createElement('div');
+            this._overlay.setAttribute('data-role', 'overlay');
+            this._content.appendChild(this._overlay);
+
             this._tabtitle = document.createElement('div');
             this._tabtitle.setAttribute('data-role', 'tabtitle');
 
@@ -207,6 +213,11 @@ var Tabs = (function () {
                 e.preventDefault();
             };
 
+            this._overlay.onclick = function (e) {
+                self.__hideMenus();
+                e.preventDefault();
+            };
+
             tab.click();
 
         },
@@ -230,8 +241,6 @@ var Tabs = (function () {
             newActiveTab.classList.remove('inactive');
             newActiveTab.classList.add('active');
             this._tabtitle.textContent = newActiveTab.innerHTML;
-
-
         },
 
         /**
@@ -306,10 +315,19 @@ var Tabs = (function () {
          */
         __toggleTabsmenu: function () {
             this._tabsmenu.classList.toggle('active');
-            var actions = this._tabsactions.querySelector('.has_actions');
-            if (actions != null) {
-                actions.classList.remove('active');
-            }
+            this._overlay.classList.toggle('active');
+
+            if (this._tabsactions.querySelector('.has_actions.active') != null)
+                this._tabsactions.querySelector('.has_actions.active').classList.remove('active');
+        },
+
+        /**
+         * @private
+         */
+        __hideMenus: function () {
+            this._tabsmenu.classList.remove('active');
+            this._overlay.classList.remove('active');
+            this._tabsactions.querySelector('.has_actions.active').classList.remove('active');
         }
     };
 

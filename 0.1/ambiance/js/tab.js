@@ -121,7 +121,7 @@ Tab.prototype = {
         var tab_actions = document.getElementById("actions_" + this.id);
 
         if (tab_actions !== null) {
-          tab_actions.style.display = 'block';
+            tab_actions.style.display = 'block';
         }
     },
 

@@ -30,6 +30,8 @@ var ActionBar = (function () {
         this.oldFooter = oldFooter;
         this.oldFooterParent = parent;
 
+        this._overlay = document.querySelector('[data-role="overlay"]');
+
         var newActionsBar = document.querySelector('[data-role="actions"]');
 
         if (!this.oldFooter)
@@ -79,6 +81,12 @@ var ActionBar = (function () {
 
                 li.style.backgroundImage = 'url( ' + icon + ' )';
                 overflowList.appendChild(li);
+
+                li.onclick = function (e) {
+                    actionsPopover.classList.toggle('active');
+                    self._overlay.classList.toggle('active');
+                    e.preventDefault();
+                };
             }
 
             // Add the action overflow button
@@ -97,9 +105,11 @@ var ActionBar = (function () {
             newActionsBarWrapper.appendChild(overflowButton);
             newActionsBarWrapper.appendChild(actionsPopover);
 
+            self = this;
             overflowButton.onclick = function (e) {
                 newActionsBar.parentNode.querySelector('.has_tabs').classList.remove('active');
                 actionsPopover.classList.toggle('active');
+                self._overlay.classList.toggle('active');
                 e.preventDefault();
             };
         } else {
