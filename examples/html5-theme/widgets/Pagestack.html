@@ -5,19 +5,19 @@
  This file is part of ubuntu-html5-ui-toolkit.
 
  This package is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as 
- published by the Free Software Foundation; either version 3 of the 
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 3 of the
  License, or
  (at your option) any later version.
- 
+
  This package is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
- You should have received a copy of the GNU Lesser General Public 
- License along with this program. If not, see 
- <http://www.gnu.org/licenses/>.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program. If not, see
+ <http://www.gnu.org/licenses/>
 -->
 
 <!DOCTYPE html>
@@ -26,112 +26,62 @@
     <meta charset="utf-8" />
     <meta name="copyright" content="Adnane Belmadiaf <daker@ubuntu.com>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Ubuntu UI HTML5: PageStack</title>
+
+    <!-- Ubuntu UI Style imports - Ambiance theme -->
     <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+
+    <!-- External javascript imports -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="file:///usr/share/javascript/jquery/jquery.min.js"></script>
+
+    <!-- Ubuntu UI javascript imports - Ambiance theme -->
+    <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/dialogs.js"></script>
+    <script src="../../../0.1/ambiance/js/page.js"></script>
+    <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
+    <script src="../../../0.1/ambiance/js/popovers.js"></script>
+    <script src="../../../0.1/ambiance/js/list.js"></script>
+    <script src="../../../0.1/ambiance/js/toolbars.js"></script>
+    <script src="../../../0.1/ambiance/js/tab.js"></script>
+
+    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+
+    <script src="../apps/rss-reader/app.js"></script>
 </head>
 
 <body>
     <div data-role="mainview">
 
-        <header data-role="header">
-            <ul data-role="tabs">
-                <li data-role="tabitem" data-page="main">Ubuntu HTML5 UI Toolkit</li>
-            </ul>
-        </header>
+        <header data-role="header"></header>
 
         <div data-role="content">
             <div data-role="pagestack">
-                <div data-role="page">
-                    <section data-role="list">
-                        <header>1 - Standard</header>
-                        <ul>
-                            <li>
-                                <p>Label</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-                <div class="page">
-                    <section data-role="list">
-                        <header>2 - Subtitled</header>
-                        <ul>
-                            <li>
-                                <p>Label</p>
-                                <p>Secondary Label</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                                <p>Secondary Label</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                                <p>Secondary Label</p>
-                            </li>
-                        </ul>
-                    </section>
+                <div data-role="page" id="main" data-title="RSS Mobile Reader">
+                    <section data-role="list" id="yourfeeds"></section>
                 </div>
 
-                <div class="page">
-                    <section data-role="list">
-                        <header>3 - Multiple Value</header>
-                        <ul>
-                            <li>
-                                <p>Label</p>
-                                <p>Value 1, Value 2</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                                <p>Value 1, Value 2</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                                <p>Value 1, Value 2</p>
-                            </li>
-                            <li>
-                                <p>Label</p>
-                                <p>Value 1, Value 2</p>
-                            </li>
-                        </ul>
-                    </section>
+                <div data-role="page" id="results" data-title="Articles">
+                    <section data-role="list" id="resultscontent"></section>
                 </div>
 
-                <div class="page">
-                    <section data-role="list">
-                        <header>5 - Icon</header>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <aside>
-                                        <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
-                                    <p>Label</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <aside>
-                                        <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
-                                    <p>Label</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <aside>
-                                        <img alt="placeholder" src="../../ambiance/img/avatar_contacts_list@8.png"></aside>
-                                    <p>Label</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </section>
+                <div data-role="page" id="article" data-title="Article">
+                    <section id="articleinfo"></section>
                 </div>
-
             </div>
+            <div data-role="dialog" id="loading"><section><progress></progress></section></div>
         </div>
+
     </div>
+
+    <script type="text/javascript">
+        var UI = new UbuntuUI();
+    </script>
 </body>
 </html>
+
