@@ -24,5 +24,5 @@ Running SASS
 
 Once you have SASS installed. Open terminal (CTRL+Alt+T) and cd into your
 branch folder. Then enter this command to begin watching your scss files:
-$ sass --watch 0.1/ambiance/css/sass/default.scss:0.1/ambiance/css/appTemplate.css --style compressed
+$ sass --watch 0.1/ambiance/css/sass/default.scss:0.1/ambiance/css/appTemplate.css --style expanded
 
