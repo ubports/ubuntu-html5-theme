@@ -221,7 +221,6 @@ var Tabs = (function () {
             };
 
             tab.click();
-
         },
 
         /**

@@ -145,8 +145,8 @@ var UbuntuUI = (function () {
             this._pageactions.setAttribute('data-role', 'actions');
 
             header.appendChild(this._tabtitle);
-            header.appendChild(this._pageactions);
-
+            // FIXME once enable Uncaught TypeError: Cannot read property 'depth' of undefined
+            //header.appendChild(this._pageactions);
         },
 
         __setupPage: function (document) {
