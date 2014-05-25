@@ -124,18 +124,11 @@ var UbuntuUI = (function () {
 
             var header = d.querySelector("[data-role='header']");
 
-            var tabsbtn = d.querySelector("[data-role='tabs-btn']");
-
             this._tabtitle = document.createElement('div');
             this._tabtitle.setAttribute('data-role', 'tabtitle');
-            this._tabtitle.style.display = 'block';
 
             var tabtitle_value = document.createTextNode('');
             this._tabtitle.appendChild(tabtitle_value);
-
-            if (typeof tabsbtn != 'undefined' && tabsbtn) {
-                tabsbtn.style.display = "none";
-            }
 
             var backbtn = __createBackButtonListItem();
             header.insertBefore(backbtn, header.firstChild);
@@ -148,7 +141,12 @@ var UbuntuUI = (function () {
                 e.preventDefault();
             };
 
+            this._pageactions = d.createElement('div');
+            this._pageactions.setAttribute('data-role', 'actions');
+
             header.appendChild(this._tabtitle);
+            header.appendChild(this._pageactions);
+
         },
 
         __setupPage: function (document) {
@@ -159,18 +157,29 @@ var UbuntuUI = (function () {
             }
         },
 
-        __setupActionBars: function(document) {
+        __setupActionsBar: function(document) {
 
             var apptabsElements = document.querySelectorAll('[data-role=tab]');
-            if (apptabsElements.length == 0)
-                return;
+            if (apptabsElements.length >= 0) {
+                for (var idx = 0; idx < apptabsElements.length; ++idx) {
+                    var footers = apptabsElements[idx].querySelectorAll("[data-role='footer']");
+                    if (footers.length >= 0) {
+                        // TODO: validate footer count: should be 1 footer
+                        var actionBar = new ActionBar(footers[0], apptabsElements[idx]);
+                        if (footers[0] != null) footers[0].remove();
+                    }
+                }
+            }
 
-            for (var idx = 0; idx < apptabsElements.length; ++idx) {
-                var footers = apptabsElements[idx].querySelectorAll("[data-role='footer']");
-                if (footers.length >= 0) {
-                    // TODO: validate footer count: should be 1 footer
-                    var actionBar = new ActionBar(footers[0], apptabsElements[idx]);
-                    if (footers[0] != null) footers[0].remove();
+            var apppagesElements = document.querySelectorAll('[data-role=page]');
+            if (apppagesElements.length >= 0) {
+                for (var idx = 0; idx < apppagesElements.length; ++idx) {
+                    var footers = apppagesElements[idx].querySelectorAll("[data-role='footer']");
+                    if (footers.length >= 0) {
+                        // TODO: validate footer count: should be 1 footer
+                        var actionBar = new ActionBar(footers[0], apppagesElements[idx]);
+                        if (footers[0] != null) footers[0].remove();
+                    }
                 }
             }
         },
@@ -203,7 +212,7 @@ var UbuntuUI = (function () {
         init: function () {
             this.__setupTabs(document);
             this.__setupPage(document);
-            this.__setupActionBars(document);
+            this.__setupActionsBar(document);
         },
 
         /**

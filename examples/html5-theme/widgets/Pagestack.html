@@ -48,8 +48,8 @@
     <script src="../../../0.1/ambiance/js/popovers.js"></script>
     <script src="../../../0.1/ambiance/js/list.js"></script>
     <script src="../../../0.1/ambiance/js/toolbars.js"></script>
+    <script src="../../../0.1/ambiance/js/actionsbar.js"></script>
     <script src="../../../0.1/ambiance/js/tab.js"></script>
-
     <script src="../../../0.1/ambiance/js/tabs.js"></script>
 
     <script src="../apps/rss-reader/app.js"></script>
@@ -64,10 +64,69 @@
             <div data-role="pagestack">
                 <div data-role="page" id="main" data-title="RSS Mobile Reader">
                     <section data-role="list" id="yourfeeds"></section>
+                    <footer id="footer1" data-role="footer" class="revealed">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" id="new-contact">
+                                        <img src="../../../0.1/ambiance/img/actions/contact-new.svg" alt="Tap me!" />
+                                        <span>New contact</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="edit-contact">
+                                        <img src="../../../0.1/ambiance/img/actions/edit-cut.svg" alt="Tap me!" />
+                                        <span>Edit Contact</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="add-alarm">
+                                        <img src="../../../0.1/ambiance/img/actions/reminder.svg" alt="Tap me!" />
+                                        <span>Add Alarm</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </footer>
                 </div>
 
                 <div data-role="page" id="results" data-title="Articles">
                     <section data-role="list" id="resultscontent"></section>
+                    <footer id="footer2" data-role="footer" class="revealed">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" id="new-email">
+                                        <img src="../../../0.1/ambiance/img/actions/notebook-new.svg" alt="Tap me!" />
+                                        <span>New Email</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="edit-note">
+                                        <img src="../../../0.1/ambiance/img/actions/edit-paste.svg" alt="Tap me!" />
+                                        <span>Edit Note</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="infos">
+                                        <img src="../../../0.1/ambiance/img/actions/info.svg" alt="Tap me!" />
+                                        <span>Infos</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="private-browsing">
+                                        <img src="../../../0.1/ambiance/img/actions/private-browsing.svg" alt="Tap me!" />
+                                        <span>Private Browsing</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </footer>
                 </div>
 
                 <div data-role="page" id="article" data-title="Article">
