@@ -30,21 +30,27 @@
 
 input[type=range] {
     @include box_sizing (border-box);
-    @include box_shadow (inset 0 1px 1px rgba(0, 0, 0, 0.1));
     -webkit-appearance: none;
-    background-color: rgba(192, 192, 192, 0.1);
+    background: linear-gradient(to right, $ubuntu_orange 50%, rgba(175, 175, 175, 0.50) 50% );
     width: 200px;
-    height: 35px;
-    border-radius: 6px;
-    padding: 5px 0;
+    height: 4px;
+    border-radius: 1px;
+    margin: 5px;
 
     &::-webkit-slider-thumb {
-        @include box_shadow (inset 0 2px 1px rgba(0, 0, 0, 0.1));
+        @include box_shadow (inset 0 1px 1px rgba(0, 0, 0, 0.3));
         @include box_sizing (border-box);
         -webkit-appearance: none;
+        background-color: #fff;
+        pointer-events: none;
+        border-radius: 3px;
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: -1px;
+    }
+
+    &::-webkit-fill-lower {
         background-color: $ubuntu_orange;
-        border-radius: 6px;
-        width: 30px;
-        height: 27px;
     }
 }
