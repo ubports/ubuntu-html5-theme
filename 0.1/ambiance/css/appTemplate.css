@@ -817,8 +817,6 @@ input[type=range] {
     height: 16px;
     position: relative;
     top: -1px; }
-  input[type=range]::-webkit-fill-lower {
-    background-color: #dd4814; }
 
 /*
  * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>

@@ -49,8 +49,4 @@ input[type=range] {
         position: relative;
         top: -1px;
     }
-
-    &::-webkit-fill-lower {
-        background-color: $ubuntu_orange;
-    }
 }
