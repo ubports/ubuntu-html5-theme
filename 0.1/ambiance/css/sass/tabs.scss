@@ -37,14 +37,17 @@
     height: 74px;
     width: 100%;
     position: relative;
+    overflow: hidden;
 
     &:after {
         background: #c2c2c2;
         content: "";
         border-top: 1px solid #afafaf;
-        height: 14px;
+        height: 15px;
         width: 100%;
         display: block;
+        position: absolute;
+        top: 58px;
     }
 }
 
@@ -77,16 +80,26 @@
     }
 }
 
+[data-role="back-btn"]:disabled+[data-role="tabtitle"],
+[data-role="tabs-btn"]+[data-role="tabtitle"],
+[data-role="popover"]+[data-role="tabtitle"] {
+    width: calc(100% - 155px);
+}
+
 [data-role="tabtitle"] {
     font-family: $font_family;
     font-size: 27px;
     font-weight: 300;
     text-decoration: none;
     color: #808080;
-    display: inline-block;
+    float: left;
     height: 60px;
     line-height: 60px;
     padding-right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 135px);
 }
 
 [data-role="tab"] {

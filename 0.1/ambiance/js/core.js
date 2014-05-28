@@ -51,10 +51,10 @@ var UbuntuUI = (function () {
     };
 
     function __createBackButtonListItem() {
-        var backbtn = document.createElement('button');
-        backbtn.setAttribute('data-role', 'back-btn');
-        backbtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
-        return backbtn;
+        var backBtn = document.createElement('button');
+        backBtn.setAttribute('data-role', 'back-btn');
+        backBtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
+        return backBtn;
     };
 
     function UbuntuUI() {
@@ -124,29 +124,29 @@ var UbuntuUI = (function () {
 
             var header = d.querySelector("[data-role='header']");
 
-            this._tabtitle = document.createElement('div');
-            this._tabtitle.setAttribute('data-role', 'tabtitle');
+            this._tabTitle = document.createElement('div');
+            this._tabTitle.setAttribute('data-role', 'tabtitle');
 
-            var tabtitle_value = document.createTextNode('');
-            this._tabtitle.appendChild(tabtitle_value);
+            var tabTitleValue = document.createTextNode('');
+            this._tabTitle.appendChild(tabTitleValue);
 
-            var backbtn = __createBackButtonListItem();
-            header.insertBefore(backbtn, header.firstChild);
+            var backBtn = __createBackButtonListItem();
+            header.insertBefore(backBtn, header.firstChild);
 
-            self = this;
-            backbtn.onclick = function (e) {
+            var self = this;
+            backBtn.onclick = function (e) {
+                console.log(self);
                 if (self._pageStack.depth() > 1){
                     self._pageStack.pop();
                 }
                 e.preventDefault();
             };
 
-            this._pageactions = d.createElement('div');
-            this._pageactions.setAttribute('data-role', 'actions');
+            this._pageActions = d.createElement('div');
+            this._pageActions.setAttribute('data-role', 'actions');
 
-            header.appendChild(this._tabtitle);
-            // FIXME once enable Uncaught TypeError: Cannot read property 'depth' of undefined
-            //header.appendChild(this._pageactions);
+            header.appendChild(this._tabTitle);
+            header.appendChild(this._pageActions);
         },
 
         __setupPage: function (document) {

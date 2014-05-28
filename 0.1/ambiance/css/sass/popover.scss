@@ -53,14 +53,18 @@
     top: 0;
     color: $text_color;
     font-size: 1rem;
-    display: none;
+    visibility: hidden;
     opacity: 0;
-    -webkit-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
+    -webkit-transform: scaleY(0.0);
+    transform: scaleY(0.0);
+    -webkit-transition: -webkit-transform 0.1s;
+    transition: transform 0.1s;
 
     &.active {
-        display: block;
+        visibility: visible;
         opacity: 1;
+        -webkit-transform: scaleY(1.0);
+        transform: scaleY(1.0);
     }
 
     .list,
