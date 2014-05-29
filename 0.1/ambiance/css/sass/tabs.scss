@@ -37,7 +37,6 @@
     height: 74px;
     width: 100%;
     position: relative;
-    overflow: hidden;
 
     &:after {
         background: #c2c2c2;
@@ -81,6 +80,7 @@
 }
 
 [data-role="back-btn"]:disabled+[data-role="tabtitle"],
+[data-role="back-btn"]+[data-role="tabtitle"],
 [data-role="tabs-btn"]+[data-role="tabtitle"],
 [data-role="popover"]+[data-role="tabtitle"] {
     width: calc(100% - 155px);
