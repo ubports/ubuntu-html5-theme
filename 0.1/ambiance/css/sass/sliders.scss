@@ -53,8 +53,8 @@ input[type=range] {
     &::-webkit-slider-thumb:after {
         /* create a larger (but hidden) hit area */
         position: absolute;
-        top: -16px;
-        left: -16px;
+        top: -$range-slider-height;
+        left: -$range-slider-width;
         padding: 30px;
         content: ' ';
     }
