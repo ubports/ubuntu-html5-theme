@@ -89,13 +89,13 @@ input[type=range] {
         position: relative;
     }
 
-    &::-moz-range-thumb:before {
+    /*&::-moz-range-thumb:before {
         position: absolute;
         top: ($range-slider-height / 2) - ($range-track-height / 2);
-        left: 0;
+        left: -2000px;
         width: 2000px;
         height: $range-track-height;
         background: $ubuntu_orange;
         content: ' ';
-    }
+    }*/
 }
