@@ -39,6 +39,18 @@ input[type=range] {
     margin-top: 5px;
     margin-bottom: 5px;
 
+    &::-webkit-slider-thumb {
+        @include box_shadow (inset 0 1px 0 rgba(0, 0, 0, 0.2));
+        @include box_sizing (border-box);
+        -webkit-appearance: none;
+        background-color: #fff;
+        pointer-events: none;
+        border-radius: 3px;
+        width: $range-slider-width;
+        height: $range-slider-height;
+        position: relative;
+    }
+
     &::-webkit-slider-thumb:before {
         /* what creates the colorful line on the left side of the slider */
         position: absolute;
@@ -50,24 +62,40 @@ input[type=range] {
         content: ' ';
     }
 
-    &::-webkit-slider-thumb:after {
-        /* create a larger (but hidden) hit area */
-        position: absolute;
-        top: -$range-slider-height;
-        left: -$range-slider-width;
-        padding: 30px;
-        content: ' ';
+    &::-moz-range-track {
+        @include box_sizing (border-box);
+        background: -moz-linear-gradient(to right, rgba(175, 175, 175, 0.30) 0%, rgba(175, 175, 175, 0.30) 100%);
+        background-position: center;
+        background-size: 99% 4px;
+        background-repeat: no-repeat;
+        width: auto;
+        height: $range-slider-height + 20;
+        border: 0;
+        border-radius: $range-slider-border-radius;
+        overflow: hidden;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
-    &::-webkit-slider-thumb {
+    &::-moz-range-thumb {
         @include box_shadow (inset 0 1px 0 rgba(0, 0, 0, 0.2));
         @include box_sizing (border-box);
-        -webkit-appearance: none;
-        background-color: #fff;
+        background: #fff;
         pointer-events: none;
+        border: 0;
         border-radius: 3px;
         width: $range-slider-width;
         height: $range-slider-height;
         position: relative;
+    }
+
+    &::-moz-range-thumb:before {
+        position: absolute;
+        top: ($range-slider-height / 2) - ($range-track-height / 2);
+        left: 0;
+        width: 2000px;
+        height: $range-track-height;
+        background: $ubuntu_orange;
+        content: ' ';
     }
 }
