@@ -67,41 +67,28 @@ var UbuntuUI = (function () {
             touchLeave: ['mouseleave'],
         };
 
-        /*
-        // Hide Header on on scroll down
-        var didScroll;
-        var lastScrollTop = 0;
-        var delta = 5;
+        this.prevScrollTop = 0;
+        this.y = 0;
 
         this._header = document.querySelector('[data-role="header"]');
         this._content = document.querySelector('[data-role="content"]');
-        var headerPos = this._header.offsetTop;
+        this.headerHeight = this._header.offsetHeight;
 
-        self = this;
+        var self = this;
         window.onscroll = function(event){
-            var scrollPos = window.pageYOffset;
+            var ScrollTop = window.pageYOffset;
+            var y = Math.min(self.headerHeight, Math.max(0, (self.y + ScrollTop - self.prevScrollTop)));
 
-            var of = scrollPos-headerPos;
-
-            if (of >= 0) {
-                if (of == 0) {
-                    self._header.style.position = "fixed";
-                    self._header.style.top = '0px';
-                    self._content.style.paddingTop = "75px";
-                } else {
-                    self._header.style.position = "relative";
-                    self._header.style.top = '-' + (scrollPos) + 'px';
-                    self._content.style.paddingTop = "0px";
-                }
-
-            } else {
-                self._header.style.position = "fixed";
-                self._header.style.top = '0px';
-                self._content.style.paddingTop = "75px";
+            if (self.prevScrollTop > ScrollTop && ScrollTop > 0) {
+                y = Math.max(y, 0);
             }
-            //console.log(headerPos);
-            console.log(scrollPos);
-        };*/
+            if (y !== self.y) {
+                requestAnimationFrame(self.__transformHeader.bind(self, y));
+            }
+
+            self.prevScrollTop = ScrollTop;
+            self.y = y;
+        };
     };
 
     UbuntuUI.prototype = {
@@ -147,6 +134,15 @@ var UbuntuUI = (function () {
 
             header.appendChild(this._tabTitle);
             header.appendChild(this._pageActions);
+        },
+
+        __transformHeader: function(y) {
+          var s = this._header.style;
+          this.__translateY(s, -y);
+        },
+
+        __translateY: function(s, y) {
+            s.webkitTransform = s.transform = 'translate3d(0, ' + y + 'px, 0)';
         },
 
         __setupPage: function (document) {

@@ -36,7 +36,8 @@
     background: #ededed;
     height: 74px;
     width: 100%;
-    position: relative;
+    position: fixed;
+    z-index: 10;
 
     &:after {
         background: #c2c2c2;
@@ -54,7 +55,6 @@
     width: 100%;
     white-space: nowrap;
 }
-
 
 [data-role="tabs-btn"] {
     border: none;
@@ -109,6 +109,9 @@
     height: 100%;
     overflow: hidden;
     display: none;
+    -webkit-transform: translate3d(0px, 74px, 0px);
+
+    transform: translate3d(0px, 74px, 0px);
 
     &:first-child {
         display: block;
