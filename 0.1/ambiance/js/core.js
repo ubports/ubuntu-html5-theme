@@ -72,12 +72,12 @@ var UbuntuUI = (function () {
 
         this._header = document.querySelector('[data-role="header"]');
         this._content = document.querySelector('[data-role="content"]');
-        this.headerHeight = this._header.offsetHeight;
+        this._headerHeight = this._header.offsetHeight;
 
         var self = this;
         window.onscroll = function(event){
             var ScrollTop = window.pageYOffset;
-            var y = Math.min(self.headerHeight, Math.max(0, (self.y + ScrollTop - self.prevScrollTop)));
+            var y = Math.min(self._headerHeight, Math.max(0, (self.y + ScrollTop - self.prevScrollTop)));
 
             if (self.prevScrollTop > ScrollTop && ScrollTop > 0) {
                 y = Math.max(y, 0);
