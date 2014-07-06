@@ -44,6 +44,14 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+html, body,
+[data-role="mainview"],
+[data-role="content"] {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 body {
     background: #ededed;
     font-family: $font_family;
@@ -54,10 +62,8 @@ body {
 [data-role="content"] {
     background: #ededed;
     border-top: 1px solid #f0f0f0;
-    height: auto;
-    min-height: auto;
-    width: 100%;
     font-size: 1rem $font_family;
+    height: calc(100% - 75px);
     color: $text_color;
 }
 

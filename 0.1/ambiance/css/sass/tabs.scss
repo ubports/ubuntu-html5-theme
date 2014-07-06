@@ -109,9 +109,6 @@
     height: 100%;
     overflow: hidden;
     display: none;
-    -webkit-transform: translate3d(0px, 74px, 0px);
-
-    transform: translate3d(0px, 74px, 0px);
 
     &:first-child {
         display: block;
@@ -183,7 +180,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 100;
+    z-index: 9;
     background: transparent;
     display: none;
 
