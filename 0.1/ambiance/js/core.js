@@ -70,7 +70,6 @@ var UbuntuUI = (function () {
         this._prevScrollTop = this._y = 0;
 
         this._header = document.querySelector('[data-role="header"]');
-        console.log(this._header);
         this._content = document.querySelector('[data-role="content"]');
         this._headerHeight = this._header.offsetHeight;
         this._content.style.paddingTop = this._headerHeight + "px";
@@ -124,7 +123,6 @@ var UbuntuUI = (function () {
 
             var self = this;
             backBtn.onclick = function (e) {
-                console.log(self);
                 if (self._pageStack.depth() > 1){
                     self._pageStack.pop();
                 }
