@@ -19,10 +19,11 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>
  */
-
 var UI = new UbuntuUI();
 
-document.addEventListener('deviceready', function() { console.log('device ready') }, true);
+document.addEventListener('deviceready', function () {
+    console.log('device ready');
+}, true);
 
 $(document).ready(function () {
 
@@ -35,16 +36,18 @@ $(document).ready(function () {
     //load local storage feeds
     var feeds = eval(localStorage["feeds"]);
     if (feeds !== null) {
-	var feeds_list = UI.list('#yourfeeds');
-	feeds_list.removeAllItems();
-	feeds_list.setHeader('My feeds');
+        var feeds_list = UI.list('#yourfeeds');
+        feeds_list.removeAllItems();
+        feeds_list.setHeader('My feeds');
 
         for (var i = 0; i < feeds.length; i++) {
             feeds_list.append(feeds[i],
-			      null,
-			      null,
-			      function (target, thisfeed) { loadFeed(thisfeed); },
-			      feeds[i]);
+                null,
+                null,
+                function (target, thisfeed) {
+                    loadFeed(thisfeed);
+                },
+                feeds[i]);
         }
     }
 
@@ -113,16 +116,17 @@ function loadFeed(url) {
         if (!result.error) {
             UI.dialog("loading").hide();
 
-	    var results_list = UI.list('#resultscontent');
-	    results_list.removeAllItems();
-	    results_list.setHeader(result.feed.title);
+            var results_list = UI.list('#resultscontent');
+            results_list.removeAllItems();
+            results_list.setHeader(result.feed.title);
 
             for (var i = 0; i < result.feed.entries.length; i++) {
-		results_list.append(result.feed.entries[i].title.replace(/"/g, "'"),
-				    null,
-				    null,
-				    function (target, result_infos) { showArticle.apply(null, result_infos); },
-				    [escape(result.feed.entries[i].title), escape(result.feed.entries[i].link), escape(result.feed.entries[i].content)] );
+                results_list.append(result.feed.entries[i].title.replace(/"/g, "'"),
+                    null,
+                    null,
+                    function (target, result_infos) {
+                        showArticle.apply(null, result_infos);
+                    }, [escape(result.feed.entries[i].title), escape(result.feed.entries[i].link), escape(result.feed.entries[i].content)]);
             }
         } else
             alert('feed error');
