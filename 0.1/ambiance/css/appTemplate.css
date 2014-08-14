@@ -74,6 +74,27 @@
  * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of the
+ * License, or
+ * (at your option) any later version.
+
+ * This package is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>
+ */
+/*
+ * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ * License granted by Canonical Limited
+ *
+ * This file is part of ubuntu-html5-ui-toolkit.
+ *
+ * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as 
  * published by the Free Software Foundation; either version 3 of the 
  * License, or
@@ -213,7 +234,7 @@ ul {
 }
 [data-role="header"] {
   background: #ededed;
-  height: 74px;
+  height: 60px;
   width: 100%;
   position: fixed;
   z-index: 10;
@@ -242,7 +263,7 @@ ul {
   cursor: pointer;
   text-decoration: none;
   line-height: 60px;
-  width: 35px;
+  width: 40px;
   height: 60px;
   float: left;
 }

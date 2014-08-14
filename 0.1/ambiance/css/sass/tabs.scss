@@ -34,7 +34,7 @@
 
 [data-role="header"] {
     background: #ededed;
-    height: 74px;
+    height: units_gu(7.5);
     width: 100%;
     position: fixed;
     z-index: 10;
@@ -63,9 +63,9 @@
     padding: 0;
     cursor: pointer;
     text-decoration: none;
-    line-height: 60px;
-    width: 35px;
-    height: 60px;
+    line-height: units_gu(7.5);
+    width: units_gu(5);
+    height: units_gu(7.5);
     float: left;
 }
 
@@ -93,8 +93,8 @@
     text-decoration: none;
     color: #808080;
     float: left;
-    height: 60px;
-    line-height: 60px;
+    height: units_gu(7.5);
+    line-height: units_gu(7.5);
     padding-right: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -121,9 +121,9 @@
     background-size: 70%;
     cursor: pointer;
     text-decoration: none;
-    line-height: 60px;
+    line-height: units_gu(7.5);
     width: 35px;
-    height: 60px;
+    height: units_gu(7.5);
     float: left;
     position: relative;
 
@@ -136,7 +136,7 @@
 
 [data-role="actions"] {
     float: right;
-    height: 60px;
+    height: units_gu(7.5);
     display: inline-block;
     padding-right: 15px;
 
@@ -145,8 +145,8 @@
         border: 0;
         padding: 0;
         width: 35px;
-        height: 60px;
-        line-height: 60px;
+        height: units_gu(7.5);
+        line-height: units_gu(7.5);
         background: transparent url('../img/actions/go-down.svg') center center no-repeat;
         background-size: 70%;
         cursor: pointer;
