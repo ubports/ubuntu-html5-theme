@@ -57,16 +57,27 @@
 }
 
 [data-role="tabs-btn"] {
-    border: none;
-    background: transparent url('../img/actions/navigation-menu.svg') no-repeat center center;
-    background-size: 70%;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: units_gu(7.5);
+    background: #EDEDED;
     width: units_gu(5);
     height: units_gu(7.5);
+    line-height: units_gu(7.5);
     float: left;
+    cursor: pointer;
+    border: none;
+
+    &:after {
+        content: "";
+        display: block;
+        width: units_gu(2.5);
+        height: units_gu(2.5);
+        background: transparent url('../img/actions/navigation-menu.svg') no-repeat center center;
+        background-size: 100%;
+        margin: 0 auto;
+    }
+
+    &:active {
+        background: rgba(0, 0, 0, 0.05);
+    }
 }
 
 [data-role="tabitem"] {
@@ -83,7 +94,7 @@
 [data-role="back-btn"]+[data-role="tabtitle"],
 [data-role="tabs-btn"]+[data-role="tabtitle"],
 [data-role="popover"]+[data-role="tabtitle"] {
-    width: calc(100% - 155px);
+    width: calc(100% - 135px);
 }
 
 [data-role="tabtitle"] {
@@ -95,11 +106,11 @@
     float: left;
     height: units_gu(7.5);
     line-height: units_gu(7.5);
-    padding-right: 0;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: calc(100% - 135px);
+    width: calc(100% - units_gu(5));
 }
 
 [data-role="tab"] {
@@ -116,20 +127,32 @@
 }
 
 [data-role="back-btn"] {
-    border: none;
-    background: transparent url('../img/actions/back.svg') no-repeat center center;
-    background-size: 70%;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: units_gu(7.5);
-    width: 35px;
+    background: #EDEDED;
+    width: units_gu(5);
     height: units_gu(7.5);
+    line-height: units_gu(7.5);
     float: left;
+    cursor: pointer;
+    border: none;
     position: relative;
+
+    &:after {
+        content: "";
+        display: block;
+        width: units_gu(2.5);
+        height: units_gu(2.5);
+        background: transparent url('../img/actions/back.svg') no-repeat center center;
+        background-size: 100%;
+        margin: 0 auto;
+    }
 
     &:disabled  {
         background: transparent;
         width: 0;
+    }
+
+    &:active {
+        background: rgba(0, 0, 0, 0.05);
     }
 }
 
@@ -144,17 +167,34 @@
     button {
         border: 0;
         padding: 0;
-        width: 35px;
+        width: units_gu(5);
         height: units_gu(7.5);
         line-height: units_gu(7.5);
-        background: transparent url('../img/actions/go-down.svg') center center no-repeat;
-        background-size: 70%;
         cursor: pointer;
         float: left;
+        background: transparent;
 
         img {
             position : relative;
             top: 5px;
+        }
+
+        &:disabled {
+            opacity: 0.3;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            width: units_gu(2.5);
+            height: units_gu(2.5);
+            background: transparent url('../img/actions/go-down.svg') center center no-repeat;
+            background-size: 100%;
+            margin: 0 auto;
+        }
+
+        &:active {
+            background: rgba(0, 0, 0, 0.05);
         }
     }
 
@@ -168,8 +208,21 @@
 }
 
 [data-role="action-overflow-icon"] {
-    background: transparent url('../img/actions/go-down.svg') center center no-repeat!important;
-    background-size: 65%!important;
+    background: transparent;
+
+    &:after {
+        content: "";
+        display: block;
+        width: units_gu(2.5);
+        height: units_gu(2.5);
+        background: transparent url('../img/actions/go-down.svg') no-repeat center center;
+        background-size: 100%;
+        margin: 0 auto;
+    }
+
+    &:active {
+        background: rgba(0, 0, 0, 0.05);
+    }
 }
 
 [data-role="action-overflow-list"] {}

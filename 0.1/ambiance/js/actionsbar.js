@@ -45,23 +45,19 @@ var ActionBar = (function () {
         newActionsBarWrapper.setAttribute("data-role", "actions-wrapper");
         newActionsBarWrapper.setAttribute("id", "actions_" + this.oldFooterParent.id);
 
-        if (actionButtons.length > 3) {
+        if (actionButtons.length > 2) {
 
             // Maintain the first & second item then replace the rest with an action overflow
             var firstAction = actionButtons[0],
-                secondAction = actionButtons[1],
                 actionsPopover = document.createElement('div'),
                 overflowList = document.createElement('ul'),
                 /* Actions Buttons */
                 firstButton = document.createElement('button'),
-                secondButton = document.createElement('button'),
                 overflowButton = document.createElement('button'),
                 /* Icons */
                 firstIcon = firstAction.querySelector('img').getAttribute('src'),
-                secondIcon = secondAction.querySelector('img').getAttribute('src'),
                 /* IDs*/
-                firstId = firstAction.querySelector('a').getAttribute('id'),
-                secondId = secondAction.querySelector('a').getAttribute('id');
+                firstId = firstAction.querySelector('a').getAttribute('id');
 
             actionsPopover.setAttribute('data-role', 'popover');
             actionsPopover.setAttribute('data-gravity', 'n');
@@ -70,7 +66,7 @@ var ActionBar = (function () {
             overflowList.setAttribute('data-role', 'action-overflow-list');
 
             // Hide the overflow
-            for (var x = 2; x < i; x++) {
+            for (var x = 1; x < i; x++) {
                 var li = document.createElement('li'),
                     a_id = actionButtons[x].querySelector('a').getAttribute('id'),
                     lbl = actionButtons[x].querySelector('span').innerHTML,
@@ -94,14 +90,12 @@ var ActionBar = (function () {
 
             actionsPopover.appendChild(overflowList);
 
-            firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
-            secondButton.style.backgroundImage = 'url( ' + secondIcon + ' )';
+            //firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
             firstButton.setAttribute('id', firstId);
-            secondButton.setAttribute('id', secondId);
+            document.styleSheets[0].addRule('#'+ firstId + ':after','background-image: url("' + firstIcon + '");');
+
 
             newActionsBarWrapper.appendChild(firstButton);
-            newActionsBarWrapper.appendChild(secondButton);
-
             newActionsBarWrapper.appendChild(overflowButton);
             newActionsBarWrapper.appendChild(actionsPopover);
 
