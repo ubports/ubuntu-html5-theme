@@ -47,17 +47,59 @@
         width: 100%;
         display: block;
         position: absolute;
-        top: 58px;
+        top: 60px;
     }
 }
 
 [data-role="tabs"] {
-    width: 100%;
-    white-space: nowrap;
+    background: #ededed;
+    -webkit-box-shadow: 0 0px 10px rgba(140, 140, 140, 0.3);
+    box-shadow: 0 0px 10px rgba(140, 140, 140, 0.3);
+    width: units_gu(20);
+    max-height: 250px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    left: 0;
+    top: 61px;
+    z-index: 9;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+
+    &.opened {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+[data-role="tabitem"] {
+    position: relative;
+    padding: 16px units_gu(2);
+    border-bottom: 1px solid #d9d9d9;
+    text-align: left;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    &:only-child {
+        border-bottom: 0;
+    }
+
+    &.active {
+        display: none;
+    }
+
+    &.inactive {
+        display: block;
+    }
+
+    &:active {
+        background: rgba(0, 0, 0, 0.05);
+    }
 }
 
 [data-role="back-btn"] {
-    background: #EDEDED;
+    background: #ededed;
     width: units_gu(5);
     height: units_gu(7.5);
     line-height: units_gu(7.5);
@@ -87,13 +129,16 @@
 }
 
 [data-role="tabs-btn"] {
-    background: #EDEDED;
+    background: #ededed;
     width: units_gu(5);
     height: units_gu(7.5);
     line-height: units_gu(7.5);
     float: left;
     cursor: pointer;
     border: none;
+
+    position: relative;
+    z-index: 10;
 
     &:after {
         content: "";
@@ -110,20 +155,10 @@
     }
 }
 
-[data-role="tabitem"] {
-    &.active {
-        display: none;
-    }
-
-    &.inactive {
-        display: block;
-    }
-}
-
 [data-role="back-btn"]:disabled+[data-role="tabtitle"],
 [data-role="back-btn"]+[data-role="tabtitle"],
 [data-role="tabs-btn"]+[data-role="tabtitle"],
-[data-role="popover"]+[data-role="tabtitle"] {
+[data-role="tabs"]+[data-role="tabtitle"] {
     width: calc(100% - 140px);
 }
 
@@ -132,6 +167,7 @@
     font-size: x-large;
     font-weight: 300;
     text-decoration: none;
+    background: #ededed;
     color: #808080;
     float: left;
     height: units_gu(7.5);
@@ -139,7 +175,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: calc(100% - units_gu(5));
+    position: relative;
+    z-index: 10;
 }
 
 [data-role="tab"] {
@@ -160,6 +197,9 @@
     height: units_gu(7.5);
     display: inline-block;
     padding-right: 15px;
+    background: #ededed;
+    position: relative;
+    z-index: 10;
 
     button {
         border: 0;

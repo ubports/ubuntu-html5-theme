@@ -164,22 +164,15 @@ var Tabs = (function () {
             PAGESTACK_BACK_ID = 'ubuntu-pagestack-back';
             TAB_BTN_ID = 'ubuntu-tabs-btn';
 
-
             var backbtn = document.createElement('button');
             backbtn.setAttribute('data-role', 'back-btn');
-            backbtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
+            backbtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.floor(Math.random()));
             backbtn.style.display = 'none';
 
             this._tabsbtn = document.createElement('button');
             this._tabsbtn.setAttribute('data-role', 'tabs-btn');
-            this._tabsbtn.setAttribute('id', TAB_BTN_ID + '-' + Math.random());
+            this._tabsbtn.setAttribute('id', TAB_BTN_ID + '-' + Math.floor(Math.random()));
             this._tabsbtn.style.display = 'block';
-
-            this._tabsmenu = document.createElement('div');
-            this._tabsmenu.setAttribute('data-role', 'popover');
-            this._tabsmenu.setAttribute('data-gravity', 'n');
-            this._tabsmenu.classList.add('has_tabs');
-            this._tabsmenu.appendChild(this._tabs);
 
             this._content = document.querySelector('[data-role="content"]');
 
@@ -203,13 +196,13 @@ var Tabs = (function () {
             this._header.innerHTML = '';
             this._header.appendChild(backbtn);
             this._header.appendChild(this._tabsbtn);
-            this._header.appendChild(this._tabsmenu);
+            this._header.appendChild(this._tabs);
             this._header.appendChild(this._tabtitle);
             this._header.appendChild(this._tabsactions);
 
             var self = this;
             this._tabsbtn.onclick = function (e) {
-                self.__toggleTabsmenu();
+                self.__toggleTabs();
                 e.preventDefault();
             };
 
@@ -282,7 +275,7 @@ var Tabs = (function () {
                 this._firstrun = false;
             }
             else {
-                this.__toggleTabsmenu();
+                this.__toggleTabs();
             }
         },
 
@@ -314,11 +307,11 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __toggleTabsmenu: function () {
-            this._tabsmenu.classList.toggle('active');
+        __toggleTabs: function () {
+            this._tabs.classList.toggle('opened');
             this._overlay.classList.toggle('active');
 
-            if (this._tabsactions.querySelector('.has_actions.active') != null)
+            if (this._tabsactions.querySelector('.has_actions.active') !== null)
                 this._tabsactions.querySelector('.has_actions.active').classList.remove('active');
         },
 
@@ -326,7 +319,7 @@ var Tabs = (function () {
          * @private
          */
         __hideMenus: function () {
-            this._tabsmenu.classList.remove('active');
+            this._tabs.classList.remove('opened');
             this._overlay.classList.remove('active');
             this._tabsactions.querySelector('.has_actions.active').classList.remove('active');
         }

@@ -72,7 +72,7 @@ var UbuntuUI = (function () {
         this._header = document.querySelector('[data-role="header"]');
         this._content = document.querySelector('[data-role="content"]');
         this._headerHeight = this._header.offsetHeight;
-        this._content.style.paddingTop = this._headerHeight + "px";
+        this._content.style.paddingTop = this._headerHeight + 15 + "px";
 
         var self = this;
         window.onscroll = function(event){

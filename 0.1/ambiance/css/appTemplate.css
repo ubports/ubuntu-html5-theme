@@ -247,16 +247,53 @@ ul {
   width: 100%;
   display: block;
   position: absolute;
-  top: 58px;
+  top: 60px;
 }
 
 [data-role="tabs"] {
-  width: 100%;
-  white-space: nowrap;
+  background: #ededed;
+  -webkit-box-shadow: 0 0px 10px rgba(140, 140, 140, 0.3);
+  box-shadow: 0 0px 10px rgba(140, 140, 140, 0.3);
+  width: 160px;
+  max-height: 250px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  left: 0;
+  top: 61px;
+  z-index: 9;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s;
+}
+[data-role="tabs"].opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+[data-role="tabitem"] {
+  position: relative;
+  padding: 16px 16px;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+[data-role="tabitem"]:only-child {
+  border-bottom: 0;
+}
+[data-role="tabitem"].active {
+  display: none;
+}
+[data-role="tabitem"].inactive {
+  display: block;
+}
+[data-role="tabitem"]:active {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 [data-role="back-btn"] {
-  background: #EDEDED;
+  background: #ededed;
   width: 40px;
   height: 60px;
   line-height: 60px;
@@ -283,13 +320,15 @@ ul {
 }
 
 [data-role="tabs-btn"] {
-  background: #EDEDED;
+  background: #ededed;
   width: 40px;
   height: 60px;
   line-height: 60px;
   float: left;
   cursor: pointer;
   border: none;
+  position: relative;
+  z-index: 10;
 }
 [data-role="tabs-btn"]:after {
   content: "";
@@ -304,17 +343,10 @@ ul {
   background: rgba(0, 0, 0, 0.05);
 }
 
-[data-role="tabitem"].active {
-  display: none;
-}
-[data-role="tabitem"].inactive {
-  display: block;
-}
-
 [data-role="back-btn"]:disabled + [data-role="tabtitle"],
 [data-role="back-btn"] + [data-role="tabtitle"],
 [data-role="tabs-btn"] + [data-role="tabtitle"],
-[data-role="popover"] + [data-role="tabtitle"] {
+[data-role="tabs"] + [data-role="tabtitle"] {
   width: calc(100% - 140px);
 }
 
@@ -323,6 +355,7 @@ ul {
   font-size: x-large;
   font-weight: 300;
   text-decoration: none;
+  background: #ededed;
   color: #808080;
   float: left;
   height: 60px;
@@ -330,7 +363,8 @@ ul {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100% - units_gu(5));
+  position: relative;
+  z-index: 10;
 }
 
 [data-role="tab"] {
@@ -351,6 +385,9 @@ ul {
   height: 60px;
   display: inline-block;
   padding-right: 15px;
+  background: #ededed;
+  position: relative;
+  z-index: 10;
 }
 [data-role="actions"] button {
   border: 0;
