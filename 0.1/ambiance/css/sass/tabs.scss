@@ -56,6 +56,36 @@
     white-space: nowrap;
 }
 
+[data-role="back-btn"] {
+    background: #EDEDED;
+    width: units_gu(5);
+    height: units_gu(7.5);
+    line-height: units_gu(7.5);
+    float: left;
+    cursor: pointer;
+    border: none;
+    position: relative;
+
+    &:after {
+        content: "";
+        display: block;
+        width: units_gu(2.5);
+        height: units_gu(2.5);
+        background: transparent url('../img/actions/back.svg') no-repeat center center;
+        background-size: 100%;
+        margin: 0 auto;
+    }
+
+    &:disabled  {
+        background: transparent;
+        width: 0;
+    }
+
+    &:active {
+        background: rgba(0, 0, 0, 0.05);
+    }
+}
+
 [data-role="tabs-btn"] {
     background: #EDEDED;
     width: units_gu(5);
@@ -94,19 +124,18 @@
 [data-role="back-btn"]+[data-role="tabtitle"],
 [data-role="tabs-btn"]+[data-role="tabtitle"],
 [data-role="popover"]+[data-role="tabtitle"] {
-    width: calc(100% - 135px);
+    width: calc(100% - 140px);
 }
 
 [data-role="tabtitle"] {
     font-family: $font_family;
-    font-size: 27px;
+    font-size: x-large;
     font-weight: 300;
     text-decoration: none;
     color: #808080;
     float: left;
     height: units_gu(7.5);
     line-height: units_gu(7.5);
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -126,43 +155,11 @@
     }
 }
 
-[data-role="back-btn"] {
-    background: #EDEDED;
-    width: units_gu(5);
-    height: units_gu(7.5);
-    line-height: units_gu(7.5);
-    float: left;
-    cursor: pointer;
-    border: none;
-    position: relative;
-
-    &:after {
-        content: "";
-        display: block;
-        width: units_gu(2.5);
-        height: units_gu(2.5);
-        background: transparent url('../img/actions/back.svg') no-repeat center center;
-        background-size: 100%;
-        margin: 0 auto;
-    }
-
-    &:disabled  {
-        background: transparent;
-        width: 0;
-    }
-
-    &:active {
-        background: rgba(0, 0, 0, 0.05);
-    }
-}
-
-
 [data-role="actions"] {
     float: right;
     height: units_gu(7.5);
     display: inline-block;
     padding-right: 15px;
-
 
     button {
         border: 0;
