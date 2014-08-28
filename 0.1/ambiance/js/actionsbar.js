@@ -49,7 +49,6 @@ var ActionBar = (function () {
 
             // Maintain the first & second item then replace the rest with an action overflow
             var firstAction = actionButtons[0],
-                actionsPopover = document.createElement('div'),
                 overflowList = document.createElement('ul'),
                 /* Actions Buttons */
                 firstButton = document.createElement('button'),
@@ -59,11 +58,7 @@ var ActionBar = (function () {
                 /* IDs*/
                 firstId = firstAction.querySelector('a').getAttribute('id');
 
-            actionsPopover.setAttribute('data-role', 'popover');
-            actionsPopover.setAttribute('data-gravity', 'n');
-            actionsPopover.classList.add('has_actions');
-
-            overflowList.setAttribute('data-role', 'action-overflow-list');
+            overflowList.setAttribute('data-role', 'actions-overflow-list');
 
             // Hide the overflow
             for (var x = 1; x < i; x++) {
@@ -79,16 +74,14 @@ var ActionBar = (function () {
                 overflowList.appendChild(li);
 
                 li.onclick = function (e) {
-                    actionsPopover.classList.toggle('active');
+                    overflowList.classList.toggle('opened');
                     self._overlay.classList.toggle('active');
                     e.preventDefault();
                 };
             }
 
             // Add the action overflow button
-            overflowButton.setAttribute('data-role', 'action-overflow-icon');
-
-            actionsPopover.appendChild(overflowList);
+            overflowButton.setAttribute('data-role', 'actions-overflow-icon');
 
             //firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
             firstButton.setAttribute('id', firstId);
@@ -97,12 +90,11 @@ var ActionBar = (function () {
 
             newActionsBarWrapper.appendChild(firstButton);
             newActionsBarWrapper.appendChild(overflowButton);
-            newActionsBarWrapper.appendChild(actionsPopover);
+            newActionsBarWrapper.appendChild(overflowList);
 
             self = this;
             overflowButton.onclick = function (e) {
-                newActionsBar.parentNode.querySelector('.has_tabs').classList.remove('active');
-                actionsPopover.classList.toggle('active');
+                overflowList.classList.toggle('opened');
                 self._overlay.classList.toggle('active');
                 e.preventDefault();
             };
