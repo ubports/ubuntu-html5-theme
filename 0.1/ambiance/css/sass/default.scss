@@ -50,7 +50,7 @@ html, body,
 [data-role="content"] {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
@@ -64,7 +64,7 @@ body {
     background: #ededed;
     border-top: 1px solid #f0f0f0;
     font-size: 1rem $font_family;
-    height: calc(100% - 75px);
+    min-height: calc(100% - 75px);
     color: $text_color;
 }
 
