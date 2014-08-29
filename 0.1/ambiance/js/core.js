@@ -137,8 +137,8 @@ var UbuntuUI = (function () {
         },
 
         __transformHeader: function(y) {
-          var s = this._header.style;
-          this.__translateY(s, -y);
+            var s = this._header.style;
+            this.__translateY(s, -y);
         },
 
         __translateY: function(s, y) {
@@ -163,7 +163,7 @@ var UbuntuUI = (function () {
                     var footers = apptabsElements[idx].querySelectorAll("[data-role='footer']");
                     if (footers.length >= 0) {
                         // TODO: validate footer count: should be 1 footer
-                        actionBar = new ActionBar(footers[0], apptabsElements[idx]);
+                        actionBar = new ActionBar(this._tabs, footers[0], apptabsElements[idx]);
                         if (footers[0] != null) footers[0].remove();
                     }
                 }
@@ -175,7 +175,7 @@ var UbuntuUI = (function () {
                     var footers = apppagesElements[idx].querySelectorAll("[data-role='footer']");
                     if (footers.length >= 0) {
                         // TODO: validate footer count: should be 1 footer
-                        actionBar = new ActionBar(footers[0], apppagesElements[idx]);
+                        actionBar = new ActionBar(this._tabs, footers[0], apppagesElements[idx]);
                         if (footers[0] != null) footers[0].remove();
                     }
                 }
