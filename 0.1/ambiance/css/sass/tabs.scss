@@ -113,7 +113,7 @@
         display: block;
         width: units_gu(2.5);
         height: units_gu(2.5);
-        background: transparent url('../img/actions/back.svg') no-repeat center center;
+        background: transparent  url(icon(back)) no-repeat center center;
         background-size: 100%;
         margin: 0 auto;
     }
@@ -145,7 +145,7 @@
         display: block;
         width: units_gu(2.5);
         height: units_gu(2.5);
-        background: transparent url('../img/actions/navigation-menu.svg') no-repeat center center;
+        background: transparent url(icon(navigation-menu)) no-repeat center center;
         background-size: 100%;
         margin: 0 auto;
     }
@@ -225,7 +225,7 @@
             display: block;
             width: units_gu(2.5);
             height: units_gu(2.5);
-            background: transparent url('../img/actions/go-down.svg') center center no-repeat;
+            background: transparent url(icon(go-down)) center center no-repeat;
             background-size: 100%;
             margin: 0 auto;
         }
@@ -252,7 +252,7 @@
         display: block;
         width: units_gu(2.5);
         height: units_gu(2.5);
-        background: transparent url('../img/actions/go-down.svg') no-repeat center center;
+        background: transparent url(icon(go-down)) no-repeat center center;
         background-size: 100%;
         margin: 0 auto;
     }
@@ -322,5 +322,4 @@
         display: block;
     }
 }
-
 

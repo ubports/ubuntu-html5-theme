@@ -307,7 +307,7 @@ ul {
   display: block;
   width: 20px;
   height: 20px;
-  background: transparent url("../img/actions/back.svg") no-repeat center center;
+  background: transparent url("/usr/share/icons/suru/actions/back.svg") no-repeat center center;
   background-size: 100%;
   margin: 0 auto;
 }
@@ -335,7 +335,7 @@ ul {
   display: block;
   width: 20px;
   height: 20px;
-  background: transparent url("../img/actions/navigation-menu.svg") no-repeat center center;
+  background: transparent url("/usr/share/icons/suru/actions/navigation-menu.svg") no-repeat center center;
   background-size: 100%;
   margin: 0 auto;
 }
@@ -411,7 +411,7 @@ ul {
   display: block;
   width: 20px;
   height: 20px;
-  background: transparent url("../img/actions/go-down.svg") center center no-repeat;
+  background: transparent url("/usr/share/icons/suru/actions/go-down.svg") center center no-repeat;
   background-size: 100%;
   margin: 0 auto;
 }
@@ -433,7 +433,7 @@ ul {
   display: block;
   width: 20px;
   height: 20px;
-  background: transparent url("../img/actions/go-down.svg") no-repeat center center;
+  background: transparent url("/usr/share/icons/suru/actions/go-down.svg") no-repeat center center;
   background-size: 100%;
   margin: 0 auto;
 }
@@ -497,7 +497,7 @@ ul {
 }
 
 /*
- * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ * Copyright (C) 2013, 2014 Adnane Belmadiaf <daker@ubuntu.com>
  * License granted by Canonical Limited
  *
  * This file is part of ubuntu-html5-ui-toolkit.
@@ -520,17 +520,17 @@ ul {
 /* ----------------------------------
 * Icons
 * ---------------------------------- */
-.icon {
+[data-role="icon"] {
   width: 26px;
   height: 26px;
   display: inline-block;
   vertical-align: middle;
 }
-.icon.icon-call {
+[data-role="icon"][data-icon="call"] {
   background: url(../img/icons/icon-call.svg) no-repeat scroll center center transparent;
   background-size: 26px;
 }
-.icon.icon-caret {
+[data-role="icon"][data-icon="caret"] {
   background: url(../img/chevron_down@30.png) no-repeat scroll center center transparent;
   background-size: 26px;
 }

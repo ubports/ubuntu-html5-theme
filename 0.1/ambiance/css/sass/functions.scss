@@ -23,3 +23,8 @@
 @function units_gu($value){
   @return $value*8px
 }
+
+@function icon($icon-name){
+  @return "/usr/share/icons/suru/actions/" + $icon-name + ".svg"
+}
+

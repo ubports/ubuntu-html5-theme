@@ -315,8 +315,8 @@ var Tabs = (function () {
             this._tabs.classList.toggle('opened');
             this._overlay.classList.toggle('active');
 
-            if (this._tabsactions.querySelector('.has_actions.opened') !== null)
-                this._tabsactions.querySelector('.has_actions.opened').classList.remove('opened');
+            if (this._tabsactions.querySelector('.opened') !== null)
+                this._tabsactions.querySelector('.opened').classList.remove('opened');
         },
 
         /**
@@ -325,7 +325,8 @@ var Tabs = (function () {
         __hideMenus: function () {
             this._tabs.classList.remove('opened');
             this._overlay.classList.remove('active');
-            this._tabsactions.querySelector('.has_actions.opened').classList.remove('opened');
+            if (this._tabsactions.querySelector('.opened') !== null)
+                this._tabsactions.querySelector('.opened').classList.remove('opened');
         }
     };
 
