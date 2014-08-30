@@ -25,6 +25,6 @@
 }
 
 @function icon($icon-name){
-  @return "/usr/share/icons/suru/actions/" + $icon-name + ".svg"
+  @return "/usr/share/icons/suru/actions/scalable/" + $icon-name + ".svg"
 }
 
