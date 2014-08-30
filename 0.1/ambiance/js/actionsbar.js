@@ -116,6 +116,7 @@ var ActionBar = (function () {
             overflowButton.onclick = function (e) {
                 overflowList.classList.toggle('opened');
                 self._overlay.classList.toggle('active');
+                self._tabs._tabs.classList.remove('opened');
                 e.preventDefault();
             };
         } else {

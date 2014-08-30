@@ -314,7 +314,6 @@ var Tabs = (function () {
         __toggleTabs: function () {
             this._tabs.classList.toggle('opened');
             this._overlay.classList.toggle('active');
-
             if (this._tabsactions.querySelector('.opened') !== null)
                 this._tabsactions.querySelector('.opened').classList.remove('opened');
         },
