@@ -168,7 +168,7 @@
     font-weight: 300;
     text-decoration: none;
     background: #ededed;
-    color: #808080;
+    color: $dark_grey;
     float: left;
     height: units_gu(7.5);
     line-height: units_gu(7.5);
@@ -252,7 +252,7 @@
         display: block;
         width: units_gu(2.5);
         height: units_gu(2.5);
-        background: transparent url(icon(go-down)) no-repeat center center;
+        background: transparent url(icon(contextual-menu)) no-repeat center center;
         background-size: 100%;
         margin: 0 auto;
     }

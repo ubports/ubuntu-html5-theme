@@ -31,7 +31,7 @@
     vertical-align: middle;
 
     &[data-icon="call"] {
-        background: url(../img/icons/icon-call.svg) no-repeat scroll center center transparent;
+        background: url(icon(icon-call)) no-repeat scroll center center transparent;
         background-size: 26px;
     }
 

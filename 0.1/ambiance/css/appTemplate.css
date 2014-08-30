@@ -356,7 +356,7 @@ ul {
   font-weight: 300;
   text-decoration: none;
   background: #ededed;
-  color: #808080;
+  color: #5d5d5d;
   float: left;
   height: 60px;
   line-height: 60px;
@@ -433,7 +433,7 @@ ul {
   display: block;
   width: 20px;
   height: 20px;
-  background: transparent url("/usr/share/icons/suru/actions/scalable/go-down.svg") no-repeat center center;
+  background: transparent url("/usr/share/icons/suru/actions/scalable/contextual-menu.svg") no-repeat center center;
   background-size: 100%;
   margin: 0 auto;
 }
@@ -527,7 +527,7 @@ ul {
   vertical-align: middle;
 }
 [data-role="icon"][data-icon="call"] {
-  background: url(../img/icons/icon-call.svg) no-repeat scroll center center transparent;
+  background: url("/usr/share/icons/suru/actions/scalable/icon-call.svg") no-repeat scroll center center transparent;
   background-size: 26px;
 }
 [data-role="icon"][data-icon="caret"] {
@@ -1070,9 +1070,9 @@ progress.infinite:after {
   color: #888888;
 }
 [data-role="button"].negative {
-  background: #b2b2b2;
+  background: #929292;
   color: white;
-  border-color: #b2b2b2;
+  border-color: #929292;
 }
 
 /*
