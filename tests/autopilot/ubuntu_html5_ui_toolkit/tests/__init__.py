@@ -9,7 +9,7 @@
 
 import os
 import json
-import BaseHTTPServer
+import http.server as http
 import threading
 import subprocess
 
@@ -25,13 +25,12 @@ from autopilot import platform
 # from autopilot.introspection.qt import QtIntrospectionTestMixin
 
 
-class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class RequestHandler(http.BaseHTTPRequestHandler):
     BASE_PATH_FOR_SERVED_APPS = {'rss-reader': "%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../0.1/examples/apps/rss-reader')}
 
     def get_served_filename(self, appname, filename):
         if len(filename) == 0 or filename == '/':
             filename = 'autopilot.html'
-        print os.path.join(self.BASE_PATH_FOR_SERVED_APPS[appname], filename)
         return os.path.join(self.BASE_PATH_FOR_SERVED_APPS[appname], filename)
 
     def serve_file(self, filename):
@@ -59,7 +58,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 class UbuntuHTML5HTTPServer(threading.Thread):
     def __init__(self, port):
         super(UbuntuHTML5HTTPServer, self).__init__()
-        self.server = BaseHTTPServer.HTTPServer(("", port), RequestHandler)
+        self.server = http.HTTPServer(("", port), RequestHandler)
         self.server.allow_reuse_address = True
 
     def run(self):
@@ -75,7 +74,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     INSTALLED_BROWSER_CONTAINER_PATH = '/usr/share/ubuntu-html5-ui-toolkit/tests/tools/qml/webview.qml'
     arch = subprocess.check_output(
         ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip()
-    BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch + "/qt5/bin/qmlscene"
+    BROWSER_QML_APP_LAUNCHER = "/usr/lib/" + arch.decode('ascii') + "/qt5/bin/qmlscene"
 
     # TODO: fix version
     LOCAL_HTML_EXAMPLES_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__)), '../../../../tests'))
@@ -107,7 +106,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
             self.pointer = Pointer(Touch.create())
 
         params = [self.BROWSER_QML_APP_LAUNCHER, self.get_browser_container_path()]
-        if (platform.model() <> 'Desktop'):
+        if (platform.model() != 'Desktop'):
             params.append('--desktop_file_hint=/usr/share/applications/unitywebappsqmllauncher.desktop')
 
         self.app = self.launch_test_application(
