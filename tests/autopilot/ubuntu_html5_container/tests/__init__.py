@@ -36,6 +36,6 @@ class UbuntuHtml5LauncherTestCase (AutopilotTestCase):
     def launch_with_argument(self, args):
         try:
             self.app = self.launch_test_application(self.get_launcher_path(), args)
-        except Exception, e:
+        except Exception:
             pass
 
