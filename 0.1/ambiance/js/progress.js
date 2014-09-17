@@ -32,7 +32,7 @@
       <progress value="80" max="100"></progress>
 
       Javascript access:
-      var pre = UI.progrss("progressID");
+      var pre = UI.progress("progressID");
  */
 var Progress = (function () {
 

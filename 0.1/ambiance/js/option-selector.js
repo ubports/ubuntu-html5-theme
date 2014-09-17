@@ -42,8 +42,14 @@
         </ul>
       </section>
 
-      JavaScript:
-      UI.optionselector.METHOD();
+      JavaScript access:
+
+      Expanded:
+        UI.optionselector("OptionSelectorID", true);
+      Expanded and multi selection:
+        UI.optionselector("OptionSelectorID", true, true);
+      Multi selection:
+        UI.optionselector("OptionSelectorID", false, true);
 */
 var OptionSelector = (function () {
 
