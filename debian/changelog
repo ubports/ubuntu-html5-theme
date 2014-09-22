@@ -1,3 +1,15 @@
+ubuntu-html5-theme (0.1.2+14.10.20140922.1-0ubuntu1) utopic; urgency=low
+
+  [ Alexandre Abreu ]
+  * make ubuntu-html5-container multi-arch foreign; update dependencies
+    for libqt5webkit5-qmlwebkitplugin to qml-module-qtwebkit
+
+  [ Steve Langasek ]
+  * Drop unused dependency on dpkg-dev from ubuntu-html5-container. LP:
+    #1369052. (LP: #1369052)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 22 Sep 2014 21:14:27 +0000
+
 ubuntu-html5-theme (0.1.2+14.10.20140731-0ubuntu2) utopic; urgency=low
 
   * debian/control:
