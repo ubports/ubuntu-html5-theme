@@ -5,7 +5,7 @@ Maintainer: Michael Hall <mhall119@ubuntu.com>
 Build-Depends: cmake (>= 2.8.9),
                debhelper (>= 9),
                libqt5webkit5-dev,
-               libqt5webkit5-qmlwebkitplugin,
+               qml-module-qtwebkit,
                python (>= 2.7),
                python-setuptools,
                qt5-default,
@@ -48,7 +48,7 @@ Description: Toolkit for Ubuntu HTML5 Apps
 Package: ubuntu-html5-ui-toolkit-examples
 Architecture: all
 Depends: libjs-jquery,
-         libqt5webkit5-qmlwebkitplugin,
+         qml-module-qtwebkit,
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
          ubuntu-html5-ui-toolkit (= ${binary:Version}),
@@ -66,7 +66,7 @@ Depends: dpkg-dev,
          libautopilot-qt (>= 1.4),
          libjs-jquery,
          libqt5test5,
-         libqt5webkit5-qmlwebkitplugin,
+         qml-module-qtwebkit,
          python-xlib,
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
@@ -83,8 +83,9 @@ Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
 
 Package: ubuntu-html5-container
 Architecture: any
+Multi-Arch: foreign
 Depends: dpkg-dev,
-         libqt5webkit5-qmlwebkitplugin,
+         qml-module-qtwebkit,
          qmlscene,
          qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-qtquick2-plugin,
@@ -102,7 +103,7 @@ Package: ubuntu-html5-container-autopilot
 Architecture: all
 Depends: libautopilot-qt (>= 1.4),
          libqt5test5,
-         libqt5webkit5-qmlwebkitplugin,
+         qml-module-qtwebkit,
          qtdeclarative5-qtquick2-plugin,
          ubuntu-html5-container (>= ${binary:Version}),
          ${misc:Depends},
