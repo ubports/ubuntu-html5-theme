@@ -84,8 +84,7 @@ Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
 Package: ubuntu-html5-container
 Architecture: any
 Multi-Arch: foreign
-Depends: dpkg-dev,
-         qml-module-qtwebkit,
+Depends: qml-module-qtwebkit,
          qmlscene,
          qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-qtquick2-plugin,
