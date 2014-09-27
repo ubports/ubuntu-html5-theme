@@ -192,8 +192,8 @@ var Tabs = (function () {
             this._tabsactions.setAttribute('data-role', 'actions');
 
             var tab = this._tabs.querySelector('[data-role="tabitem"]:first-child');
-            tab.classList.remove('inactive');
-            tab.classList.add('active');
+            /*tab.classList.remove('inactive');
+            tab.classList.add('active');*/
 
             this._header.innerHTML = '';
             this._header.appendChild(backbtn);
@@ -233,11 +233,11 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __updateActiveTab: function (newActiveTab, oldActiveTab) {
-            oldActiveTab.classList.remove('inactive');
-            oldActiveTab.classList.remove('active');
-            newActiveTab.classList.remove('inactive');
-            newActiveTab.classList.add('active');
+        __updateActiveTab: function (newActiveTab) {
+            //oldActiveTab.classList.remove('inactive');
+            //oldActiveTab.classList.remove('active');
+            //newActiveTab.classList.remove('inactive');
+            //newActiveTab.classList.add('active');
             this._tabtitle.textContent = newActiveTab.innerHTML;
         },
 
@@ -263,17 +263,17 @@ var Tabs = (function () {
             if (tabElement.getAttribute("data-role") !== 'tabitem')
                 return;
 
-            activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
+            this.__updateActiveTab(tabElement);
 
-            this.__updateActiveTab(tabElement, activeTab);
-
+            /*activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
             [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (e) {
                 e.classList.remove('inactive');
-            });
+            });*/
 
             var targetPageId = tabElement.getAttribute('data-page');
 
-            this.__activate(targetPageId);
+            //this.__activate(targetPageId);
+
             this.__dispatchTabChangedEvent(targetPageId);
             if (this._firstrun) {
                 this._firstrun = false;
