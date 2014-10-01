@@ -23,6 +23,11 @@ Item {
 
     property string htmlIndexDirectory
 
+    // Remote Inspector Properties
+    property string remoteInspectorEnabled
+    property string remoteInspectorPort
+    property string remoteInspectorHost
+
     // Cordova plugin instance
     property var cordovaInstance: null
 

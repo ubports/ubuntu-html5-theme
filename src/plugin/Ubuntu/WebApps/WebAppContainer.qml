@@ -42,6 +42,22 @@ MainView {
       */
     property alias htmlIndexDirectory: cordovaWebviewProvider.htmlIndexDirectory
 
+    /*!
+      \preliminary
+      The properties hold whether the remote debugging interface should be enabled for the
+      Web View. The host ip and port for accessing the remote interface should be provided.
+      */
+    property alias remoteInspectorEnabled: cordovaWebviewProvider.remoteInspectorEnabled
+    property alias remoteInspectorHost: cordovaWebviewProvider.remoteInspectorHost
+    property alias remoteInspectorPort: cordovaWebviewProvider.remoteInspectorPort
+
+    /*!
+      \preliminary
+      The property holds the whether .
+
+      The path is absolute or relative to the current dir.
+      */
+
     Page {
         id: mainPage
         anchors.fill: parent
@@ -109,6 +125,13 @@ MainView {
 
                 preferences.localStorageEnabled: true
                 preferences.allowUniversalAccessFromFileUrls: true
+                preferences.appCacheEnabled: true
+
+                context: WebContext {
+                    devtoolsEnabled: root.remoteInspectorEnabled
+                    devtoolsIp: root.remoteInspectorHost
+                    devtoolsPort: root.remoteInspectorPort
+                }
             }
         }
 
