@@ -222,11 +222,10 @@ int main(int argc, char *argv[])
         qCritical() << "Main application component cannot be loaded.";
         return EXIT_FAILURE;
     }
-    view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
     view.rootObject()->setProperty("remoteInspectorEnabled", remoteInspectorEnabled);
     view.rootObject()->setProperty("remoteInspectorHost", remoteInspectorHost);
     view.rootObject()->setProperty("remoteInspectorPort", remoteInspectorPort);
-
+    view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
     view.setTitle(QCoreApplication::applicationName());
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
