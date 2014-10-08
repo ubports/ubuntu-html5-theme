@@ -1,3 +1,12 @@
+ubuntu-html5-theme (0.1.2+14.10.20141008-0ubuntu1) utopic; urgency=low
+
+  [ Jean-Francois Moy ]
+  * Fixed alignment issues. Fixed UI.optionselector being incorrectly
+    documented. Aligned terminology between various pages. Fixed
+    incorrect UI.progress documentation. (LP: #1276234)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 08 Oct 2014 15:25:01 +0000
+
 ubuntu-html5-theme (0.1.2+14.10.20140922.1-0ubuntu1) utopic; urgency=low
 
   [ Alexandre Abreu ]
