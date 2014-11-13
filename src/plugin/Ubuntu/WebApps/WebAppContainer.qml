@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import Ubuntu.Components 0.1
-import Ubuntu.Components.Extras.Browser 0.1
+import Ubuntu.Web 0.2
 
 
 /*!
@@ -41,6 +41,22 @@ MainView {
       The path is absolute or relative to the current dir.
       */
     property alias htmlIndexDirectory: cordovaWebviewProvider.htmlIndexDirectory
+
+    /*!
+      \preliminary
+      The properties hold whether the remote debugging interface should be enabled for the
+      Web View. The host ip and port for accessing the remote interface should be provided.
+      */
+    property alias remoteInspectorEnabled: cordovaWebviewProvider.remoteInspectorEnabled
+    property alias remoteInspectorHost: cordovaWebviewProvider.remoteInspectorHost
+    property alias remoteInspectorPort: cordovaWebviewProvider.remoteInspectorPort
+
+    /*!
+      \preliminary
+      The property holds the whether .
+
+      The path is absolute or relative to the current dir.
+      */
 
     Page {
         id: mainPage
@@ -104,25 +120,18 @@ MainView {
          */
         Component {
             id: webviewFallbackComponent
-            UbuntuWebView {
+            WebView {
                 url: mainPage._getAppStartupIndexFileUri()
 
-                experimental.preferences.localStorageEnabled: true
-                experimental.preferences.offlineWebApplicationCacheEnabled: true
-                experimental.preferences.universalAccessFromFileURLsAllowed: true
-                experimental.preferences.webGLEnabled: true
+                preferences.localStorageEnabled: true
+                preferences.allowUniversalAccessFromFileUrls: true
+                preferences.appCacheEnabled: true
 
-                experimental.databaseQuotaDialog: Item {
-                    Timer {
-                        interval: 1
-                        running: true
-                        onTriggered: {
-                            model.accept(model.expectedUsage)
-                        }
-                    }
+                context: WebContext {
+                    devtoolsEnabled: root.remoteInspectorEnabled
+                    devtoolsIp: root.remoteInspectorHost
+                    devtoolsPort: root.remoteInspectorPort
                 }
-                // port in QTWEBKIT_INSPECTOR_SERVER enviroment variable
-                experimental.preferences.developerExtrasEnabled: true
             }
         }
 
