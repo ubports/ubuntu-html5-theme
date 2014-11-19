@@ -2,18 +2,22 @@
 # Copyright 2014 Canonical
 #
 # This program is free software: you can redistribute it and/or modify it
-# under the terms of the GNU Lesser General Public License version 3, as published
-# by the Free Software Foundation.
+# under the terms of the GNU Lesser General Public License version 3, as
+# published by the Free Software Foundation.
 
 """Tests for the Ubuntu HTML5 Launcher package """
 
 import os
 from autopilot.testcase import AutopilotTestCase
 
+
 LAUNCHER_EXEC_NAME = 'ubuntu-html5-app-launcher'
 
-LOCAL_LAUNCHER_PATH = os.path.abspath("%s/%s" % (os.path.dirname(os.path.realpath(__file__))
-                                        , '../../../../src/ubuntu-html5-app-launcher/' + LAUNCHER_EXEC_NAME))
+LOCAL_LAUNCHER_PATH = os.path.abspath(
+    "{}/{}".format(
+        os.path.dirname(os.path.realpath(__file__)),
+        '../../../../src/ubuntu-html5-app-launcher/' + LAUNCHER_EXEC_NAME))
+
 INSTALLED_LAUNCHER_PATH = '/usr/bin/' + LAUNCHER_EXEC_NAME
 
 
@@ -35,7 +39,8 @@ class UbuntuHtml5LauncherTestCase (AutopilotTestCase):
 
     def launch_with_argument(self, args):
         try:
-            self.app = self.launch_test_application(self.get_launcher_path(), args)
-        except Exception, e:
+            self.app = self.launch_test_application(
+                self.get_launcher_path(),
+                args)
+        except Exception:
             pass
-

@@ -17,7 +17,8 @@
  */
 
 import QtQuick 2.0
-import com.canonical.Oxide 1.0
+import QtTest 1.0
+import com.canonical.Oxide 1.0 as Oxide
 
 Item {
     id: root
@@ -29,6 +30,8 @@ Item {
     property string url
 
     signal resultUpdated(string message)
+
+    TestResult { id: qtest_testResult }
 
     function __gentid() {
         return Math.random() + '';
@@ -63,23 +66,21 @@ Item {
         var tid = __gentid();
         var statement = 'document.getElementById("' + id + '").click();';
 
-        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
-		function(result) { root.resultUpdated(root.__createResult(result)); });
+        var result = webview.evaluateCode(statement, true);
+        root.resultUpdated(root.__createResult(result, tid));
     }
 
     function evalInPageUnsafe(expr) {
-        var tid = __gentid();
-
-        webview.experimental.evaluateJavaScript(__wrapJsCommands(expr),
-		function(result) { root.resultUpdated(root.__createResult(result)); });
+        var result = webview.evaluateCode(expr, true);
+        root.resultUpdated(result.toString())
     }
 
     function clickAnyElementBySelector(selector) {
         var tid = __gentid();
         var statement = 'document.querySelectorAll("' + selector + '")[0].click();';
 
-        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
-		function(result) { root.resultUpdated(root.__createResult(result)); });
+        var result = webview.evaluateCode(statement, true);
+        root.resultUpdated(root.__createResult(result, tid));
     }
 
     function elementWithIdHasAttribute(id,attribute,value) {
@@ -94,13 +95,13 @@ Item {
         statement += hasAttributeWithIdFunc;
         statement += "; return __hasAttributeWithId(id,attribute,value); "
 
-        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
-		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
+        var result = webview.evaluateCode(statement, true);
+        root.resultUpdated(root.__createResult(result, tid));
     }
 
     function isNodeWithIdVisible(id) {
         var tid = __gentid();
-	var isNodeWithIdVisibleFunc = '
+        var isNodeWithIdVisibleFunc = '
         function __isNodeWithIdVisible() {
             try { return document.getElementById(id).style.display !== "none"; } catch (e) { return e.toString(); };
             return false;
@@ -109,14 +110,15 @@ Item {
         var statement = __setupClosedVariables({'id': id});
         statement += isNodeWithIdVisibleFunc;
         statement += "; return __isNodeWithIdVisible(id); "
-        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
-		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
+
+        var result = webview.evaluateCode(statement, true);
+        root.resultUpdated(root.__createResult(result, tid));
     }
 
     function getAttributeForElementWithId(id,attribute) {
         var tid = __gentid();
         var getAttributeWithIdFunc = '
-	function __getAttributeWithId() {
+        function __getAttributeWithId() {
             try { var value = document.querySelector("#" + id).getAttribute(attribute); return value || ""; } catch (e) { return e.toString(); };
             return "";
         };';
@@ -125,11 +127,11 @@ Item {
         statement += getAttributeWithIdFunc;
         statement += "; return __getAttributeWithId(); "
 
-        webview.experimental.evaluateJavaScript(__wrapJsCommands(statement),
-		function(result) { root.resultUpdated(root.__createResult(result, tid)); });
+        var result = webview.evaluateCode(statement, true);
+        root.resultUpdated(root.__createResult(result, tid));
     }
 
-    WebView {
+    Oxide.WebView {
         objectName: "webview"
         id: webview
 
@@ -145,12 +147,77 @@ Item {
             left: parent.left
         }
 
-        experimental.userScripts: []
-        experimental.preferences.navigatorQtObjectEnabled: true
-        experimental.preferences.developerExtrasEnabled: true
+        preferences.localStorageEnabled: true
+        preferences.appCacheEnabled: true
 
-        experimental.userAgent: {
-            return "Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3"
+        function evaluateCode(code, wrap) {
+          var value = webview._waitForResult(
+              webview.rootFrame.sendMessage(
+                "oxide://main-world",
+                "EVALUATE-CODE",
+                { code: code,
+                  wrap: wrap === undefined ? false : wrap }));
+            return value ? value.result : undefined;
+        }
+
+        function _waitForResult(req, timeout) {
+          var result;
+          var error;
+          req.onreply = function(response) {
+              result = response;
+              error = 0;
+          };
+          req.onerror = function(error_code, msg) {
+              result = msg;
+              error = error_code;
+          };
+          webview._waitFor(function() { return error !== undefined; },
+                                timeout);
+
+          if (error > 0) {
+              console.error('Error:' + error + ', result:' + result)
+          } else if (error === 0) {
+              return result;
+          } else {
+              throw new Error("Message call timed out");
+          }
+        }
+
+        function _waitFor(predicate, timeout) {
+          timeout = timeout || 5000000;
+          var end = Date.now() + timeout;
+          var i = Date.now();
+          while (i < end && !predicate()) {
+              qtest_testResult.wait(50);
+              i = Date.now();
+          }
+          return predicate();
+        }
+
+        context: Oxide.WebContext {
+            userScripts: [
+                Oxide.UserScript {
+                    context: "oxide://main-world"
+                    emulateGreasemonkey: true
+                    url: Qt.resolvedUrl("message-server.js")
+                    matchAllFrames: true
+                }
+            ]
+        }
+
+        onJavaScriptConsoleMessage: {
+            var msg = "[JS] (%1:%2) %3".arg(sourceId).arg(lineNumber).arg(message)
+            if (level === Oxide.WebView.LogSeverityVerbose) {
+                console.log(msg)
+            } else if (level === Oxide.WebView.LogSeverityInfo) {
+                console.info(msg)
+            } else if (level === Oxide.WebView.LogSeverityWarning) {
+                console.warn(msg)
+            } else if ((level === Oxide.WebView.LogSeverityError) ||
+                       (level === Oxide.WebView.LogSeverityErrorReport) ||
+                       (level === Oxide.WebView.LogSeverityFatal)) {
+                console.error(msg)
+            }
         }
     }
 
