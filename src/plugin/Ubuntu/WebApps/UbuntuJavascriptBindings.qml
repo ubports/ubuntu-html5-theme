@@ -25,11 +25,13 @@ Item {
 
     property var bindingMainWebview: null
 
+    signal ready()
+
     /*!
       \internal
      */
     function getUnityWebappsProxies() {
-        return UnityWebAppsUtils.makeProxiesForQtWebViewBindee(bindingMainWebview);
+        return UnityWebAppsUtils.makeProxiesForWebViewBindee(bindingMainWebview);
     }
 
     /*!
@@ -53,6 +55,8 @@ Item {
             bindee: root
             injectExtraUbuntuApis: true
             requiresInit: false
+
+            onUserScriptsInjected: root.ready()
         }
     }
 }

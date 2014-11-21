@@ -121,8 +121,6 @@ MainView {
         Component {
             id: webviewFallbackComponent
             WebView {
-                url: mainPage._getAppStartupIndexFileUri()
-
                 preferences.localStorageEnabled: true
                 preferences.allowUniversalAccessFromFileUrls: true
                 preferences.appCacheEnabled: true
@@ -140,6 +138,11 @@ MainView {
          */
         UbuntuJavascriptBindings {
             id: bindings
+            onReady: {
+                if (webviewFallbackComponentLoader.item) {
+                    webviewFallbackComponentLoader.item.url = mainPage._getAppStartupIndexFileUri()
+                }
+            }
         }
     }
 }
