@@ -26,5 +26,9 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
+# make non compiled files (QML, JS, images, etc.) visible in QtCreator
+file(GLOB_RECURSE NON_COMPILED_FILES *.qml *.js *.png *.py *.pot *.po *.qdoc *.qdocconf *.css *.html)
+add_custom_target(NON_COMPILED_TARGET ALL SOURCES ${NON_COMPILED_FILES})
+
 add_subdirectory(src)
 add_subdirectory(tests)

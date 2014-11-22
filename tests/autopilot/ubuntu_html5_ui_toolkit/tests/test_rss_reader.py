@@ -2,17 +2,16 @@
 # Copyright 2013 Canonical
 #
 # This program is free software: you can redistribute it and/or modify it
-# under the terms of the GNU Lesser General Public License version 3, as published
-# by the Free Software Foundation.
+# under the terms of the GNU Lesser General Public License version 3, as
+# published by the Free Software Foundation.
 
 from __future__ import absolute_import
-
-import time
 
 from testtools.matchers import Contains, Equals
 from autopilot.matchers import Eventually
 
-from ubuntu_html5_ui_toolkit.tests import UbuntuHTML5TestCaseBase, UbuntuThemeRemotePageTestCaseBase
+from ubuntu_html5_ui_toolkit.tests import UbuntuHTML5TestCaseBase
+
 
 class UbuntuThemeRSSReaderTestCase(UbuntuHTML5TestCaseBase):
     def setUp(self):
@@ -29,6 +28,8 @@ class UbuntuThemeRSSReaderTestCase(UbuntuHTML5TestCaseBase):
 
     def test_switchToFeedView(self):
         self.click_any_dom_node_by_selector('#yourfeeds li a')
-        self.assertThat(lambda: self.is_dom_node_visible('main'), Eventually(Equals(False)))
+        self.assertThat(
+            lambda: self.is_dom_node_visible('main'),
+            Eventually(Equals(False)))
         self.assertThat(self.is_dom_node_visible('article'), Equals(False))
         self.assertThat(self.is_dom_node_visible('results'), Equals(True))

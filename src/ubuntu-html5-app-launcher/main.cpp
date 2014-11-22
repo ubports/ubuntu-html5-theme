@@ -142,6 +142,10 @@ int main(int argc, char *argv[])
     QString wwwfolderArg;
     bool maximized = false;
 
+    QString remoteInspectorHost = "";
+    QString remoteInspectorPort = QString::number(REMOTE_INSPECTOR_PORT);
+    bool remoteInspectorEnabled = false;
+
     QStringList arguments = app.arguments();
     arguments.pop_front();
 
@@ -159,20 +163,13 @@ int main(int argc, char *argv[])
         else
         if (argument.contains(INSPECTOR))
         {
-            QString host;
+            remoteInspectorEnabled = true;
             Q_FOREACH(QHostAddress address, QNetworkInterface::allAddresses()) {
                 if (!address.isLoopback() && (address.protocol() == QAbstractSocket::IPv4Protocol)) {
-                    host = address.toString();
+                    remoteInspectorHost = address.toString();
                     break;
                 }
             }
-            QString server;
-            if (host.isEmpty()) {
-                server = QString::number(REMOTE_INSPECTOR_PORT);
-            } else {
-                server = QString("%1:%2").arg(host, QString::number(REMOTE_INSPECTOR_PORT));
-            }
-            qputenv("QTWEBKIT_INSPECTOR_SERVER", server.toUtf8());
         }
         else
         {
@@ -225,8 +222,10 @@ int main(int argc, char *argv[])
         qCritical() << "Main application component cannot be loaded.";
         return EXIT_FAILURE;
     }
+    view.rootObject()->setProperty("remoteInspectorEnabled", remoteInspectorEnabled);
+    view.rootObject()->setProperty("remoteInspectorHost", remoteInspectorHost);
+    view.rootObject()->setProperty("remoteInspectorPort", remoteInspectorPort);
     view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
-
     view.setTitle(QCoreApplication::applicationName());
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
