@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1.2+15.04.20141122-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Port HTML5 containert to oxide
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Sat, 22 Nov 2014 00:44:42 +0000
+
 ubuntu-html5-theme (0.1.2+14.10.20141008-0ubuntu1) utopic; urgency=low
 
   [ Jean-Francois Moy ]
