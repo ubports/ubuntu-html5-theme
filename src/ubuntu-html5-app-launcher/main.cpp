@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
     const QString ARG_HEADER = "--";
     const QString VALUE_HEADER = "=";
     const QString INSPECTOR = "--inspector";
+    const QString OXIDE = "--oxide";
 
     QString wwwfolderArg;
     bool maximized = false;
@@ -145,6 +146,7 @@ int main(int argc, char *argv[])
     QString remoteInspectorHost = "";
     QString remoteInspectorPort = QString::number(REMOTE_INSPECTOR_PORT);
     bool remoteInspectorEnabled = false;
+    bool useOxide = false;
 
     QStringList arguments = app.arguments();
     arguments.pop_front();
@@ -153,7 +155,12 @@ int main(int argc, char *argv[])
     {
         if (argument.contains(WWW_LOCATION_ARG_HEADER))
         {
-            wwwfolderArg = argument.right(argument.count() - WWW_LOCATION_ARG_HEADER.count());
+            wwwfolderArg = argument.split(WWW_LOCATION_ARG_HEADER)[1];
+        }
+        else
+        if (argument == OXIDE)
+        {
+            useOxide = true;
         }
         else
         if (argument.contains(MAXIMIZED_ARG_HEADER))
@@ -170,6 +177,9 @@ int main(int argc, char *argv[])
                     break;
                 }
             }
+            if (argument.startsWith(INSPECTOR + "=")) {
+                remoteInspectorPort = argument.split(INSPECTOR + "=")[1];
+            }
         }
         else
         {
@@ -185,7 +195,6 @@ int main(int argc, char *argv[])
     }
 
     QFileInfo wwwFolder(wwwfolderArg);
-
     if (wwwFolder.isRelative())
     {
         wwwFolder.makeAbsolute();
@@ -215,6 +224,21 @@ int main(int argc, char *argv[])
     setUpQmlImportPathIfNecessary(plugin_path);
 
     QQuickView view;
+    QQmlEngine* engine = view.engine();
+    engine->rootContext()->setContextProperty("withOxide", useOxide);
+
+    if (remoteInspectorEnabled) {
+        qputenv("UBUNTU_WEBVIEW_DEVTOOLS_HOST", remoteInspectorHost.toUtf8());
+        qputenv("UBUNTU_WEBVIEW_DEVTOOLS_PORT", remoteInspectorPort.toUtf8());
+    }
+
+    engine->rootContext()->setContextProperty("inspector", remoteInspectorEnabled);
+    engine->rootContext()->setContextProperty("wwwFolder", wwwFolder.absoluteFilePath());
+
+    if (remoteInspectorEnabled) {
+        qputenv("QTWEBKIT_INSPECTOR_SERVER", remoteInspectorPort.toUtf8());
+    }
+
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
@@ -222,10 +246,7 @@ int main(int argc, char *argv[])
         qCritical() << "Main application component cannot be loaded.";
         return EXIT_FAILURE;
     }
-    view.rootObject()->setProperty("remoteInspectorEnabled", remoteInspectorEnabled);
-    view.rootObject()->setProperty("remoteInspectorHost", remoteInspectorHost);
-    view.rootObject()->setProperty("remoteInspectorPort", remoteInspectorPort);
-    view.rootObject()->setProperty("htmlIndexDirectory", wwwFolder.canonicalFilePath());
+
     view.setTitle(QCoreApplication::applicationName());
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 

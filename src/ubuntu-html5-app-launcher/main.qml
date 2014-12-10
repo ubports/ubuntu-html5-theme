@@ -23,5 +23,8 @@ import Ubuntu.WebApps 0.1
 WebAppContainer {
     width: units.gu(100)
     height: units.gu(75)
-}
 
+    oxide: withOxide
+    remoteInspectorEnabled: inspector
+    htmlIndexDirectory: wwwFolder
+}
