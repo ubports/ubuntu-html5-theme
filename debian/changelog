@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1.2+15.04.20141210.1-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Add --oxide flag to switch between oxide/webkit; simplify code.
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 10 Dec 2014 18:34:51 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20141122-0ubuntu1) vivid; urgency=low
 
   [ Ubuntu daily release ]
