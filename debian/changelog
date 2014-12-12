@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1.2+15.04.20141212.1-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Small fix for new tab/target blank handling
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 12 Dec 2014 19:35:53 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20141210.1-0ubuntu1) vivid; urgency=low
 
   [ Ubuntu daily release ]
