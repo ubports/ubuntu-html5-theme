@@ -23,6 +23,8 @@ import Ubuntu.Components.Extras.Browser 0.1
 UbuntuWebView {
     id: webview
 
+    onNewTabRequested: Qt.openUrlExternally(url)
+
     property bool remoteInspectorEnabled: false
     property string remoteInspectorPort: ""
     property string remoteInspectorHost: ""
