@@ -19,6 +19,8 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.UnityWebApps 0.1
+import com.canonical.Oxide 1.0 as Oxide
+import Ubuntu.Web 0.2
 
 /*!
     \qmltype WebAppContainer
@@ -77,12 +79,31 @@ MainView {
             }
         }
 
+        Component {
+            id: webviewComponent
+
+            WebView {
+                id: webview
+
+                preferences.allowUniversalAccessFromFileUrls: true
+                preferences.allowFileAccessFromFileUrls: true
+                preferences.appCacheEnabled: true
+                preferences.localStorageEnabled: true
+
+                function navigationRequestedDelegate(request) {
+                    var url = request.url.toString()
+
+                    if (url.indexOf("file://") !== 0) {
+                        request.action = Oxide.NavigationRequest.ActionReject
+                        Qt.openUrlExternally(url)
+                        return
+                    }
+                }
+            }
+        }
+
         Component.onCompleted: {
-            var webview = oxide ?
-                Qt.resolvedUrl("WebViewOxide.qml")
-                : Qt.resolvedUrl("WebViewWebkit.qml");
-            webviewComponentLoader.setSource(webview, {
-                remoteInspectorEnabled: root.remoteInspectorEnabled});
+            webviewComponentLoader.sourceComponent = webviewComponent;
         }
 
         /*!

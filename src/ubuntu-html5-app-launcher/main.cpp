@@ -28,6 +28,11 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
+#if QT_VERSION < QT_VERSION_CHECK(5, 3, 0)
+#include <QtQuick/private/qsgcontext_p.h>
+#else
+#include <QtGui/private/qopenglcontext_p.h>
+#endif
 
 
 namespace {
@@ -72,7 +77,7 @@ void addPathToQmlImport(const QString & importPath)
     qputenv("QML2_IMPORT_PATH", existingImportPath.toLatin1());
 }
 
-void setUpQmlImportPathIfNecessary(const QString & applicationLocalSearchPath)
+void setUpQmlImportPathIfNecessary()
 {
     QString importPath = Webapp::Config::getContainerImportPath();
     if ( !importPath.isEmpty())
@@ -80,28 +85,8 @@ void setUpQmlImportPathIfNecessary(const QString & applicationLocalSearchPath)
         addPathToQmlImport(importPath);
     }
 
-    // Note: By default we add the local path to the import path
-    //  mostly to account for potential Cordova 3.0 qml plugin
-    //  not installed globally but embedded into apps. So the
-    //  one embedded should take precedence over the ones installed
-    //  system wide (2.8).
-    addPathToQmlImport(applicationLocalSearchPath);
-
     qDebug() << "Setting import path to: "
              << qgetenv("QML2_IMPORT_PATH").data();
-}
-
-QString pluginPathForCurrentArchitecture()
-{
-#if defined(__i386__)
-    return QLatin1String("/lib/i386-linux-gnu");
-#elif defined(__x86_64__)
-    return QLatin1String("/lib/x86_64-linux-gnu");
-#elif defined(__arm__)
-    return QLatin1String("/lib/arm-linux-gnueabihf");
-#else
-#error Unable to determine target architecture
-#endif
 }
 
 
@@ -138,7 +123,6 @@ int main(int argc, char *argv[])
     const QString ARG_HEADER = "--";
     const QString VALUE_HEADER = "=";
     const QString INSPECTOR = "--inspector";
-    const QString OXIDE = "--oxide";
 
     QString wwwfolderArg;
     bool maximized = false;
@@ -146,7 +130,6 @@ int main(int argc, char *argv[])
     QString remoteInspectorHost = "";
     QString remoteInspectorPort = QString::number(REMOTE_INSPECTOR_PORT);
     bool remoteInspectorEnabled = false;
-    bool useOxide = false;
 
     QStringList arguments = app.arguments();
     arguments.pop_front();
@@ -156,11 +139,6 @@ int main(int argc, char *argv[])
         if (argument.contains(WWW_LOCATION_ARG_HEADER))
         {
             wwwfolderArg = argument.split(WWW_LOCATION_ARG_HEADER)[1];
-        }
-        else
-        if (argument == OXIDE)
-        {
-            useOxide = true;
         }
         else
         if (argument.contains(MAXIMIZED_ARG_HEADER))
@@ -217,15 +195,21 @@ int main(int argc, char *argv[])
         QString appPkgName = qgetenv("APP_ID").split('_').first();
         QCoreApplication::setApplicationName(appPkgName);
     }
+    setUpQmlImportPathIfNecessary();
 
-    QString plugin_path = wwwFolder.absoluteFilePath() + "/.." +
-        pluginPathForCurrentArchitecture();
-
-    setUpQmlImportPathIfNecessary(plugin_path);
+    // Enable compositing in oxide
+    QOpenGLContext* glcontext = new QOpenGLContext();
+    glcontext->create();
+#if QT_VERSION < QT_VERSION_CHECK(5, 3, 0)
+    QSGContext::setSharedOpenGLContext(glcontext);
+#elif QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
+    QOpenGLContextPrivate::setGlobalShareContext(glcontext);
+#else
+    qt_gl_set_global_share_context(glcontext);
+#endif
 
     QQuickView view;
     QQmlEngine* engine = view.engine();
-    engine->rootContext()->setContextProperty("withOxide", useOxide);
 
     if (remoteInspectorEnabled) {
         qputenv("UBUNTU_WEBVIEW_DEVTOOLS_HOST", remoteInspectorHost.toUtf8());
@@ -259,6 +243,3 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
-
-
-
