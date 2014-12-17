@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1.2+15.04.20141217-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Cleanup oxide option and set it as default and only option
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 17 Dec 2014 01:01:52 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20141212.1-0ubuntu1) vivid; urgency=low
 
   [ Ubuntu daily release ]
