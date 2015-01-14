@@ -78,7 +78,7 @@ var List = (function () {
          * Add or Set the List Header
          * @method setHeader
          * @param {String} text - The header text
-         */ 
+         */
         setHeader: function (text) {
             if (typeof (text) == 'string') {
                 var header = this._list.querySelectorAll('header');
@@ -96,7 +96,7 @@ var List = (function () {
                 if (!header)
                     header = document.createElement('header');
 
-                header.innerText = text;
+                header.textContent = text;
             }
         },
             /**
@@ -122,12 +122,12 @@ var List = (function () {
                 });
             }
             //FIXME: no real checks on text content
-            a.innerText = text;
+            a.textContent = text;
             li.appendChild(a);
 
             if (label && typeof (label) == 'string') {
                 var n = document.createElement('label');
-                n.innerText = label;
+                n.textContent = label;
                 li.appendChild(n);
             }
 
@@ -143,7 +143,7 @@ var List = (function () {
          * Gets a list item &lt;li&gt; by its index, where index counting starts from 1
          * @method at
          * @param {Number} index
-         * @return The list item, or null on failure 
+         * @return The list item, or null on failure
          */
         at: function (index) {
             if (typeof (index) != 'number')
