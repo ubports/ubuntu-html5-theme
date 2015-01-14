@@ -304,7 +304,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Shape object
          * @method shape
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Shape} - The Shape with the specified id
          */
         shape: function (id) {
@@ -334,7 +334,7 @@ var UbuntuUI = (function () {
         /**
          * Gets an Ubuntu Progress object
          * @method progress
-         * @param {ID} id - The element's id attrubute
+         * @param {ID} id - The element's id attribute
          * @return {Progress} - The Progress with the specified id
          */
         progress: function (id) {
