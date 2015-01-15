@@ -50,12 +50,12 @@ A contained unordered list has list items, each of which has "data-page" data at
           </header>
 
           <div data-role="content">
-      <div data-role="tab" id="main">
-            [...]
-      </div>
-      <div data-role="tab" id="two">
-            [...]
-      </div>
+            <div data-role="tab" id="main">
+                [...]
+            </div>
+            <div data-role="tab" id="two">
+                [...]
+            </div>
           </div>
 
         </div>

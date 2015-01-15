@@ -1,3 +1,92 @@
+ubuntu-html5-theme (0.1.2+15.04.20150115.2-0ubuntu1) vivid; urgency=low
+
+  [ Alexandre Abreu ]
+  * Meta branch that contains those bug fixes (easier to land):
+
+  [ daker ]
+  * Added timer to hide the toolbar (LP: #1293899, #1292109)
+
+  [ David Barth ]
+  * Fix a few small typos in the docs
+  * Make sure to add the header after it's created
+  * Remove the strict cordova-2.8 dependency, which is not supported
+    anymore (LP: #1409656)
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 15 Jan 2015 16:20:56 +0000
+
+ubuntu-html5-theme (0.1.2+15.04.20141217-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Cleanup oxide option and set it as default and only option
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 17 Dec 2014 01:01:52 +0000
+
+ubuntu-html5-theme (0.1.2+15.04.20141212.1-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Small fix for new tab/target blank handling
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 12 Dec 2014 19:35:53 +0000
+
+ubuntu-html5-theme (0.1.2+15.04.20141210.1-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Add --oxide flag to switch between oxide/webkit; simplify code.
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 10 Dec 2014 18:34:51 +0000
+
+ubuntu-html5-theme (0.1.2+15.04.20141122-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Port HTML5 containert to oxide
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Sat, 22 Nov 2014 00:44:42 +0000
+
+ubuntu-html5-theme (0.1.2+14.10.20141008-0ubuntu1) utopic; urgency=low
+
+  [ Jean-Francois Moy ]
+  * Fixed alignment issues. Fixed UI.optionselector being incorrectly
+    documented. Aligned terminology between various pages. Fixed
+    incorrect UI.progress documentation. (LP: #1276234)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 08 Oct 2014 15:25:01 +0000
+
+ubuntu-html5-theme (0.1.2+14.10.20140922.1-0ubuntu1) utopic; urgency=low
+
+  [ Alexandre Abreu ]
+  * make ubuntu-html5-container multi-arch foreign; update dependencies
+    for libqt5webkit5-qmlwebkitplugin to qml-module-qtwebkit
+
+  [ Steve Langasek ]
+  * Drop unused dependency on dpkg-dev from ubuntu-html5-container. LP:
+    #1369052. (LP: #1369052)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 22 Sep 2014 21:14:27 +0000
+
+ubuntu-html5-theme (0.1.2+14.10.20140731-0ubuntu2) utopic; urgency=low
+
+  * debian/control:
+    - make ubuntu-html5-container multi-arch foreign
+    - update dependencies for libqt5webkit5-qmlwebkitplugin
+      to qml-module-qtwebkit
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 03 Sep 2014 17:56:23 +0200
+
 ubuntu-html5-theme (0.1.2+14.10.20140731-0ubuntu1) utopic; urgency=low
 
   [ Ubuntu daily release ]

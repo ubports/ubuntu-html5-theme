@@ -20,9 +20,9 @@
  * <http://www.gnu.org/licenses/>
  */
 
- /*
-  * Colours
-  */
+/*
+ * Colours
+ */
 $ubuntu_orange: #dd4814;
 $text_color: #787878;
 $cream: #f3f3e7;
@@ -38,3 +38,12 @@ $white: #ffffff;
  */
 
 $font_family: "Ubuntu";
+
+/*
+ * Slider
+ */
+
+$range-track-height:              4px !default;
+$range-slider-width:              16px !default;
+$range-slider-height:             16px !default;
+$range-slider-border-radius:      1px !default;

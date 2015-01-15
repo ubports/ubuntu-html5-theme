@@ -4,8 +4,7 @@ Priority: optional
 Maintainer: Michael Hall <mhall119@ubuntu.com>
 Build-Depends: cmake (>= 2.8.9),
                debhelper (>= 9),
-               libqt5webkit5-dev,
-               libqt5webkit5-qmlwebkitplugin,
+               liboxideqt-qmlplugin (>= 1.2.0),
                python (>= 2.7),
                python-setuptools,
                qt5-default,
@@ -25,9 +24,7 @@ Vcs-Browser: https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-th
 
 Package: ubuntu-html5-sdk
 Architecture: all
-Depends: cordova-ubuntu-2.8,
-         qtdeclarative5-cordova-2.8-plugin,
-         qtdeclarative5-ubuntu-webapps-api,
+Depends: qtdeclarative5-ubuntu-webapps-api,
          ubuntu-html5-container,
          ubuntu-html5-ui-toolkit,
 Description: Ubuntu HTML5 SDK Metapackage
@@ -48,7 +45,7 @@ Description: Toolkit for Ubuntu HTML5 Apps
 Package: ubuntu-html5-ui-toolkit-examples
 Architecture: all
 Depends: libjs-jquery,
-         libqt5webkit5-qmlwebkitplugin,
+         liboxideqt-qmlplugin (>= 1.2.0),
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
          ubuntu-html5-ui-toolkit (= ${binary:Version}),
@@ -66,7 +63,7 @@ Depends: dpkg-dev,
          libautopilot-qt (>= 1.4),
          libjs-jquery,
          libqt5test5,
-         libqt5webkit5-qmlwebkitplugin,
+         liboxideqt-qmlplugin (>= 1.2.0),
          python-xlib,
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
@@ -83,10 +80,10 @@ Description: Autopilot tests for the Toolkit for Ubuntu HTML5 Apps
 
 Package: ubuntu-html5-container
 Architecture: any
-Depends: dpkg-dev,
-         libqt5webkit5-qmlwebkitplugin,
+Multi-Arch: foreign
+Depends: liboxideqt-qmlplugin (>= 1.3.5),
+         qml-module-qtwebkit,
          qmlscene,
-         qtdeclarative5-cordova-2.8-plugin,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,
          ubuntu-html5-ui-toolkit (= ${source:Version}),
@@ -102,7 +99,7 @@ Package: ubuntu-html5-container-autopilot
 Architecture: all
 Depends: libautopilot-qt (>= 1.4),
          libqt5test5,
-         libqt5webkit5-qmlwebkitplugin,
+         liboxideqt-qmlplugin (>= 1.2.0),
          qtdeclarative5-qtquick2-plugin,
          ubuntu-html5-container (>= ${binary:Version}),
          ${misc:Depends},

@@ -34,7 +34,7 @@
     z-index: 100;
 
     &:after {
-        background: url(../img/ubuntushape_medium_radius_idle@18.png) no-repeat;
+        background: url(../img/ubuntushape.png) no-repeat;
         background-size: 100% 100%;
         content: ' ';
         width: 100%;
@@ -47,7 +47,7 @@
     img {
         height: 100%;
         width: 100%;
-        border-radius: 1.5rem;
+        max-width: 100%!important;
         margin-bottom: 0;
         display: inline-block;
     }
@@ -55,7 +55,7 @@
     div {
         height: 100%;
         width: 100%;
-        border-radius: 1.5rem;
+        border-radius: 1rem;
         margin-bottom: 0;
         display: inline-block;
     }

@@ -19,8 +19,9 @@ set(HTML5_LAUNCHER_SRC
 add_executable(${HTML5_LAUNCHER}
     ${HTML5_LAUNCHER_SRC}
 )
-qt5_use_modules(${HTML5_LAUNCHER} Core Widgets Quick)
+qt5_use_modules(${HTML5_LAUNCHER} Core Gui Widgets Quick)
 
+include_directories(${Qt5Quick_PRIVATE_INCLUDE_DIRS})
 
 # install qml files
 file(GLOB QML_FILES *.qml)

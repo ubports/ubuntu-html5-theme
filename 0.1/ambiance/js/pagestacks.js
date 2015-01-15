@@ -70,7 +70,7 @@ A <em>page</em> may declare a page-specific <em>footer</em> as a child element.
 
       </div>
 
-      JavaScript:
+      JavaScript access:
       UI.pagestack.METHOD();
 
  */

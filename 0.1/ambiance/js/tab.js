@@ -33,7 +33,7 @@ A Tab represents the UI element that hosts your tab content. This UI element is 
         <div data-role="mainview">
           <header data-role="header" id="headerID">
             <ul data-role="tabs">
-              <li data-role="tabitem" data-page="main">
+              <li data-role="tabitem" data-page="tabID">
                 Main
               </li>
               <li data-role="tabitem" data-page="page2">
@@ -43,7 +43,7 @@ A Tab represents the UI element that hosts your tab content. This UI element is 
           </header>
 
           <div data-role="content">
-              <div data-role="tab" id="main">
+              <div data-role="tab" id="tabID">
                 [...]
               </div>
               <div data-role="tab" id="page2">

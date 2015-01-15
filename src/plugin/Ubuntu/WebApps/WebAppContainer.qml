@@ -18,8 +18,9 @@
 
 import QtQuick 2.0
 import Ubuntu.Components 0.1
-import Ubuntu.Components.Extras.Browser 0.1
-
+import Ubuntu.UnityWebApps 0.1
+import com.canonical.Oxide 1.0 as Oxide
+import Ubuntu.Web 0.2
 
 /*!
     \qmltype WebAppContainer
@@ -30,8 +31,15 @@ import Ubuntu.Components.Extras.Browser 0.1
 MainView {
     id: root
     objectName: "root"
+
     anchorToKeyboard: true
     automaticOrientation: true
+
+    /*!
+      \preliminary
+      The property defines if oxide is to be used as the webengine backend.
+      */
+    property bool oxide: true
 
     /*!
       \preliminary
@@ -40,46 +48,18 @@ MainView {
 
       The path is absolute or relative to the current dir.
       */
-    property alias htmlIndexDirectory: cordovaWebviewProvider.htmlIndexDirectory
+    property string htmlIndexDirectory: ""
+
+    /*!
+      \preliminary
+      The properties hold whether the remote debugging interface should be enabled for the
+      Web View. The host ip and port for accessing the remote interface should be provided.
+      */
+    property bool remoteInspectorEnabled: false
 
     Page {
         id: mainPage
         anchors.fill: parent
-
-        /*!
-          \internal
-         */
-        CordovaLoader {
-            id: cordovaWebviewProvider
-            anchors.fill: parent
-            onCreationError: {
-                mainPage._onCordovaCreationError();
-            }
-            onCreated: {
-                bindings.bindingMainWebview = Qt.binding(function() {
-                    return cordovaInstance.mainWebview;
-                });
-            }
-        }
-
-        /*!
-          \internal
-         */
-        function _onCordovaCreationError() {
-            mainPage._fallbackToWebview();
-        }
-
-        /*!
-          \internal
-         */
-        function _fallbackToWebview() {
-            console.debug('Falling back on the plain Webview backend.')
-
-            webviewFallbackComponentLoader.sourceComponent = Qt.binding(function() {
-                return root.htmlIndexDirectory.length !== 0
-                        ? webviewFallbackComponent : null;
-            });
-        }
 
         /*!
           \internal
@@ -92,46 +72,74 @@ MainView {
           \internal
          */
         Loader {
-            id: webviewFallbackComponentLoader
+            id: webviewComponentLoader
             anchors.fill: parent
             onLoaded: {
-                bindings.bindingMainWebview = item;
+                webappBindingsLoader.sourceComponent = webappBindingsComponent
             }
+        }
+
+        Component {
+            id: webviewComponent
+
+            WebView {
+                id: webview
+
+                preferences.allowUniversalAccessFromFileUrls: true
+                preferences.allowFileAccessFromFileUrls: true
+                preferences.appCacheEnabled: true
+                preferences.localStorageEnabled: true
+
+                function navigationRequestedDelegate(request) {
+                    var url = request.url.toString()
+
+                    if (url.indexOf("file://") !== 0) {
+                        request.action = Oxide.NavigationRequest.ActionReject
+                        Qt.openUrlExternally(url)
+                        return
+                    }
+                }
+            }
+        }
+
+        Component.onCompleted: {
+            webviewComponentLoader.sourceComponent = webviewComponent;
+        }
+
+        /*!
+          \internal
+         */
+        function getUnityWebappsProxies() {
+            return UnityWebAppsUtils.makeProxiesForWebViewBindee(webviewComponentLoader.item);
+        }
+
+        /*!
+          \internal
+         */
+        Loader {
+            id: webappBindingsLoader
+            visible: false
+            anchors.fill: parent
+        }
+
+        function userScriptInjected() {
+            webviewComponentLoader.item.url =
+                mainPage._getAppStartupIndexFileUri();
         }
 
         /*!
           \internal
          */
         Component {
-            id: webviewFallbackComponent
-            UbuntuWebView {
-                url: mainPage._getAppStartupIndexFileUri()
+            id: webappBindingsComponent
 
-                experimental.preferences.localStorageEnabled: true
-                experimental.preferences.offlineWebApplicationCacheEnabled: true
-                experimental.preferences.universalAccessFromFileURLsAllowed: true
-                experimental.preferences.webGLEnabled: true
+            UnityWebApps {
+                bindee: mainPage
+                injectExtraUbuntuApis: true
+                requiresInit: false
 
-                experimental.databaseQuotaDialog: Item {
-                    Timer {
-                        interval: 1
-                        running: true
-                        onTriggered: {
-                            model.accept(model.expectedUsage)
-                        }
-                    }
-                }
-                // port in QTWEBKIT_INSPECTOR_SERVER enviroment variable
-                experimental.preferences.developerExtrasEnabled: true
+                onUserScriptsInjected: mainPage.userScriptInjected()
             }
-        }
-
-        /*!
-          \internal
-         */
-        UbuntuJavascriptBindings {
-            id: bindings
         }
     }
 }
-

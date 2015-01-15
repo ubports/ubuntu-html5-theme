@@ -50,6 +50,7 @@
 
         ul {
             list-style: none;
+            text-align: right;
 
             li,
             li a {
@@ -57,7 +58,7 @@
                 font-size: 0.6rem;
                 text-align: center;
                 width: 60px;
-                float: right;
+                display: inline-block;
                 text-decoration: none;
             }
             li {

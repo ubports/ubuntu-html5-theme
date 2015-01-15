@@ -43,7 +43,7 @@ See the Pagestack class documentation for information about the default applicat
       </footer>
 
       JavaScript access:
-      var toolbar = UI.footer("footerID");
+      var toolbar = UI.toolbar("toolbarID");
       UI.button('home').click(function () {
         UI.pagestack.push("main");
       });
@@ -51,6 +51,45 @@ See the Pagestack class documentation for information about the default applicat
  */
 
 var Toolbar = (function () {
+
+    function ToolbarListener(id) {
+        this._id = id;
+        this._onChangedCallbacks = [];
+        this._listen();
+    };
+
+    ToolbarListener.prototype = {
+        onchanged: function (callback) {
+            if (callback && typeof callback === 'function')
+                this._onChangedCallbacks.push(callback);
+        },
+        _listen: function () {
+            var mutationObserverClass =
+                this._getNativeMutationObserverClass();
+            if (!mutationObserverClass) {
+                console.error(
+                    'Could not listen to toolbar changes: no mutation observer found');
+                return;
+            }
+            var toolbar = document.getElementById(this._id);
+            if (toolbar) {
+                var observer = new mutationObserverClass(
+                    this._onMutated.bind(this));
+                observer.observe(toolbar, {
+                    attributes: true
+                });
+            }
+        },
+        _onMutated: function (mutations, observer) {
+            for (var i = 0; i < this._onChangedCallbacks.length; ++i) {
+                this._onChangedCallbacks[i](mutations);
+            }
+        },
+        _getNativeMutationObserverClass: function () {
+            return window.MutationObserver || window.WebKitMutationObserver;
+        },
+    };
+
 
     function Toolbar(id, touchInfoDelegate) {
 
@@ -90,6 +129,31 @@ var Toolbar = (function () {
             touchEvents.touchMove, this.toolbar, this.__onTouchMove.bind(this));
         touchInfoDelegate.registerTouchEvent(
             touchEvents.touchLeave, this.toolbar, this.__onTouchLeave.bind(this));
+
+        this._timer = null;
+
+        var listener = new ToolbarListener(id);
+        var self = this;
+        listener.onchanged(function () {
+            var toolbar = self.toolbar;
+
+            function __isToolbarVisible() {
+                return Array.prototype.slice.call(toolbar.classList)
+                    .indexOf('revealed') >= 0;
+            }
+            if (__isToolbarVisible()) {
+                self._timer = window.setTimeout(
+                    function () {
+                        self.hide();
+                    },
+                    5000);
+            } else {
+                if (self._timer) {
+                    window.clearTimeout(self._timer);
+                    self._timer = null;
+                }
+            }
+        });
     };
 
     Toolbar.prototype = {
