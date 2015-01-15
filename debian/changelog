@@ -1,3 +1,22 @@
+ubuntu-html5-theme (0.1.2+15.04.20150115.2-0ubuntu1) vivid; urgency=low
+
+  [ Alexandre Abreu ]
+  * Meta branch that contains those bug fixes (easier to land):
+
+  [ daker ]
+  * Added timer to hide the toolbar (LP: #1293899, #1292109)
+
+  [ David Barth ]
+  * Fix a few small typos in the docs
+  * Make sure to add the header after it's created
+  * Remove the strict cordova-2.8 dependency, which is not supported
+    anymore (LP: #1409656)
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 15 Jan 2015 16:20:56 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20141217-0ubuntu1) vivid; urgency=low
 
   [ Ubuntu daily release ]
