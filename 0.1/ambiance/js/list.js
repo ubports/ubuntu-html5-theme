@@ -98,7 +98,7 @@ var List = (function () {
                     this._list.insertBefore(header, this._list.firstChild);
                 }
 
-                header.innerText = text;
+                header.textContent = text;
             }
         },
             /**
@@ -124,12 +124,12 @@ var List = (function () {
                 });
             }
             //FIXME: no real checks on text content
-            a.innerText = text;
+            a.textContent = text;
             li.appendChild(a);
 
             if (label && typeof (label) == 'string') {
                 var n = document.createElement('label');
-                n.innerText = label;
+                n.textContent = label;
                 li.appendChild(n);
             }
 

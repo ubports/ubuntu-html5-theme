@@ -48,6 +48,9 @@
  * Font family
  */
 /*
+ * Slider
+ */
+/*
  * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
  * License granted by Canonical Limited
  *
@@ -221,7 +224,7 @@ ul {
   display: block;
 }
 [data-role="header"] .active {
-  color: #484647;
+  color: #888888;
   padding-left: 15px;
   -webkit-opacity: 1;
   opacity: 1;
@@ -245,8 +248,8 @@ ul {
 
 [data-role="tabitem"] {
   display: inline-block;
-  font: 35px "Ubuntu";
-  letter-spacing: -1px;
+  font: 33px "Ubuntu";
+  font-weight: 100;
   line-height: 60px;
   padding-right: 35px;
   text-decoration: none;
@@ -442,7 +445,7 @@ textarea {
 }
 
 .textfield.clear:focus {
-  background: url(artwork/icon_clear@20.png) no-repeat 97% center white;
+  background: url(artwork/icon_clear@20.png) no-repeat 97% center #fff;
   background-size: 12%;
 }
 
@@ -555,7 +558,6 @@ progress.infinite:after {
   from {
     -webkit-transform: rotate(1deg);
   }
-
   to {
     -webkit-transform: rotate(360deg);
   }
@@ -564,11 +566,9 @@ progress.infinite:after {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
@@ -698,43 +698,33 @@ progress.infinite:after {
     0% {
       -webkit-transform: translate3d(0, 0, 0);
     }
-
     10% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     20% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     30% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     40% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     50% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     60% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     70% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     80% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     90% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     100% {
       -webkit-transform: translate3d(0, 0, 0);
     }
@@ -743,43 +733,33 @@ progress.infinite:after {
     0% {
       -webkit-transform: translate3d(0, 0, 0);
     }
-
     10% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     20% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     30% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     40% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     50% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     60% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     70% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     80% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     90% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     100% {
       -webkit-transform: translate3d(0, 0, 0);
     }
@@ -826,7 +806,7 @@ progress.infinite:after {
   background: #dd4814;
   border: 2px solid #dd4814;
   border-radius: 6px;
-  color: white;
+  color: #ffffff;
   font-family: "Ubuntu";
   font-size: 1rem;
   padding: 9px 25px;
@@ -836,21 +816,21 @@ progress.infinite:after {
 }
 [data-role="button"].positive {
   background: #38b44a;
-  color: white;
+  color: #ffffff;
   border-color: #38b44a;
 }
 [data-role="button"].information {
   background: #2ab7ec;
-  color: white;
+  color: #ffffff;
   border-color: #2ab7ec;
 }
 [data-role="button"].secondary {
-  background: white;
+  background: #ffffff;
   color: #888888;
 }
 [data-role="button"].negative {
   background: #b2b2b2;
-  color: white;
+  color: #ffffff;
   border-color: #b2b2b2;
 }
 
@@ -878,31 +858,81 @@ progress.infinite:after {
 /* ----------------------------------
  * Sliders
  * ---------------------------------- */
-/**
-   TODO: remove absolte values for w/h
- */
 input[type=range] {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   -webkit-appearance: none;
-  background-color: rgba(192, 192, 192, 0.1);
-  width: 200px;
-  height: 35px;
-  border-radius: 6px;
-  padding: 5px 0;
+  background: linear-gradient(to right, rgba(175, 175, 175, 0.3) 0%, rgba(175, 175, 175, 0.3) 100%);
+  background-position: center;
+  background-size: 99% 4px;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+  width: auto;
+  height: 36px;
+  border-radius: 1px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*&::-moz-range-thumb:before {
+      position: absolute;
+      top: ($range-slider-height / 2) - ($range-track-height / 2);
+      left: -2000px;
+      width: 2000px;
+      height: $range-track-height;
+      background: $ubuntu_orange;
+      content: ' ';
+  }*/
 }
 input[type=range]::-webkit-slider-thumb {
-  -webkit-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-appearance: none;
-  background-color: #dd4814;
-  border-radius: 6px;
-  width: 30px;
-  height: 27px;
+  background-color: #fff;
+  pointer-events: none;
+  border-radius: 3px;
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+input[type=range]::-webkit-slider-thumb:before {
+  /* what creates the colorful line on the left side of the slider */
+  position: absolute;
+  top: 6px;
+  left: -2000px;
+  width: 2000px;
+  height: 4px;
+  background: #dd4814;
+  content: ' ';
+}
+input[type=range]::-moz-range-track {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: -moz-linear-gradient(to right, rgba(175, 175, 175, 0.3) 0%, rgba(175, 175, 175, 0.3) 100%);
+  background-position: center;
+  background-size: 99% 4px;
+  background-repeat: no-repeat;
+  width: auto;
+  height: 36px;
+  border: 0;
+  border-radius: 1px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+input[type=range]::-moz-range-thumb {
+  -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #fff;
+  pointer-events: none;
+  border: 0;
+  border-radius: 3px;
+  width: 16px;
+  height: 16px;
+  position: relative;
 }
 
 /*
@@ -1199,7 +1229,7 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
-  height: 3.5rem;
+  height: 3.1rem;
   border-bottom: solid 0.1rem #c7c7c7;
   color: #787878;
   position: relative;
@@ -1208,10 +1238,10 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
   text-decoration: none;
   color: #787878;
   display: block;
-  height: 3.4rem;
+  height: 3rem;
   position: relative;
   border: none;
-  line-height: 3.4rem;
+  line-height: 3rem;
   padding-left: 1rem;
   padding-right: 1.5rem;
   border-top: 1px solid #ebebeb;
@@ -1229,7 +1259,7 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
   height: 2rem;
   top: 50%;
   right: 0;
-  margin-top: -1rem;
+  margin-top: -1.2rem;
   z-index: 0;
 }
 [data-role="list"] ul li > a:active {
@@ -1249,7 +1279,12 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
   line-height: 1rem;
 }
 [data-role="list"] ul li p:only-child, [data-role="list"] ul li p:first-of-type:last-of-type {
-  line-height: 2.5rem;
+  line-height: 2.1rem;
+}
+[data-role="list"] ul li p + p {
+  color: rgba(136, 136, 136, 0.8);
+  padding-top: 0.1rem;
+  font-size: 0.8rem;
 }
 [data-role="list"] ul li > label {
   z-index: 100;
@@ -1336,6 +1371,7 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
 }
 [data-role="footer"] nav ul {
   list-style: none;
+  text-align: right;
 }
 [data-role="footer"] nav ul li,
 [data-role="footer"] nav ul li a {
@@ -1343,7 +1379,7 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
   font-size: 0.6rem;
   text-align: center;
   width: 60px;
-  float: right;
+  display: inline-block;
   text-decoration: none;
 }
 [data-role="footer"] nav ul li {
@@ -1394,7 +1430,7 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
   z-index: 100;
 }
 [data-role="shape"]:after {
-  background: url(../img/ubuntushape_medium_radius_idle@18.png) no-repeat;
+  background: url(../img/ubuntushape.png) no-repeat;
   background-size: 100% 100%;
   content: ' ';
   width: 100%;
@@ -1406,14 +1442,14 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
 [data-role="shape"] img {
   height: 100%;
   width: 100%;
-  border-radius: 1.5rem;
+  max-width: 100% !important;
   margin-bottom: 0;
   display: inline-block;
 }
 [data-role="shape"] div {
   height: 100%;
   width: 100%;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   margin-bottom: 0;
   display: inline-block;
 }
@@ -1496,8 +1532,8 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
  * <http://www.gnu.org/licenses/>.
  */
 [data-role="option-selector"] {
-  -webkit-box-shadow: inset 0 2px 2px 0 #d5d5d5;
-  box-shadow: inset 0 2px 2px 0 #d5d5d5;
+  -webkit-box-shadow: inset 0 2px 2px 0 #D5D5D5;
+  box-shadow: inset 0 2px 2px 0 #D5D5D5;
   width: 100%;
   height: auto;
   margin: 0 auto;
@@ -1689,3 +1725,5 @@ body {
   font-size: 8px;
   line-height: 1.3;
 }
+
+/*# sourceMappingURL=appTemplate.css.map */
