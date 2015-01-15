@@ -50,7 +50,7 @@ The Popover's position is set relative to a specified base element with the <em>
       </div>
 
       Javascript:
-      var popBase = document.getElementByID("popoverBase");
+      var popBase = document.getElementById("popoverBase");
       var popover = UI.popover(popBase, "popover");
  */
 
