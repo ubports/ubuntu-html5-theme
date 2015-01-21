@@ -1118,22 +1118,20 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
 }
 .popover .list li {
   position: relative;
-  padding: 20px 10px 20px 10px;
-  border-bottom: 1px solid #d9d9d9;
   text-align: center;
   font-size: 1rem;
 }
 .popover .list li a {
   color: #787878;
   text-decoration: none;
+  display: block;
+  padding: 20px 10px;
+  border-bottom: 1px solid #d9d9d9;
 }
-.popover .list li.active {
+.popover .list li a.active {
   background: #ebebeb;
   border-top: 1px solid #fcfcfc;
-}
-.popover .list li.active a {
   color: #dd4814;
-  text-decoration: none;
 }
 
 /* Caret */
