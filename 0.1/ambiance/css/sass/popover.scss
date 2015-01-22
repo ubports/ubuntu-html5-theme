@@ -49,23 +49,20 @@
 
         li {
             position: relative;
-            padding: 20px 10px 20px 10px;
-            border-bottom: 1px solid #d9d9d9;
             text-align: center;
             font-size: 1rem;
 
             a {
-                color: $text_color;
+                color: #787878;
                 text-decoration: none;
-            }
+                display: block;
+                padding: 20px 10px;
+                border-bottom: 1px solid #d9d9d9;
 
-            &.active {
-                background: #ebebeb;
-                border-top: 1px solid #fcfcfc;
-
-                a {
+                &.active {
+                    background: #ebebeb;
+                    border-top: 1px solid #fcfcfc;
                     color: $ubuntu_orange;
-                    text-decoration: none;
                 }
             }
         }
