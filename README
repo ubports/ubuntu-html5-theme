@@ -26,3 +26,21 @@ Once you have SASS installed. Open terminal (CTRL+Alt+T) and cd into your
 branch folder. Then enter this command to begin watching your scss files:
 $ sass --watch 0.1/ambiance/css/sass/default.scss:0.1/ambiance/css/appTemplate.css --style expanded
 
+Automated UI tests
+==================
+
+The ubuntu-html5 container and the ubuntu-ui-toolkit both use autopilot (https://launchpad.net/autopilot) to test its functional elements.
+
+To run the tests, you will need to install python3-autopilot and libautopilot-qt.
+Then do the following:
+
+    $ cd tests/autopilot/
+    $ autopilot3 run ubuntu_html5_ui_toolkit
+    $ autopilot3 run ubuntu_html5_container
+
+You can get a list of all available tests with the following commands:
+
+    $ autopilot3 list ubuntu_html5_ui_toolkit
+    $ autopilot3 list ubuntu_html5_container
+
+

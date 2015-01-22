@@ -72,7 +72,8 @@ Item {
 
     function evalInPageUnsafe(expr) {
         var result = webview.evaluateCode(expr, true);
-        root.resultUpdated(result.toString())
+        console.log('result: ' + result)
+        root.resultUpdated(result ? result.toString() : result)
     }
 
     function clickAnyElementBySelector(selector) {

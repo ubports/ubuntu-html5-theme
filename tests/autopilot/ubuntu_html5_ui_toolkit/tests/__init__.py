@@ -200,7 +200,7 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
     def eval_expression_in_page_unsafe(self, expr):
         webview = self.get_webviewContainer()
         prev_emissions = self.watcher.num_emissions
-        result = webview.slots.evalInPageUnsafe(expr)
+        webview.slots.evalInPageUnsafe(expr)
         self.assertThat(
             lambda: self.watcher.num_emissions,
             Eventually(GreaterThan(prev_emissions)))
