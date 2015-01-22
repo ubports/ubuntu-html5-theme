@@ -1,3 +1,15 @@
+ubuntu-html5-theme (0.1.2+15.04.20150122-0ubuntu1) vivid; urgency=low
+
+  [ Ubuntu daily release ]
+  * New rebuild forced
+
+  [ Alexandre Abreu ]
+  * Port AP tests to python3 (blocking all other landings for fixes on
+    the project) (LP: #1369655)
+  * Merge lp:~ya-bo-ng/ubuntu-html5-theme/popover-update & fixes
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 22 Jan 2015 14:01:08 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20150115.2-0ubuntu1) vivid; urgency=low
 
   [ Alexandre Abreu ]
