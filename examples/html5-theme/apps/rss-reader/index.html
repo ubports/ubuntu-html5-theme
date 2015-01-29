@@ -47,9 +47,9 @@
     <script src="../../../../0.1/ambiance/js/pagestacks.js"></script>
     <script src="../../../../0.1/ambiance/js/popovers.js"></script>
     <script src="../../../../0.1/ambiance/js/list.js"></script>
-    <script src="../../../../0.1/ambiance/js/toolbars.js"></script>
+    <script src="../../../../0.1/ambiance/js/actionsbar.js"></script>
+    <script src="../../../../0.1/ambiance/js/tab.js"></script>
     <script src="../../../../0.1/ambiance/js/tabs.js"></script>
-    <script src="app.js"></script>
 </head>
 
 <body>
@@ -69,7 +69,7 @@
                             <ul>
                                 <li>
                                     <a href="#" id="addfeed">
-                                        <img src="../../../ambiance/img/back@18.png" alt="Tap me!" />
+                                        <img src="../../../../0.1/ambiance/img/actions/note-new.svg" alt="Tap me!" />
                                         <span>Add feed</span>
                                     </a>
                                 </li>
@@ -78,11 +78,11 @@
                     </footer>
                 </div>
 
-                <div data-role="page" id="results" data-title="Articles >">
+                <div data-role="page" id="results" data-title="Articles">
                     <section data-role="list" id="resultscontent"></section>
                 </div>
 
-                <div data-role="page" id="article" data-title="Article >">
+                <div data-role="page" id="article" data-title="Article">
                     <section id="articleinfo"></section>
                 </div>
             </div>
@@ -101,5 +101,7 @@
         </div>
 
     </div>
+    <script src="app.js"></script>
+
 </body>
 </html>

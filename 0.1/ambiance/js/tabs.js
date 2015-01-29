@@ -62,55 +62,21 @@ Declare the Header and Tabs in HTML as a direct child of the top level Page as a
       UI.tabs.METHOD();
 */
 var Tabs = (function () {
-    var pageX,
-        pageY,
-        isScrolling,
-        deltaX,
-        deltaY,
-        offsetX,
-        resistance,
-        tabsWidth,
-        activeTab,
-        navigationTimer,
-        t2,
-        startTimestamp;
+    var activeTab;
 
-    var STATES = {
-        basic: 0,
-        transitioning_to_navigation: 1,
-        navigating: 2,
-    };
-    var state = STATES.basic;
-
-    function Tabs (tabs, touchInfoDelegate) {
-        if (tabs == null || touchInfoDelegate == null) {
+    function Tabs(tabs) {
+        if (tabs == null) {
             return;
         }
-        this._touchDown = false;
+
         this._tabs = tabs;
+        this._header = this._tabs.parentNode;
 
-        this._infos = {
-            width: this.__getTabHeadersWidth(),
-            count: this._tabs.querySelectorAll('li').length
-        };
-        this._touchInfoDelegate = touchInfoDelegate;
+        this._tabsitems = this.tabChildren;
 
-        var touchEvents = touchInfoDelegate.touchEvents;
-
-        touchInfoDelegate.registerTouchEvent(
-            touchEvents.touchStart,
-            this._tabs,
-            this.__onTouchStart.bind(this));
-
-        touchInfoDelegate.registerTouchEvent(
-            touchEvents.touchMove,
-            this._tabs,
-            this.__onTouchMove.bind(this));
-
-        touchInfoDelegate.registerTouchEvent(
-            touchEvents.touchEnd,
-            this._tabs,
-            this.__onTouchEnd.bind(this));
+        [].forEach.call(this._tabsitems, function (elm) {
+            elm.addEventListener('click', this.__onClicked.bind(this, elm), false);
+        }.bind(this));
 
         // initialize default page
         this.__setupInitialTabVisibility();
@@ -136,7 +102,7 @@ var Tabs = (function () {
             if (index < 0 || index >= tabs.length)
                 return;
 
-            this.__doSelectTab(tabs[index], true);
+            this.__doSelectTab(tabs[index]);
         },
 
         /**
@@ -162,8 +128,7 @@ var Tabs = (function () {
             if (activeTab) {
                 try {
                     selected = document.getElementBydId(activeTab.getAttribute('data-page'));
-                }
-                catch(e) {};
+                } catch (e) {};
             }
             return selected;
         },
@@ -192,223 +157,73 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __setupInitialTabVisibility: function() {
+        __setupInitialTabVisibility: function () {
+
+            this._firstrun = true;
+
+            PAGESTACK_BACK_ID = 'ubuntu-pagestack-back';
+            TAB_BTN_ID = 'ubuntu-tabs-btn';
+
+            var backbtn = document.createElement('button');
+            backbtn.setAttribute('data-role', 'back-btn');
+            backbtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.floor(Math.random()));
+            backbtn.style.display = 'none';
+
+            if(this._tabs.childElementCount > 1) {
+                this._tabsbtn = document.createElement('button');
+                this._tabsbtn.setAttribute('data-role', 'tabs-btn');
+                this._tabsbtn.setAttribute('id', TAB_BTN_ID + '-' + Math.floor(Math.random()));
+                this._tabsbtn.style.display = 'block';
+            }
+
+            this._content = document.querySelector('[data-role="content"]');
+
+            this._overlay = document.createElement('div');
+            this._overlay.setAttribute('data-role', 'overlay');
+            this._content.appendChild(this._overlay);
+
+            this._tabtitle = document.createElement('div');
+            this._tabtitle.setAttribute('data-role', 'tabtitle');
+
+            var tabtitle_value = document.createTextNode('Main');
+            this._tabtitle.appendChild(tabtitle_value);
+
+            this._tabsactions = document.createElement('div');
+            this._tabsactions.setAttribute('data-role', 'actions');
+
             var tab = this._tabs.querySelector('[data-role="tabitem"]:first-child');
-            tab.classList.remove('inactive');
-            tab.classList.add('active');
-            var updateDisplayStyle = function(tab, value) {
-                var targetPage = document.getElementById(tab.getAttribute('data-page'));
-                if (targetPage)
-                    targetPage.style.display=value;
-            };
-            updateDisplayStyle(tab, 'block');
-            [].slice.
-                call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(:first-child)')).
-                forEach(function(element) {
-                    element.classList.remove('inactive');
-                    updateDisplayStyle(element, 'none');
-                });
-        },
+            /*tab.classList.remove('inactive');
+            tab.classList.add('active');*/
 
-        /**
-         * @private
-         */
-        __getScroll: function () {
-            var translate3d = this._tabs.style.webkitTransform.match(/translate3d\(([^,]*)/);
-            return parseInt(translate3d ? translate3d[1] : 0)
-        },
+            this._header.innerHTML = '';
+            this._header.appendChild(backbtn);
+            if(this._tabs.childElementCount > 1) {
+                this._header.appendChild(this._tabsbtn);
+                this._header.appendChild(this._tabs);
 
-        /**
-         * @private
-         */
-        __getTabHeadersWidth: function() {
-            return Array.prototype.slice.call(document.querySelectorAll('header li')).reduce(function(prev, cur) { return prev + cur.clientWidth;}, 0);
-        },
-
-        /**
-         * @private
-         */
-        __getHeaderWidth: function() {
-            return this._tabs.clientWidth;
-        },
-
-        /**
-         * @private
-         */
-        __clearInternalState: function() {
-            if (navigationTimer) window.clearTimeout(navigationTimer);
-            if (t2) window.clearTimeout(t2);
-            navigationTimer = undefined;
-            t2 = undefined;
-            isScrolling = undefined;
-            tabsWidth = this._tabs.offsetWidth;
-            resistance = 10;
-            startTimestamp = 0;
-        },
-
-        /**
-         * @private
-         */
-        __onTouchStart: function (e) {
-            if (!this._tabs) return;
-
-            e.preventDefault();
-
-            this.__clearInternalState();
-
-            if (state === STATES.basic) {
-                state = STATES.transitioning_to_navigation;
-                this.__showNavigation();
-            }
-
-            var _e = this._touchInfoDelegate.translateTouchEvent(e);
-            pageX = _e.touches[0].pageX;
-            pageY = _e.touches[0].pageY;
-
-            startTimestamp = _e.timeStamp;
-
-            this._tabs.style['-webkit-transition-duration'] = 0;
-
-            this._touchDown = true;
-        },
-
-        /**
-         * @private
-         */
-        __onTouchMove: function (e) {
-            if (!this._touchDown) {
-                return;
-            }
-
-            e.preventDefault();
-
-            var _e = this._touchInfoDelegate.translateTouchEvent(e);
-            deltaX = _e.touches[0].pageX - pageX;
-            deltaY = _e.touches[0].pageY - pageY;
-
-            // TODO: account for DPR
-            var MIN_JITTER_THRESHOLD = 20;
-
-            var plusDeltaX = Math.abs(deltaX);
-            var plusDeltaY = Math.abs(deltaY);
-
-            // Account for clicks w/ slight touch jitter
-            isScrolling = plusDeltaY > plusDeltaX &&
-                plusDeltaY > MIN_JITTER_THRESHOLD;
-            if (isScrolling) return;
-
-            offsetX = (deltaX / resistance) + this.__getScroll();
-
-            var firstTab = this._tabs.querySelector('li:first-child');
-            var maxRightScrollReached = 
-                firstTab.getBoundingClientRect().left >= 0 &&
-                deltaX > 0;
-
-            var lastTab = this._tabs.querySelector('li:last-child');
-            var maxLeftScrollReached = 
-                lastTab.getBoundingClientRect().right <= this.__getHeaderWidth() &&
-                deltaX < 0;
-
-            if (!maxRightScrollReached && !maxLeftScrollReached) {
-                this._tabs.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
-            }
-        },
-
-        /**
-         * @private
-         */
-        __onTouchEnd: function (e) {
-            if (!this._tabs || isScrolling) return;
-
-            e.preventDefault();
-            this._touchDown = false;
-
-            var _e = this._touchInfoDelegate.translateTouchEvent(e);
-
-            var MIN_JITTER_THRESHOLD = 20;
-            if (state === STATES.transitioning_to_navigation) {
-                state = STATES.navigating;
-            }
-            else if (state === STATES.navigating &&
-                     Math.abs((_e.changedTouches[0].pageX - pageX)) < MIN_JITTER_THRESHOLD) {
-                this.__onClicked(_e);
-                // Timer should have been cancelled, back to basic
-                state = STATES.basic;
-            }
+                var self = this;
+                this._tabsbtn.onclick = function (e) {
+                    self.__toggleTabs();
+                    e.preventDefault();
+                };
+            } else { this._tabtitle.style.marginLeft = '16px'; }
+            this._header.appendChild(this._tabtitle);
+            this._header.appendChild(this._tabsactions);
 
             var self = this;
-            navigationTimer = window.setTimeout(function () {
-                self.__endNavigation();
-                state = STATES.basic;
-            }, 3000);
+            this._overlay.onclick = function (e) {
+                self.__hideMenus();
+                var elm = document.elementFromPoint(e.pageX, e.pageY);
+                e.preventDefault();
+            };
+
+            tab.click();
         },
 
         /**
          * @private
          */
-        __endNavigation: function () {
-            if (state !== STATES.navigating) return;
-
-            var activeTab = document.querySelector('[data-role="tabitem"].active');
-            if (! activeTab) return;
-
-            var offsetX = activeTab.offsetLeft;
-            this._tabs.style['-webkit-transition-duration'] = '.3s';
-            this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
-
-            [].forEach.call(document.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
-                el.classList.toggle('inactive');
-            });
-        },
-
-        /**
-         * @private
-         */
-        __showNavigation: function () {
-            if (state !== STATES.transitioning_to_navigation) return;
-
-            // TODO constraint a bit the selector
-            [].forEach.call(document.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
-                el.classList.toggle('inactive');
-            });
-        },
-
-        /**
-         * @private
-         */
-        __updateActiveTab: function(newActiveTab, oldActiveTab) {
-            // TODO avoid reflow
-            oldActiveTab.classList.remove('inactive');
-            oldActiveTab.classList.remove('active');
-            newActiveTab.classList.remove('inactive');
-            newActiveTab.classList.add('active');
-        },
-
-        /**
-         * @private
-         */
-        __onTouchLeave: function (e) {},
-
-        /**
-         * @private
-         */
-        __dispatchTabChangedEvent: function (tabId) {
-            this._evt = document.createEvent('Event');
-            this._evt.initEvent('tabchanged',true,true);
-            this._evt.infos = {tabId: tabId};
-            this._tabs.dispatchEvent(this._evt);
-        },
-
-        /**
-         * @private
-         */
-        __onClicked: function (e) {
-            if (state !== STATES.navigating)
-                return;
-            if (e.changedTouches.length === 0)
-                return;
-            var touch = e.changedTouches[0];
-            var selectedTab = document.elementFromPoint(touch.pageX, touch.pageY);
+        __onClicked: function (selectedTab, e) {
             if (selectedTab == null)
                 return;
             this.__doSelectTab(selectedTab);
@@ -418,55 +233,63 @@ var Tabs = (function () {
         /**
          * @private
          */
-        __doSelectTab: function(tabElement, forcedSelection) {
-            if ( ! tabElement)
+        __updateActiveTab: function (newActiveTab) {
+            //oldActiveTab.classList.remove('inactive');
+            //oldActiveTab.classList.remove('active');
+            //newActiveTab.classList.remove('inactive');
+            //newActiveTab.classList.add('active');
+            this._tabtitle.textContent = newActiveTab.innerHTML;
+        },
+
+        /**
+         * @private
+         */
+        __dispatchTabChangedEvent: function (tabId) {
+            this._evt = document.createEvent('Event');
+            this._evt.initEvent('tabchanged', true, true);
+            this._evt.infos = {
+                tabId: tabId
+            };
+            this._tabs.dispatchEvent(this._evt);
+        },
+
+        /**
+         * @private
+         */
+        __doSelectTab: function (tabElement) {
+            if (!tabElement)
                 return;
 
             if (tabElement.getAttribute("data-role") !== 'tabitem')
                 return;
 
-            if (forcedSelection ||
-		(Array.prototype.slice.call(tabElement.classList)).indexOf('inactive') > -1) {
+            this.__updateActiveTab(tabElement);
 
-                window.clearTimeout(t2);
+            /*activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
+            [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (e) {
+                e.classList.remove('inactive');
+            });*/
 
-                activeTab = this._tabs.querySelector('[data-role="tabitem"].active');
-                offsetX = this.offsetLeft;
-                this._tabs.style['-webkit-transition-duration'] = '.3s';
-                this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
+            var targetPageId = tabElement.getAttribute('data-page');
 
-                this.__updateActiveTab(tabElement, activeTab);
+            //this.__activate(targetPageId);
 
-                [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (e) {
-                    e.classList.remove('inactive');
-                });
-
-                var targetPageId = tabElement.getAttribute('data-page');
-                this.activate(targetPageId);
-                this.__dispatchTabChangedEvent(targetPageId);
-            } else {
-
-                [].forEach.call(this._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)'), function (el) {
-                    el.classList.toggle('inactive');
-                });
-
-                var self = this;
-                t2 = window.setTimeout(function () {
-                    var nonActiveTabs = self._tabs.querySelectorAll('[data-role="tabitem"]:not(.active)');
-                    [].forEach.call(nonActiveTabs, function (el) {
-                        el.classList.toggle('inactive');
-                    });
-                }, 3000);
+            this.__dispatchTabChangedEvent(targetPageId);
+            if (this._firstrun) {
+                this._firstrun = false;
+            }
+            else {
+                this.__toggleTabs();
             }
         },
 
         /**
          * @private
          */
-        activate: function (id) {
+        __activate: function (id) {
             if (!id || typeof (id) !== 'string')
                 return;
-            activeTab = this._tabs.querySelector('[data-page="'+ id +'"]');
+            activeTab = this._tabs.querySelector('[data-page="' + id + '"]');
             if (!activeTab)
                 return;
 
@@ -476,17 +299,33 @@ var Tabs = (function () {
             });
 
             activeTab.classList.add('active');
-
-            offsetX = activeTab.offsetLeft;
-            this._tabs.style['-webkit-transition-duration'] = '.3s';
-            this._tabs.style.webkitTransform = 'translate3d(-' + offsetX + 'px,0,0)';
         },
 
         /**
          * @private
          */
-        onTabChanged: function(callback){
+        onTabChanged: function (callback) {
             this._tabs.addEventListener("tabchanged", callback);
+        },
+
+        /**
+         * @private
+         */
+        __toggleTabs: function () {
+            this._tabs.classList.toggle('opened');
+            this._overlay.classList.toggle('active');
+            if (this._tabsactions.querySelector('.opened') !== null)
+                this._tabsactions.querySelector('.opened').classList.remove('opened');
+        },
+
+        /**
+         * @private
+         */
+        __hideMenus: function () {
+            this._tabs.classList.remove('opened');
+            this._overlay.classList.remove('active');
+            if (this._tabsactions.querySelector('.opened') !== null)
+                this._tabsactions.querySelector('.opened').classList.remove('opened');
         }
     };
 

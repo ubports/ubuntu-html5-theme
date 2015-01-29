@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ * Copyright (C) 2013, 2014 Adnane Belmadiaf <daker@ubuntu.com>
  * License granted by Canonical Limited
  *
  * This file is part of ubuntu-html5-ui-toolkit.
@@ -24,19 +24,19 @@
  * Icons
  * ---------------------------------- */
 
-.icon {
-	width: 26px;
-	height: 26px;
-	display: inline-block;
-	vertical-align: middle;
+[data-role="icon"] {
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
 
-	&.icon-call {
-		background: url(../img/icons/icon-call.svg) no-repeat scroll center center transparent;
-		background-size: 26px;
-	}
+    &[data-icon="call"] {
+        background: url(icon(icon-call)) no-repeat scroll center center transparent;
+        background-size: 26px;
+    }
 
-	&.icon-caret {
-		background: url(../img/chevron_down@30.png) no-repeat scroll center center transparent;
-		background-size: 26px;
-	}
+    &[data-icon="caret"] {
+        background: url(../img/chevron_down@30.png) no-repeat scroll center center transparent;
+        background-size: 26px;
+    }
 }

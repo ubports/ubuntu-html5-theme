@@ -4,18 +4,18 @@
  * This file is part of ubuntu-html5-ui-toolkit.
  *
  * This package is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation; either version 3 of the 
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of the
  * License, or
  * (at your option) any later version.
- 
+
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this program. If not, see 
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 
@@ -45,7 +45,7 @@ A Tab represents the UI element that hosts your tab content. This UI element is 
           <div data-role="content">
               <div data-role="tab" id="tabID">
                 [...]
-              </div> 
+              </div>
               <div data-role="tab" id="page2">
                 [...]
               </div>
@@ -58,7 +58,7 @@ A Tab represents the UI element that hosts your tab content. This UI element is 
       var tab = UI.tab("tabID");
  */
 var Tab = function (id) {
-    this.id =  id;
+    this.id = id;
 };
 
 Tab.prototype = {
@@ -78,12 +78,7 @@ Tab.prototype = {
      * @method {} deactivate
      */
     deactivate: function () {
-        this.__updateVisibleState('none', function(footer) {
-            if (!footer)
-                return;
-            footer.style.display = 'none';
-            footer.classList.remove('revealed');
-        });
+        this.__updateVisibleState('none');
     },
 
     /**
@@ -92,12 +87,8 @@ Tab.prototype = {
      */
     activate: function (id) {
         this.__hideVisibleSibling();
-        this.__updateVisibleState('block', function(footer) {
-            if (!footer)
-                return;
-            footer.style.display = 'block';
-            footer.classList.add('revealed');
-        });
+        this.__updateVisibleState('block');
+
     },
 
     /**
@@ -114,7 +105,7 @@ Tab.prototype = {
     /**
      * @private
      */
-    __updateVisibleState: function(displayStyle, footerHandlerFunc) {
+    __updateVisibleState: function (displayStyle) {
         if (!this.__isValidId(this.id))
             return;
         var tab = document.getElementById(this.id);
@@ -122,16 +113,22 @@ Tab.prototype = {
             return;
         }
         tab.style.display = displayStyle;
-        if (tab.querySelector(this.__thisSelector + ' > footer')) {
-            var footer = tab.querySelector('footer');
-            footerHandlerFunc(footer);
+
+        [].forEach.call( document.querySelectorAll('[data-role="actions-wrapper"]'), function(el) {
+           el.style.display = 'none';
+        });
+
+        var tab_actions = document.getElementById("actions_" + this.id);
+
+        if (tab_actions !== null) {
+            tab_actions.style.display = 'block';
         }
     },
 
     /**
      * @private
      */
-    __hideVisibleSibling: function() {
+    __hideVisibleSibling: function () {
         if (!this.__isValidId(this.id))
             return;
         var tab = document.getElementById(this.id);
@@ -150,13 +147,13 @@ Tab.prototype = {
      * @private
      */
     __isValidId: function (id) {
-        return id && typeof(id) === 'string';
+        return id && typeof (id) === 'string';
     },
 
     /**
      * @private
      */
-    get __thisSelector () {
+    get __thisSelector() {
         return "#" + this.id;
     }
 };
