@@ -123,14 +123,12 @@ var ActionBar = (function () {
 
             for (var y = 0; y < i; y++) {
                 var actionButton = document.createElement('button'),
-                    lbl = actionButtons[y].querySelector('span').innerHTML,
-                    icon = actionButtons[y].querySelector('img').getAttribute('src'),
-                    a_id = actionButtons[y].querySelector('a').getAttribute('id');
+                    actionButton_lbl = actionButtons[y].querySelector('span').innerHTML,
+                    actionButton_icon = actionButtons[y].querySelector('img').getAttribute('src'),
+                    actionButton_id = actionButtons[y].querySelector('a').getAttribute('id');
 
-                actionButton.style.backgroundImage = 'url( ' + icon + ' )';
-                actionButton.setAttribute('content', icon);
-                actionButton.setAttribute('id', a_id);
-
+                actionButton.setAttribute('id', actionButton_id);
+                document.styleSheets[0].addRule('#'+ actionButton_id + ':after','background-image: url("' + actionButton_icon + '");');
                 newActionsBarWrapper.appendChild(actionButton);
             }
         }
