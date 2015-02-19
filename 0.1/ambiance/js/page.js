@@ -57,6 +57,10 @@ var Page = function (id) {
     this.id = id;
     this.onActivatedCallbacks = [];
 
+    this._header = document.querySelector('div[data-role="mainview"] header');
+    this._tabtitle = this._header.querySelector('[data-role="tabtitle"]');
+    this._backbtn = this._header.querySelector('[data-role="back-btn"]');
+
     this.__setup();
 };
 Page.PAGE_ACTIVATED_EVENT = 'ubuntu-html5-on-page-activated';
@@ -101,12 +105,7 @@ Page.prototype = {
      * @method {} deactivate
      */
     deactivate: function () {
-        this.__updateVisibleState('none', function (footer) {
-            if (!footer)
-                return;
-            footer.style.display = 'none';
-            footer.classList.remove('revealed');
-        });
+        this.__updateVisibleState('none');
     },
 
     /**
@@ -116,12 +115,7 @@ Page.prototype = {
      */
     activate: function (properties) {
         this.__hideVisibleSibling();
-        this.__updateVisibleState('block', function (footer) {
-            if (!footer)
-                return;
-            footer.style.display = 'block';
-            footer.classList.add('revealed');
-        });
+        this.__updateVisibleState('block');
         this.__updateHeaderTitle();
         this.__dispatchActivatedEvent(properties);
     },
@@ -173,34 +167,18 @@ Page.prototype = {
     __updateHeaderTitle: function () {
         if (!this.element().getAttribute('data-title'))
             return;
-        var header =
-            document.querySelector('div[data-role="mainview"] header');
-        if (!header)
-            return;
-        var ul = header.querySelector('ul');
-        if (!ul) {
-            ul = document.createElement('ul');
-            ul.setAttribute('data-role', 'tabs');
-            header.appendChild(ul);
-        }
 
-        var titles = header.querySelectorAll('ul li');
-        for (var i = 0; i < titles.length; ++i) {
-            ul.removeChild(titles[i]);
-        }
-        var li = document.createElement('li');
-        li.setAttribute('data-role', 'tabitem');
-        li.setAttribute('data-page', this.id);
-        li.classList.add('active');
+        if (!this._header)
+            return;
+
         var DEFAULT_TITLE = 'Unknown';
         var title = DEFAULT_TITLE;
         try {
             title = this.element().getAttribute('data-title');
         } catch (e) {}
+
         title = title || DEFAULT_TITLE;
-        var text = document.createTextNode(title);
-        li.appendChild(text);
-        ul.appendChild(li);
+        this._tabtitle.textContent= title;
     },
 
     /**
@@ -214,21 +192,27 @@ Page.prototype = {
             element.getAttribute('data-role') === 'page';
     },
 
+
     /**
      * @private
      */
-    __updateVisibleState: function (displayStyle, footerHandlerFunc) {
+    isFirst_Page: function (element) {
+        return element.parentNode.querySelector(':first-child') ==  element;
+    },
+
+    /**
+     * @private
+     */
+    __updateVisibleState: function (displayStyle) {
         if (!this.__isValidId(this.id))
             return;
         var page = document.getElementById(this.id);
         if (!this.isPage(page)) {
             return;
         }
+
+        this._backbtn.disabled = this.isFirst_Page(page);
         page.style.display = displayStyle;
-        if (page.querySelector(this.__thisSelector + ' > footer')) {
-            var footer = page.querySelector('footer');
-            footerHandlerFunc(footer);
-        }
     },
 
     /**

@@ -1,0 +1,237 @@
+<!--
+ Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>
+ License granted by Canonical Limited
+
+ This file is part of ubuntu-html5-ui-toolkit.
+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 3 of the
+ License, or
+ (at your option) any later version.
+
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program. If not, see
+ <http://www.gnu.org/licenses/>
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="copyright" content="Adnane Belmadiaf <daker@ubuntu.com>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Tabs</title>
+
+    <!-- Ubuntu UI Style imports - Ambiance theme -->
+    <link href="../../../0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <!-- Ubuntu UI javascript imports - Ambiance theme -->
+    <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/actionsbar.js"></script>
+    <script src="../../../0.1/ambiance/js/tab.js"></script>
+    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+</head>
+
+<body>
+    <div data-role="mainview">
+
+        <header data-role="header">
+            <ul data-role="tabs">
+                <li data-role="tabitem" data-page="tab1">Tab 1</li>
+                <li data-role="tabitem" data-page="tab2">Tab 2</li>
+                <li data-role="tabitem" data-page="tab3">Tab 3</li>
+                <li data-role="tabitem" data-page="tab4">Tab 4</li>
+            </ul>
+        </header>
+
+        <div data-role="content">
+
+            <div data-role="tab" id="tab1">
+                <div>tab1 content</div>
+
+                <footer id="footer1" data-role="footer" class="revealed">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#" id="new-contact">
+                                    <img src="/usr/share/icons/suru/actions/scalable/contact-new.svg" alt="Tap me!" />
+                                    <span>New contact</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="edit-contact">
+                                    <img src="/usr/share/icons/suru/actions/scalable/edit-cut.svg" alt="Tap me!" />
+                                    <span>Edit Contact</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="add-alarm">
+                                    <img src="/usr/share/icons/suru/actions/scalable/reminder.svg" alt="Tap me!" />
+                                    <span>Add Alarm</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </footer>
+            </div>
+
+            <div data-role="tab" id="tab2">
+                <div>tab2 content</div>
+
+                <footer id="footer2" data-role="footer" class="revealed">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#" id="new-email">
+                                    <img src="/usr/share/icons/suru/actions/scalable/notebook-new.svg" alt="Tap me!" />
+                                    <span>New Email</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="edit-note">
+                                    <img src="/usr/share/icons/suru/actions/scalable/edit-paste.svg" alt="Tap me!" />
+                                    <span>Edit Note</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="infos">
+                                    <img src="/usr/share/icons/suru/actions/scalable/info.svg" alt="Tap me!" />
+                                    <span>Infos</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="private-browsing">
+                                    <img src="/usr/share/icons/suru/actions/scalable/private-browsing.svg" alt="Tap me!" />
+                                    <span>Private Browsing</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </footer>
+            </div>
+
+            <div data-role="tab" id="tab3">
+                <div>tab3 content</div>
+
+                <footer id="footer3" data-role="footer" class="revealed">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#" id="new-call">
+                                    <img src="/usr/share/icons/suru/actions/scalable/outgoing-call.svg" alt="Tap me!" />
+                                    <span>New Call</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="edit-alarm">
+                                    <img src="/usr/share/icons/suru/actions/scalable/reminder.svg" alt="Tap me!" />
+                                    <span>Edit Alarm</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="share">
+                                    <img src="/usr/share/icons/suru/actions/scalable/share.svg" alt="Tap me!" />
+                                    <span>Share this article</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="out-call">
+                                    <img src="/usr/share/icons/suru/actions/scalable/outgoing-call.svg" alt="Tap me!" />
+                                    <span>Out Call</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/reminder.svg" alt="Tap me!" />
+                                    <span>Edit Alarm</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/share.svg" alt="Tap me!" />
+                                    <span>Share this article</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/outgoing-call.svg" alt="Tap me!" />
+                                    <span>New Call</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/reminder.svg" alt="Tap me!" />
+                                    <span>Edit Alarm</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/share.svg" alt="Tap me!" />
+                                    <span>Share this article</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/outgoing-call.svg" alt="Tap me!" />
+                                    <span>New Call</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="addfeed">
+                                    <img src="/usr/share/icons/suru/actions/scalable/reminder.svg" alt="Tap me!" />
+                                    <span>Edit Alarm</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </footer>
+            </div>
+
+            <div data-role="tab" id="tab4">
+                <div>tab4 content with no actions</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var UI = new UbuntuUI();
+        UI.init();
+
+        document.getElementById('new-contact').addEventListener("click", function (e) {
+            alert('Oh! New Contact');
+        }, false);
+
+        document.getElementById('add-alarm').addEventListener("click", function (e) {
+            alert('zzZzZzzzz');
+        }, false);
+
+        document.getElementById('edit-contact').addEventListener("click", function (e) {
+            alert('Oh! Cut Cut!');
+        }, false);
+    </script>
+</body>
+</html>

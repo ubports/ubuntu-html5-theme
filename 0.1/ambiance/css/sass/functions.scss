@@ -20,12 +20,11 @@
  * <http://www.gnu.org/licenses/>
  */
 
-@mixin box_sizing($type: border-box) {
-    -webkit-box-sizing: $type;
-    box-sizing:         $type;
+@function units_gu($value){
+  @return $value*8px
 }
 
-@mixin box_shadow($type: inset 0 1px 1px rgba(0, 0, 0, 0.1)) {
-    -webkit-box-shadow: $type;
-    box-shadow:         $type;
+@function icon($icon-name){
+  @return "/usr/share/icons/suru/actions/scalable/" + $icon-name + ".svg"
 }
+

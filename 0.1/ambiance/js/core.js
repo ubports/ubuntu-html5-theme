@@ -50,54 +50,12 @@ var UbuntuUI = (function () {
          return document.querySelectorAll("[data-role='tabs']") != null;
     };
 
-    function __createBackButtonListItem(d) {
-        var a = d.createElement('a');
-        a.setAttribute('href', '#');
-        a.setAttribute('data-role', 'back');
-
-        a.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
-
-        var img = d.createElement('img');
-        img.setAttribute('src', '/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/img/back@18.png');
-
-        // TODO: translation?
-        img.setAttribute('alt', 'Back');
-        a.appendChild(img);
-        var span = d.createElement('span');
-        var text = d.createTextNode('Back');
-        span.appendChild(text);
-        a.appendChild(span);
-
-        var li = d.createElement('li');
-        li.appendChild(a);
-
-        return li;
+    function __createBackButtonListItem() {
+        var backBtn = document.createElement('button');
+        backBtn.setAttribute('data-role', 'back-btn');
+        backBtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
+        return backBtn;
     };
-
-    function __appendBackButtonToFooter(self, d, footer) {
-        var li = __createBackButtonListItem(d);
-        var ul = null;
-        if (footer.querySelectorAll('ul').length == 0) {
-            ul = d.createElement('ul');
-        } else {
-            ul = footer.querySelectorAll('ul')[0];
-        }
-        ul.appendChild(li);
-
-        if (footer.querySelectorAll('nav').length == 0) {
-            var nav = d.createElement('nav');
-            nav.appendChild(ul);
-            footer.appendChild(nav);
-        }
-
-        var a = li.querySelector('a');
-        a.onclick = function (e) {
-            if (self._pageStack.depth() > 1){
-                self._pageStack.pop();
-            }
-            e.preventDefault();
-        };
-    }
 
     function UbuntuUI() {
         var U = this;
@@ -107,6 +65,30 @@ var UbuntuUI = (function () {
             touchMove: ['touchmove','mousemove'],
             touchEnd: ['touchend','mouseup'],
             touchLeave: ['mouseleave'],
+        };
+
+        this._prevScrollTop = this._y = 0;
+
+        this._header = document.querySelector('[data-role="header"]');
+        this._content = document.querySelector('[data-role="content"]');
+        this._headerHeight = this._header.offsetHeight + 17;
+        this._content.style.paddingTop = this._headerHeight + "px";
+
+        var self = this;
+        window.onscroll = function(event){
+            var scrollTop = window.pageYOffset;
+            var y = Math.min(self._headerHeight, Math.max(0, (self._y + scrollTop - self._prevScrollTop)));
+
+            if (self._prevScrollTop > scrollTop && scrollTop > 0) {
+                y = Math.max(y, 0);
+            }
+
+            if (y !== self._y) {
+                requestAnimationFrame(self.__transformHeader.bind(self, y));
+            }
+
+            self._prevScrollTop = scrollTop;
+            self._y = y;
         };
     };
 
@@ -128,37 +110,39 @@ var UbuntuUI = (function () {
                 this._pageStack.push(pages[0].getAttribute('id'));
             }
 
-            var immediateFooters = [].filter.call(pagestack.children,
-                function (e) {
-                    return e.nodeName.toLowerCase() === 'footer';
-                });
-            if (immediateFooters.length !== 0) {
-                // There is a main footer for the whole pagestack,
-                // FIXME: only consider the first (there should be only 1 anyway)
-                var footer = immediateFooters[0];
-                __appendBackButtonToFooter(this, d, footer);
-                return;
-            }
+            var header = d.querySelector("[data-role='header']");
 
-            // try to find subpages & append back button there
-            for (var idx = 0; idx < pages.length; ++idx) {
-                var page = pages[idx];
+            this._tabTitle = document.createElement('div');
+            this._tabTitle.setAttribute('data-role', 'tabtitle');
 
-                // TODO: only add the footer for now, but need to sync w/ title
-                //  , properties & header
-                var footer;
-                if (page.querySelectorAll("[data-role='footer']").length == 0) {
-                    footer = d.createElement('footer');
-                    footer.setAttribute('data-role', 'footer');
-                    footer.setAttribute('class', 'revealed');
+            var tabTitleValue = document.createTextNode('');
+            this._tabTitle.appendChild(tabTitleValue);
 
-                    page.appendChild(footer);
-                } else {
-                    // TODO: validate footer count: should be 1 footer
-                    footer = page.querySelectorAll("[data-role='footer']")[0];
+            var backBtn = __createBackButtonListItem();
+            header.insertBefore(backBtn, header.firstChild);
+
+            var self = this;
+            backBtn.onclick = function (e) {
+                if (self._pageStack.depth() > 1){
+                    self._pageStack.pop();
                 }
-                __appendBackButtonToFooter(this, d, footer);
-            }
+                e.preventDefault();
+            };
+
+            this._pageActions = d.createElement('div');
+            this._pageActions.setAttribute('data-role', 'actions');
+
+            header.appendChild(this._tabTitle);
+            header.appendChild(this._pageActions);
+        },
+
+        __transformHeader: function(y) {
+            var s = this._header.style;
+            this.__translateY(s, -y);
+        },
+
+        __translateY: function(s, y) {
+            s.webkitTransform = s.transform = 'translate3d(0, ' + y + 'px, 0)';
         },
 
         __setupPage: function (document) {
@@ -169,73 +153,32 @@ var UbuntuUI = (function () {
             }
         },
 
-        __getTabInfosDelegate: function () {
-            var self = this;
-            var __createTouchObject = function(event) {
-                return {
-                    identifier: event.timeStamp,
-                    target: event.target,
-                    screenX: event.screenX,
-                    screenY: event.screenY,
-                    clientX: event.clientX,
-                    clientY: event.clientY,
-                    pageX: event.pageX,
-                    pageY: event.pageY,
-                };
-            };
-            return {
-                get isTouch() {
-                    return self.isTouch;
-                },
-                registerTouchEvent: function(eventId,
-                                             element,
-                                             callback) {
-                    if ( ! eventId
-                         || typeof(eventId) !== 'object'
-                         || eventId.length === 0) {
-                        console.log('Invalid or empty eventId for registerTouchEvent: ' + eventId.toString() + ' ' + typeof(eventId));
-                        return;
-                    }
+        __setupActionsBar: function(document) {
 
-                    for (var i = 0; i < eventId.length; ++i) {
-                        element.addEventListener(eventId[i], callback);
+            var actionBar;
+
+            var apptabsElements = document.querySelectorAll('[data-role=tab]');
+            if (apptabsElements.length >= 0) {
+                for (var idx = 0; idx < apptabsElements.length; ++idx) {
+                    var footers = apptabsElements[idx].querySelectorAll("[data-role='footer']");
+                    if (footers.length >= 0) {
+                        // TODO: validate footer count: should be 1 footer
+                        actionBar = new ActionBar(this._tabs, footers[0], apptabsElements[idx]);
+                        if (footers[0] != null) footers[0].remove();
                     }
-                },
-                touchEvents: {
-                    get touchStart() {
-                        return self.touchEvents.touchStart;
-                    },
-                    get touchMove() {
-                        return self.touchEvents.touchMove;
-                    },
-                    get touchEnd() {
-                        return self.touchEvents.touchEnd;
-                    },
-                    get touchLeave() {
-                        return self.touchEvents.touchLeave;
-                    },
-                },
-                translateTouchEvent: function(event) {
-                    var touch = __createTouchObject(event);
-                    var translatedTouchEvent = event;
-                    translatedTouchEvent.changedTouches = [touch];
-                    // keep the properties even for e.g. 'touchend'
-                    translatedTouchEvent.touches = [touch];
-                    translatedTouchEvent.targetTouches = [touch];
-                    return translatedTouchEvent;
                 }
-            };
-        },
+            }
 
-        __setupToolbars: function(document) {
-            var toolbars =
-                document.querySelectorAll('footer[data-role="footer"]');
-            for (var i = 0; i < toolbars.length; ++i) {
-                var id = toolbars[i].getAttribute('id');
-                if ( !id)
-                    continue;
-                var toolbar = new Toolbar(
-                    id, this.__getTabInfosDelegate());
+            var apppagesElements = document.querySelectorAll('[data-role=page]');
+            if (apppagesElements.length >= 0) {
+                for (var idx = 0; idx < apppagesElements.length; ++idx) {
+                    var footers = apppagesElements[idx].querySelectorAll("[data-role='footer']");
+                    if (footers.length >= 0) {
+                        // TODO: validate footer count: should be 1 footer
+                        actionBar = new ActionBar(this._tabs, footers[0], apppagesElements[idx]);
+                        if (footers[0] != null) footers[0].remove();
+                    }
+                }
             }
         },
 
@@ -247,9 +190,7 @@ var UbuntuUI = (function () {
                     var apptabsElements = document.querySelectorAll('[data-role=tabs]');
                     if (apptabsElements.length == 0)
                         return;
-                    this._tabs = new Tabs(apptabsElements[0],
-                                          this.__getTabInfosDelegate());
-
+                    this._tabs = new Tabs(apptabsElements[0]);
                     this._tabs.onTabChanged(function (e) {
                         if (!e || !e.infos)
                             return;
@@ -268,7 +209,7 @@ var UbuntuUI = (function () {
         init: function () {
             this.__setupTabs(document);
             this.__setupPage(document);
-            this.__setupToolbars(document);
+            this.__setupActionsBar(document);
         },
 
         /**
