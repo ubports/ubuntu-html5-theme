@@ -1,3 +1,16 @@
+ubuntu-html5-theme (0.1.2+15.04.20150219-0ubuntu1) vivid; urgency=medium
+
+  [ daker ]
+  * New Ubuntu HTML5 header
+
+  [ Adnane Belmadiaf ]
+  * New Ubuntu HTML5 header
+
+  [ CI Train Bot ]
+  * New rebuild forced.
+
+ -- CI Train Bot <ci-train-bot@canonical.com>  Thu, 19 Feb 2015 19:15:33 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20150122-0ubuntu2) vivid; urgency=medium
 
   * No-change rebuild against Qt 5.4.0.
