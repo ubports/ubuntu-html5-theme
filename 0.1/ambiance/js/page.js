@@ -192,14 +192,6 @@ Page.prototype = {
             element.getAttribute('data-role') === 'page';
     },
 
-
-    /**
-     * @private
-     */
-    isFirst_Page: function (element) {
-        return element.parentNode.querySelector(':first-child') ==  element;
-    },
-
     /**
      * @private
      */
@@ -210,8 +202,6 @@ Page.prototype = {
         if (!this.isPage(page)) {
             return;
         }
-
-        this._backbtn.disabled = this.isFirst_Page(page);
         page.style.display = displayStyle;
     },
 

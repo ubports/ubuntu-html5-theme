@@ -89,6 +89,7 @@ var Pagestack = (function () {
     function Pagestack(pagestack) {
         this._pages = [];
         this._pagestack = pagestack;
+        this._backbtn = document.querySelector('[data-role="back-btn"]');
     };
 
     Pagestack.prototype = {
@@ -194,6 +195,7 @@ var Pagestack = (function () {
          * @private
          */
         __dispatchPageChanged: function (page) {
+            this._backbtn.disabled = (this.depth() ==  1);
             var event = document.createEvent('Event');
             event.initEvent('pagechanged',true,true);
             event.page = page;

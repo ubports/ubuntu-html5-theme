@@ -43,17 +43,18 @@ var UbuntuUI = (function () {
     PAGESTACK_BACK_ID = 'ubuntu-pagestack-back';
 
     function __hasPageStack(document) {
-        return document.querySelectorAll("[data-role='pagestack']") != null;
+        return document.querySelectorAll("[data-role='pagestack']").length  >= 1;
     };
 
     function __hasTabs(document) {
-         return document.querySelectorAll("[data-role='tabs']") != null;
+         return document.querySelectorAll("[data-role='tabs']").length  >= 1;
     };
 
     function __createBackButtonListItem() {
         var backBtn = document.createElement('button');
         backBtn.setAttribute('data-role', 'back-btn');
-        backBtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.random());
+        backBtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.floor(Math.random()));
+        backBtn.disabled = true;
         return backBtn;
     };
 
@@ -94,21 +95,6 @@ var UbuntuUI = (function () {
 
     UbuntuUI.prototype = {
         __setupPageStack: function (d) {
-            // TODO validate no more than one page stack etc.
-            // d.querySelectorAll("[data-role='pagestack']")
-
-            // FIXME: support multiple page stack & complex docs?
-            var pagestacks = d.querySelectorAll("[data-role='pagestack']");
-            if (pagestacks.length == 0)
-                return;
-            var pagestack = pagestacks[0];
-
-            this._pageStack = new Pagestack(pagestack);
-
-            var pages = pagestack.querySelectorAll("[data-role='page']");
-            if (pages.length > 0) {
-                this._pageStack.push(pages[0].getAttribute('id'));
-            }
 
             var header = d.querySelector("[data-role='header']");
 
@@ -128,6 +114,22 @@ var UbuntuUI = (function () {
                 }
                 e.preventDefault();
             };
+
+            // TODO validate no more than one page stack etc.
+            // d.querySelectorAll("[data-role='pagestack']")
+
+            // FIXME: support multiple page stack & complex docs?
+            var pagestacks = d.querySelectorAll("[data-role='pagestack']");
+            if (pagestacks.length == 0)
+                return;
+            var pagestack = pagestacks[0];
+
+            this._pageStack = new Pagestack(pagestack);
+
+            var pages = pagestack.querySelectorAll("[data-role='page']");
+            if (pages.length > 0) {
+                this._pageStack.push(pages[0].getAttribute('id'));
+            }
 
             this._pageActions = d.createElement('div');
             this._pageActions.setAttribute('data-role', 'actions');
@@ -163,7 +165,7 @@ var UbuntuUI = (function () {
                     var footers = apptabsElements[idx].querySelectorAll("[data-role='footer']");
                     if (footers.length >= 0) {
                         // TODO: validate footer count: should be 1 footer
-                        actionBar = new ActionBar(this._tabs, footers[0], apptabsElements[idx]);
+                        actionBar = this.__setupAction(footers[0], apptabsElements[idx]);
                         if (footers[0] != null) footers[0].remove();
                     }
                 }
@@ -175,7 +177,7 @@ var UbuntuUI = (function () {
                     var footers = apppagesElements[idx].querySelectorAll("[data-role='footer']");
                     if (footers.length >= 0) {
                         // TODO: validate footer count: should be 1 footer
-                        actionBar = new ActionBar(this._tabs, footers[0], apppagesElements[idx]);
+                        actionBar = this.__setupAction(footers[0], apppagesElements[idx]);
                         if (footers[0] != null) footers[0].remove();
                     }
                 }
@@ -200,6 +202,116 @@ var UbuntuUI = (function () {
                     }.bind(this));
                 }
              }
+        },
+
+
+        __setupAction: function (oldFooter, parent) {
+            this._oldFooter = oldFooter;
+            this._oldFooterParent = parent;
+
+            this._overlay = document.querySelector('[data-role="overlay"]');
+
+            var newActionsBar = document.querySelector('[data-role="actions"]');
+
+            if (!this._oldFooter)
+                return;
+
+            var actionBar = this._oldFooter,
+                actions = actionBar.querySelector('ul'),
+                actionButtons = actionBar.querySelectorAll('ul li'),
+                i = actionButtons.length;
+            newActionsBarWrapper = document.createElement('div');
+            newActionsBarWrapper.setAttribute("data-role", "actions-wrapper");
+            newActionsBarWrapper.setAttribute("id", "actions_" + this._oldFooterParent.id);
+
+            if (actionButtons.length > 2) {
+                // Maintain the first then replace the rest with an action overflow
+                var firstAction = actionButtons[0],
+                    overflowList = document.createElement('ul'),
+                    /* Actions Button */
+                    firstButton = document.createElement('button'),
+                    overflowButton = document.createElement('button'),
+                    /* Icon */
+                    firstIcon = firstAction.querySelector('img').getAttribute('src'),
+                    /* ID*/
+                    firstId = firstAction.querySelector('a').getAttribute('id');
+
+                var k =1;
+
+                if (this._tabs._tabsitems.length == 1) {
+                    k = 2;
+                    this._tabs._tabtitle.style.width = "calc(100% - 155px)";
+
+                    // Maintain the second
+                    var secondAction = actionButtons[1],
+                    /* Actions Button */
+                    secondButton = document.createElement('button'),
+                    /* Icon */
+                    secondIcon = secondAction.querySelector('img').getAttribute('src'),
+                    /* ID*/
+                    secondId = secondAction.querySelector('a').getAttribute('id');
+                }
+
+                overflowList.setAttribute('data-role', 'actions-overflow-list');
+
+                // Hide the overflow
+                for (var x = k; x < i; x++) {
+                    var li = document.createElement('li'),
+                        a_id = actionButtons[x].querySelector('a').getAttribute('id'),
+                        lbl = actionButtons[x].querySelector('span').innerHTML,
+                        icon = actionButtons[x].querySelector('img').getAttribute('src');
+
+                    li.innerHTML = lbl;
+                    li.setAttribute('id', a_id);
+
+                    li.style.backgroundImage = 'url( ' + icon + ' )';
+                    overflowList.appendChild(li);
+
+                    li.onclick = function (e) {
+                        overflowList.classList.toggle('opened');
+                        self._overlay.classList.toggle('active');
+                        e.preventDefault();
+                    };
+                }
+
+                // Add the action overflow button
+                overflowButton.setAttribute('data-role', 'actions-overflow-icon');
+
+                //firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
+                firstButton.setAttribute('id', firstId);
+                document.styleSheets[0].addRule('#'+ firstId + ':after','background-image: url("' + firstIcon + '");');
+
+                newActionsBarWrapper.appendChild(firstButton);
+                if (this._tabs._tabsitems.length == 1) {
+                    secondButton.setAttribute('id', secondId);
+                    document.styleSheets[0].addRule('#'+ secondId + ':after','background-image: url("' + secondIcon + '");');
+                    newActionsBarWrapper.appendChild(secondButton);
+                }
+                newActionsBarWrapper.appendChild(overflowButton);
+                newActionsBarWrapper.appendChild(overflowList);
+
+                self = this;
+                overflowButton.onclick = function (e) {
+                    overflowList.classList.toggle('opened');
+                    self._overlay.classList.toggle('active');
+                    self._tabs._tabs.classList.remove('opened');
+                    e.preventDefault();
+                };
+            } else {
+
+                for (var y = 0; y < i; y++) {
+                    var actionButton = document.createElement('button'),
+                        actionButton_lbl = actionButtons[y].querySelector('span').innerHTML,
+                        actionButton_icon = actionButtons[y].querySelector('img').getAttribute('src'),
+                        actionButton_id = actionButtons[y].querySelector('a').getAttribute('id');
+
+                    actionButton.setAttribute('id', actionButton_id);
+                    document.styleSheets[0].addRule('#'+ actionButton_id + ':after','background-image: url("' + actionButton_icon + '");');
+                    newActionsBarWrapper.appendChild(actionButton);
+                }
+            }
+
+            newActionsBar.appendChild(newActionsBarWrapper);
         },
 
         /**
