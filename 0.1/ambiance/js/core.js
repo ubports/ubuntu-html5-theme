@@ -236,14 +236,13 @@ var UbuntuUI = (function() {
                     /* Icon */
                     firstIcon = firstAction.querySelector('img').getAttribute('src'),
                     /* ID*/
-                    firstId = firstAction.querySelector('a').getAttribute('id');
-
-                var k = 1;
+                    firstId = firstAction.querySelector('a').getAttribute('id'),
+                    k = 1;
 
                 if (this._tabs != 'undefined' && this._tabs) {
-                    if (this._tabs._tabsitems.length == 1) {
+                    if (this._tabs._tabsItems.length == 1) {
                         k = 2;
-                        this._tabs._tabtitle.style.width = "calc(100% - 155px)";
+                        this._tabs._tabTitle.style.width = "calc(100% - 155px)";
 
                         // Maintain the second item
                         var secondAction = actionButtons[1],
@@ -287,7 +286,7 @@ var UbuntuUI = (function() {
 
                 newActionsBarWrapper.appendChild(firstButton);
                 if (this._tabs != 'undefined' && this._tabs) {
-                    if (this._tabs._tabsitems.length == 1) {
+                    if (this._tabs._tabsItems.length == 1) {
                         secondButton.setAttribute('id', secondId);
                         document.styleSheets[0].addRule('#' + secondId + ':after', 'background-image: url("' + secondIcon + '");');
                         newActionsBarWrapper.appendChild(secondButton);

@@ -86,9 +86,9 @@ var Pagestack = (function () {
         }
     };
 
-    function Pagestack(pagestack) {
+    function Pagestack(pageStack) {
         this._pages = [];
-        this._pagestack = pagestack;
+        this._pageStack = pageStack;
         this._backBtn = document.querySelector('[data-role="back-btn"]');
     };
 
@@ -162,7 +162,7 @@ var Pagestack = (function () {
         },
 
         onPageChanged : function(callback){
-            this._pagestack.addEventListener("pagechanged", callback);
+            this._pageStack.addEventListener("pagechanged", callback);
         },
 
         /**
@@ -171,7 +171,7 @@ var Pagestack = (function () {
         __setAllPagesVisibility: function (visible) {
             var visibility = visible ? "block" : "none";
 
-            var children = [].slice.call(this._pagestack.children);
+            var children = [].slice.call(this._pageStack.children);
             children.forEach(function(element) {
                 var pageHelper = new Page();
                 if (pageHelper.isPage(element)) {
@@ -205,7 +205,7 @@ var Pagestack = (function () {
             var event = document.createEvent('Event');
             event.initEvent('pagechanged',true,true);
             event.page = page;
-            this._pagestack.dispatchEvent(event);
+            this._pageStack.dispatchEvent(event);
         },
     };
 
