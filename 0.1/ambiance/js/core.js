@@ -115,6 +115,11 @@ var UbuntuUI = (function () {
                 e.preventDefault();
             };
 
+            this._content = document.querySelector('[data-role="content"]');
+            this._overlay = document.createElement('div');
+            this._overlay.setAttribute('data-role', 'overlay');
+            this._content.appendChild(this._overlay);
+
             // TODO validate no more than one page stack etc.
             // d.querySelectorAll("[data-role='pagestack']")
 
@@ -165,7 +170,7 @@ var UbuntuUI = (function () {
                     var footers = apptabsElements[idx].querySelectorAll("[data-role='footer']");
                     if (footers.length >= 0) {
                         // TODO: validate footer count: should be 1 footer
-                        actionBar = this.__setupAction(footers[0], apptabsElements[idx]);
+                        actionBar = this.__setupTabAction(footers[0], apptabsElements[idx]);
                         if (footers[0] != null) footers[0].remove();
                     }
                 }
@@ -177,7 +182,7 @@ var UbuntuUI = (function () {
                     var footers = apppagesElements[idx].querySelectorAll("[data-role='footer']");
                     if (footers.length >= 0) {
                         // TODO: validate footer count: should be 1 footer
-                        actionBar = this.__setupAction(footers[0], apppagesElements[idx]);
+                        actionBar = this.__setupPageAction(footers[0], apppagesElements[idx]);
                         if (footers[0] != null) footers[0].remove();
                     }
                 }
@@ -205,7 +210,7 @@ var UbuntuUI = (function () {
         },
 
 
-        __setupAction: function (oldFooter, parent) {
+        __setupTabAction: function (oldFooter, parent) {
             this._oldFooter = oldFooter;
             this._oldFooterParent = parent;
 
@@ -238,18 +243,20 @@ var UbuntuUI = (function () {
 
                 var k =1;
 
-                if (this._tabs._tabsitems.length == 1) {
-                    k = 2;
-                    this._tabs._tabtitle.style.width = "calc(100% - 155px)";
+                if (this._tabs != 'undefined' && this._tabs ) {
+                    if (this._tabs._tabsitems.length == 1) {
+                        k = 2;
+                        this._tabs._tabtitle.style.width = "calc(100% - 155px)";
 
-                    // Maintain the second
-                    var secondAction = actionButtons[1],
-                    /* Actions Button */
-                    secondButton = document.createElement('button'),
-                    /* Icon */
-                    secondIcon = secondAction.querySelector('img').getAttribute('src'),
-                    /* ID*/
-                    secondId = secondAction.querySelector('a').getAttribute('id');
+                        // Maintain the second
+                        var secondAction = actionButtons[1],
+                        /* Actions Button */
+                        secondButton = document.createElement('button'),
+                        /* Icon */
+                        secondIcon = secondAction.querySelector('img').getAttribute('src'),
+                        /* ID*/
+                        secondId = secondAction.querySelector('a').getAttribute('id');
+                    }
                 }
 
                 overflowList.setAttribute('data-role', 'actions-overflow-list');
@@ -282,10 +289,12 @@ var UbuntuUI = (function () {
                 document.styleSheets[0].addRule('#'+ firstId + ':after','background-image: url("' + firstIcon + '");');
 
                 newActionsBarWrapper.appendChild(firstButton);
-                if (this._tabs._tabsitems.length == 1) {
-                    secondButton.setAttribute('id', secondId);
-                    document.styleSheets[0].addRule('#'+ secondId + ':after','background-image: url("' + secondIcon + '");');
-                    newActionsBarWrapper.appendChild(secondButton);
+                if (this._tabs != 'undefined' && this._tabs ) {
+                    if (this._tabs._tabsitems.length == 1) {
+                        secondButton.setAttribute('id', secondId);
+                        document.styleSheets[0].addRule('#'+ secondId + ':after','background-image: url("' + secondIcon + '");');
+                        newActionsBarWrapper.appendChild(secondButton);
+                    }
                 }
                 newActionsBarWrapper.appendChild(overflowButton);
                 newActionsBarWrapper.appendChild(overflowList);
@@ -314,6 +323,110 @@ var UbuntuUI = (function () {
             newActionsBar.appendChild(newActionsBarWrapper);
         },
 
+
+        __setupPageAction: function (oldFooter, parent) {
+            this._oldFooter = oldFooter;
+            this._oldFooterParent = parent;
+
+            this._overlay = document.querySelector('[data-role="overlay"]');
+
+            var newActionsBar = document.querySelector('[data-role="actions"]');
+
+            if (!this._oldFooter)
+                return;
+
+            var actionBar = this._oldFooter,
+                actions = actionBar.querySelector('ul'),
+                actionButtons = actionBar.querySelectorAll('ul li'),
+                i = actionButtons.length;
+            newActionsBarWrapper = document.createElement('div');
+            newActionsBarWrapper.setAttribute("data-role", "actions-wrapper");
+            newActionsBarWrapper.setAttribute("id", "actions_" + this._oldFooterParent.id);
+
+            if (actionButtons.length > 2) {
+                // Maintain the first then replace the rest with an action overflow
+                var firstAction = actionButtons[0],
+                    overflowList = document.createElement('ul'),
+                    /* Actions Button */
+                    firstButton = document.createElement('button'),
+                    overflowButton = document.createElement('button'),
+                    /* Icon */
+                    firstIcon = firstAction.querySelector('img').getAttribute('src'),
+                    /* ID*/
+                    firstId = firstAction.querySelector('a').getAttribute('id');
+
+                var k = 2;
+                        this._tabTitle.style.width = "calc(100% - 155px)";
+
+                        // Maintain the second
+                        var secondAction = actionButtons[1],
+                        /* Actions Button */
+                        secondButton = document.createElement('button'),
+                        /* Icon */
+                        secondIcon = secondAction.querySelector('img').getAttribute('src'),
+                        /* ID*/
+                        secondId = secondAction.querySelector('a').getAttribute('id');
+
+
+                overflowList.setAttribute('data-role', 'actions-overflow-list');
+
+                // Hide the overflow
+                for (var x = k; x < i; x++) {
+                    var li = document.createElement('li'),
+                        a_id = actionButtons[x].querySelector('a').getAttribute('id'),
+                        lbl = actionButtons[x].querySelector('span').innerHTML,
+                        icon = actionButtons[x].querySelector('img').getAttribute('src');
+
+                    li.innerHTML = lbl;
+                    li.setAttribute('id', a_id);
+
+                    li.style.backgroundImage = 'url( ' + icon + ' )';
+                    overflowList.appendChild(li);
+
+                    li.onclick = function (e) {
+                        overflowList.classList.toggle('opened');
+                        self._overlay.classList.toggle('active');
+                        e.preventDefault();
+                    };
+                }
+
+                // Add the action overflow button
+                overflowButton.setAttribute('data-role', 'actions-overflow-icon');
+
+                //firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
+                firstButton.setAttribute('id', firstId);
+                document.styleSheets[0].addRule('#'+ firstId + ':after','background-image: url("' + firstIcon + '");');
+
+                newActionsBarWrapper.appendChild(firstButton);
+                secondButton.setAttribute('id', secondId);
+                document.styleSheets[0].addRule('#'+ secondId + ':after','background-image: url("' + secondIcon + '");');
+                newActionsBarWrapper.appendChild(secondButton);
+                newActionsBarWrapper.appendChild(overflowButton);
+                newActionsBarWrapper.appendChild(overflowList);
+
+                self = this;
+                overflowButton.onclick = function (e) {
+                    overflowList.classList.toggle('opened');
+                    self._overlay.classList.toggle('active');
+                    e.preventDefault();
+                };
+            } else {
+
+                for (var y = 0; y < i; y++) {
+                    var actionButton = document.createElement('button'),
+                        actionButton_lbl = actionButtons[y].querySelector('span').innerHTML,
+                        actionButton_icon = actionButtons[y].querySelector('img').getAttribute('src'),
+                        actionButton_id = actionButtons[y].querySelector('a').getAttribute('id');
+
+                    actionButton.setAttribute('id', actionButton_id);
+                    document.styleSheets[0].addRule('#'+ actionButton_id + ':after','background-image: url("' + actionButton_icon + '");');
+                    newActionsBarWrapper.appendChild(actionButton);
+                }
+            }
+
+            newActionsBar.appendChild(newActionsBarWrapper);
+        },
+
         /**
          * Required call that initializes the UbuntuUI object
          * @method {} init
@@ -321,9 +434,7 @@ var UbuntuUI = (function () {
         init: function () {
             this.__setupTabs(document);
             this.__setupPage(document);
-            if (typeof ActionBar != 'undefined' && ActionBar ) {
-                this.__setupActionsBar(document);
-            }
+            this.__setupActionsBar(document);
         },
 
         /**

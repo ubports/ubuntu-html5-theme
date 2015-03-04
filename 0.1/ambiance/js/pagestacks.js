@@ -175,11 +175,7 @@ var Pagestack = (function () {
             children.forEach(function(element) {
                 var pageHelper = new Page();
                 if (pageHelper.isPage(element)) {
-                    el.style.display = visibility;
-                    // treat footers separately
-                    var footer = el.querySelector('footer');
-                    if (footer)
-                        footer.style.display = visibility;
+                    element.style.display = visibility;
                 }
             });
         },
@@ -196,6 +192,16 @@ var Pagestack = (function () {
          */
         __dispatchPageChanged: function (page) {
             this._backbtn.disabled = (this.depth() ==  1);
+
+            [].forEach.call( document.querySelectorAll('[data-role="actions-wrapper"]'), function(el) {
+                el.style.display = 'none';
+            });
+
+            var pageActions = document.getElementById("actions_" + page);
+            if (pageActions !== null) {
+                pageActions.style.display = 'block';
+            }
+
             var event = document.createEvent('Event');
             event.initEvent('pagechanged',true,true);
             event.page = page;
