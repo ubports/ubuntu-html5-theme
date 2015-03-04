@@ -58,9 +58,7 @@ var Page = function (id) {
     this.onActivatedCallbacks = [];
 
     this._header = document.querySelector('div[data-role="mainview"] header');
-    this._tabtitle = this._header.querySelector('[data-role="tabtitle"]');
-    this._backbtn = this._header.querySelector('[data-role="back-btn"]');
-
+    this._tabTitle = this._header.querySelector('[data-role="tabtitle"]');
     this.__setup();
 };
 Page.PAGE_ACTIVATED_EVENT = 'ubuntu-html5-on-page-activated';
@@ -178,7 +176,7 @@ Page.prototype = {
         } catch (e) {}
 
         title = title || DEFAULT_TITLE;
-        this._tabtitle.textContent= title;
+        this._tabTitle.textContent= title;
     },
 
     /**
@@ -192,14 +190,6 @@ Page.prototype = {
             element.getAttribute('data-role') === 'page';
     },
 
-
-    /**
-     * @private
-     */
-    isFirst_Page: function (element) {
-        return element.parentNode.querySelector(':first-child') ==  element;
-    },
-
     /**
      * @private
      */
@@ -210,8 +200,6 @@ Page.prototype = {
         if (!this.isPage(page)) {
             return;
         }
-
-        this._backbtn.disabled = this.isFirst_Page(page);
         page.style.display = displayStyle;
     },
 
