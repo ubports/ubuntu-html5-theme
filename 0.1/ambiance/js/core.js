@@ -209,9 +209,7 @@ var UbuntuUI = (function () {
         init: function () {
             this.__setupTabs(document);
             this.__setupPage(document);
-            if (typeof ActionBar != 'undefined' && ActionBar ) {
-                this.__setupActionsBar(document);
-            }
+            this.__setupActionsBar(document);
         },
 
         /**
