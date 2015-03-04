@@ -167,7 +167,7 @@ var Tabs = (function () {
             var backbtn = document.createElement('button');
             backbtn.setAttribute('data-role', 'back-btn');
             backbtn.setAttribute('id', PAGESTACK_BACK_ID + '-' + Math.floor(Math.random()));
-            backbtn.style.display = 'none';
+            backbtn.disabled = true;
 
             if(this._tabs.childElementCount > 1) {
                 this._tabsbtn = document.createElement('button');
@@ -245,6 +245,7 @@ var Tabs = (function () {
          * @private
          */
         __dispatchTabChangedEvent: function (tabId) {
+
             this._evt = document.createEvent('Event');
             this._evt.initEvent('tabchanged', true, true);
             this._evt.infos = {

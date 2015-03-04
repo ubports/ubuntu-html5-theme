@@ -86,9 +86,10 @@ var Pagestack = (function () {
         }
     };
 
-    function Pagestack(pagestack) {
+    function Pagestack(pageStack) {
         this._pages = [];
-        this._pagestack = pagestack;
+        this._pageStack = pageStack;
+        this._backBtn = document.querySelector('[data-role="back-btn"]');
     };
 
     Pagestack.prototype = {
@@ -161,7 +162,7 @@ var Pagestack = (function () {
         },
 
         onPageChanged : function(callback){
-            this._pagestack.addEventListener("pagechanged", callback);
+            this._pageStack.addEventListener("pagechanged", callback);
         },
 
         /**
@@ -170,15 +171,11 @@ var Pagestack = (function () {
         __setAllPagesVisibility: function (visible) {
             var visibility = visible ? "block" : "none";
 
-            var children = [].slice.call(this._pagestack.children);
+            var children = [].slice.call(this._pageStack.children);
             children.forEach(function(element) {
                 var pageHelper = new Page();
                 if (pageHelper.isPage(element)) {
-                    el.style.display = visibility;
-                    // treat footers separately
-                    var footer = el.querySelector('footer');
-                    if (footer)
-                        footer.style.display = visibility;
+                    element.style.display = visibility;
                 }
             });
         },
@@ -194,10 +191,21 @@ var Pagestack = (function () {
          * @private
          */
         __dispatchPageChanged: function (page) {
+            this._backBtn.disabled = (this.depth() ==  1);
+
+            [].forEach.call( document.querySelectorAll('[data-role="actions-wrapper"]'), function(el) {
+                el.style.display = 'none';
+            });
+
+            var pageActions = document.getElementById("actions_" + page);
+            if (pageActions !== null) {
+                pageActions.style.display = 'block';
+            }
+
             var event = document.createEvent('Event');
             event.initEvent('pagechanged',true,true);
             event.page = page;
-            this._pagestack.dispatchEvent(event);
+            this._pageStack.dispatchEvent(event);
         },
     };
 
