@@ -89,7 +89,7 @@ var Pagestack = (function () {
     function Pagestack(pagestack) {
         this._pages = [];
         this._pagestack = pagestack;
-        this._backbtn = document.querySelector('[data-role="back-btn"]');
+        this._backBtn = document.querySelector('[data-role="back-btn"]');
     };
 
     Pagestack.prototype = {
@@ -191,7 +191,7 @@ var Pagestack = (function () {
          * @private
          */
         __dispatchPageChanged: function (page) {
-            this._backbtn.disabled = (this.depth() ==  1);
+            this._backBtn.disabled = (this.depth() ==  1);
 
             [].forEach.call( document.querySelectorAll('[data-role="actions-wrapper"]'), function(el) {
                 el.style.display = 'none';

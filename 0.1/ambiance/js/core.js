@@ -38,16 +38,16 @@ Note: The UbuntuUI object is "UI" in all API doc examples.
         [...]
       };
  */
-var UbuntuUI = (function () {
+var UbuntuUI = (function() {
 
     PAGESTACK_BACK_ID = 'ubuntu-pagestack-back';
 
     function __hasPageStack(document) {
-        return document.querySelectorAll("[data-role='pagestack']").length  >= 1;
+        return document.querySelectorAll("[data-role='pagestack']").length >= 1;
     };
 
     function __hasTabs(document) {
-         return document.querySelectorAll("[data-role='tabs']").length  >= 1;
+        return document.querySelectorAll("[data-role='tabs']").length >= 1;
     };
 
     function __createBackButtonListItem() {
@@ -62,9 +62,9 @@ var UbuntuUI = (function () {
         var U = this;
         U.isTouch = "ontouchstart" in window;
         U.touchEvents = {
-            touchStart: ['touchstart','mousedown'],
-            touchMove: ['touchmove','mousemove'],
-            touchEnd: ['touchend','mouseup'],
+            touchStart: ['touchstart', 'mousedown'],
+            touchMove: ['touchmove', 'mousemove'],
+            touchEnd: ['touchend', 'mouseup'],
             touchLeave: ['mouseleave'],
         };
 
@@ -76,7 +76,7 @@ var UbuntuUI = (function () {
         this._content.style.paddingTop = this._headerHeight + "px";
 
         var self = this;
-        window.onscroll = function(event){
+        window.onscroll = function(event) {
             var scrollTop = window.pageYOffset;
             var y = Math.min(self._headerHeight, Math.max(0, (self._y + scrollTop - self._prevScrollTop)));
 
@@ -94,7 +94,7 @@ var UbuntuUI = (function () {
     };
 
     UbuntuUI.prototype = {
-        __setupPageStack: function (d) {
+        __setupPageStack: function(d) {
 
             var header = d.querySelector("[data-role='header']");
 
@@ -108,8 +108,8 @@ var UbuntuUI = (function () {
             header.insertBefore(backBtn, header.firstChild);
 
             var self = this;
-            backBtn.onclick = function (e) {
-                if (self._pageStack.depth() > 1){
+            backBtn.onclick = function(e) {
+                if (self._pageStack.depth() > 1) {
                     self._pageStack.pop();
                 }
                 e.preventDefault();
@@ -119,9 +119,6 @@ var UbuntuUI = (function () {
             this._overlay = document.createElement('div');
             this._overlay.setAttribute('data-role', 'overlay');
             this._content.appendChild(this._overlay);
-
-            // TODO validate no more than one page stack etc.
-            // d.querySelectorAll("[data-role='pagestack']")
 
             // FIXME: support multiple page stack & complex docs?
             var pagestacks = d.querySelectorAll("[data-role='pagestack']");
@@ -152,7 +149,7 @@ var UbuntuUI = (function () {
             s.webkitTransform = s.transform = 'translate3d(0, ' + y + 'px, 0)';
         },
 
-        __setupPage: function (document) {
+        __setupPage: function(document) {
             if (this._pageStack != null)
                 return;
             if (__hasPageStack(document)) {
@@ -189,7 +186,7 @@ var UbuntuUI = (function () {
             }
         },
 
-        __setupTabs: function (document) {
+        __setupTabs: function(document) {
             if (this._tabs != null)
                 return;
             if (__hasTabs(document)) {
@@ -198,7 +195,7 @@ var UbuntuUI = (function () {
                     if (apptabsElements.length == 0)
                         return;
                     this._tabs = new Tabs(apptabsElements[0]);
-                    this._tabs.onTabChanged(function (e) {
+                    this._tabs.onTabChanged(function(e) {
                         if (!e || !e.infos)
                             return;
                         if (e.infos.tabId) {
@@ -206,11 +203,11 @@ var UbuntuUI = (function () {
                         }
                     }.bind(this));
                 }
-             }
+            }
         },
 
 
-        __setupTabAction: function (oldFooter, parent) {
+        __setupTabAction: function(oldFooter, parent) {
             this._oldFooter = oldFooter;
             this._oldFooterParent = parent;
 
@@ -230,10 +227,10 @@ var UbuntuUI = (function () {
             newActionsBarWrapper.setAttribute("id", "actions_" + this._oldFooterParent.id);
 
             if (actionButtons.length > 2) {
-                // Maintain the first then replace the rest with an action overflow
+                // Maintain the first item then replace the rest with an action overflow
                 var firstAction = actionButtons[0],
                     overflowList = document.createElement('ul'),
-                    /* Actions Button */
+                    /* Action Button */
                     firstButton = document.createElement('button'),
                     overflowButton = document.createElement('button'),
                     /* Icon */
@@ -241,21 +238,21 @@ var UbuntuUI = (function () {
                     /* ID*/
                     firstId = firstAction.querySelector('a').getAttribute('id');
 
-                var k =1;
+                var k = 1;
 
-                if (this._tabs != 'undefined' && this._tabs ) {
+                if (this._tabs != 'undefined' && this._tabs) {
                     if (this._tabs._tabsitems.length == 1) {
                         k = 2;
                         this._tabs._tabtitle.style.width = "calc(100% - 155px)";
 
-                        // Maintain the second
+                        // Maintain the second item
                         var secondAction = actionButtons[1],
-                        /* Actions Button */
-                        secondButton = document.createElement('button'),
-                        /* Icon */
-                        secondIcon = secondAction.querySelector('img').getAttribute('src'),
-                        /* ID*/
-                        secondId = secondAction.querySelector('a').getAttribute('id');
+                            /* Action Button */
+                            secondButton = document.createElement('button'),
+                            /* Icon */
+                            secondIcon = secondAction.querySelector('img').getAttribute('src'),
+                            /* ID*/
+                            secondId = secondAction.querySelector('a').getAttribute('id');
                     }
                 }
 
@@ -274,7 +271,7 @@ var UbuntuUI = (function () {
                     li.style.backgroundImage = 'url( ' + icon + ' )';
                     overflowList.appendChild(li);
 
-                    li.onclick = function (e) {
+                    li.onclick = function(e) {
                         overflowList.classList.toggle('opened');
                         self._overlay.classList.toggle('active');
                         e.preventDefault();
@@ -286,13 +283,13 @@ var UbuntuUI = (function () {
 
                 //firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
                 firstButton.setAttribute('id', firstId);
-                document.styleSheets[0].addRule('#'+ firstId + ':after','background-image: url("' + firstIcon + '");');
+                document.styleSheets[0].addRule('#' + firstId + ':after', 'background-image: url("' + firstIcon + '");');
 
                 newActionsBarWrapper.appendChild(firstButton);
-                if (this._tabs != 'undefined' && this._tabs ) {
+                if (this._tabs != 'undefined' && this._tabs) {
                     if (this._tabs._tabsitems.length == 1) {
                         secondButton.setAttribute('id', secondId);
-                        document.styleSheets[0].addRule('#'+ secondId + ':after','background-image: url("' + secondIcon + '");');
+                        document.styleSheets[0].addRule('#' + secondId + ':after', 'background-image: url("' + secondIcon + '");');
                         newActionsBarWrapper.appendChild(secondButton);
                     }
                 }
@@ -300,7 +297,7 @@ var UbuntuUI = (function () {
                 newActionsBarWrapper.appendChild(overflowList);
 
                 self = this;
-                overflowButton.onclick = function (e) {
+                overflowButton.onclick = function(e) {
                     overflowList.classList.toggle('opened');
                     self._overlay.classList.toggle('active');
                     self._tabs._tabs.classList.remove('opened');
@@ -315,7 +312,7 @@ var UbuntuUI = (function () {
                         actionButton_id = actionButtons[y].querySelector('a').getAttribute('id');
 
                     actionButton.setAttribute('id', actionButton_id);
-                    document.styleSheets[0].addRule('#'+ actionButton_id + ':after','background-image: url("' + actionButton_icon + '");');
+                    document.styleSheets[0].addRule('#' + actionButton_id + ':after', 'background-image: url("' + actionButton_icon + '");');
                     newActionsBarWrapper.appendChild(actionButton);
                 }
             }
@@ -324,10 +321,9 @@ var UbuntuUI = (function () {
         },
 
 
-        __setupPageAction: function (oldFooter, parent) {
+        __setupPageAction: function(oldFooter, parent) {
             this._oldFooter = oldFooter;
             this._oldFooterParent = parent;
-
             this._overlay = document.querySelector('[data-role="overlay"]');
 
             var newActionsBar = document.querySelector('[data-role="actions"]');
@@ -339,6 +335,7 @@ var UbuntuUI = (function () {
                 actions = actionBar.querySelector('ul'),
                 actionButtons = actionBar.querySelectorAll('ul li'),
                 i = actionButtons.length;
+
             newActionsBarWrapper = document.createElement('div');
             newActionsBarWrapper.setAttribute("data-role", "actions-wrapper");
             newActionsBarWrapper.setAttribute("id", "actions_" + this._oldFooterParent.id);
@@ -353,20 +350,19 @@ var UbuntuUI = (function () {
                     /* Icon */
                     firstIcon = firstAction.querySelector('img').getAttribute('src'),
                     /* ID*/
-                    firstId = firstAction.querySelector('a').getAttribute('id');
+                    firstId = firstAction.querySelector('a').getAttribute('id'),
+                    k = 2;
 
-                var k = 2;
-                        this._tabTitle.style.width = "calc(100% - 155px)";
+                this._tabTitle.style.width = "calc(100% - 155px)";
 
-                        // Maintain the second
-                        var secondAction = actionButtons[1],
-                        /* Actions Button */
-                        secondButton = document.createElement('button'),
-                        /* Icon */
-                        secondIcon = secondAction.querySelector('img').getAttribute('src'),
-                        /* ID*/
-                        secondId = secondAction.querySelector('a').getAttribute('id');
-
+                // Maintain the second item
+                var secondAction = actionButtons[1],
+                    /* Action Button */
+                    secondButton = document.createElement('button'),
+                    /* Icon */
+                    secondIcon = secondAction.querySelector('img').getAttribute('src'),
+                    /* ID*/
+                    secondId = secondAction.querySelector('a').getAttribute('id');
 
                 overflowList.setAttribute('data-role', 'actions-overflow-list');
 
@@ -383,7 +379,7 @@ var UbuntuUI = (function () {
                     li.style.backgroundImage = 'url( ' + icon + ' )';
                     overflowList.appendChild(li);
 
-                    li.onclick = function (e) {
+                    li.onclick = function(e) {
                         overflowList.classList.toggle('opened');
                         self._overlay.classList.toggle('active');
                         e.preventDefault();
@@ -393,19 +389,18 @@ var UbuntuUI = (function () {
                 // Add the action overflow button
                 overflowButton.setAttribute('data-role', 'actions-overflow-icon');
 
-                //firstButton.style.backgroundImage = 'url( ' + firstIcon + ' )';
                 firstButton.setAttribute('id', firstId);
-                document.styleSheets[0].addRule('#'+ firstId + ':after','background-image: url("' + firstIcon + '");');
+                document.styleSheets[0].addRule('#' + firstId + ':after', 'background-image: url("' + firstIcon + '");');
 
                 newActionsBarWrapper.appendChild(firstButton);
                 secondButton.setAttribute('id', secondId);
-                document.styleSheets[0].addRule('#'+ secondId + ':after','background-image: url("' + secondIcon + '");');
+                document.styleSheets[0].addRule('#' + secondId + ':after', 'background-image: url("' + secondIcon + '");');
                 newActionsBarWrapper.appendChild(secondButton);
                 newActionsBarWrapper.appendChild(overflowButton);
                 newActionsBarWrapper.appendChild(overflowList);
 
                 self = this;
-                overflowButton.onclick = function (e) {
+                overflowButton.onclick = function(e) {
                     overflowList.classList.toggle('opened');
                     self._overlay.classList.toggle('active');
                     e.preventDefault();
@@ -419,7 +414,7 @@ var UbuntuUI = (function () {
                         actionButton_id = actionButtons[y].querySelector('a').getAttribute('id');
 
                     actionButton.setAttribute('id', actionButton_id);
-                    document.styleSheets[0].addRule('#'+ actionButton_id + ':after','background-image: url("' + actionButton_icon + '");');
+                    document.styleSheets[0].addRule('#' + actionButton_id + ':after', 'background-image: url("' + actionButton_icon + '");');
                     newActionsBarWrapper.appendChild(actionButton);
                 }
             }
@@ -431,7 +426,7 @@ var UbuntuUI = (function () {
          * Required call that initializes the UbuntuUI object
          * @method {} init
          */
-        init: function () {
+        init: function() {
             this.__setupTabs(document);
             this.__setupPage(document);
             this.__setupActionsBar(document);
@@ -443,11 +438,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Page} - The Page with the specified id
          */
-        page: function (id) {
-            if (typeof Page != 'undefined' && Page ) {
+        page: function(id) {
+            if (typeof Page != 'undefined' && Page) {
                 return new Page(id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Page element. You might be missing the "page.js" Page definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -458,11 +452,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Tab} - The Tab with the specified id
          */
-        tab: function (id) {
-            if (typeof Tab != 'undefined' && Tab ) {
+        tab: function(id) {
+            if (typeof Tab != 'undefined' && Tab) {
                 return new Tab(id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Tab element. You might be missing the "tab.js" Tab definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -473,11 +466,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Shape} - The Shape with the specified id
          */
-        shape: function (id) {
-            if (typeof Shape != 'undefined' && Shape ) {
+        shape: function(id) {
+            if (typeof Shape != 'undefined' && Shape) {
                 return new Shape(id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Shape element. You might be missing the "shape.js" Shape definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -488,11 +480,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Button} - The Button with the specified id
          */
-        button: function (id) {
+        button: function(id) {
             if (typeof Button != 'undefined' && Button) {
                 return new Button(id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Button element. You might be missing the "button.js" Button definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -503,7 +494,7 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Progress} - The Progress with the specified id
          */
-        progress: function (id) {
+        progress: function(id) {
             if (typeof Progress != 'undefined' && Progress) {
                 return new Progress(id);
             }
@@ -515,11 +506,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Dialog} - The Dialog with the specified id
          */
-        dialog: function (id) {
+        dialog: function(id) {
             if (typeof Dialog != 'undefined' && Dialog) {
                 return new Dialog(id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Dialog element. You might be missing the "dialog.js" Dialog definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -531,11 +521,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Popover} - The Popover with the specified id
          */
-        popover: function (elem, id) {
+        popover: function(elem, id) {
             if (typeof Popover != 'undefined' && Popover) {
                 return new Popover(elem, id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Popover element. You might be missing the "popover.js" Popover definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -546,11 +535,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Header} - The Header with the specified id
          */
-        header: function (id) {
+        header: function(id) {
             if (typeof Header != 'undefined' && Header) {
                 return new Header(id);
-            }
-            else {
+            } else {
                 console.error('Could not find the Header element. You might be missing the "header.js" Header definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -561,11 +549,10 @@ var UbuntuUI = (function () {
          * @param {ID} id - The element's id attribute
          * @return {Toolbar} - The Toolbar with the specified id
          */
-        toolbar: function (id) {
+        toolbar: function(id) {
             if (typeof Toolbar != 'undefined' && Toolbar) {
                 return new Toolbar(id, this.__getTabInfosDelegate());
-            }
-            else {
+            } else {
                 console.error('Could not find the Toolbar element. You might be missing the "toolbar.js" Toolbar definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -576,11 +563,10 @@ var UbuntuUI = (function () {
          * @param {Selector} selector - A selector that JavaScript querySelector method understands
          * @return {List}
          */
-        list: function (selector) {
+        list: function(selector) {
             if (typeof List != 'undefined' && List) {
                 return new List(selector);
-            }
-            else {
+            } else {
                 console.error('Could not find the List element. You might be missing the "list.js" List definition script. Please add a <script> declaration to include it.');
             }
         },
@@ -593,11 +579,10 @@ var UbuntuUI = (function () {
          * @param {Boolean} multiSelection - If multiple choice selection is enabled the list is always expanded.
          * @return {OptionSelector}
          */
-        optionselector: function (id, expanded, multiSelection) {
+        optionselector: function(id, expanded, multiSelection) {
             if (typeof OptionSelector != 'undefined' && OptionSelector) {
                 return new OptionSelector(id, expanded, multiSelection);
-            }
-            else {
+            } else {
                 console.error('Could not find the OptionSelector element. You might be missing the "option-selector.js" OptionSelector definition script. Please add a <script> declaration to include it.');
             }
         },
