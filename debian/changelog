@@ -1,3 +1,20 @@
+ubuntu-html5-theme (0.1.2+15.04.20150304-0ubuntu1) vivid; urgency=medium
+
+  [ Alexandre Abreu ]
+  * revert revision 196: push to trunk instead of usual landing
+
+  [ CI Train Bot ]
+  * New rebuild forced.
+
+  [ David Barth ]
+  * Fixes Uncaught ReferenceError: ActionBar is not defined
+
+  [ daker ]
+  * Removed ActionsBar deps Fixed the back button in PageStack Fixed
+    PageStack actions (LP: #1427729, #1427909)
+
+ -- CI Train Bot <ci-train-bot@canonical.com>  Wed, 04 Mar 2015 21:32:05 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20150219-0ubuntu1) vivid; urgency=medium
 
   [ daker ]
