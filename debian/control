@@ -82,7 +82,6 @@ Package: ubuntu-html5-container
 Architecture: any
 Multi-Arch: foreign
 Depends: liboxideqt-qmlplugin (>= 1.3.5),
-         qml-module-qtwebkit,
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,

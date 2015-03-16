@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.0
-import QtWebKit 3.0
+import com.canonical.Oxide 1.0
 
 Item {
      width: 800
