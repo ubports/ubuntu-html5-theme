@@ -1,0 +1,74 @@
+#! /bin/sh
+
+OUTDIR="$(pwd)"
+WORKDIR=$(mktemp -d)
+
+cleanup()
+{
+	rm -rf $WORKDIR
+	rm -f .ubuntu-html5-theme.releases-list
+}
+
+trap cleanup EXIT INT QUIT ILL KILL SEGV TERM
+
+
+list_releases() {
+	wget -q -O ./.ubuntu-html5-theme.releases-list https://code.launchpad.net/ubuntu-html5-theme
+	cat .ubuntu-html5-theme.releases-list | \
+		grep lp:ubuntu | \
+		grep ~ubuntu-html5-theme-devs | \
+		awk '{match($0, /~ubuntu-html5-theme-devs\/ubuntu-html5-theme\/([^\"]*)/, releases); print releases[1]}'
+}
+
+download() {
+	rel=$1
+	echo "Downloading release $rel..."
+	bzr branch https://code.launchpad.net/~ubuntu-html5-theme-devs/ubuntu-html5-theme/$1 $WORKDIR/$rel
+        if [ "$?" -ne 0 ]; then
+		echo "Unable to download release $rel"
+		exit 1
+	fi
+}
+
+do_install_theme() {
+	if [ ! -d $OUTDIR/www ]; then
+		echo "No 'www' folder found in the current directory"
+		echo "Exiting..."
+		exit 1
+	fi
+	if [ -d $OUTDIR/ambiance ]; then
+		echo "There is already an 'ambiance' folder in the project directory"
+		echo "Exiting..."
+		exit 1
+	fi
+	download $1
+	mv $WORKDIR/$1/0.1/ambiance $OUTDIR/www
+}
+
+do_convert_project() {
+	if [ ! -e $OUTDIR/www/index.html ]; then
+		echo "No index.html found in the 'www' folder"
+		echo "Exiting..."
+		exit 1
+	fi
+	sed -i 's:/usr/share/ubuntu-html5-ui-toolkit/0.1/::' $OUTDIR/www/index.html
+}
+
+case "$1" in
+install)
+	do_install_theme $2
+	;;
+convert)
+	do_convert_project
+	;;
+list)
+	list_releases
+	;;
+update)
+	echo "Not implemented..."
+	exit 1
+	;;
+*)
+	echo "Usage: $0 {list|install <release>|convert|update}"
+	exit 1
+esac
