@@ -2,15 +2,6 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ubuntu-html5-theme
 Source: https://launchpad.net/ubuntu-html5-theme
 
-Files: 0.1/ambiance/img/*
-       0.1/ambiance/js/docsbuild/
-Copyright: 2013 Canonical Ltd.
-License: CC-BY-SA 3.0
- This work is licensed under the Creative Commons Attribution-ShareAlike 3.0
- Unported License. To view a copy of this license, visit
- http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative
- Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
 Files: 0.1/ambiance/js/docsbuild/assets/vendor/prettify/prettify-min.js
        0.1/ambiance/js/docsbuild/assets/js/yui-prettify.js
        0.1/ambiance/js/docsbuild/assets/js/tabs.js
@@ -42,6 +33,15 @@ License: BSD (3 clause)
  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Files: 0.1/ambiance/img/*
+       0.1/ambiance/js/docsbuild/*
+Copyright: 2013 Canonical Ltd.
+License: CC-BY-SA 3.0
+ This work is licensed under the Creative Commons Attribution-ShareAlike 3.0
+ Unported License. To view a copy of this license, visit
+ http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative
+ Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
 Files: *
 Copyright: 2013 Adnane Belmadiaf <daker@ubuntu.com>
