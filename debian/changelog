@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1.2+15.04.20150330-0ubuntu1) UNRELEASED; urgency=medium
+
+  [ Daniel Holbach ]
+  * Add ubuntu-html5-ui-toolkit-doc package, so we can more easily update
+    developer.ubuntu.com/api. Not all node dependencies for generating the
+    docs are packaged. To update the docs locally, run the ./update-docs
+    script in the top-level directory.
+
+ -- Daniel Holbach <daniel.holbach@ubuntu.com>  Mon, 30 Mar 2015 17:43:55 +0200
+
 ubuntu-html5-theme (0.1.2+15.04.20150304-0ubuntu1) vivid; urgency=medium
 
   [ Alexandre Abreu ]

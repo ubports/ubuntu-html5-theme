@@ -130,3 +130,13 @@ Depends: ubuntu-html5-ui-toolkit-autopilot,
          ${misc:Depends},
 Description: Transitional package for theme/ui-toolkit rename.
  This can be safely removed.
+
+Package: ubuntu-html5-ui-toolkit-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: Development documentation for the Ubuntu HTML5 UI toolkit
+ This package contains the API docs for Ubuntu HTML5 UI toolkit. This should
+ be the easiest way to write an app for Ubuntu, if you are a web developer:
+ Implement Ubuntu's native look and feel while having all the flexibility
+ you as a web developer want.
