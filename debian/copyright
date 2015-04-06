@@ -33,8 +33,13 @@ License: CC-BY-SA 3.0
  Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
 Files: 0.1/ambiance/js/docsbuild/assets/vendor/prettify/prettify-min.js
+       0.1/ambiance/js/docsbuild/assets/js/api-search.js
+       0.1/ambiance/js/docsbuild/assets/js/api-filter.js
+       0.1/ambiance/js/docsbuild/assets/js/api-list.js
        0.1/ambiance/js/docsbuild/assets/js/yui-prettify.js
        0.1/ambiance/js/docsbuild/assets/js/tabs.js
+       0.1/ambiance/js/docsbuild/assets/js/apidocs.js
+       0.1/ambiance/js/docsbuild/api.js       
 Copyright: 2011 Yahoo! Inc.
 License: BSD (3 clause)
  Redistribution and use in source and binary forms, with or without
