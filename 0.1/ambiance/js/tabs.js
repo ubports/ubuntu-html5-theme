@@ -227,7 +227,6 @@ var Tabs = (function () {
             if (selectedTab == null)
                 return;
             this.__doSelectTab(selectedTab);
-            console.log('on clicked')
             e.preventDefault();
         },
 

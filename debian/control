@@ -13,6 +13,7 @@ Build-Depends: cmake (>= 2.8.9),
                qtbase5-private-dev,
                qtdeclarative5-dev,
                qtdeclarative5-qtquick2-plugin,
+               qml-module-qttest | qtdeclarative5-test-plugin,
                qtdeclarative5-ubuntu-ui-toolkit-plugin,
 Standards-Version: 3.9.5
 # if you don't have have commit access to this branch but would like to upload
