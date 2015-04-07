@@ -1,4 +1,28 @@
+#!/usr/bin/python3
+#
+# Copyright 2015 Canonical Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/
 
+filenamess_to_fix = [
+    'docsbuild/assets/js/api-search.js',
+    'docsbuild/assets/js/apidocs.js',
+    'docsbuild/assets/js/api-filter.js',
+    'docsbuild/assets/js/api-list.js',
+    'docsbuild/api.js'
+]
+
+COPYRIGHT_HEADER = """
 /*
  * Copyright 2011 Yahoo! Inc.
  * All rights reserved.
@@ -26,32 +50,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-YUI.add("yuidoc-meta", function(Y) {
-   Y.YUIDoc = { meta: {
-    "classes": [
-        "UbuntuUI",
-        "UbuntuUI.Button",
-        "UbuntuUI.Dialog",
-        "UbuntuUI.Header",
-        "UbuntuUI.List",
-        "UbuntuUI.OptionSelector",
-        "UbuntuUI.Page",
-        "UbuntuUI.Pagestack",
-        "UbuntuUI.Popover",
-        "UbuntuUI.Progress",
-        "UbuntuUI.Shape",
-        "UbuntuUI.Tab",
-        "UbuntuUI.Tabs",
-        "UbuntuUI.Toolbar"
-    ],
-    "modules": [
-        "UbuntuUI"
-    ],
-    "allModules": [
-        {
-            "displayName": "UbuntuUI",
-            "name": "UbuntuUI"
-        }
-    ]
-} };
-});
+"""
+
+for filename in filenamess_to_fix:
+    content = ''
+    with open(filename, "r") as f:
+        content = COPYRIGHT_HEADER + f.read()
+    with open(filename, "w+") as f:
+        f.write(content)

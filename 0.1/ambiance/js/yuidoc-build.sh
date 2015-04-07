@@ -18,4 +18,4 @@
 
 ./docslib.py
 yuidoc -c yuidoc.json .
-
+./fix_copyright_header.py
