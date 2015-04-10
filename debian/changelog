@@ -1,3 +1,13 @@
+ubuntu-html5-theme (0.1.2+15.04.20150410-0ubuntu1) vivid; urgency=medium
+
+  [ Alexandre Abreu ]
+  * Remove QtWebkit support code (LP: #1362640)
+
+  [ CI Train Bot ]
+  * New rebuild forced.
+
+ -- CI Train Bot <ci-train-bot@canonical.com>  Fri, 10 Apr 2015 13:32:34 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20150409.1-0ubuntu1) vivid; urgency=medium
 
   [ Daniel Holbach ]
