@@ -37,12 +37,6 @@ MainView {
 
     /*!
       \preliminary
-      The property defines if oxide is to be used as the webengine backend.
-      */
-    property bool oxide: true
-
-    /*!
-      \preliminary
       The property holds the path to the filesystem location where the 'index.html'
       file can be found (root of the HTML5 application).
 

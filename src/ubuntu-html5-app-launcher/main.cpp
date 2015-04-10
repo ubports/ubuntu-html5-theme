@@ -219,10 +219,6 @@ int main(int argc, char *argv[])
     engine->rootContext()->setContextProperty("inspector", remoteInspectorEnabled);
     engine->rootContext()->setContextProperty("wwwFolder", wwwFolder.absoluteFilePath());
 
-    if (remoteInspectorEnabled) {
-        qputenv("QTWEBKIT_INSPECTOR_SERVER", remoteInspectorPort.toUtf8());
-    }
-
     view.setSource(QUrl::fromLocalFile(Webapp::Config::getContainerMainQmlPath()
                                           + "/main.qml"));
     if (view.status() != QQuickView::Ready)
