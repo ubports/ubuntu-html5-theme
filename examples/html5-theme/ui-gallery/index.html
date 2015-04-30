@@ -32,15 +32,25 @@
     <!-- Ubuntu UI javascript imports - Ambiance theme -->
     <script src="../../../0.1/ambiance/js/fast-buttons.js"></script>
     <script src="../../../0.1/ambiance/js/core.js"></script>
+    <script src="../../../0.1/ambiance/js/header.js"></script>
+    <script src="../../../0.1/ambiance/js/button.js"></script>
+    <script src="../../../0.1/ambiance/js/dialogs.js"></script>
+    <script src="../../../0.1/ambiance/js/list.js"></script>
     <script src="../../../0.1/ambiance/js/page.js"></script>
-    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+    <script src="../../../0.1/ambiance/js/progress.js"></script>
+    <script src="../../../0.1/ambiance/js/shape.js"></script>
+    <script src="../../../0.1/ambiance/js/popover.js"></script>
     <script src="../../../0.1/ambiance/js/pagestacks.js"></script>
+    <script src="../../../0.1/ambiance/js/actionsbar.js"></script>
+    <script src="../../../0.1/ambiance/js/tab.js"></script>
+    <script src="../../../0.1/ambiance/js/tabs.js"></script>
+    <script src="../../../0.1/ambiance/js/toolbars.js"></script>
 
     <script>
-        var UI = new UbuntuUI();
-        window.onload = function() {
-            UI.init();
-        };
+    window.onload = function() {
+	    var UI = new UbuntuUI();
+	    UI.init();
+    }
     </script>
 
 </head>
@@ -50,13 +60,17 @@
 
         <header data-role="header">
             <ul data-role="tabs">
-                <li data-role="tabitem" data-page="main">Ubuntu HTML5 UI Toolkit</li>
+              <li data-role="tabitem" data-page="main">
+		Ubuntu HTML5 UI Toolkit
+	      </li>
             </ul>
         </header>
 
         <div data-role="content">
-            <iframe src="widgets.html" frameborder="0" style="min-height: 600px; width: 300px; display: inline-block;" ></iframe>
-            <iframe src="../widgets/Typography.html" name="component" frameborder="0" style="min-height: 600px; width: calc(100% - 305px); display: inline-block;"></iframe>
+		<div data-role="tab" id="main">
+			<iframe src="widgets.html" frameborder="0" style="min-height: 600px; width: 300px; display: inline-block;" ></iframe>
+			<iframe src="../widgets/Typography.html" name="component" frameborder="0" style="min-height: 600px; width: calc(100% - 305px); display: inline-block;"></iframe>
+		</div>
         </div>
     </div>
 </body>
