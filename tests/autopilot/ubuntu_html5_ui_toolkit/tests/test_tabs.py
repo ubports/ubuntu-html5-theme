@@ -39,8 +39,5 @@ class UbuntuUIToolkitTabsTestCase(UbuntuHTML5TestCaseBase):
 
         self.assertThat(
             self.eval_expression_in_page_unsafe(
-                'var UI = new UbuntuUI(); '
-                'UI.init(); '
-                'return UI.tabs.selectedTabIndex;'),
-            Equals('1'))
-
+                'return document.getElementById("tab2").style.display;'),
+            Equals('block'))

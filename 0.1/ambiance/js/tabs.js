@@ -188,9 +188,6 @@ var Tabs = (function () {
             var tabtitle_value = document.createTextNode('Main');
             this._tabtitle.appendChild(tabtitle_value);
 
-            this._tabsactions = document.createElement('div');
-            this._tabsactions.setAttribute('data-role', 'actions');
-
             var tab = this._tabs.querySelector('[data-role="tabitem"]:first-child');
             /*tab.classList.remove('inactive');
             tab.classList.add('active');*/
@@ -208,7 +205,6 @@ var Tabs = (function () {
                 };
             } else { this._tabtitle.style.marginLeft = '16px'; }
             this._header.appendChild(this._tabtitle);
-            this._header.appendChild(this._tabsactions);
 
             var self = this;
             this._overlay.onclick = function (e) {
@@ -315,8 +311,11 @@ var Tabs = (function () {
         __toggleTabs: function () {
             this._tabs.classList.toggle('opened');
             this._overlay.classList.toggle('active');
-            if (this._tabsactions.querySelector('.opened') !== null)
-                this._tabsactions.querySelector('.opened').classList.remove('opened');
+
+            var tabsActions = document.querySelector('[data-role="actions"]');
+            if (tabsActions &&
+                tabsActions.querySelector('.opened') !== null)
+                tabsActions.querySelector('.opened').classList.remove('opened');
         },
 
         /**
@@ -325,8 +324,11 @@ var Tabs = (function () {
         __hideMenus: function () {
             this._tabs.classList.remove('opened');
             this._overlay.classList.remove('active');
-            if (this._tabsactions.querySelector('.opened') !== null)
-                this._tabsactions.querySelector('.opened').classList.remove('opened');
+            
+            var tabsActions = document.querySelector('[data-role="actions"]');
+            if (tabsActions &&
+                tabsActions.querySelector('.opened') !== null)
+                tabsActions.querySelector('.opened').classList.remove('opened');
         }
     };
 
