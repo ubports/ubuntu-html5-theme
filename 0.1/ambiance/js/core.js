@@ -71,6 +71,9 @@ var UbuntuUI = (function() {
         this._prevScrollTop = this._y = 0;
 
         this._header = document.querySelector('[data-role="header"]');
+        if ( ! this._header) {
+            return;
+        }
         this._content = document.querySelector('[data-role="content"]');
         this._headerHeight = this._header.offsetHeight + 17;
         this._content.style.paddingTop = this._headerHeight + "px";
@@ -133,11 +136,18 @@ var UbuntuUI = (function() {
                 this._pageStack.push(pages[0].getAttribute('id'));
             }
 
-            this._pageActions = d.createElement('div');
-            this._pageActions.setAttribute('data-role', 'actions');
+            this._pageActions = null;
 
             header.appendChild(this._tabTitle);
-            header.appendChild(this._pageActions);
+        },
+
+        __createPageActions: function() {
+            if ( ! this._pageActions) {
+                this._pageActions = document.createElement('div');
+                this._pageActions.setAttribute('data-role', 'actions');
+                var header = document.querySelector("[data-role='header']");
+                header.appendChild(this._pageActions);
+            }
         },
 
         __transformHeader: function(y) {
@@ -213,7 +223,11 @@ var UbuntuUI = (function() {
 
             this._overlay = document.querySelector('[data-role="overlay"]');
 
+            this.__createPageActions();
+
             var newActionsBar = document.querySelector('[data-role="actions"]');
+            if ( ! newActionsBar)
+                return;
 
             if (!this._oldFooter)
                 return;
@@ -239,20 +253,18 @@ var UbuntuUI = (function() {
                     firstId = firstAction.querySelector('a').getAttribute('id'),
                     k = 1;
 
-                if (this._tabs != 'undefined' && this._tabs) {
-                    if (this._tabs._tabsItems.length == 1) {
-                        k = 2;
-                        this._tabs._tabTitle.style.width = "calc(100% - 155px)";
+                if (this._tabs && this._tabs._tabsitems.length == 1) {
+                    k = 2;
+                    this._tabs._tabTitle.style.width = "calc(100% - 155px)";
 
-                        // Maintain the second item
-                        var secondAction = actionButtons[1],
-                            /* Action Button */
-                            secondButton = document.createElement('button'),
-                            /* Icon */
-                            secondIcon = secondAction.querySelector('img').getAttribute('src'),
-                            /* ID*/
-                            secondId = secondAction.querySelector('a').getAttribute('id');
-                    }
+                    // Maintain the second item
+                    var secondAction = actionButtons[1],
+                        /* Action Button */
+                        secondButton = document.createElement('button'),
+                        /* Icon */
+                        secondIcon = secondAction.querySelector('img').getAttribute('src'),
+                        /* ID*/
+                        secondId = secondAction.querySelector('a').getAttribute('id');
                 }
 
                 overflowList.setAttribute('data-role', 'actions-overflow-list');
@@ -286,7 +298,7 @@ var UbuntuUI = (function() {
 
                 newActionsBarWrapper.appendChild(firstButton);
                 if (this._tabs != 'undefined' && this._tabs) {
-                    if (this._tabs._tabsItems.length == 1) {
+                    if (this._tabs._tabsitems && this._tabs._tabsitems.length == 1) {
                         secondButton.setAttribute('id', secondId);
                         document.styleSheets[0].addRule('#' + secondId + ':after', 'background-image: url("' + secondIcon + '");');
                         newActionsBarWrapper.appendChild(secondButton);
@@ -325,7 +337,11 @@ var UbuntuUI = (function() {
             this._oldFooterParent = parent;
             this._overlay = document.querySelector('[data-role="overlay"]');
 
+            this.__createPageActions();
+            
             var newActionsBar = document.querySelector('[data-role="actions"]');
+            if (! newActionsBar)
+                return;
 
             if (!this._oldFooter)
                 return;
