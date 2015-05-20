@@ -1,3 +1,21 @@
+ubuntu-html5-theme (0.1.2+15.10.20150520-0ubuntu1) wily; urgency=medium
+
+  [ Alexandre Abreu ]
+  * Fix gallery & component showcase (LP: #1450614)
+  * Fix page actions; no need to create actions when none is defined
+    (LP: #1455622)
+  * Update debian/control to remove qt private package deps; Rely on Qt
+    5.4's new API (LP: #1387537)
+
+  [ CI Train Bot ]
+  * New rebuild forced.
+
+  [ David Barth ]
+  * Add a command line tool to maintain a theme installation in an html5
+    project (LP: #1451937)
+
+ -- CI Train Bot <ci-train-bot@canonical.com>  Wed, 20 May 2015 16:51:40 +0000
+
 ubuntu-html5-theme (0.1.2+15.04.20150410-0ubuntu1) vivid; urgency=medium
 
   [ Alexandre Abreu ]
