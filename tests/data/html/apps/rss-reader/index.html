@@ -55,23 +55,20 @@
     <div data-role="mainview">
 
         <header data-role="header">
-            <ul data-role="tabs">
-                <li data-role="tabitem" data-page="main">RSS Mobile Reader</li>
-                <li data-role="tabitem" data-page="results">RSS Feed</li>
-                <li data-role="tabitem" data-page="article">Article</li>
-            </ul>
         </header>
 
         <div data-role="content">
-            <div data-role="pagestack">
-                <div data-role="page" id="main">
+          
+          <div data-role="pagestack">
+            
+                <div data-role="page" id="main" data-title="RSS Mobile Reader">
                     <section data-role="list" id="yourfeeds"></section>
                     <footer data-role="footer" class="revealed">
                         <nav>
                             <ul>
                                 <li>
                                     <a href="#" id="addfeed">
-                                        <img src="../../../ambiance/img/back@18.png" alt="Tap me!" />
+                                        <img src="/usr/share/icons/suru/actions/scalable/note-new.svg" alt="Tap me!" />
                                         <span>Add feed</span>
                                     </a>
                                 </li>
@@ -80,11 +77,11 @@
                     </footer>
                 </div>
 
-                <div data-role="page" id="results">
+                <div data-role="page" id="results" data-title="Articles">
                     <section data-role="list" id="resultscontent"></section>
                 </div>
 
-                <div data-role="page" id="article">
+                <div data-role="page" id="article" data-title="Article">
                     <section id="articleinfo"></section>
                 </div>
             </div>
