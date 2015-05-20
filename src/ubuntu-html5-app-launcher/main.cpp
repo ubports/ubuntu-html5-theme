@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Canonical Ltd.
+ * Copyright 2013-2015 Canonical Ltd.
  *
  * This file is part of ubuntu-html5-ui-toolkit.
  *
@@ -28,11 +28,6 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
-#if QT_VERSION < QT_VERSION_CHECK(5, 3, 0)
-#include <QtQuick/private/qsgcontext_p.h>
-#else
-#include <QtGui/private/qopenglcontext_p.h>
-#endif
 
 
 namespace {
@@ -107,6 +102,9 @@ void usage()
 
 int main(int argc, char *argv[])
 {
+    // Enable compositing in oxide
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
     QGuiApplication app(argc, argv);
 
     if (!app.arguments().count())
@@ -196,17 +194,6 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName(appPkgName);
     }
     setUpQmlImportPathIfNecessary();
-
-    // Enable compositing in oxide
-    QOpenGLContext* glcontext = new QOpenGLContext();
-    glcontext->create();
-#if QT_VERSION < QT_VERSION_CHECK(5, 3, 0)
-    QSGContext::setSharedOpenGLContext(glcontext);
-#elif QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
-    QOpenGLContextPrivate::setGlobalShareContext(glcontext);
-#else
-    qt_gl_set_global_share_context(glcontext);
-#endif
 
     QQuickView view;
     QQmlEngine* engine = view.engine();

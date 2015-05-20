@@ -21,8 +21,6 @@ add_executable(${HTML5_LAUNCHER}
 )
 qt5_use_modules(${HTML5_LAUNCHER} Core Gui Widgets Quick)
 
-include_directories(${Qt5Quick_PRIVATE_INCLUDE_DIRS})
-
 # install qml files
 file(GLOB QML_FILES *.qml)
 install(FILES ${QML_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/ubuntu-html5-app-launcher/qml)
