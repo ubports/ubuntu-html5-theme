@@ -21,11 +21,11 @@ class UbuntuUIToolkitTabsTestCase(UbuntuHTML5TestCaseBase):
     def test_programaticTabSelectIndex(self):
         self.browse_to_test_html('test-tabs-in-app.html')
         self.assertThat(
-            self.eval_expression_in_page_unsafe(
+            lambda: self.eval_expression_in_page_unsafe(
                 'var UI = new UbuntuUI(); '
                 'UI.init(); UI.tabs.selectedTabIndex = 1; '
-                'return "ok";'),
-            Equals('ok'))
+                'return UI.tabs.selectedTabIndex;'),
+            Eventually(Equals('1')))
 
         self.assertThat(
             lambda: self.is_dom_node_visible('tab1'),

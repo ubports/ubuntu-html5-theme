@@ -20,10 +20,11 @@
  * <http://www.gnu.org/licenses/>
  */
 
-var UI = new UbuntuUI();
+var UI;
 
 $(document).ready(function () {
 
+    UI = new UbuntuUI()
     UI.init();
     UI.pagestack.push("main");
 
