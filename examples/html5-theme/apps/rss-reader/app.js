@@ -19,7 +19,7 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>
  */
-var UI = new UbuntuUI();
+var UI;
 
 document.addEventListener('deviceready', function () {
     console.log('device ready');
@@ -27,6 +27,7 @@ document.addEventListener('deviceready', function () {
 
 $(document).ready(function () {
 
+    UI = new UbuntuUI()
     UI.init();
     UI.pagestack.push("main");
 
