@@ -86,7 +86,8 @@ class UbuntuHTML5TestCaseBase(AutopilotTestCase):
         '/usr/share/ubuntu-html5-ui-toolkit/tests/tools/qml/webview.qml'
     BROWSER_QML_APP_LAUNCHER = "/usr/lib/{}/qt5/bin/qmlscene".format(
         subprocess.check_output(
-            ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip().decode('utf-8'))
+            ["dpkg-architecture", "-qDEB_HOST_MULTIARCH"]).strip().decode(
+                'utf-8'))
 
     # TODO: fix version
     LOCAL_HTML_EXAMPLES_PATH = os.path.abspath(

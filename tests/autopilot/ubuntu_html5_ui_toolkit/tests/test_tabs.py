@@ -36,4 +36,3 @@ class UbuntuUIToolkitTabsTestCase(UbuntuHTML5TestCaseBase):
         self.assertThat(
             lambda: self.is_dom_node_visible('tab3'),
             Eventually(Equals(False)))
-
