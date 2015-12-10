@@ -2042,9 +2042,16 @@ body {
   line-height: 1.3;
 }
 
+.checkbox {
+	width: 10px;
+	margin-left:-18px;
+}
+
 .medium-font {
   font-size: 14px;
   line-height: 1.3;
+  width: 100px;
+  display: inline-block;
 }
 
 .small-font {
@@ -2061,3 +2068,4 @@ body {
   font-size: 8px;
   line-height: 1.3;
 }
+
