@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
+ * BOXES SCALED BY A FACTOR OF 0.65
  */
 
 label:not([for])  {
@@ -27,6 +28,7 @@ label:not([for])  {
     height: 2.2rem;
     position: relative;
     background: none;
+    margin-top: 15px;
 
     input[type="checkbox"] {
         margin: 0;
@@ -35,6 +37,7 @@ label:not([for])  {
         top: 0;
         left: 0;
 
+
         & + span {
             @include box_shadow (inset 0 1px 1px rgba(0, 0, 0, 0.3));
             @include box_sizing (border-box);
@@ -42,8 +45,8 @@ label:not([for])  {
             left: 50%;
             top: 50%;
             margin: -1.1rem 0 0 -1.1rem;
-            width: 2rem;
-            height: 2rem;
+            width: 1.3rem;
+            height: 1.3rem;
             pointer-events: none;
             border-radius: 6px;
             background: rgba(0, 0, 0, 0.4);
@@ -55,7 +58,7 @@ label:not([for])  {
 
         &:checked + span {
             background: $ubuntu_orange url(../img/tick-white@30.png) no-repeat 0.3rem 0.3rem;
-            background-size: 75% 75%;
+            background-size: 48.75% 48.75%;
             background-position-y: 5px;
             -webkit-transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
             transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
@@ -68,7 +71,7 @@ label:not([for])  {
 
             &:checked + span {
                 background: rgba(221, 72, 20, 0.5) url(../img/tick-white@30.png) no-repeat 0.3rem 0.3rem!important;
-                background-size: 75% 75%!important;
+                background-size: 48.75% 48.75%!important;
             }
         }
     }

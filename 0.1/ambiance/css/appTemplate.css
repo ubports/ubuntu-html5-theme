@@ -672,7 +672,7 @@ textarea {
 }
 
 .textfield.clear:focus {
-  background: url(artwork/icon_clear@20.png) no-repeat 97% center white;
+  background: url(artwork/icon_clear@20.png) no-repeat 97% center #fff;
   background-size: 12%;
 }
 
@@ -785,7 +785,6 @@ progress.infinite:after {
   from {
     -webkit-transform: rotate(1deg);
   }
-
   to {
     -webkit-transform: rotate(360deg);
   }
@@ -794,11 +793,9 @@ progress.infinite:after {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
@@ -928,43 +925,33 @@ progress.infinite:after {
     0% {
       -webkit-transform: translate3d(0, 0, 0);
     }
-
     10% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     20% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     30% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     40% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     50% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     60% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     70% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     80% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     90% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     100% {
       -webkit-transform: translate3d(0, 0, 0);
     }
@@ -973,43 +960,33 @@ progress.infinite:after {
     0% {
       -webkit-transform: translate3d(0, 0, 0);
     }
-
     10% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     20% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     30% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     40% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     50% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     60% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     70% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     80% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     90% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     100% {
       -webkit-transform: translate3d(0, 0, 0);
     }
@@ -1056,7 +1033,7 @@ progress.infinite:after {
   background: #dd4814;
   border: 2px solid #dd4814;
   border-radius: 6px;
-  color: white;
+  color: #ffffff;
   font-family: "Ubuntu";
   font-size: 1rem;
   padding: 9px 25px;
@@ -1066,21 +1043,21 @@ progress.infinite:after {
 }
 [data-role="button"].positive {
   background: #38b44a;
-  color: white;
+  color: #ffffff;
   border-color: #38b44a;
 }
 [data-role="button"].information {
   background: #2ab7ec;
-  color: white;
+  color: #ffffff;
   border-color: #2ab7ec;
 }
 [data-role="button"].secondary {
-  background: white;
+  background: #ffffff;
   color: #888888;
 }
 [data-role="button"].negative {
   background: #929292;
-  color: white;
+  color: #ffffff;
   border-color: #929292;
 }
 
@@ -1205,6 +1182,7 @@ input[type=range]::-moz-range-thumb {
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
+ * BOXES SCALED BY A FACTOR OF 0.65
  */
 label:not([for]) {
   display: inline-block;
@@ -1213,6 +1191,7 @@ label:not([for]) {
   height: 2.2rem;
   position: relative;
   background: none;
+  margin-top: 15px;
 }
 label:not([for]) input[type="checkbox"] {
   margin: 0;
@@ -1230,8 +1209,8 @@ label:not([for]) input[type="checkbox"] + span {
   left: 50%;
   top: 50%;
   margin: -1.1rem 0 0 -1.1rem;
-  width: 2rem;
-  height: 2rem;
+  width: 1.3rem;
+  height: 1.3rem;
   pointer-events: none;
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.4);
@@ -1241,7 +1220,7 @@ label:not([for]) input[type="checkbox"] + span {
 }
 label:not([for]) input[type="checkbox"]:checked + span {
   background: #dd4814 url(../img/tick-white@30.png) no-repeat 0.3rem 0.3rem;
-  background-size: 75% 75%;
+  background-size: 48.75% 48.75%;
   background-position-y: 5px;
   -webkit-transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
   transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
@@ -1251,7 +1230,7 @@ label:not([for]) input[type="checkbox"]:disabled + span {
 }
 label:not([for]) input[type="checkbox"]:disabled:checked + span {
   background: rgba(221, 72, 20, 0.5) url(../img/tick-white@30.png) no-repeat 0.3rem 0.3rem !important;
-  background-size: 75% 75% !important;
+  background-size: 48.75% 48.75% !important;
 }
 
 label input[type="checkbox"][data-type="switch"] + span.toggle {
@@ -1862,8 +1841,8 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
  * <http://www.gnu.org/licenses/>.
  */
 [data-role="option-selector"] {
-  -webkit-box-shadow: inset 0 2px 2px 0 #d5d5d5;
-  box-shadow: inset 0 2px 2px 0 #d5d5d5;
+  -webkit-box-shadow: inset 0 2px 2px 0 #D5D5D5;
+  box-shadow: inset 0 2px 2px 0 #D5D5D5;
   width: 100%;
   height: auto;
   margin: 0 auto;
@@ -2042,16 +2021,11 @@ body {
   line-height: 1.3;
 }
 
-.checkbox {
-	width: 10px;
-	margin-left:-18px;
-}
-
 .medium-font {
-  font-size: 14px;
-  line-height: 1.3;
   width: 100px;
   display: inline-block;
+  font-size: 14px;
+  line-height: 1.3;
 }
 
 .small-font {
@@ -2069,3 +2043,4 @@ body {
   line-height: 1.3;
 }
 
+/*# sourceMappingURL=appTemplate.css.map */
