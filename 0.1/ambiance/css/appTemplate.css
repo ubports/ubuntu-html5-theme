@@ -915,13 +915,11 @@ progress {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
-  /*width: 100%;*/
   min-width: 92px;
   height: 35px;
   line-height: 27px;
   padding: 4px 10px;
   background: #dd4814;
-  /*border: 2px solid $ubuntu_orange;*/
   border: none;
   border-radius: 9px/7px;
   color: #ffffff;
@@ -963,13 +961,17 @@ progress {
   [data-role="button"] [data-role="icon"] {
     display: inline-block;
     height: 100%;
-    vertical-align: top; }
+    vertical-align: top;
+    -webkit-filter: brightness(2);
+    filter: brightness(2); }
   [data-role="button"].icon-left [data-role="icon"] {
     float: left;
     margin-right: 5px; }
   [data-role="button"].icon-right [data-role="icon"] {
     float: right;
     margin-left: 5px; }
+  [data-role="button"].disabled [data-role="icon"] {
+    opacity: 0.5; }
 
 /*
  * Copyright (C) 2013 Adnane Belmadiaf <daker@ubuntu.com>

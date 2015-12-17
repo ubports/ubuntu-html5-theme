@@ -36,3 +36,8 @@
     -o-transition:      $transition;
     transition:         $transition;
 }
+
+@mixin filter($filter) {
+    -webkit-filter: $filter;
+    filter:         $filter;
+}
