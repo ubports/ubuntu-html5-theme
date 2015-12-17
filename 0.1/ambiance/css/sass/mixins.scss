@@ -21,11 +21,18 @@
  */
 
 @mixin box_sizing($type: border-box) {
-    -webkit-box-sizing: $type;
-    box-sizing:         $type;
+	-webkit-box-sizing: $type;
+	box-sizing:         $type;
 }
 
-@mixin box_shadow($type: inset 0 1px 1px rgba(0, 0, 0, 0.1)) {
-    -webkit-box-shadow: $type;
-    box-shadow:         $type;
+@mixin box_shadow($type...) {
+	-webkit-box-shadow: $type;
+    box-shadow: 		$type;
+}
+
+@mixin transition($transition...) {
+    -webkit-transition: $transition;
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    transition:         $transition;
 }
