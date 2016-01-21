@@ -536,7 +536,7 @@ ul {
   vertical-align: middle;
 }
 [data-role="icon"][data-icon="call"] {
-  background: url("/usr/share/icons/suru/actions/scalable/icon-call.svg") no-repeat scroll center center transparent;
+  background: url("/usr/share/icons/suru/actions/scalable/call-start.svg") no-repeat scroll center center transparent;
   background-size: 26px;
 }
 [data-role="icon"][data-icon="caret"] {
@@ -672,7 +672,7 @@ textarea {
 }
 
 .textfield.clear:focus {
-  background: url(artwork/icon_clear@20.png) no-repeat 97% center white;
+  background: url(artwork/icon_clear@20.png) no-repeat 97% center #fff;
   background-size: 12%;
 }
 
@@ -785,7 +785,6 @@ progress.infinite:after {
   from {
     -webkit-transform: rotate(1deg);
   }
-
   to {
     -webkit-transform: rotate(360deg);
   }
@@ -794,11 +793,9 @@ progress.infinite:after {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
@@ -928,43 +925,33 @@ progress.infinite:after {
     0% {
       -webkit-transform: translate3d(0, 0, 0);
     }
-
     10% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     20% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     30% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     40% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     50% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     60% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     70% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     80% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     90% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     100% {
       -webkit-transform: translate3d(0, 0, 0);
     }
@@ -973,43 +960,33 @@ progress.infinite:after {
     0% {
       -webkit-transform: translate3d(0, 0, 0);
     }
-
     10% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     20% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     30% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     40% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     50% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     60% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     70% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     80% {
       -webkit-transform: translate3d(20px, 0, 0);
     }
-
     90% {
       -webkit-transform: translate3d(-20px, 0, 0);
     }
-
     100% {
       -webkit-transform: translate3d(0, 0, 0);
     }
@@ -1044,44 +1021,79 @@ progress.infinite:after {
  * Buttons
  * ---------------------------------- */
 [data-role="button"] {
+  -webkit-box-shadow: 0 2px 2px rgba(100, 100, 100, 0.4) inset;
+  box-shadow: 0 2px 2px rgba(100, 100, 100, 0.4) inset;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
-  width: 100%;
-  height: 42px;
-  vertical-align: middle;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  min-width: 92px;
+  height: 35px;
+  line-height: 27px;
+  padding: 4px 10px;
   background: #dd4814;
-  border: 2px solid #dd4814;
-  border-radius: 6px;
-  color: white;
+  border: none;
+  border-radius: 9px/7px;
+  color: #ffffff;
   font-family: "Ubuntu";
   font-size: 1rem;
-  padding: 9px 25px;
+  overflow: hidden;
+  position: relative;
   text-align: center;
   text-decoration: none;
-  position: relative;
+  text-overflow: ellipsis;
+  -webkit-transition: box-shadow 0.175s;
+  -moz-transition: box-shadow 0.175s;
+  -o-transition: box-shadow 0.175s;
+  transition: box-shadow 0.175s;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 [data-role="button"].positive {
   background: #38b44a;
-  color: white;
+  color: #ffffff;
   border-color: #38b44a;
 }
 [data-role="button"].information {
   background: #2ab7ec;
-  color: white;
+  color: #ffffff;
   border-color: #2ab7ec;
 }
 [data-role="button"].secondary {
-  background: white;
+  background: #ffffff;
   color: #888888;
 }
 [data-role="button"].negative {
-  background: #929292;
-  color: white;
-  border-color: #929292;
+  background: #ABA59F;
+  color: #ffffff;
+  border-color: #ABA59F;
+}
+[data-role="button"].disabled {
+  color: rgba(255, 255, 255, 0.5);
+}
+[data-role="button"]:not(.disabled):active {
+  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4) inset, 0 0 200px rgba(0, 0, 0, 0.15) inset;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4) inset, 0 0 200px rgba(0, 0, 0, 0.15) inset;
+}
+[data-role="button"] + [data-role="button"] {
+  margin-left: 15px;
+}
+[data-role="button"] [data-role="icon"] {
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  -webkit-filter: brightness(2);
+  filter: brightness(2);
+}
+[data-role="button"].icon-left [data-role="icon"] {
+  float: left;
+  margin-right: 5px;
+}
+[data-role="button"].icon-right [data-role="icon"] {
+  float: right;
+  margin-left: 5px;
+}
+[data-role="button"].disabled [data-role="icon"] {
+  opacity: 0.5;
 }
 
 /*
@@ -1205,14 +1217,16 @@ input[type=range]::-moz-range-thumb {
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
+ * BOXES SCALED BY A FACTOR OF 0.65
  */
 label:not([for]) {
   display: inline-block;
   vertical-align: middle;
-  width: 4.5rem;
+  width: 2.925rem;
   height: 2.2rem;
   position: relative;
   background: none;
+  margin-top: 15px;
 }
 label:not([for]) input[type="checkbox"] {
   margin: 0;
@@ -1230,92 +1244,92 @@ label:not([for]) input[type="checkbox"] + span {
   left: 50%;
   top: 50%;
   margin: -1.1rem 0 0 -1.1rem;
-  width: 2rem;
-  height: 2rem;
+  width: 1.25rem;
+  height: 1.15rem;
   pointer-events: none;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.4);
-  background-position-y: 30px;
+  background: transparent;
+  background-position-y: 5px;
   -webkit-transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
   transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
 }
 label:not([for]) input[type="checkbox"]:checked + span {
-  background: #dd4814 url(../img/tick-white@30.png) no-repeat 0.3rem 0.3rem;
-  background-size: 75% 75%;
+  background: #00a132 url(../img/tick-white@30.png) no-repeat 0.2rem 0.2rem;
+  background-size: 70% 70%;
   background-position-y: 5px;
   -webkit-transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
   transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out, background-position 0.3s ease-in-out;
 }
 label:not([for]) input[type="checkbox"]:disabled + span {
-  background: rgba(0, 0, 0, 0.25) !important;
+  background: rgba(0, 0, 0, 0.025) !important;
 }
 label:not([for]) input[type="checkbox"]:disabled:checked + span {
-  background: rgba(221, 72, 20, 0.5) url(../img/tick-white@30.png) no-repeat 0.3rem 0.3rem !important;
-  background-size: 75% 75% !important;
+  background: rgba(0, 161, 50, 0.5) url(../img/tick-white@30.png) no-repeat 0.2em 0.2rem !important;
+  background-size: 70% 70% !important;
 }
 
 label input[type="checkbox"][data-type="switch"] + span.toggle {
   position: absolute;
   left: 50%;
   top: 50%;
-  margin: -1.1rem 0 0 -2.2rem;
-  width: 4.5rem;
-  height: 2.2rem;
+  margin: -1.1rem 0 0 -1.2rem;
+  width: 2.925rem;
+  height: 1.43rem;
   pointer-events: none;
   overflow: hidden;
-  background: rgba(136, 136, 136, 0.3);
+  background: rgba(136, 136, 136, 0.2);
 }
 label input[type="checkbox"][data-type="switch"] + span.toggle > span.toggle-bg {
-  background: transparent url(../img/unCheckbox.png) no-repeat 0.4rem 0.35rem;
-  background-size: 90% 75%;
+  background: transparent url(../img/unCheckbox.png) no-repeat 0.26rem 0.21rem;
+  background-size: 90% 80%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
-  width: 4.5rem;
-  height: 2.1rem;
+  width: 2.925rem;
+  height: 1.365rem;
   -webkit-transition: background-image 0.3s ease-in-out;
   transition: background-image 0.3s ease-in-out;
 }
 label input[type="checkbox"][data-type="switch"] + span.toggle > span.toggle-handle {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 3px;
+  left: 3px;
   z-index: 2;
-  width: 2rem;
-  height: 2rem;
+  width: 1.1rem;
+  height: 1.1rem;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.2);
   -webkit-transition: background 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
   transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 label input[type="checkbox"][data-type="switch"]:checked + span.toggle {
-  background: rgba(136, 136, 136, 0.3) !important;
+  background: rgba(136, 136, 136, 0.2) !important;
 }
 label input[type="checkbox"][data-type="switch"]:checked + span.toggle > span.toggle-bg {
-  background: transparent url(../img/Checkbox.png) no-repeat 0.4rem 0.35rem;
-  background-size: 90% 75%;
+  background: transparent url(../img/Checkbox.png) no-repeat 0.26rem 0.2275rem;
+  background-size: 90% 80%;
 }
 label input[type="checkbox"][data-type="switch"]:checked + span.toggle > span.toggle-handle {
-  background: #dd4814;
-  -webkit-transform: translate3d(38px, 0, 0);
-  transform: translate3d(38px, 0, 0);
+  background: #00a132;
+  -webkit-transform: translate3d(24.7px, 0, 0);
+  transform: translate3d(24.7px, 0, 0);
 }
 
 label input[data-type="switch"]:disabled + span.toggle {
-  background: rgba(136, 136, 136, 0.3) !important;
+  background: rgba(136, 136, 136, 0.03) !important;
 }
 label input[data-type="switch"]:disabled + span.toggle > span.toggle-handle {
   opacity: 0.4;
 }
 label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-handle {
   opacity: 0.4;
-  -webkit-transform: translate3d(38px, 0, 0);
-  transform: translate3d(38px, 0, 0);
+  -webkit-transform: translate3d(24.7px, 0, 0);
+  transform: translate3d(24.7px, 0, 0);
 }
 
 /*
@@ -1862,8 +1876,8 @@ label input[data-type="switch"]:disabled:checked + span.toggle > span.toggle-han
  * <http://www.gnu.org/licenses/>.
  */
 [data-role="option-selector"] {
-  -webkit-box-shadow: inset 0 2px 2px 0 #d5d5d5;
-  box-shadow: inset 0 2px 2px 0 #d5d5d5;
+  -webkit-box-shadow: inset 0 2px 2px 0 #D5D5D5;
+  box-shadow: inset 0 2px 2px 0 #D5D5D5;
   width: 100%;
   height: auto;
   margin: 0 auto;
@@ -2043,6 +2057,8 @@ body {
 }
 
 .medium-font {
+  width: 100px;
+  display: inline-block;
   font-size: 14px;
   line-height: 1.3;
 }
@@ -2061,3 +2077,5 @@ body {
   font-size: 8px;
   line-height: 1.3;
 }
+
+/*# sourceMappingURL=appTemplate.css.map */
