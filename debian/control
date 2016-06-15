@@ -26,8 +26,7 @@ Package: ubuntu-html5-sdk
 Architecture: all
 Depends: qtdeclarative5-ubuntu-webapps-api,
          ubuntu-html5-ui-toolkit,
-Conflicts: ubuntu-html5-container
-Breaks: ubuntu-html5-container
+         webapp-container,
 Description: Ubuntu HTML5 SDK Metapackage
  This package depends on all components of the HTML5 app stack, allowing
  for easy installation of all necessary components.
