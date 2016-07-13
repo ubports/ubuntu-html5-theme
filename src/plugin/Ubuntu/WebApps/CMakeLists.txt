@@ -1,12 +1,8 @@
 project(ubuntu-html5-container)
 
 # setup install location
-execute_process(
-    COMMAND qmake -query QT_INSTALL_QML
-    OUTPUT_VARIABLE QT_INSTALL_QML
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-set(HTML5_CONTAINER_IMPORTS_DIR "${QT_INSTALL_QML}/Ubuntu/WebApps")
+set(QT_IMPORTS_DIR "${CMAKE_INSTALL_LIBDIR}/qt5/qml")
+set(HTML5_CONTAINER_IMPORTS_DIR "${QT_IMPORTS_DIR}/Ubuntu/WebApps")
 
 # setup install for local component files
 file(GLOB QML_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.qml qmldir)
