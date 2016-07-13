@@ -1,3 +1,10 @@
+ubuntu-html5-theme (0.1.2+16.10.20160713-0ubuntu1) yakkety; urgency=medium
+
+  [ Florian Boucault ]
+  * Fixes for crossbuilding.
+
+ -- Alexandre Abreu <alexandre.abreu@canonical.com>  Wed, 13 Jul 2016 16:23:03 +0000
+
 ubuntu-html5-theme (0.1.2+16.04.20160203-0ubuntu1) xenial; urgency=medium
 
   * Merge fix branches
