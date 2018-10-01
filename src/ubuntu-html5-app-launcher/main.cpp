@@ -102,7 +102,7 @@ void usage()
 
 int main(int argc, char *argv[])
 {
-    // Enable compositing in oxide
+    // Enable compositing in QtWebEngine
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 
     QGuiApplication app(argc, argv);
