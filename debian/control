@@ -9,9 +9,9 @@ Build-Depends: cmake (>= 2.8.9),
                qt5-default,
 	       qtbase5-dev (>= 5.4),
                qtdeclarative5-dev,
-               qtdeclarative5-qtquick2-plugin,
+               qml-module-qtquick2,
                qml-module-qttest | qtdeclarative5-test-plugin,
-               qtdeclarative5-ubuntu-ui-toolkit-plugin,
+               qml-module-ubuntu-components,
 Standards-Version: 3.9.5
 # if you don't have have commit access to this branch but would like to upload
 # directly to Ubuntu, don't worry: your changes will be merged back into the
@@ -45,7 +45,7 @@ Architecture: all
 Depends: libjs-jquery,
          qmlscene,
          qml-module-morph-web,
-         qtdeclarative5-qtquick2-plugin,
+         qml-module-qtquick2,
          ubuntu-html5-ui-toolkit (= ${binary:Version}),
          ${misc:Depends},
 Replaces: ubuntu-html5-theme-examples (<< 0.1.1),
@@ -64,7 +64,7 @@ Depends: dpkg-dev,
          python3-xlib,
          python3-autopilot,
          qmlscene,
-         qtdeclarative5-qtquick2-plugin,
+         qml-module-qtquick2,
          qml-module-qttest | qtdeclarative5-test-plugin,
          ubuntu-html5-ui-toolkit (= ${binary:Version}),
          ubuntu-html5-ui-toolkit-examples (= ${binary:Version}),
@@ -80,7 +80,7 @@ Package: ubuntu-html5-container
 Architecture: any
 Multi-Arch: foreign
 Depends: qmlscene,
-         qtdeclarative5-qtquick2-plugin,
+         qml-module-qtquick2,
          qtdeclarative5-ubuntu-ui-extras-browser-plugin,
          ubuntu-html5-ui-toolkit (= ${source:Version}),
          unity-webapps-qml (>= 0.1+14.04.20131106-0ubuntu2),
@@ -94,7 +94,7 @@ Package: ubuntu-html5-container-autopilot
 Architecture: all
 Depends: libautopilot-qt (>= 1.4),
          libqt5test5,
-         qtdeclarative5-qtquick2-plugin,
+         qml-module-qtquick2,
          ubuntu-html5-container (>= ${binary:Version}),
          python3-autopilot,
          ${misc:Depends},
